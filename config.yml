@@ -1,0 +1,14 @@
+#
+# Codari_Lib Configuration file
+#
+# Any changes made here will only take effect
+# after a restart or reload. To change these
+# settings during runtime use the command
+# provided in the commenting.
+#
+
+#
+# Debugging Configuration
+#
+debug:
+  active: true 
