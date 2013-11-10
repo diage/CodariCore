@@ -3,15 +3,9 @@ package com.codari.arenacore;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.codari.api.util.Tick;
 import com.codari.arena.Arena;
-import com.codari.arena.objects.persistant.DelayedPersistentObject;
-import com.codari.arena.objects.persistant.ImmediatePersistentObject;
-import com.codari.arena.objects.spawnable.FixedSpawnableObject;
-import com.codari.arena.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena.players.teams.Team;
 import com.codari.arena.players.teams.TeamColor;
-import com.codari.arena.rules.GameRule;
 
 public final class ArenaCore implements Arena {
 	//-----Fields-----//
@@ -30,5 +24,13 @@ public final class ArenaCore implements Arena {
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	public Map<TeamColor, Team> getTeams() {
+		return teams;
+	}
+
+	public Map<String, TimelineGroup> getRandomTimelineGroups() {
+		return randomTimelineGroups;
 	}
 }
