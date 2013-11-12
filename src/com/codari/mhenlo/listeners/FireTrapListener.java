@@ -13,8 +13,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
 
 import com.codari.api.Codari;
-import com.codari.mhenlo.AoeTriggerEvent;
 import com.codari.mhenlo.FireTrap;
+import com.codari.mhenlo.utl.AoeTriggerEvent;
 
 public class FireTrapListener implements Listener {
 	

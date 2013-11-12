@@ -25,12 +25,13 @@ import com.codari.api.io.CodariIO;
 import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.FireTrap;
 import com.codari.mhenlo.listeners.FireTrapListener;
+import com.codari.mhenlo.listeners.TrapRegister;
 
 @SuppressWarnings("unused")
 public class Debugger implements Listener {
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
-		Bukkit.getPluginManager().registerEvents(new FireTrapListener(), Codari.INSTANCE);
+		new TrapRegister();
 	}
 	
 	@EventHandler

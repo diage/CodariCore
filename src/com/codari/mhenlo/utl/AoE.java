@@ -1,4 +1,4 @@
-package com.codari.mhenlo;
+package com.codari.mhenlo.utl;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.bukkit.entity.Slime;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api.Codari;
+import com.codari.mhenlo.Trap;
 
 /* This class will be used to determine nearby entities around a specified location. */
 

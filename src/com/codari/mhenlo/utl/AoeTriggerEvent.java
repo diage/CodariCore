@@ -1,4 +1,4 @@
-package com.codari.mhenlo;
+package com.codari.mhenlo.utl;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import com.codari.mhenlo.Trap;
 
 public class AoeTriggerEvent extends Event {
 	//-----Static Fields-----//

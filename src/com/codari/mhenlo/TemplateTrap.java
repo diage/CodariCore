@@ -13,6 +13,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.codari.api.Codari;
 import com.codari.arena.players.teams.TeamColor;
+import com.codari.mhenlo.utl.AoE;
 
 public abstract class TemplateTrap implements Trap {
 	//-----Fields-----//
