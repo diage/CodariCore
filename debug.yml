@@ -1,0 +1,6 @@
+#
+# Codari Debugging Configuration
+#
+
+debug:
+  active: true 
