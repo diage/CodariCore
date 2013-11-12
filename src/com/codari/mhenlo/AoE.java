@@ -19,10 +19,12 @@ public class AoE {
 	private Location location;
 	private double radius;
 	private boolean active;
+	private Trap trap;
 	
-	public AoE(Location location, double radius) {
+	public AoE(Location location, double radius, Trap trap) {
 		this.location = location;
 		this.radius = radius;
+		this.trap = trap;
 	}
 	
 	public void setActive() {
@@ -48,7 +50,7 @@ public class AoE {
 			public void run() {
 				calculate(radius);
 				if(nearbyEntities.size() > 0) {
-					Bukkit.getPluginManager().callEvent(new AoeTriggerEvent(location, nearbyEntities));
+					Bukkit.getPluginManager().callEvent(new AoeTriggerEvent(location, nearbyEntities, trap));
 				}
 				if(!active) {
 					super.cancel();
