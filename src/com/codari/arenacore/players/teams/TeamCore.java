@@ -1,4 +1,4 @@
-package com.codari.arenacore.combatants.teams;
+package com.codari.arenacore.players.teams;
 
 import java.util.ArrayList;
 import java.util.List;

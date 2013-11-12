@@ -11,8 +11,8 @@ import com.codari.arena.Arena;
 import com.codari.arena.ArenaBuilder;
 import com.codari.arena.ArenaManager;
 import com.codari.arena.players.combatants.Combatant;
-import com.codari.arenacore.combatants.CombatantCore;
-import com.codari.arenacore.combatants.CombatantDataCore;
+import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.combatants.CombatantDataCore;
 
 public class ArenaManagerCore implements ArenaManager {
 	//-----Fields-----//
