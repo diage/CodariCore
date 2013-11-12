@@ -16,6 +16,7 @@ import com.codari.api.Codari;
 import com.codari.mhenlo.FireTrap;
 import com.codari.mhenlo.utl.AoeTriggerEvent;
 
+
 public class FireTrapListener implements Listener {
 	
 	//-----Events-----//
@@ -27,6 +28,7 @@ public class FireTrapListener implements Listener {
 		//Has to check if opposing team triggered the trap
 		if(true /*e.getEntities().contains*/) {
 			e.getTrap().trigger(targets);
+			e.getTrap().deactivate();
 		}
 	}
 

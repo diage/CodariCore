@@ -50,7 +50,7 @@ public class Debugger implements Listener {
 			}
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
-				FireTrap trap = new FireTrap(e.getPlayer(), 5);
+				FireTrap trap = new FireTrap(e.getPlayer(), 2);
 				e.getPlayer().teleport(loc);
 				trap.spawn();
 			}
