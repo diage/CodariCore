@@ -22,6 +22,13 @@ public class GameRuleCore implements GameRule {
 		this.timedActions = new HashSet<>();
 	}
 	
+	//-----Public Methods-----//
+	@Override
+	public void setTeamSize(int teamSize) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void addWinCondition(WinCondition winCondition) {
 		this.winConditions.add(winCondition);
@@ -56,11 +63,5 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public boolean isValid() {
 		return this.matchDuration != null && !this.winConditions.isEmpty();
-	}
-
-	@Override
-	public void setTeamSize(int teamSize) {
-		// TODO Auto-generated method stub
-		
 	}
 }

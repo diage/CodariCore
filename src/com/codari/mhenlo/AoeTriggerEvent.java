@@ -19,10 +19,12 @@ public class AoeTriggerEvent extends Event {
 	//-----Fields-----//
 	private Location location;
 	private List<Entity> entities;
+	private Trap trap;
 	
-	public AoeTriggerEvent(Location location, List<Entity> entities) {
+	public AoeTriggerEvent(Location location, List<Entity> entities, Trap trap) {
 		this.location = location;
 		this.entities = entities;
+		this.trap = trap;
 	}
 	
 	public Location getLocation() {
@@ -32,6 +34,10 @@ public class AoeTriggerEvent extends Event {
 	public List<Entity> getEntities() {
 		return this.entities;
 	}
+	
+	public Trap getTrap() {
+		return this.trap;
+	}	
 
 	@Override
 	public HandlerList getHandlers() {

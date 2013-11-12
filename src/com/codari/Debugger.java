@@ -24,11 +24,13 @@ import com.codari.api.Codari;
 import com.codari.api.io.CodariIO;
 import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.FireTrap;
+import com.codari.mhenlo.listeners.FireTrapListener;
 
 @SuppressWarnings("unused")
 public class Debugger implements Listener {
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
+		Bukkit.getPluginManager().registerEvents(new FireTrapListener(), Codari.INSTANCE);
 	}
 	
 	@EventHandler
@@ -48,7 +50,6 @@ public class Debugger implements Listener {
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
 				FireTrap trap = new FireTrap(e.getPlayer(), 5);
-				Bukkit.getPluginManager().registerEvents(trap, Codari.INSTANCE);
 				e.getPlayer().teleport(loc);
 				trap.spawn();
 			}
