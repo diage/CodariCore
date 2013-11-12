@@ -25,17 +25,16 @@ import com.codari.api.io.CodariIO;
 import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.FireTrap;
 import com.codari.mhenlo.listeners.FireTrapListener;
-import com.codari.mhenlo.listeners.TrapRegister;
 
 @SuppressWarnings("unused")
 public class Debugger implements Listener {
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
-		new TrapRegister();
 	}
 	
 	@EventHandler
 	public void testerbugrer(PlayerInteractEvent e) {
+		/*I WONT FORGET*/
 		if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
 			Location loc = e.getPlayer().getLocation();
 			BlockIterator i = new BlockIterator(e.getPlayer(), 100);
