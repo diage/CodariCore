@@ -81,20 +81,4 @@ public class Debugger implements Listener {
 			}
 		}
 	}
-	
-	@EventHandler
-	public void test1(PlayerQuitEvent e) {
-		System.out.println("@@@@@@@@@@@@@@@@@@ PLAYER QUIT @@@@@@@@@@@@@@@@@@@@@");
-		Bukkit.getScheduler().runTask(Codari.INSTANCE, new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("@@@@@@@@@@@@@@@@@@ PLAYER QUIT 1 TICK LATER @@@@@@@@@@@@@@@@@@@@@");
-			}
-		});
-	}
-	
-	@EventHandler
-	public void test1(PluginDisableEvent e) {
-		System.out.println("@@@@@@@@@@@@@@@@@@ PLUGIN DISABLE @@@@@@@@@@@@@@@@@@@@@");
-	}
 }
