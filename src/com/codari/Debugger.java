@@ -34,6 +34,7 @@ import com.codari.mhenlo.structure.TrapListener;
 @SuppressWarnings("unused")
 public class Debugger implements Listener {
 	private Random random = new Random();
+	private final int NUMBER_OF_TRAPS = 3;
 	
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
@@ -59,12 +60,18 @@ public class Debugger implements Listener {
 				e.getPlayer().teleport(target.getLocation());
 				Trap trap;
 				int nextRandom = this.random.nextInt() % 3;
-				if(nextRandom == 0) {
+				switch(nextRandom) {
+				case 0:
 					trap = new FireTrap(e.getPlayer(), 2);
-				} else if(nextRandom == 1) {
+					break;
+				case 1:
 					trap = new ExplosionTrap(e.getPlayer(), 2);
-				} else {
+					break;
+				case 2:
 					trap = new PoisonSnareTrap(e.getPlayer(), 2);
+					break;
+				default:
+					trap = new ExplosionTrap(e.getPlayer(), 2);
 				}
 				e.getPlayer().teleport(loc);
 				trap.spawn();
