@@ -61,9 +61,9 @@ public class Debugger implements Listener {
 				} else {
 					trap = new ExplosionTrap(e.getPlayer(), 2);
 				}
-				
 				e.getPlayer().teleport(loc);
 				trap.spawn();
+				Bukkit.broadcastMessage(trap.getClass().getSimpleName());
 			}
 		}
 	}
