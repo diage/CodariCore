@@ -18,6 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.BlockIterator;
@@ -78,5 +80,15 @@ public class Debugger implements Listener {
 				Bukkit.broadcastMessage(trap.getClass().getSimpleName());
 			}
 		}
+	}
+	
+	@EventHandler
+	public void test1(PlayerQuitEvent e) {
+		System.out.println("@@@@@@@@@@@@@@@@@@ PLAYER QUIT @@@@@@@@@@@@@@@@@@@@@");
+	}
+	
+	@EventHandler
+	public void test1(PluginDisableEvent e) {
+		System.out.println("@@@@@@@@@@@@@@@@@@ PLUGIN DISABLE @@@@@@@@@@@@@@@@@@@@@");
 	}
 }
