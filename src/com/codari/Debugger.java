@@ -16,6 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +27,6 @@ import com.codari.api.io.CodariIO;
 import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.ExplosionTrap;
 import com.codari.mhenlo.FireTrap;
-import com.codari.mhenlo.PoisonSnareTrap;
 import com.codari.mhenlo.structure.Trap;
 import com.codari.mhenlo.structure.TrapListener;
 
@@ -69,6 +69,9 @@ public class Debugger implements Listener {
 				trap.spawn();
 				Bukkit.broadcastMessage(trap.getClass().getSimpleName());
 			}
+		}
+		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			e.getPlayer().sendMessage(e.getClickedBlock().getState().getData().toString());
 		}
 	}
 }
