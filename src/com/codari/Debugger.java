@@ -71,8 +71,5 @@ public class Debugger implements Listener {
 				Bukkit.broadcastMessage(trap.getClass().getSimpleName());
 			}
 		}
-		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			e.getPlayer().sendMessage(e.getClickedBlock().getState().getData().toString());
-		}
 	}
 }
