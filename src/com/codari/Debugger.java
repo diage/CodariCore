@@ -32,6 +32,7 @@ import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.ExplosionTrap;
 import com.codari.mhenlo.FireTrap;
 import com.codari.mhenlo.PoisonSnareTrap;
+import com.codari.mhenlo.structure.Trap;
 import com.codari.mhenlo.structure.TrapListener;
 
 
