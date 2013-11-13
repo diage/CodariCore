@@ -48,7 +48,6 @@ public class Debugger implements Listener {
 	
 	@EventHandler
 	public void testerbugrer(PlayerInteractEvent e) {
-		/*I WONT FORGET*/
 		if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
 			Location loc = e.getPlayer().getLocation();
 			BlockIterator i = new BlockIterator(e.getPlayer(), 100);
