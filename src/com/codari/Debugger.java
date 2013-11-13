@@ -61,7 +61,7 @@ public class Debugger implements Listener {
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
 				Trap trap;
-				int nextRandom = this.random.nextInt() % 3;
+				int nextRandom = this.random.nextInt() % NUMBER_OF_TRAPS;
 				switch(nextRandom) {
 				case 0:
 					trap = new FireTrap(e.getPlayer(), 2);
