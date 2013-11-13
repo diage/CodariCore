@@ -48,6 +48,7 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	@Override
 	public void onDisable() {
 		this.setInstanceAccess(false);
+		PlayerReference.kickAllPlayers();
 	}
 	
 	//-----Public Methods-----//

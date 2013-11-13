@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +27,7 @@ import org.bukkit.util.BlockIterator;
 
 import com.codari.api.Codari;
 import com.codari.api.io.CodariIO;
+import com.codari.api.util.PlayerReference;
 import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.ExplosionTrap;
 import com.codari.mhenlo.FireTrap;
@@ -61,7 +63,7 @@ public class Debugger implements Listener {
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
 				Trap trap;
-				int nextRandom = this.random.nextInt() % NUMBER_OF_TRAPS;
+				int nextRandom = this.random.nextInt() % 3;
 				switch(nextRandom) {
 				case 0:
 					trap = new FireTrap(e.getPlayer(), 2);
@@ -80,5 +82,27 @@ public class Debugger implements Listener {
 				Bukkit.broadcastMessage(trap.getClass().getSimpleName());
 			}
 		}
+	}
+	
+	@EventHandler
+	public void test1(PlayerKickEvent e) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER KICK @@@@@@@@@@@@@@@@@@@@@@@");
+		Bukkit.getScheduler().runTask(Codari.INSTANCE, new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER KICK 1 TICK @@@@@@@@@@@@@@@@@@@@@@@");
+			}
+		});
+	}
+	
+	@EventHandler
+	public void test1(PlayerQuitEvent e) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER QUIT @@@@@@@@@@@@@@@@@@@@@@@");
+		Bukkit.getScheduler().runTask(Codari.INSTANCE, new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER QUIT 1 TICK @@@@@@@@@@@@@@@@@@@@@@@");
+			}
+		});
 	}
 }
