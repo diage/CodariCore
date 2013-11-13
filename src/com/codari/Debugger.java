@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
@@ -23,11 +24,15 @@ import org.bukkit.util.BlockIterator;
 import com.codari.api.Codari;
 import com.codari.api.io.CodariIO;
 import com.codari.api.util.PluginUtils;
+import com.codari.mhenlo.ExplosionTrap;
 import com.codari.mhenlo.FireTrap;
+import com.codari.mhenlo.structure.Trap;
 import com.codari.mhenlo.structure.TrapListener;
 
 @SuppressWarnings("unused")
 public class Debugger implements Listener {
+	private Random random = new Random();
+	
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
 		Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);
@@ -50,7 +55,13 @@ public class Debugger implements Listener {
 			}
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
-				FireTrap trap = new FireTrap(e.getPlayer(), 2);
+				Trap trap;
+				if((this.random.nextInt() % 2) == 0) {
+					trap = new FireTrap(e.getPlayer(), 2);
+				} else {
+					trap = new ExplosionTrap(e.getPlayer(), 2);
+				}
+				
 				e.getPlayer().teleport(loc);
 				trap.spawn();
 			}
