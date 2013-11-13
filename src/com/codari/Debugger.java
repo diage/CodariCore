@@ -26,6 +26,7 @@ import com.codari.api.io.CodariIO;
 import com.codari.api.util.PluginUtils;
 import com.codari.mhenlo.ExplosionTrap;
 import com.codari.mhenlo.FireTrap;
+import com.codari.mhenlo.PoisonSnareTrap;
 import com.codari.mhenlo.structure.Trap;
 import com.codari.mhenlo.structure.TrapListener;
 
@@ -56,10 +57,13 @@ public class Debugger implements Listener {
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
 				Trap trap;
-				if((this.random.nextInt() % 2) == 0) {
+				int nextRandom = this.random.nextInt() % 3;
+				if(nextRandom == 0) {
 					trap = new FireTrap(e.getPlayer(), 2);
-				} else {
+				} else if(nextRandom == 1) {
 					trap = new ExplosionTrap(e.getPlayer(), 2);
+				} else {
+					trap = new PoisonSnareTrap(e.getPlayer(), 2);
 				}
 				e.getPlayer().teleport(loc);
 				trap.spawn();

@@ -15,7 +15,6 @@ import com.codari.api.Codari;
 import com.codari.arena.players.teams.Team;
 import com.codari.mhenlo.utl.AoE;
 
-
 public abstract class TemplateTrap implements Trap {
 	//-----Fields-----//
 	//---Block Configuration---//
@@ -29,7 +28,7 @@ public abstract class TemplateTrap implements Trap {
 	protected Material setTrapMaterial = Material.REDSTONE;
 	
 	private final Material revealedTrapIndicatorMaterial = Material.CLAY;
-	protected int clayStoneMetaDataValue;
+	protected byte clayStoneMetaDataValue = 0;
 
 	//---Initialized in Constructor---//
 	private AoE areaOfEffect;
@@ -71,10 +70,12 @@ public abstract class TemplateTrap implements Trap {
 		this.setActivatable();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void reveal() {
 		this.trapState.getBlock().setType(revealedTrapMaterial);
 		this.trapIndicatorState.getBlock().setType(revealedTrapIndicatorMaterial);
+		this.trapIndicatorState.getBlock().setData(this.clayStoneMetaDataValue);
 	}	
 
 	@Override
