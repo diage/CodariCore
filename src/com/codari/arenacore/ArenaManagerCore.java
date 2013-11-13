@@ -11,6 +11,8 @@ import com.codari.arena.Arena;
 import com.codari.arena.ArenaBuilder;
 import com.codari.arena.ArenaManager;
 import com.codari.arena.players.combatants.Combatant;
+import com.codari.arena.players.teams.Team;
+import com.codari.arena.players.teams.TeamColor;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
 
@@ -60,6 +62,18 @@ public class ArenaManagerCore implements ArenaManager {
 
 	@Override
 	public ArenaBuilder getArenaBuider() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Team getTeam(String arenaName, TeamColor teamColor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Team getTeam(Combatant combatant) {
 		// TODO Auto-generated method stub
 		return null;
 	}
