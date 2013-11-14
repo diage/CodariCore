@@ -157,7 +157,6 @@ public final class StatCore extends Number implements Stat {
 	private final class ModifierIterator implements Iterator<StatModifier> {
 		//-----Fields-----//
 		private final Iterator<StatModifier> modifierIterator;
-		private StatModifier next;
 		
 		//-----Constructor-----//
 		private ModifierIterator() {
@@ -172,18 +171,12 @@ public final class StatCore extends Number implements Stat {
 
 		@Override
 		public StatModifier next() {
-			this.next = this.modifierIterator.next();
-			return this.next;
+			return this.modifierIterator.next();
 		}
 
 		@Override
-		public void remove() {
-			if (this.next == null) {
-				throw new IllegalStateException();
-			}
-			this.modifierIterator.remove();
-			modifiers.total.subtract(this.next);
-			this.next = null;
+		public void remove() throws UnsupportedOperationException {
+			throw new UnsupportedOperationException("Use stat modifiers remove method isntead");
 		}
 	}
 	
