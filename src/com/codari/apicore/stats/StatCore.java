@@ -1,8 +1,10 @@
 package com.codari.apicore.stats;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 
+import com.codari.api5.Codari;
 import com.codari.api5.stats.Stat;
 import com.codari.api5.stats.StatModifier;
 import com.codari.api5.util.Modifier;
@@ -18,6 +20,9 @@ public final class StatCore extends Number implements Stat {
 	
 	//-----Constructor-----//
 	public StatCore(String name, StatManagerCore statManager, float baseValue) {
+		if (!Codari.INSTANCE.getStatFactory().isValidStatName(name)) {
+			throw new IllegalArgumentException(name + " is not a valid stat name");
+		}
 		this.name = name;
 		this.statManager = statManager;
 		this.modifiers = new ModifierMap();
@@ -46,8 +51,8 @@ public final class StatCore extends Number implements Stat {
 
 	@Override
 	public float floatValue() {
-		float totalFixedValue = this.modifiers.total.getFixedValue();
-		float totalPercentage = this.modifiers.total.getPercentage();
+		float totalFixedValue = this.modifiers.getFixedValue();
+		float totalPercentage = this.modifiers.getPercentage();
 		float percentageIncrease = this.baseValue * totalPercentage;
 		return this.baseValue + totalFixedValue + percentageIncrease;
 	}
@@ -83,18 +88,23 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
-	public boolean addModifier(String identifier, Modifier modifier) {
-		if (this.modifiers.containsKey(identifier)) {
-			return false;
+	public StatModifier setModifier(String identifier, Modifier modifier) {
+		if (modifier == null) {
+			return this.removeModifier(identifier);
 		}
 		StatModifier statModifier = new StatModifierCore(identifier, modifier);
 		this.modifiers.put(identifier, statModifier);
-		return true;
+		return statModifier;
 	}
 	
 	@Override
 	public StatModifier getModifier(String identifier) {
 		return this.modifiers.get(identifier);
+	}
+	
+	@Override
+	public StatModifier removeModifier(String identifier) {
+		return this.modifiers.remove(identifier);
 	}
 	
 	//-----Utility Methods-----//
@@ -108,10 +118,11 @@ public final class StatCore extends Number implements Stat {
 		return Float.compare(this.floatValue(), other.floatValue());
 	}
 	
-	//-----Stat Modifier-----//
+	//-----Stat Modifier Core-----//
 	private final class StatModifierCore implements StatModifier {
 		//-----Fields-----//
 		private final String identifier;
+		private boolean active;
 		private Modifier modifier;
 		
 		//-----Constructor-----//
@@ -137,15 +148,23 @@ public final class StatCore extends Number implements Stat {
 		}
 		
 		@Override
+		public boolean isActive() {
+			return this.active;
+		}
+		
+		@Override
 		public void set(Modifier modifier) {
-			modifier = ModifierUtils.handleNullModifier(modifier);
-			modifiers.total.exchange(this.modifier, modifier);
-			this.modifier = modifier;
+			if (this.isActive()) {
+				modifiers.exchange(this.modifier, modifier);
+				this.modifier = ModifierUtils.handleNullModifier(modifier);
+			}
 		}
 		
 		@Override
 		public void remove() {
-			modifiers.remove(this.identifier);
+			if (this.isActive()) {
+				modifiers.remove(this.identifier);
+			}
 		}
 	}
 	
@@ -153,10 +172,11 @@ public final class StatCore extends Number implements Stat {
 	private final class ModifierIterator implements Iterator<StatModifier> {
 		//-----Fields-----//
 		private final Iterator<StatModifier> modifierIterator;
+		private StatModifier next;
 		
 		//-----Constructor-----//
 		private ModifierIterator() {
-			this.modifierIterator = modifiers.values().iterator();
+			this.modifierIterator = new HashSet<StatModifier>(modifiers.values()).iterator();
 		}
 		
 		//-----Iterator Methods-----//
@@ -167,56 +187,52 @@ public final class StatCore extends Number implements Stat {
 
 		@Override
 		public StatModifier next() {
-			return this.modifierIterator.next();
+			this.next = this.modifierIterator.next();
+			return this.next();
 		}
 
 		@Override
-		public void remove() throws UnsupportedOperationException {
-			throw new UnsupportedOperationException("Use stat modifiers remove method isntead");
+		public void remove() {
+			if (this.next == null) {
+				throw new IllegalStateException();
+			}
+			modifiers.remove(this.next.getIdentifier());
+			this.next = null;
 		}
 	}
 	
 	//-----Modifier Map-----//
-	private final class ModifierMap extends HashMap<String, StatModifier> {
-		private static final long serialVersionUID = 7636678191032307562L;
+	@SuppressWarnings("serial")//I have no intention of serializing stat modifiers
+	private final class ModifierMap extends HashMap<String, StatModifier> implements Modifier {
 		//-----Fields-----//
-		private final ModifierTotal total;
-		
-		//-----Constructor-----//
-		private ModifierMap() {
-			super();
-			this.total = new ModifierTotal();
-		}
+		private float fixedValueTotal;
+		private float percentageTotal;
 		
 		//-----Methods-----//
 		@Override
 		public StatModifier put(String key, StatModifier value) {
-			StatModifier statModifier = super.put(key, value);
-			if (statModifier == null) {
-				this.total.add(value);
+			StatModifier statModifier = super.get(key);
+			if (statModifier != null) {
+				statModifier.set(value);
+				return statModifier;
 			} else {
-				this.total.exchange(statModifier, value);
+				statModifier = new StatModifierCore(key, value);
+				super.put(key, statModifier);
+				this.add(value);
+				return null;
 			}
-			return statModifier;
 		}
 		
 		@Override
 		public StatModifier remove(Object key) {
 			StatModifier statModifier = super.remove(key);
 			if (statModifier != null) {
-				this.total.subtract(statModifier);
+				this.subtract(statModifier);
+				((StatModifierCore) statModifier).active = false;
 			}
 			return statModifier;
 		}
-	}
-	
-	//-----Modifier Total-----//
-	private final class ModifierTotal implements Modifier {
-		//-----Fields-----//
-		private float fixedValueTotal;
-		private float percentageTotal;
-		
-		//-----Public Methods-----//
+
 		@Override
 		public float getFixedValue() {
 			return this.fixedValueTotal;
