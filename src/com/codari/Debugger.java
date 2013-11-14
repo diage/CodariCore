@@ -63,7 +63,7 @@ public class Debugger implements Listener {
 			if (target != null) {
 				e.getPlayer().teleport(target.getLocation());
 				Trap trap;
-				int nextRandom = this.random.nextInt() % 3;
+				int nextRandom = this.random.nextInt(3);
 				switch(nextRandom) {
 				case 0:
 					trap = new FireTrap(e.getPlayer(), 2);
@@ -75,11 +75,15 @@ public class Debugger implements Listener {
 					trap = new PoisonSnareTrap(e.getPlayer(), 2);
 					break;
 				default:
-					trap = new ExplosionTrap(e.getPlayer(), 2);
+					trap = null;
 				}
 				e.getPlayer().teleport(loc);
-				trap.spawn();
-				Bukkit.broadcastMessage(trap.getClass().getSimpleName());
+				if (trap != null) {
+					trap.spawn();
+					Bukkit.broadcastMessage(trap.getClass().getSimpleName());
+				} else {
+					Bukkit.broadcastMessage("NO TRAP");
+				}
 			}
 		}
 	}
