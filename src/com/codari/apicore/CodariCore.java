@@ -10,6 +10,7 @@ import com.codari.api.Codari;
 import com.codari.api.CodariException;
 import com.codari.api.util.PlayerReference;
 import com.codari.apicore.metadata.MetadataManagerCore;
+import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arenacore.ArenaManagerCore;
 
 public final class CodariCore extends JavaPlugin implements Codari {
@@ -22,6 +23,7 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	private final Field instanceField;
 	private MetadataManagerCore metadataManager;
 	private ArenaManagerCore arenaManager;
+	private StatFactoryCore statFactory;
 	
 	//-----Constructor-----//
 	public CodariCore() {
@@ -39,6 +41,7 @@ public final class CodariCore extends JavaPlugin implements Codari {
 		this.metadataManager = new MetadataManagerCore();
 		this.staticInitialization();
 		this.arenaManager = new ArenaManagerCore();
+		this.statFactory = new StatFactoryCore();
 		
 		//-----TODO debugger-----//
 		Debugger.debug();
@@ -60,6 +63,11 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	@Override
 	public ArenaManagerCore getArenaManager() {
 		return this.arenaManager;
+	}
+	
+	@Override
+	public StatFactoryCore getStatFactory() {
+		return this.statFactory;
 	}
 	
 	//-----Private Methods-----//
