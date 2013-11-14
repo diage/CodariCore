@@ -13,6 +13,7 @@ public class ExplosionTrap extends TemplateTrap {
 
 	public ExplosionTrap(Player player, double radius) {
 		super(player, radius);
+		super.clayStoneMetaDataValue = 14;
 	}
 
 	@Override

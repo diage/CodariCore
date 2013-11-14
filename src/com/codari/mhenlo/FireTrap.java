@@ -13,6 +13,7 @@ public class FireTrap extends TemplateTrap {
 
 	public FireTrap(Player player, double radius) {
 		super(player, radius);
+		super.clayStoneMetaDataValue = 1;
 	}
 
 	//-----Private Methods-----//

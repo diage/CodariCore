@@ -18,7 +18,7 @@ public class PoisonSnareTrap extends TemplateTrap{
 	
 	private int poisonEffectDuration = 100;
 	private int poisonEffectAmplifier = 10;
-	PotionEffect potionEffectPoison = new PotionEffect(PotionEffectType.SLOW, poisonEffectDuration, poisonEffectAmplifier);
+	PotionEffect potionEffectPoison = new PotionEffect(PotionEffectType.POISON, poisonEffectDuration, poisonEffectAmplifier);
 
 	public PoisonSnareTrap(Player player, double radius) {
 		super(player, radius);
