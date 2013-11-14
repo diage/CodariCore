@@ -188,8 +188,8 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	//-----Modifier Map-----//
-	@SuppressWarnings("serial")//I have no intention of serializing stat modifiers
 	private final class ModifierMap extends HashMap<String, StatModifier> {
+		private static final long serialVersionUID = 7636678191032307562L;
 		//-----Fields-----//
 		private final ModifierTotal total;
 		
@@ -221,7 +221,7 @@ public final class StatCore extends Number implements Stat {
 		}
 	}
 	
-	//-----Total Modifier-----//
+	//-----Modifier Total-----//
 	private final class ModifierTotal implements Modifier {
 		//-----Fields-----//
 		private float fixedValueTotal;
