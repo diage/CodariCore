@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.codari.api.util.Tick;
-import com.codari.arena.rules.GameRule;
-import com.codari.arena.rules.TimedAction;
-import com.codari.arena.rules.WinCondition;
+import com.codari.api5.util.Tick;
+import com.codari.arena5.rules.GameRule;
+import com.codari.arena5.rules.TimedAction;
+import com.codari.arena5.rules.WinCondition;
 
 public class GameRuleCore implements GameRule {
 	//-----Fields-----//

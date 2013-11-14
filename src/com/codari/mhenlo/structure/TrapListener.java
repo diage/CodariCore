@@ -14,8 +14,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
 
-import com.codari.api.Codari;
-import com.codari.arena.players.teams.Team;
+import com.codari.api5.Codari;
+import com.codari.arena5.players.teams.Team;
 import com.codari.mhenlo.utl.AoeTriggerEvent;
 
 public class TrapListener implements Listener {

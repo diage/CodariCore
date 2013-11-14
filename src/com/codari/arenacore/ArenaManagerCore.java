@@ -6,13 +6,13 @@ import java.util.Map;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
-import com.codari.api.util.PlayerReference;
-import com.codari.arena.Arena;
-import com.codari.arena.ArenaBuilder;
-import com.codari.arena.ArenaManager;
-import com.codari.arena.players.combatants.Combatant;
-import com.codari.arena.players.teams.Team;
-import com.codari.arena.players.teams.TeamColor;
+import com.codari.api5.util.PlayerReference;
+import com.codari.arena5.Arena;
+import com.codari.arena5.ArenaBuilder;
+import com.codari.arena5.ArenaManager;
+import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.players.teams.TeamColor;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
 

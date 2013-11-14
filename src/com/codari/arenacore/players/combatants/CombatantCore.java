@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import com.codari.api.Codari;
-import com.codari.api.io.CodariIO;
-import com.codari.api.util.PlayerReference;
-import com.codari.arena.Arena;
-import com.codari.arena.players.combatants.Combatant;
-import com.codari.arena.players.combatants.CombatantStats;
-import com.codari.arena.players.role.Role;
+import com.codari.api5.Codari;
+import com.codari.api5.io.CodariIO;
+import com.codari.api5.util.PlayerReference;
+import com.codari.arena5.Arena;
+import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.combatants.CombatantStats;
+import com.codari.arena5.players.role.Role;
 
 public final class CombatantCore implements Combatant {
 	//-----Constants-----//

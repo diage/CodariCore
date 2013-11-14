@@ -2,7 +2,7 @@ package com.codari.apicore.stats;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.codari.api.stats.StatFactory;
+import com.codari.api5.stats.StatFactory;
 
 public final class StatFactoryCore implements StatFactory {
 	//-----Fields-----//

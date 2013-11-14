@@ -25,10 +25,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.BlockIterator;
 
-import com.codari.api.Codari;
-import com.codari.api.io.CodariIO;
-import com.codari.api.util.PlayerReference;
-import com.codari.api.util.PluginUtils;
+import com.codari.api5.Codari;
+import com.codari.api5.io.CodariIO;
+import com.codari.api5.util.PlayerReference;
+import com.codari.api5.util.PluginUtils;
 import com.codari.mhenlo.ExplosionTrap;
 import com.codari.mhenlo.FireTrap;
 import com.codari.mhenlo.PoisonSnareTrap;

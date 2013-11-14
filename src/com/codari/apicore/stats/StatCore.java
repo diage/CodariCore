@@ -3,11 +3,10 @@ package com.codari.apicore.stats;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.codari.api.Codari;
-import com.codari.api.stats.Stat;
-import com.codari.api.stats.StatModifier;
-import com.codari.api.util.Modifier;
-import com.codari.api.util.ModifierUtils;
+import com.codari.api5.stats.Stat;
+import com.codari.api5.stats.StatModifier;
+import com.codari.api5.util.Modifier;
+import com.codari.api5.util.ModifierUtils;
 
 public final class StatCore extends Number implements Stat {
 	private static final long serialVersionUID = -1444790023238197846L;
@@ -19,9 +18,6 @@ public final class StatCore extends Number implements Stat {
 	
 	//-----Constructor-----//
 	public StatCore(String name, StatManagerCore statManager, float baseValue) {
-		if (!Codari.INSTANCE.getStatFactory().isValidStatName(name)) {
-			throw new IllegalArgumentException(name + " is not a valid stat name");
-		}
 		this.name = name;
 		this.statManager = statManager;
 		this.modifiers = new ModifierMap();

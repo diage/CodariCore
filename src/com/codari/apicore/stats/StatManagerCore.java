@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.codari.api.stats.Stat;
-import com.codari.api.stats.StatHolder;
-import com.codari.api.stats.StatManager;
+import com.codari.api5.stats.Stat;
+import com.codari.api5.stats.StatHolder;
+import com.codari.api5.stats.StatManager;
 
 public final class StatManagerCore implements StatManager {
 	//-----Fields-----//

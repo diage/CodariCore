@@ -18,8 +18,8 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.Plugin;
 
-import com.codari.api.metadata.MetadataManager;
-import com.codari.api.metadata.MetadataStoreAccessException;
+import com.codari.api5.metadata.MetadataManager;
+import com.codari.api5.metadata.MetadataStoreAccessException;
 
 public class MetadataManagerCore implements MetadataManager {
 	//-----Constants-----//

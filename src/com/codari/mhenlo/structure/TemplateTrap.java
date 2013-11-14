@@ -11,8 +11,8 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.codari.api.Codari;
-import com.codari.arena.players.teams.Team;
+import com.codari.api5.Codari;
+import com.codari.arena5.players.teams.Team;
 import com.codari.mhenlo.utl.AoE;
 
 public abstract class TemplateTrap implements Trap {

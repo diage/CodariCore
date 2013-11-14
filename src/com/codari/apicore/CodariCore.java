@@ -6,9 +6,9 @@ import java.lang.reflect.Modifier;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.codari.Debugger;
-import com.codari.api.Codari;
-import com.codari.api.CodariException;
-import com.codari.api.util.PlayerReference;
+import com.codari.api5.Codari;
+import com.codari.api5.CodariException;
+import com.codari.api5.util.PlayerReference;
 import com.codari.apicore.metadata.MetadataManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arenacore.ArenaManagerCore;

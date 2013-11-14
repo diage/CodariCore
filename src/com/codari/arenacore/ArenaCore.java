@@ -3,9 +3,9 @@ package com.codari.arenacore;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.codari.arena.Arena;
-import com.codari.arena.players.teams.Team;
-import com.codari.arena.players.teams.TeamColor;
+import com.codari.arena5.Arena;
+import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.players.teams.TeamColor;
 
 public final class ArenaCore implements Arena {
 	//-----Fields-----//

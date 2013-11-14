@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-import com.codari.arena.players.combatants.CombatantStats;
+import com.codari.arena5.players.combatants.CombatantStats;
 
 public final class CombatantDataCore implements CombatantStats, ConfigurationSerializable {
 	@Override

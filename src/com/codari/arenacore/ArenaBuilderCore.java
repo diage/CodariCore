@@ -1,12 +1,12 @@
 package com.codari.arenacore;
 
-import com.codari.api.util.Tick;
-import com.codari.arena.ArenaBuilder;
-import com.codari.arena.objects.persistant.DelayedPersistentObject;
-import com.codari.arena.objects.persistant.ImmediatePersistentObject;
-import com.codari.arena.objects.spawnable.FixedSpawnableObject;
-import com.codari.arena.objects.spawnable.RandomSpawnableObject;
-import com.codari.arena.rules.GameRule;
+import com.codari.api5.util.Tick;
+import com.codari.arena5.ArenaBuilder;
+import com.codari.arena5.objects.persistant.DelayedPersistentObject;
+import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
+import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
+import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
+import com.codari.arena5.rules.GameRule;
 
 public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//

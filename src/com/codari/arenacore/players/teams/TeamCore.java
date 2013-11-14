@@ -3,10 +3,10 @@ package com.codari.arenacore.players.teams;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codari.arena.Arena;
-import com.codari.arena.players.combatants.Combatant;
-import com.codari.arena.players.teams.Team;
-import com.codari.arena.players.teams.TeamColor;
+import com.codari.arena5.Arena;
+import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.players.teams.TeamColor;
 
 public class TeamCore implements Team {
 	//-----Fields-----//
