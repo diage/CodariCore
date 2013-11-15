@@ -1,14 +1,13 @@
 package com.codari.apicore.stats;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import com.codari.api5.Codari;
 import com.codari.api5.stats.Stat;
 import com.codari.api5.stats.StatModifier;
 import com.codari.api5.util.Modifier;
-import com.codari.api5.util.ModifierUtils;
+import com.codari.api5.util.SimpleModifier;
 
 public final class StatCore extends Number implements Stat {
 	private static final long serialVersionUID = -1444790023238197846L;
@@ -16,21 +15,18 @@ public final class StatCore extends Number implements Stat {
 	private final String name;
 	private final StatManagerCore statManager;
 	private final ModifierMap modifiers;
-	private float baseValue;
+	private final float[] baseValues;
+	private int level;
 	
 	//-----Constructor-----//
-	public StatCore(String name, StatManagerCore statManager, float baseValue) {
+	public StatCore(String name, StatManagerCore statManager, float[] baseValues) {
 		if (!Codari.INSTANCE.getStatFactory().isValidStatName(name)) {
 			throw new IllegalArgumentException(name + " is not a valid stat name");
 		}
 		this.name = name;
 		this.statManager = statManager;
 		this.modifiers = new ModifierMap();
-		this.baseValue = baseValue;
-	}
-	
-	public StatCore(String name, StatManagerCore statManager) {
-		this(name, statManager, 0);
+		this.baseValues = baseValues;
 	}
 	
 	//-----Public Methods-----//
@@ -51,10 +47,11 @@ public final class StatCore extends Number implements Stat {
 
 	@Override
 	public float floatValue() {
+		float baseValue = this.getBaseValue();
 		float totalFixedValue = this.modifiers.getFixedValue();
 		float totalPercentage = this.modifiers.getPercentage();
-		float percentageIncrease = this.baseValue * totalPercentage;
-		return this.baseValue + totalFixedValue + percentageIncrease;
+		float percentageIncrease = baseValue * totalPercentage;
+		return baseValue + totalFixedValue + percentageIncrease;
 	}
 
 	@Override
@@ -69,32 +66,36 @@ public final class StatCore extends Number implements Stat {
 	
 	@Override
 	public float getBaseValue() {
-		return this.baseValue;
+		return this.baseValues[this.getLevel()];
 	}
 	
 	@Override
-	public void setBaseValue(float baseValue) {
-		this.baseValue = baseValue;
+	public int getLevel() {
+		return this.level;
 	}
 	
 	@Override
-	public void increaseBaseValue(float amount) {
-		this.setBaseValue(this.getBaseValue() + amount);
+	public int getMaxLevel() {
+		return this.baseValues.length - 1;
 	}
 	
 	@Override
-	public void decreaseBaseValue(float amount) {
-		this.setBaseValue(this.getBaseValue() - amount);
+	public void setLevel(int level) {
+		if (level > this.getMaxLevel()) {
+			level = this.getMaxLevel();
+		} else if (level < 0) {
+			level = 0;
+		}
+		this.level = level;
 	}
 	
 	@Override
-	public StatModifier setModifier(String identifier, Modifier modifier) {
+	public void setModifier(String identifier, Modifier modifier) {
 		if (modifier == null) {
-			return this.removeModifier(identifier);
+			this.removeModifier(identifier);
 		}
 		StatModifier statModifier = new StatModifierCore(identifier, modifier);
 		this.modifiers.put(identifier, statModifier);
-		return statModifier;
 	}
 	
 	@Override
@@ -103,8 +104,8 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
-	public StatModifier removeModifier(String identifier) {
-		return this.modifiers.remove(identifier);
+	public void removeModifier(String identifier) {
+		this.modifiers.remove(identifier);
 	}
 	
 	//-----Utility Methods-----//
@@ -119,52 +120,20 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	//-----Stat Modifier Core-----//
-	private final class StatModifierCore implements StatModifier {
+	private final class StatModifierCore extends SimpleModifier implements StatModifier {
 		//-----Fields-----//
 		private final String identifier;
-		private boolean active;
-		private Modifier modifier;
 		
 		//-----Constructor-----//
 		private StatModifierCore(String identifier, Modifier modifier) {
+			super(modifier);
 			this.identifier = identifier;
-			this.modifier = ModifierUtils.handleNullModifier(modifier);
 		}
 		
 		//-----Methods-----//
 		@Override
-		public float getFixedValue() {
-			return this.modifier.getFixedValue();
-		}
-		
-		@Override
-		public float getPercentage() {
-			return this.modifier.getPercentage();
-		}
-		
-		@Override
 		public String getIdentifier() {
 			return this.identifier;
-		}
-		
-		@Override
-		public boolean isActive() {
-			return this.active;
-		}
-		
-		@Override
-		public void set(Modifier modifier) {
-			if (this.isActive()) {
-				modifiers.exchange(this.modifier, modifier);
-				this.modifier = ModifierUtils.handleNullModifier(modifier);
-			}
-		}
-		
-		@Override
-		public void remove() {
-			if (this.isActive()) {
-				modifiers.remove(this.identifier);
-			}
 		}
 	}
 	
@@ -176,7 +145,7 @@ public final class StatCore extends Number implements Stat {
 		
 		//-----Constructor-----//
 		private ModifierIterator() {
-			this.modifierIterator = new HashSet<StatModifier>(modifiers.values()).iterator();
+			this.modifierIterator = modifiers.values().iterator();
 		}
 		
 		//-----Iterator Methods-----//
@@ -193,11 +162,8 @@ public final class StatCore extends Number implements Stat {
 
 		@Override
 		public void remove() {
-			if (this.next == null) {
-				throw new IllegalStateException();
-			}
-			modifiers.remove(this.next.getIdentifier());
-			this.next = null;
+			this.modifierIterator.remove();
+			modifiers.subtract(this.next);
 		}
 	}
 	
@@ -211,16 +177,13 @@ public final class StatCore extends Number implements Stat {
 		//-----Methods-----//
 		@Override
 		public StatModifier put(String key, StatModifier value) {
-			StatModifier statModifier = super.get(key);
-			if (statModifier != null) {
-				statModifier.set(value);
-				return statModifier;
-			} else {
-				statModifier = new StatModifierCore(key, value);
-				super.put(key, statModifier);
+			StatModifier statModifier = super.put(key, value);
+			if (statModifier == null) {
 				this.add(value);
-				return null;
+			} else {
+				this.exchange(statModifier, value);
 			}
+			return statModifier;
 		}
 		
 		@Override
@@ -228,7 +191,6 @@ public final class StatCore extends Number implements Stat {
 			StatModifier statModifier = super.remove(key);
 			if (statModifier != null) {
 				this.subtract(statModifier);
-				((StatModifierCore) statModifier).active = false;
 			}
 			return statModifier;
 		}
