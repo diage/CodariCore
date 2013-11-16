@@ -6,6 +6,7 @@ import java.util.logging.Level;
 
 import com.codari.api5.Codari;
 import com.codari.api5.io.CodariIO;
+import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.PlayerReference;
 import com.codari.arena5.Arena;
 import com.codari.arena5.players.combatants.Combatant;
@@ -20,6 +21,7 @@ public final class CombatantCore implements Combatant {
 	private final PlayerReference playerReference;
 	private final File dataFile;
 	private CombatantDataCore data;
+	private StatManager statManager;
 	
 	//-----Constructor-----//
 	public CombatantCore(PlayerReference playerReference) {
@@ -27,6 +29,7 @@ public final class CombatantCore implements Combatant {
 		String dataFilePath = String.format(DATA_FILE_PATH, this.playerReference.getName());
 		this.dataFile = new File(Codari.INSTANCE.getDataFolder(), dataFilePath);
 		this.reloadData();
+		this.statManager = Codari.INSTANCE.getStatFactory().createStatManager(this);
 	}
 	
 	//-----Public Methods-----//
@@ -89,5 +92,10 @@ public final class CombatantCore implements Combatant {
 	public Role swapRole(Role role) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public StatManager getStatManager() {
+		return this.statManager;
 	}
 }
