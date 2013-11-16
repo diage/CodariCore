@@ -46,7 +46,7 @@ public class Debugger implements Listener {
 	
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
-		//Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);
+		//Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);-
 	}
 	
 	@EventHandler
