@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.codari.arena5.players.role.Role;
+import com.codari.arena5.players.role.RoleType;
 import com.codari.arena5.players.skills.Skill;
 import com.codari.arena5.players.skills.SkillActivation;
 
@@ -49,6 +50,12 @@ public class RoleCore implements Role {
 		if(this.skills.containsKey(SkillActivation.SNEAK)) {
 			this.skills.get(SkillActivation.SNEAK).activateSkill(); 
 		}
+	}
+
+	@Override
+	public RoleType getRoleType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
