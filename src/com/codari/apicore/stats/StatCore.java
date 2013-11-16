@@ -3,36 +3,36 @@ package com.codari.apicore.stats;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.codari.api5.Codari;
 import com.codari.api5.stats.Stat;
 import com.codari.api5.stats.StatModifier;
+import com.codari.api5.stats.StatType;
 import com.codari.api5.util.Modifier;
 import com.codari.api5.util.SimpleModifier;
 
 public final class StatCore extends Number implements Stat {
 	private static final long serialVersionUID = -1444790023238197846L;
 	//-----Fields-----//
-	private final String name;
+	private final StatType type;
 	private final StatManagerCore statManager;
 	private final ModifierMap modifiers;
-	private final float[] baseValues;
 	private int level;
 	
 	//-----Constructor-----//
-	public StatCore(String name, StatManagerCore statManager, float[] baseValues) {
-		if (!Codari.INSTANCE.getStatFactory().isValidStatName(name)) {
-			throw new IllegalArgumentException(name + " is not a valid stat name");
-		}
-		this.name = name;
+	public StatCore(StatType type, StatManagerCore statManager, int level) {
+		this.type = type;
 		this.statManager = statManager;
 		this.modifiers = new ModifierMap();
-		this.baseValues = baseValues;
+		this.setLevel(level);
+	}
+	
+	public StatCore(StatType type, StatManagerCore statManager) {
+		this(type, statManager, 0);
 	}
 	
 	//-----Public Methods-----//
 	@Override
-	public String getName() {
-		return this.name;
+	public StatType getType() {
+		return this.type;
 	}
 	
 	@Override
@@ -65,28 +65,23 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
-	public float getBaseValue() {
-		return this.baseValues[this.getLevel()];
-	}
-	
-	@Override
 	public int getLevel() {
 		return this.level;
 	}
 	
 	@Override
-	public int getMaxLevel() {
-		return this.baseValues.length - 1;
+	public void setLevel(int level) {
+		if (level > this.type.getMaxLevel()) {
+			level = this.type.getMaxLevel();
+		} else if (level < 1) {
+			level = 1;
+		}
+		this.level = level;
 	}
 	
 	@Override
-	public void setLevel(int level) {
-		if (level > this.getMaxLevel()) {
-			level = this.getMaxLevel();
-		} else if (level < 0) {
-			level = 0;
-		}
-		this.level = level;
+	public float getBaseValue() {
+		return this.type.getBaseValue(this.level);
 	}
 	
 	@Override
@@ -157,7 +152,7 @@ public final class StatCore extends Number implements Stat {
 		@Override
 		public StatModifier next() {
 			this.next = this.modifierIterator.next();
-			return this.next();
+			return this.next;
 		}
 
 		@Override
