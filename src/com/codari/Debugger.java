@@ -29,12 +29,8 @@ import com.codari.api5.Codari;
 import com.codari.api5.io.CodariIO;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.PluginUtils;
-import com.codari.mhenlo.ExplosionTrap;
-import com.codari.mhenlo.FireTrap;
-import com.codari.mhenlo.PoisonSnareTrap;
-import com.codari.mhenlo.structure.Trap;
-import com.codari.mhenlo.structure.TrapListener;
-
+import com.codari.arena.objects.traps.*;
+import com.codari.arena.objects.traps.structure.*;
 
 @SuppressWarnings("unused")
 public class Debugger implements Listener {
