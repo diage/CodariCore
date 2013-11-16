@@ -86,14 +86,14 @@ public class Debugger implements Listener {
 			}
 		}*/
 	}
-	
 	@EventHandler
 	public void arenaMakerCommand(PlayerChatEvent e) {
-		if (e.getMessage().equalsIgnoreCase("FIGHT")) {
+		if (e.getMessage().equalsIgnoreCase("-FIGHT-")) {
 			Player[] players = Bukkit.getOnlinePlayers();
 			Combatant[] c = new Combatant[players.length];
 			for (int i = 0; i < players.length; i++) {
 				c[i] = Codari.INSTANCE.getArenaManager().getCombatant(players[i]);
+				players[i].sendMessage("FIGHT!");
 			}
 			CodariCore.instance().getArenaManager().tempBuildArena(c);
 		}
