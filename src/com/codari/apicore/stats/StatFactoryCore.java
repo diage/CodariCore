@@ -53,10 +53,11 @@ public final class StatFactoryCore implements StatFactory {
 	public StatManagerCore createStatManager(StatHolder holder) {
 		Class<? extends StatHolder> clazz = holder.getClass();
 		Set<StatType> registeredStatTypes = this.registeredStatTypeSets.get(clazz);
-		if (registeredStatTypes != null && !registeredStatTypes.isEmpty()) {
-			this.finalizedStatHolders.add(clazz);
-			return new StatManagerCore(holder, registeredStatTypes);
+		if (registeredStatTypes == null) {
+			registeredStatTypes = new HashSet<>();
+			this.registeredStatTypeSets.put(clazz, registeredStatTypes);
 		}
-		return null;//TODO think of a better return for this occurrence.
+		this.finalizedStatHolders.add(clazz);
+		return new StatManagerCore(holder, registeredStatTypes);
 	}
 }

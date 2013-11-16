@@ -85,6 +85,13 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
+	public float getFlatValue() {
+		float baseValue = this.getBaseValue();
+		float totalFixedValue = this.modifiers.getFixedValue();
+		return baseValue + totalFixedValue;
+	}
+	
+	@Override
 	public void setModifier(String identifier, Modifier modifier) {
 		if (modifier == null) {
 			this.removeModifier(identifier);
