@@ -33,6 +33,10 @@ import com.codari.api5.io.CodariIO;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.PluginUtils;
 import com.codari.apicore.CodariCore;
+import com.codari.arena.objects.traps.ExplosionTrap;
+import com.codari.arena.objects.traps.FireTrap;
+import com.codari.arena.objects.traps.PoisonSnareTrap;
+import com.codari.arena.objects.traps.structure.Trap;
 import com.codari.arena5.players.combatants.Combatant;
 
 @SuppressWarnings({ "unused", "deprecation" })
@@ -47,7 +51,7 @@ public class Debugger implements Listener {
 	
 	@EventHandler
 	public void testerbugrer(PlayerInteractEvent e) {
-		/*if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
+		if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
 			Location loc = e.getPlayer().getLocation();
 			BlockIterator i = new BlockIterator(e.getPlayer(), 100);
 			Block target = null;
@@ -84,7 +88,7 @@ public class Debugger implements Listener {
 					Bukkit.broadcastMessage("NO TRAP");
 				}
 			}
-		}*/
+		}
 	}
 	
 	@EventHandler
