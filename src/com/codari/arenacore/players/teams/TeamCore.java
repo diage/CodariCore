@@ -10,31 +10,48 @@ import com.codari.arena5.players.teams.TeamColor;
 
 public class TeamCore implements Team {
 	//-----Fields-----//
-	protected final List<Combatant> members;
+	protected final List<Combatant> combatants;
+	private TeamColor teamColor;
+	private Arena arena;
 	
 	//-----Constructor-----//
-	public TeamCore() {
-		this.members = new ArrayList<>();
+	public TeamCore(Arena arena, TeamColor teamColor, Combatant...combatants) {
+		this.combatants = new ArrayList<>();
+		for(Combatant combatant : combatants) {
+			this.combatants.add(combatant);
+		}
+		this.teamColor = teamColor;
+		this.arena = arena;
+	}
+	
+	public TeamCore(Arena arena, TeamColor teamColor, List<Combatant> combatants) {
+		this.combatants = combatants;
+		this.teamColor = teamColor;
+		this.arena = arena;
 	}
 	
 	//-----Public Methods-----//
 	@Override
 	public TeamColor getColor() {
-		return null;
+		return this.teamColor;
 	}
 	
 	@Override
 	public List<Combatant> combatants() {
-		return null;
+		return new ArrayList<>(this.combatants);
 	}
 	
 	@Override
 	public Arena getArena() {
-		return null;
+		return this.arena;
 	}
 	
 	@Override
 	public List<Combatant> getTeamMates(Combatant combatant) {
-		return null;
+		List<Combatant> tempList = new ArrayList<>(this.combatants);
+		if(this.combatants.contains(combatant)) {
+			tempList.remove(combatant);
+		}
+		return tempList;
 	}
 }

@@ -21,6 +21,9 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, Combatant> combatants;
 	private final Map<String, ArenaCore> arenas;
 	
+	//TODO
+	private Arena onlyArena = null;
+	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
 		this.combatants = new HashMap<>();
@@ -56,7 +59,7 @@ public class ArenaManagerCore implements ArenaManager {
 
 	@Override
 	public Arena buildArena(ArenaBuilder arenaBuilder, String requestedName) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -68,13 +71,20 @@ public class ArenaManagerCore implements ArenaManager {
 
 	@Override
 	public Team getTeam(String arenaName, TeamColor teamColor) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.onlyArena.getTeams().get(teamColor);
 	}
 
 	@Override
 	public Team getTeam(Combatant combatant) {
-		// TODO Auto-generated method stub
+		if(this.onlyArena.getTeams().get(TeamColor.RED).getTeamMates(combatant).size() > 0) {
+			return this.onlyArena.getTeams().get(TeamColor.RED);
+		} else if (this.onlyArena.getTeams().get(TeamColor.BLUE).getTeamMates(combatant).size() > 0){
+			return this.onlyArena.getTeams().get(TeamColor.BLUE);
+		}
 		return null;
+	}
+	
+	public void tempBuildArena(Combatant...combatants) {
+		this.onlyArena = new ArenaCore("NEVER MORE THAN ONE ARENA!!", combatants);
 	}
 }
