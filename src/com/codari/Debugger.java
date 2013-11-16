@@ -86,6 +86,7 @@ public class Debugger implements Listener {
 			}
 		}*/
 	}
+	
 	@EventHandler
 	public void arenaMakerCommand(PlayerChatEvent e) {
 		if (e.getMessage().equalsIgnoreCase("-FIGHT-")) {
