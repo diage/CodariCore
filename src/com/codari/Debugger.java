@@ -14,9 +14,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -30,22 +32,22 @@ import com.codari.api5.Codari;
 import com.codari.api5.io.CodariIO;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.PluginUtils;
-import com.codari.arena.objects.traps.*;
-import com.codari.arena.objects.traps.structure.*;
+import com.codari.apicore.CodariCore;
+import com.codari.arena5.players.combatants.Combatant;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({ "unused", "deprecation" })
 public class Debugger implements Listener {
 	private Random random = new Random();
 	private final int NUMBER_OF_TRAPS = 3;
 	
 	public static void debug() {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
-		Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);
+		//Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);
 	}
 	
 	@EventHandler
 	public void testerbugrer(PlayerInteractEvent e) {
-		if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
+		/*if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
 			Location loc = e.getPlayer().getLocation();
 			BlockIterator i = new BlockIterator(e.getPlayer(), 100);
 			Block target = null;
@@ -82,6 +84,18 @@ public class Debugger implements Listener {
 					Bukkit.broadcastMessage("NO TRAP");
 				}
 			}
+		}*/
+	}
+	
+	@EventHandler
+	public void arenaMakerCommand(PlayerChatEvent e) {
+		if (e.getMessage().equalsIgnoreCase("FIGHT")) {
+			Player[] players = Bukkit.getOnlinePlayers();
+			Combatant[] c = new Combatant[players.length];
+			for (int i = 0; i < players.length; i++) {
+				c[i] = Codari.INSTANCE.getArenaManager().getCombatant(players[i]);
+			}
+			CodariCore.instance().getArenaManager().tempBuildArena(c);
 		}
 	}
 	
