@@ -10,13 +10,15 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import com.codari.api5.Codari;
+import com.codari.arena5.players.combatants.Combatant;
 
 public class SkillListener implements Listener {
 	@EventHandler()
 	public void triggerDoubleJump(PlayerToggleFlightEvent e) {
 		if(!(e.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
 			e.getPlayer().setFlying(false);
-			Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer()).getRole().doubleJump();
+			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer());
+			combatant.getRole().doubleJump(combatant);
 		}
 	}
 
@@ -24,7 +26,8 @@ public class SkillListener implements Listener {
 	public void triggerBlock(PlayerInteractEvent e) {
 		if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 			if(e.getPlayer().isBlocking()) {
-				Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer()).getRole().block();				
+				Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer());
+				combatant.getRole().block(combatant);				
 			}
 		}
 	}
@@ -32,11 +35,13 @@ public class SkillListener implements Listener {
 	@EventHandler()
 	public void triggerSprint(PlayerToggleSprintEvent e) {
 		e.getPlayer().setSprinting(false);
-		Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer()).getRole().sneak();
+		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer());
+		combatant.getRole().sprint(combatant);
 	}
 
 	@EventHandler()
 	public void triggerSneak(PlayerToggleSneakEvent e) {
-		Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer()).getRole().sneak();
+		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(e.getPlayer());
+		combatant.getRole().sneak(combatant);
 	}
 }
