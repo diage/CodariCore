@@ -1,6 +1,7 @@
 package com.codari.arenacore.rules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,5 +65,29 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public boolean isValid() {
 		return this.matchDuration != null && !this.winConditions.isEmpty();
+	}
+
+	@Override
+	public Collection<TimedAction> getTimedActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<WinCondition> getWinConditions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getTeamSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMatchDuration() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
