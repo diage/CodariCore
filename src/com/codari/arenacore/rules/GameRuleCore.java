@@ -11,6 +11,7 @@ import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.TimedAction;
 import com.codari.arena5.rules.WinCondition;
+import com.codari.arena5.rules.roles.RoleDelegation;
 
 public class GameRuleCore implements GameRule {
 	//-----Fields-----//
@@ -89,5 +90,17 @@ public class GameRuleCore implements GameRule {
 	public int getMatchDuration() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean addRoleDelegation(RoleDelegation roleDelegation) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public RoleDelegation getRoleDelegation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
