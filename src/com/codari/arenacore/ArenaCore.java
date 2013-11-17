@@ -15,13 +15,11 @@ public final class ArenaCore implements Arena {
 	//-----Fields-----//
 	private final String name;
 	private final Map<TeamColor, Team> teams;
-	private final List<ArenaTimer> timers;
 	
 	//-----Constructor-----//
-	public ArenaCore(String name, List<ArenaTimer> timers) {
+	public ArenaCore(String name) {
 		this.name = name;
 		this.teams = new HashMap<>();
-		this.timers = timers;
 	}
 	
 	public ArenaCore(String name, Combatant...combatants) {
@@ -39,8 +37,6 @@ public final class ArenaCore implements Arena {
 		}
 		this.teams.put(TeamColor.RED, new TeamCore(this, TeamColor.RED, redTeam));
 		this.teams.put(TeamColor.BLUE, new TeamCore(this, TeamColor.BLUE, blueTeam));
-		
-		this.timers = null;//TODO
 	}
 	
 	//-----Public Methods-----//
