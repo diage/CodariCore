@@ -70,23 +70,29 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
-	public void setLevel(int level) {
+	public void setLevel(int level) {	
+		//Why not use the else? if it passed the other two it takes the same amount of time
+		//Otherwise it takes less. 
 		if (level > this.type.getMaxLevel()) {
-			level = this.type.getMaxLevel();
+			this.level = this.type.getMaxLevel();
 		} else if (level < 1) {
-			level = 1;
+			this.level = 1;
+		} else {
+			this.level = level;
 		}
-		this.level = level;
 	}
 	
 	@Override
-	public float getBaseValue() {
+	public float getBaseValue() { 
+		//What if there is a different BaseValue for different Roles?
 		return this.type.getBaseValue(this.level);
 	}
 	
 	@Override
 	public void setModifier(String identifier, Modifier modifier) {
 		if (modifier == null) {
+			//Why? - If it is null why not just not add it at all? 
+			//This shouldn't be used as a remove modifier technique. 
 			this.removeModifier(identifier);
 		}
 		StatModifier statModifier = new StatModifierCore(identifier, modifier);
