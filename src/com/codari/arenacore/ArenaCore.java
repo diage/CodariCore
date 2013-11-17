@@ -15,13 +15,13 @@ public final class ArenaCore implements Arena {
 	//-----Fields-----//
 	private final String name;
 	private final Map<TeamColor, Team> teams;
-	//private final Map<String, TimelineGroup> randomTimelineGroups;
+	private final List<ArenaTimer> timers;
 	
 	//-----Constructor-----//
-	public ArenaCore(String name) {
+	public ArenaCore(String name, List<ArenaTimer> timers) {
 		this.name = name;
 		this.teams = new HashMap<>();
-		//this.randomTimelineGroups = new HashMap<>();
+		this.timers = timers;
 	}
 	
 	public ArenaCore(String name, Combatant...combatants) {
@@ -39,6 +39,8 @@ public final class ArenaCore implements Arena {
 		}
 		this.teams.put(TeamColor.RED, new TeamCore(this, TeamColor.RED, redTeam));
 		this.teams.put(TeamColor.BLUE, new TeamCore(this, TeamColor.BLUE, blueTeam));
+		
+		this.timers = null;//TODO
 	}
 	
 	//-----Public Methods-----//
@@ -51,8 +53,4 @@ public final class ArenaCore implements Arena {
 	public Map<TeamColor, Team> getTeams() {
 		return teams;
 	}
-	/*
-	public Map<String, TimelineGroup> getRandomTimelineGroups() {
-		return randomTimelineGroups;
-	}*/
 }
