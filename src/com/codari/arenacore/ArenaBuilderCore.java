@@ -19,11 +19,20 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//
 	private final GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
+	private final List<FixedSpawnableAction> fixedSpanables;
 	
 	//-----Constructor-----//
 	public ArenaBuilderCore(GameRule rules) {
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
+		this.fixedSpanables = new ArrayList<>();
+	}
+	
+	//-----Public Methods-----//
+	public List<TimedAction> compileActions() {
+		List<TimedAction> actions = new ArrayList<>();
+		actions.addAll(this.randomSpawnables.values());
+		return actions;
 	}
 	
 	@Override
@@ -33,6 +42,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean createRandomTimelineGroup(String groupName, Time time, Time repeatTime) {
+		//TODO check time
 		if (this.randomSpawnables.containsKey(groupName)) {
 			return false;
 		}
@@ -52,14 +62,14 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.registerFixedSpawnable(object, time, Time.NULL);
 	}
 	
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
-		// TODO Auto-generated method stub
-		return false;
+		//TODO check time
+		this.fixedSpanables.add(new FixedSpawnableAction(object, time, repeatTime));
+		return true;
 	}
 	
 	@Override
@@ -75,7 +85,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	//-----Random Timeline Group-----//
-	public final static class RandomTimelineGroup extends TimedAction {
+	private final static class RandomTimelineGroup extends TimedAction {
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
 		
 		//-----Fields-----//
@@ -96,6 +106,21 @@ public class ArenaBuilderCore implements ArenaBuilder {
 				RandomSpawnableObject o = this.spans.get(i);
 				o.spawn();//Is this the right method?
 			}
+		}
+	}
+	
+	private final static class FixedSpawnableAction extends TimedAction {
+		//-----Fields-----//
+		private final FixedSpawnableObject spanable;
+		
+		public FixedSpawnableAction(FixedSpawnableObject spanable, Time delay, Time period) {
+			super(null, delay, period);
+			this.spanable = spanable;
+		}
+		
+		@Override
+		public void action() {
+			this.spanable.spawn();//Is this the right method?
 		}
 	}
 }
