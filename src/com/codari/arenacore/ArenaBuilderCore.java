@@ -31,7 +31,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Public Methods-----//
 	public List<TimedAction> compileActions() {
 		List<TimedAction> actions = new ArrayList<>();
-		actions.addAll(this.randomSpawnables.values());
+		actions.addAll(this.randomSpawnables.values()); //Im not certain about this. Might need explanation. 
 		return actions;
 	}
 	
@@ -104,7 +104,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			if (!this.spans.isEmpty()) {
 				int i = this.random.nextInt(this.spans.size());
 				RandomSpawnableObject o = this.spans.get(i);
-				o.spawn();//Is this the right method?
+				o.spawn();//Is this the right method? - Yes
 			}
 		}
 	}
@@ -120,7 +120,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		
 		@Override
 		public void action() {
-			this.spanable.spawn();//Is this the right method?
+			this.spanable.spawn();//Is this the right method? - Yup
 		}
 	}
 }
