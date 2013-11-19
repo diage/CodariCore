@@ -31,6 +31,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Public Methods-----//
 	public List<TimedAction> compileActions() {
 		List<TimedAction> actions = new ArrayList<>();
+		actions.addAll(this.rules.getTimedActions());
 		actions.addAll(this.randomSpawnables.values());
 		actions.addAll(this.fixedSpawnables);
 		return actions;
@@ -75,14 +76,12 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean registerPersistent(ImmediatePersistentObject object) {
-		// TODO Auto-generated method stub
-		return false;
+		return false;//TODO
 	}
 	
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject object, Time time, boolean override) {
-		// TODO Auto-generated method stub
-		return false;
+		return false;//TODO
 	}
 	
 	//-----Random Timeline Group-----//
