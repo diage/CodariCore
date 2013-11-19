@@ -19,20 +19,20 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//
 	private final GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
-	private final List<FixedSpawnableAction> fixedSpanables;
+	private final List<FixedSpawnableAction> fixedSpawnables;
 	
 	//-----Constructor-----//
 	public ArenaBuilderCore(GameRule rules) {
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
-		this.fixedSpanables = new ArrayList<>();
+		this.fixedSpawnables = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
 	public List<TimedAction> compileActions() {
 		List<TimedAction> actions = new ArrayList<>();
 		actions.addAll(this.randomSpawnables.values());
-		actions.addAll(this.fixedSpanables);
+		actions.addAll(this.fixedSpawnables);
 		return actions;
 	}
 	
@@ -57,7 +57,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		if (g == null) {
 			return false;
 		}
-		g.spans.add(object);
+		g.spawns.add(object);
 		return true;
 	}
 	
@@ -69,7 +69,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
 		//TODO check time
-		this.fixedSpanables.add(new FixedSpawnableAction(object, time, repeatTime));
+		this.fixedSpawnables.add(new FixedSpawnableAction(object, time, repeatTime));
 		return true;
 	}
 	
@@ -90,21 +90,21 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
 		
 		//-----Fields-----//
-		private final List<RandomSpawnableObject> spans;
+		private final List<RandomSpawnableObject> spawns;
 		private final Random random;
 		
 		//-----Constructor-----//
 		public RandomTimelineGroup(Time delay, Time period) {
 			super(null, delay, period);
-			this.spans = new ArrayList<>();
+			this.spawns = new ArrayList<>();
 			this.random = new Random(System.currentTimeMillis() + globalRandom.nextInt());
 		}
 
 		@Override
 		public void action() {
-			if (!this.spans.isEmpty()) {
-				int i = this.random.nextInt(this.spans.size());
-				RandomSpawnableObject o = this.spans.get(i);
+			if (!this.spawns.isEmpty()) {
+				int i = this.random.nextInt(this.spawns.size());
+				RandomSpawnableObject o = this.spawns.get(i);
 				o.spawn();
 			}
 		}
@@ -112,16 +112,16 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	private final static class FixedSpawnableAction extends TimedAction {
 		//-----Fields-----//
-		private final FixedSpawnableObject spanable;
+		private final FixedSpawnableObject spawnable;
 		
-		public FixedSpawnableAction(FixedSpawnableObject spanable, Time delay, Time period) {
+		public FixedSpawnableAction(FixedSpawnableObject spawnable, Time delay, Time period) {
 			super(null, delay, period);
-			this.spanable = spanable;
+			this.spawnable = spawnable;
 		}
 		
 		@Override
 		public void action() {
-			this.spanable.spawn();
+			this.spawnable.spawn();
 		}
 	}
 }
