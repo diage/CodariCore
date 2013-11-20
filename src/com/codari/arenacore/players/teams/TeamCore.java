@@ -15,19 +15,15 @@ public class TeamCore implements Team {
 	private Arena arena;
 	
 	//-----Constructor-----//
-	public TeamCore(Arena arena, TeamColor teamColor, Combatant...combatants) {
+	public TeamCore(Combatant...combatants) {
 		this.combatants = new ArrayList<>();
 		for(Combatant combatant : combatants) {
 			this.combatants.add(combatant);
 		}
-		this.teamColor = teamColor;
-		this.arena = arena;
 	}
 	
-	public TeamCore(Arena arena, TeamColor teamColor, List<Combatant> combatants) {
+	public TeamCore(List<Combatant> combatants) {
 		this.combatants = combatants;
-		this.teamColor = teamColor;
-		this.arena = arena;
 	}
 	
 	//-----Public Methods-----//
@@ -46,6 +42,7 @@ public class TeamCore implements Team {
 		return this.arena;
 	}
 	
+	
 	@Override
 	public List<Combatant> getTeamMates(Combatant combatant) {
 		List<Combatant> tempList = new ArrayList<>(this.combatants);
@@ -53,5 +50,9 @@ public class TeamCore implements Team {
 			tempList.remove(combatant);
 		}
 		return tempList;
+	}
+	
+	public void joinTeam(Combatant combatant) {
+		this.combatants.add(combatant);
 	}
 }
