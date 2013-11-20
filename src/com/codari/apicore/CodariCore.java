@@ -90,4 +90,10 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	private void staticInitialization() {
 		PlayerReference._();
 	}
+
+	@Override
+	public void doNothingMethodOfNothing() {
+		// TODO Auto-generated method stub
+		
+	}
 }
