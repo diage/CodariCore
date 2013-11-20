@@ -9,9 +9,10 @@ import com.codari.arena5.players.teams.Team;
 
 
 public class TeamBuilder implements Listener {
-	public static Team createNewTeam(Player player) {
+	public static Team createNewTeam(Player player, String teamName) {
 		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
-		Team team = new TeamCore(combatant);
+		Team team = new TeamCore(teamName, combatant);
+		team.setLeader();
 		return team;
 	}
 	

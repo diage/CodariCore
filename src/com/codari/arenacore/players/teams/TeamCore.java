@@ -6,6 +6,8 @@ import java.util.List;
 import com.codari.arena5.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.players.teams.TeamColor;
+import com.codari.arenacore.ArenaCore;
 
 public class TeamCore implements Team {
 	//-----Fields-----//
@@ -13,7 +15,7 @@ public class TeamCore implements Team {
 	private Arena arena;
 	
 	//-----Constructor-----//
-	public TeamCore(Combatant...combatants) {
+	public TeamCore(String teamName, Combatant...combatants) {
 		this.combatants = new ArrayList<>();
 		for(Combatant combatant : combatants) {
 			this.combatants.add(combatant);
@@ -24,6 +26,11 @@ public class TeamCore implements Team {
 		this.combatants = combatants;
 	}
 	
+	@Deprecated
+	public TeamCore(ArenaCore arenaCore, TeamColor blue, List<Combatant> blueTeam) {
+		this.combatants = null;
+	}
+
 	//-----Public Methods-----//	
 	@Override
 	public List<Combatant> combatants() {
