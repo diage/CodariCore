@@ -14,11 +14,13 @@ import com.codari.arenacore.players.teams.TeamCore;
 public final class ArenaCore implements Arena {
 	//-----Fields-----//
 	private final String name;
+	private final ArenaBuilderCore builder;
 	private final Map<TeamColor, Team> teams;
 	
 	//-----Constructor-----//
-	public ArenaCore(String name) {
+	public ArenaCore(String name, ArenaBuilderCore builder) {
 		this.name = name;
+		this.builder = builder;
 		this.teams = new HashMap<>();
 	}
 	
@@ -37,6 +39,8 @@ public final class ArenaCore implements Arena {
 		}
 		this.teams.put(TeamColor.RED, new TeamCore(this, TeamColor.RED, redTeam));
 		this.teams.put(TeamColor.BLUE, new TeamCore(this, TeamColor.BLUE, blueTeam));
+		
+		this.builder = null;
 	}
 	
 	//-----Public Methods-----//

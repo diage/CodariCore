@@ -13,6 +13,7 @@ import com.codari.arena5.ArenaManager;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.players.teams.TeamColor;
+import com.codari.arena5.rules.GameRule;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
 
@@ -64,9 +65,8 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public ArenaBuilder getArenaBuider() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArenaBuilder getArenaBuider(GameRule gameRule) {
+		return new ArenaBuilderCore(gameRule);
 	}
 
 	@Override
