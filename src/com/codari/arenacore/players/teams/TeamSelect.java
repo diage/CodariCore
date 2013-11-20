@@ -14,8 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arena5.players.teams.Team;
-import com.codari.arena5.players.teams.TeamColor;
+
 
 public class TeamSelect implements Listener {
 	//-----Fields-----//
