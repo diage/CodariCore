@@ -61,11 +61,23 @@ public final class StatCore implements Stat {
 	@Override
 	public void setLevel(int level) {
 		this.level = level < 1 ? 1 : level > this.type.getMaxLevel() ? this.type.getMaxLevel() : level;
+		//don't complain!
 		this.handleChanges();
 	}
 	
 	@Override
 	public float getBaseValue() {
+		//If there are different base values for a role then it is quite simple.
+		//We can do one of two options
+		/*
+		 * 1. have a role have a level bonus to a stat raising the level higher by like +2 +3
+		 * 		or what ever to accommodate that. (level penalties work too I guess)
+		 * 
+		 * 2. simply add a modifier with the adjusted amount when they obtain that role, and remove
+		 * 		it once they switch out.
+		 */
+		//Both do the trick but one is visible as a modifier and easier to manipulate while the other
+		//hides in the background if we so choose but only slightly difficult to manipulate
 		return this.type.getBaseValue(this.level);
 	}
 	
@@ -93,6 +105,7 @@ public final class StatCore implements Stat {
 	private void setModifier(String identifier, Modifier modifier, boolean contingent) {
 		if (modifier == null) {
 			this.removeModifier(identifier);
+			//So throw an exception?
 		}
 		StatModifier statModifier = new StatModifierCore(identifier, modifier, contingent);
 		this.modifiers.put(identifier, statModifier);
