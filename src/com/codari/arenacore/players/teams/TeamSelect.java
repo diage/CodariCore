@@ -14,6 +14,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.players.teams.TeamColor;
 
 public class TeamSelect implements Listener {
 	//-----Fields-----//
@@ -78,13 +80,13 @@ public class TeamSelect implements Listener {
 	}
 	
 	private void joinBlueTeam(Combatant combatant) {
-		//TODO
+		//combatant.setTeam(TeamColor.BLUE);
 		Player player = combatant.getPlayerReference().getPlayer();
 		player.sendMessage(ChatColor.BLUE + "You are on the blue team.");
 	}
 	
 	private void joinRedTeam(Combatant combatant) {
-		//TODO
+		//combatant.setTeam(TeamColor.RED);
 		Player player = combatant.getPlayerReference().getPlayer();
 		player.sendMessage(ChatColor.RED + "You are on the red team.");
 	}

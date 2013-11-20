@@ -12,7 +12,7 @@ public class TeamBuilder implements Listener {
 	public static Team createNewTeam(Player player, String teamName) {
 		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 		Team team = new TeamCore(teamName, combatant);
-		team.setLeader();
+		team.setLeader(); //Is this correct?
 		return team;
 	}
 	

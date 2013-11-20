@@ -37,10 +37,14 @@ public class GameRuleCore implements GameRule {
 		this.addWinCondition(winCondition, Time.NULL, true);
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	public boolean addWinCondition(WinCondition winCondition, Time time, boolean after) {
-		// TODO Auto-generated method stub
-		return false;
+		this.addWinCondition(winCondition, time, after);
+		if(true/* if win condition can possibly be met before the end of the game */) {
+			return true;
+		}
+		return false; 
 	}
 	
 	@Override
@@ -70,24 +74,21 @@ public class GameRuleCore implements GameRule {
 
 	@Override
 	public Collection<TimedAction> getTimedActions() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.timedActions;
 	}
 
 	@Override
 	public Collection<WinCondition> getWinConditions() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.winConditions;
 	}
 
 	@Override
 	public int getTeamSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.teamSize;
 	}
 
 	@Override
-	public int getMatchDuration() {
+	public int getMatchDuration() { 
 		// TODO Auto-generated method stub
 		return 0;
 	}
