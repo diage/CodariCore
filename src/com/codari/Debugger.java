@@ -37,6 +37,7 @@ import com.codari.arena.objects.traps.ExplosionTrap;
 import com.codari.arena.objects.traps.FireTrap;
 import com.codari.arena.objects.traps.PoisonSnareTrap;
 import com.codari.arena.objects.traps.structure.Trap;
+import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.players.combatants.Combatant;
 
 @SuppressWarnings({ "unused", "deprecation" })
@@ -124,5 +125,10 @@ public class Debugger implements Listener {
 				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER QUIT 1 TICK @@@@@@@@@@@@@@@@@@@@@@@");
 			}
 		});
+	}
+	
+	public static void main(String[] args) {
+		ArenaObjectName objectName = ExplosionTrap.class.getAnnotation(ArenaObjectName.class);
+		String name = objectName.value();
 	}
 }
