@@ -70,8 +70,8 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public Team getTeam(String arenaName, TeamColor teamColor) {
-		return this.onlyArena.getTeams().get(teamColor);
+	public Team getTeam(String arenaName, String teamName) {
+		return null;
 	}
 
 	@Override
@@ -86,5 +86,11 @@ public class ArenaManagerCore implements ArenaManager {
 	
 	public void tempBuildArena(Combatant...combatants) {
 		this.onlyArena = new ArenaCore("NEVER MORE THAN ONE ARENA!!", combatants);
+	}
+
+	@Override
+	public boolean createTeam(Team team) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

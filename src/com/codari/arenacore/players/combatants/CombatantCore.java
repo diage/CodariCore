@@ -12,6 +12,7 @@ import com.codari.arena5.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.role.Role;
+import com.codari.arena5.players.teams.Team;
 
 public final class CombatantCore implements Combatant {
 	//-----Constants-----//
@@ -77,25 +78,37 @@ public final class CombatantCore implements Combatant {
 	}
 
 	@Override
-	public boolean sendToArena(Arena arena, Role role) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean leaveArena() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public Role swapRole(Role role) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
 	public StatManager getStatManager() {
 		return this.statManager;
+	}
+
+	@Override
+	public Team getTeam() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean sendToArena(Arena arena) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setRole(Role role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setTeam(Team team) {
+		// TODO Auto-generated method stub
+		
 	}
 }

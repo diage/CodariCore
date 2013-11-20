@@ -6,12 +6,10 @@ import java.util.List;
 import com.codari.arena5.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arena5.players.teams.TeamColor;
 
 public class TeamCore implements Team {
 	//-----Fields-----//
 	protected final List<Combatant> combatants;
-	private TeamColor teamColor;
 	private Arena arena;
 	
 	//-----Constructor-----//
@@ -26,12 +24,7 @@ public class TeamCore implements Team {
 		this.combatants = combatants;
 	}
 	
-	//-----Public Methods-----//
-	@Override
-	public TeamColor getColor() {
-		return this.teamColor;
-	}
-	
+	//-----Public Methods-----//	
 	@Override
 	public List<Combatant> combatants() {
 		return new ArrayList<>(this.combatants);
@@ -54,5 +47,17 @@ public class TeamCore implements Team {
 	
 	public void joinTeam(Combatant combatant) {
 		this.combatants.add(combatant);
+	}
+
+	@Override
+	public void setLeader() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isLeader(Combatant combatant) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
