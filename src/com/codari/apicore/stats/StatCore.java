@@ -9,12 +9,14 @@ import com.codari.api5.stats.StatType;
 import com.codari.api5.util.Modifier;
 import com.codari.api5.util.SimpleModifier;
 
-public final class StatCore extends Number implements Stat {
-	private static final long serialVersionUID = -1444790023238197846L;
+public final class StatCore implements Stat {
 	//-----Fields-----//
 	private final StatType type;
 	private final StatManagerCore statManager;
 	private final ModifierMap modifiers;
+	private boolean pendingChanges;
+	private float value;
+	private float contingentValue;
 	private int level;
 	
 	//-----Constructor-----//
@@ -41,27 +43,14 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
-	public double doubleValue() {
-		return this.floatValue();
+	public float value() {
+		return this.value(true);
 	}
-
+	
 	@Override
-	public float floatValue() {
-		float baseValue = this.getBaseValue();
-		float totalFixedValue = this.modifiers.getFixedValue();
-		float totalPercentage = this.modifiers.getPercentage();
-		float percentageIncrease = baseValue * totalPercentage;
-		return baseValue + totalFixedValue + percentageIncrease;
-	}
-
-	@Override
-	public int intValue() {
-		return (int) this.floatValue();
-	}
-
-	@Override
-	public long longValue() {
-		return (long) this.floatValue();
+	public float value(boolean contingent) {
+		this.calculate();
+		return contingent ? this.contingentValue : this.value;
 	}
 	
 	@Override
@@ -70,33 +59,24 @@ public final class StatCore extends Number implements Stat {
 	}
 	
 	@Override
-	public void setLevel(int level) {	
-		//Why not use the else? if it passed the other two it takes the same amount of time
-		//Otherwise it takes less. 
-		if (level > this.type.getMaxLevel()) {
-			this.level = this.type.getMaxLevel();
-		} else if (level < 1) {
-			this.level = 1;
-		} else {
-			this.level = level;
-		}
+	public void setLevel(int level) {
+		this.level = level < 1 ? 1 : level > this.type.getMaxLevel() ? this.type.getMaxLevel() : level;
+		this.handleChanges();
 	}
 	
 	@Override
-	public float getBaseValue() { 
-		//What if there is a different BaseValue for different Roles?
+	public float getBaseValue() {
 		return this.type.getBaseValue(this.level);
 	}
 	
 	@Override
 	public void setModifier(String identifier, Modifier modifier) {
-		if (modifier == null) {
-			//Why? - If it is null why not just not add it at all? 
-			//This shouldn't be used as a remove modifier technique. 
-			this.removeModifier(identifier);
-		}
-		StatModifier statModifier = new StatModifierCore(identifier, modifier);
-		this.modifiers.put(identifier, statModifier);
+		this.setModifier(identifier, modifier, false);
+	}
+	
+	@Override
+	public void setContingentModifier(String identifier, Modifier modifier) {
+		this.setModifier(identifier, modifier, true);
 	}
 	
 	@Override
@@ -109,6 +89,50 @@ public final class StatCore extends Number implements Stat {
 		this.modifiers.remove(identifier);
 	}
 	
+	//-----Private Methods-----//
+	private void setModifier(String identifier, Modifier modifier, boolean contingent) {
+		if (modifier == null) {
+			this.removeModifier(identifier);
+		}
+		StatModifier statModifier = new StatModifierCore(identifier, modifier, contingent);
+		this.modifiers.put(identifier, statModifier);
+	}
+	
+	private void calculate() {
+		if (this.pendingChanges) {
+			this.pendingChanges = false;
+			float baseValue = this.getBaseValue();
+			float percentageIncrease = baseValue * this.percentageTotal();
+			float value = baseValue + percentageIncrease + this.fixedValueTotal();
+			float contingentPercentageIncrease = this.value * this.contingentPercentageTotal();
+			float contingentValue = value + contingentPercentageIncrease + this.contingentFixedValueTotal();
+			this.value = value > this.type.getMaxValue() ? this.type.getMaxValue() :
+				value < this.type.getMinValue() ? this.type.getMinValue() : value;
+			this.contingentValue = contingentValue > this.type.getMaxValue() ? this.type.getMaxValue() :
+				contingentValue < this.type.getMinValue() ? this.type.getMinValue() : contingentValue;
+		}
+	}
+	
+	private float percentageTotal() {
+		return this.modifiers.percentageTotal;
+	}
+	
+	private float fixedValueTotal() {
+		return this.modifiers.fixedValueTotal;
+	}
+	
+	private float contingentPercentageTotal() {
+		return this.modifiers.contingentPercentageTotal;
+	}
+	
+	private float contingentFixedValueTotal() {
+		return this.modifiers.contingentFixedValueTotal;
+	}
+	
+	private void handleChanges() {
+		this.pendingChanges = true;
+	}
+	
 	//-----Utility Methods-----//
 	@Override
 	public Iterator<StatModifier> iterator() {
@@ -117,24 +141,31 @@ public final class StatCore extends Number implements Stat {
 
 	@Override
 	public int compareTo(Stat other) {
-		return Float.compare(this.floatValue(), other.floatValue());
+		return Float.compare(this.value(), other.value());
 	}
 	
 	//-----Stat Modifier Core-----//
 	private final class StatModifierCore extends SimpleModifier implements StatModifier {
 		//-----Fields-----//
 		private final String identifier;
+		private final boolean contingent;
 		
 		//-----Constructor-----//
-		private StatModifierCore(String identifier, Modifier modifier) {
+		private StatModifierCore(String identifier, Modifier modifier, boolean contingent) {
 			super(modifier);
 			this.identifier = identifier;
+			this.contingent = contingent;
 		}
 		
 		//-----Methods-----//
 		@Override
 		public String getIdentifier() {
 			return this.identifier;
+		}
+		
+		@Override
+		public boolean isContingent() {
+			return this.contingent;
 		}
 	}
 	
@@ -164,16 +195,16 @@ public final class StatCore extends Number implements Stat {
 		@Override
 		public void remove() {
 			this.modifierIterator.remove();
-			modifiers.subtract(this.next);
+			modifiers.remove(this.next);
 		}
 	}
 	
 	//-----Modifier Map-----//
 	@SuppressWarnings("serial")//I have no intention of serializing stat modifiers
-	private final class ModifierMap extends HashMap<String, StatModifier> implements Modifier {
+	private final class ModifierMap extends HashMap<String, StatModifier> {
 		//-----Fields-----//
-		private float fixedValueTotal;
-		private float percentageTotal;
+		private float fixedValueTotal, contingentFixedValueTotal;
+		private float percentageTotal, contingentPercentageTotal;
 		
 		//-----Methods-----//
 		@Override
@@ -184,6 +215,7 @@ public final class StatCore extends Number implements Stat {
 			} else {
 				this.exchange(statModifier, value);
 			}
+			handleChanges();
 			return statModifier;
 		}
 		
@@ -191,34 +223,35 @@ public final class StatCore extends Number implements Stat {
 		public StatModifier remove(Object key) {
 			StatModifier statModifier = super.remove(key);
 			if (statModifier != null) {
-				this.subtract(statModifier);
+				this.remove(statModifier);
 			}
+			handleChanges();
 			return statModifier;
 		}
-
-		@Override
-		public float getFixedValue() {
-			return this.fixedValueTotal;
-		}
-
-		@Override
-		public float getPercentage() {
-			return this.percentageTotal;
+		
+		private void add(StatModifier statModifier) {
+			if (statModifier.isContingent()) {
+				this.contingentFixedValueTotal += statModifier.getFixedValue();
+				this.contingentPercentageTotal += statModifier.getPercentage();
+			} else {
+				this.fixedValueTotal += statModifier.getFixedValue();
+				this.percentageTotal += statModifier.getPercentage();
+			}
 		}
 		
-		private void add(Modifier modifier) {
-			this.fixedValueTotal += modifier.getFixedValue();
-			this.percentageTotal += modifier.getPercentage();
+		private void remove(StatModifier statModifier) {
+			if (statModifier.isContingent()) {
+				this.contingentFixedValueTotal -= statModifier.getFixedValue();
+				this.contingentPercentageTotal -= statModifier.getPercentage();
+			} else {
+				this.fixedValueTotal -= statModifier.getFixedValue();
+				this.percentageTotal -= statModifier.getPercentage();
+			}
 		}
 		
-		private void subtract(Modifier modifier) {
-			this.fixedValueTotal -= modifier.getFixedValue();
-			this.percentageTotal -= modifier.getPercentage();
-		}
-		
-		private void exchange(Modifier oldModifier, Modifier newModifier) {
-			this.fixedValueTotal += newModifier.getFixedValue() - oldModifier.getFixedValue();
-			this.percentageTotal += newModifier.getPercentage() - oldModifier.getPercentage();
+		private void exchange(StatModifier oldStatModifier, StatModifier newStatModifier) {
+			this.remove(oldStatModifier);
+			this.add(newStatModifier);
 		}
 	}
 }

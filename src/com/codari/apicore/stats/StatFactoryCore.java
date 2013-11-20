@@ -44,7 +44,7 @@ public final class StatFactoryCore implements StatFactory {
 			return;
 		}
 		if (registeredStatTypes.contains(type)) {
-			throw new StatRegistrationException("Duplicate stat name " + type + " for " + holder);
+			throw new StatRegistrationException("Duplicate stat name " + type.getName() + " for " + holder);
 		}
 		registeredStatTypes.add(type);
 	}
