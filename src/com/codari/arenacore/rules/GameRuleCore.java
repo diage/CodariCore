@@ -88,9 +88,8 @@ public class GameRuleCore implements GameRule {
 	}
 
 	@Override
-	public int getMatchDuration() { 
-		// TODO Auto-generated method stub
-		return 0;
+	public Time getMatchDuration() { 
+		return this.matchDuration;
 	}
 
 	@Override

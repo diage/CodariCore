@@ -24,6 +24,7 @@ public class TeamBuilder implements Listener {
 	public static void removePlayer(Team team, Player player) {
 		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 		int combatantTeamSpot = 0;
+		//Diage is going to add a remove combatant method in the team class so this will be changed later on
 		for(int i = 0; i < team.combatants().size(); i++) {
 			Combatant possibleCombatant = team.combatants().get(i);
 			if(possibleCombatant.equals(combatant)) {

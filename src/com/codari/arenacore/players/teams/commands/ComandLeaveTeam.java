@@ -1,6 +1,5 @@
 package com.codari.arenacore.players.teams.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,9 +15,11 @@ public class ComandLeaveTeam implements CommandExecutor {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("invite") && args.length == 0) {
 			Player player = (Player) sender;
 			Team team = Codari.INSTANCE.getArenaManager().getTeam(Codari.INSTANCE.getArenaManager().getCombatant(player));			
-				
-			TeamBuilder.removePlayer(team, player);
-			return true;
+			
+			if(team != null) {	
+				TeamBuilder.removePlayer(team, player);
+				return true;
+			}
 
 		}
 		return false;
