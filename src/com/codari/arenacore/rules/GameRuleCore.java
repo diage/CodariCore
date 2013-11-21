@@ -12,6 +12,7 @@ import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.TimedAction;
 import com.codari.arena5.rules.WinCondition;
 import com.codari.arena5.rules.roles.RoleDelegation;
+import com.codari.arenacore.rules.roles.RoleDelegationCore;
 
 public class GameRuleCore implements GameRule {
 	//-----Fields-----//
@@ -19,6 +20,7 @@ public class GameRuleCore implements GameRule {
 	private Time matchDuration;
 	private final Set<TimedAction> timedActions;
 	private int teamSize;
+	private RoleDelegation roleDelegation;
 	
 	//-----Constructor-----//
 	public GameRuleCore() {
@@ -94,13 +96,15 @@ public class GameRuleCore implements GameRule {
 
 	@Override
 	public boolean addRoleDelegation(RoleDelegation roleDelegation) {
-		// TODO Auto-generated method stub
+		if(roleDelegation.isValidRoleDelegation()) {
+			this.roleDelegation = roleDelegation;
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public RoleDelegation getRoleDelegation() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.roleDelegation;
 	}
 }
