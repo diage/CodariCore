@@ -6,13 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.codari.api5.util.Tick;
 import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.TimedAction;
 import com.codari.arena5.rules.WinCondition;
 import com.codari.arena5.rules.roles.RoleDelegation;
-import com.codari.arenacore.rules.roles.RoleDelegationCore;
 
 public class GameRuleCore implements GameRule {
 	//-----Fields-----//
