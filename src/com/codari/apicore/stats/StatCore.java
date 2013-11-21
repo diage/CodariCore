@@ -3,6 +3,8 @@ package com.codari.apicore.stats;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.commons.lang3.Validate;
+
 import com.codari.api5.stats.Stat;
 import com.codari.api5.stats.StatModifier;
 import com.codari.api5.stats.StatType;
@@ -103,10 +105,7 @@ public final class StatCore implements Stat {
 	
 	//-----Private Methods-----//
 	private void setModifier(String identifier, Modifier modifier, boolean contingent) {
-		if (modifier == null) {
-			this.removeModifier(identifier);
-			//So throw an exception?
-		}
+		Validate.notNull(modifier, "Stat modifiers can not be set to null");
 		StatModifier statModifier = new StatModifierCore(identifier, modifier, contingent);
 		this.modifiers.put(identifier, statModifier);
 	}
