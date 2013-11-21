@@ -13,10 +13,13 @@ public class TeamCore implements Team {
 	//-----Fields-----//
 	protected final List<Combatant> combatants;
 	private Arena arena;
+	private String teamName;
+	private boolean isLeader;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
 		this.combatants = new ArrayList<>();
+		this.teamName = teamName;
 		for(Combatant combatant : combatants) {
 			this.combatants.add(combatant);
 		}
@@ -42,6 +45,11 @@ public class TeamCore implements Team {
 		return this.arena;
 	}
 	
+	@Override
+	public String getTeamName() {
+		return this.teamName;
+	}
+	
 	
 	@Override
 	public List<Combatant> getTeamMates(Combatant combatant) {
@@ -52,19 +60,21 @@ public class TeamCore implements Team {
 		return tempList;
 	}
 	
-	public void joinTeam(Combatant combatant) {
+	public void addToTeam(Combatant combatant) {
 		this.combatants.add(combatant);
+	}
+	
+	public void removeFromTeam(Combatant combatant) {
+		this.combatants.remove(combatant);
 	}
 
 	@Override
-	public void setLeader() {
-		// TODO Auto-generated method stub
-		
+	public void setLeader(Combatant combatant) {
+		this.isLeader = true;
 	}
 
 	@Override
 	public boolean isLeader(Combatant combatant) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.isLeader;
 	}
 }

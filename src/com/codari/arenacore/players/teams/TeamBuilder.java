@@ -12,26 +12,17 @@ public class TeamBuilder implements Listener {
 	public static Team createNewTeam(Player player, String teamName) {
 		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 		Team team = new TeamCore(teamName, combatant);
-		team.setLeader(); //Is this correct?
+		team.setLeader(combatant); 
 		return team;
 	}
 	
-	public static void invitePlayer(Team team, Player player) {
+	public static void invitePlayer(TeamCore team, Player player) {
 		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
-		team.combatants().add(combatant);
+		team.addToTeam(combatant);
 	}
 	
-	public static void removePlayer(Team team, Player player) {
+	public static void removePlayer(TeamCore team, Player player) {
 		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
-		int combatantTeamSpot = 0;
-		//Diage is going to add a remove combatant method in the team class so this will be changed later on
-		for(int i = 0; i < team.combatants().size(); i++) {
-			Combatant possibleCombatant = team.combatants().get(i);
-			if(possibleCombatant.equals(combatant)) {
-				combatantTeamSpot = i;
-				break;
-			}
-		}
-		team.combatants().remove(combatantTeamSpot);
+		team.removeFromTeam(combatant);		
 	}
 }
