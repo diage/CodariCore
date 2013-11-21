@@ -80,7 +80,7 @@ public class ArenaManagerCore implements ArenaManager {
 
 	@Override
 	public Team getTeam(String arenaName, String teamName) {
-		return null;
+		return this.getArena(arenaName).getTeams().get(teamName);
 	}
 
 	@Override

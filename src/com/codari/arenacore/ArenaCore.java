@@ -8,14 +8,13 @@ import java.util.Map;
 import com.codari.arena5.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arena5.players.teams.TeamColor;
-import com.codari.arenacore.players.teams.TeamCore;
+
 
 public final class ArenaCore implements Arena {
 	//-----Fields-----//
 	private final String name;
 	private final ArenaBuilderCore builder;
-	private final Map<TeamColor, Team> teams;
+	private final Map<String, Team> teams;
 	
 	//-----Constructor-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
@@ -37,8 +36,8 @@ public final class ArenaCore implements Arena {
 		for(; totalPlayers > 0; totalPlayers--) {
 			blueTeam.add(combatants[totalPlayers - 1]);
 		}
-		this.teams.put(TeamColor.RED, new TeamCore(this, TeamColor.RED, redTeam));
-		this.teams.put(TeamColor.BLUE, new TeamCore(this, TeamColor.BLUE, blueTeam));
+//		this.teams.put(TeamColor.RED, new TeamCore(this, TeamColor.RED, redTeam));
+//		this.teams.put(TeamColor.BLUE, new TeamCore(this, TeamColor.BLUE, blueTeam));
 		
 		this.builder = null;
 	}
@@ -50,7 +49,7 @@ public final class ArenaCore implements Arena {
 	}
 
 	@Override
-	public Map<TeamColor, Team> getTeams() {
+	public Map<String, Team> getTeams() {
 		return teams;
 	}
 }

@@ -12,15 +12,17 @@ import com.codari.arenacore.players.teams.TeamCore;
 public class ComandLeaveTeam implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(sender instanceof Player && command.getName().equalsIgnoreCase("invite") && args.length == 0) {
+		if(sender instanceof Player && command.getName().equalsIgnoreCase("leaveteam") && args.length == 0) {
 			Player player = (Player) sender;
 			TeamCore team = (TeamCore) Codari.INSTANCE.getArenaManager().getTeam(Codari.INSTANCE.getArenaManager().getCombatant(player));			
 			
 			if(team != null) {	
 				TeamBuilder.removePlayer(team, player);
 				return true;
+			} else {
+				player.sendMessage("You have not left any team because you were not part of any team.");
+				return true;
 			}
-
 		}
 		return false;
 	} 

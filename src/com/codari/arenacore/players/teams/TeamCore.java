@@ -60,10 +60,12 @@ public class TeamCore implements Team {
 		return tempList;
 	}
 	
+	@Override
 	public void addToTeam(Combatant combatant) {
 		this.combatants.add(combatant);
 	}
 	
+	@Override
 	public void removeFromTeam(Combatant combatant) {
 		this.combatants.remove(combatant);
 	}
