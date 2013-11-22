@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -20,12 +23,16 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
 	private final List<FixedSpawnableAction> fixedSpawnables;
+	private final List<ImmediatePersistentObject> immediatePersistentObjects;
+	private final List<DelayedPersistentAction> delayedPersistentObjects;
 	
 	//-----Constructor-----//
 	public ArenaBuilderCore(GameRule rules) {
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
 		this.fixedSpawnables = new ArrayList<>();
+		this.immediatePersistentObjects = new ArrayList<>();
+		this.delayedPersistentObjects = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
@@ -54,11 +61,11 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean registerRandomSpawnable(RandomSpawnableObject object, String groupName) {
-		RandomTimelineGroup g = this.randomSpawnables.get(groupName);
-		if (g == null) {
+		RandomTimelineGroup randomTimelineGroup = this.randomSpawnables.get(groupName);
+		if (randomTimelineGroup == null) {
 			return false;
 		}
-		g.spawns.add(object);
+		randomTimelineGroup.spawns.add(object);
 		return true;
 	}
 	
@@ -75,12 +82,29 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	@Override
-	public boolean registerPersistent(ImmediatePersistentObject object) {
-		return false;//TODO
+	public boolean registerPersistent(ImmediatePersistentObject immediatePersistentObject) {
+		this.immediatePersistentObjects.add(immediatePersistentObject);
+		return true;
 	}
 	
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject object, Time time, boolean override) {
+		BukkitRunnable runner = new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(true) {
+					
+				}
+				if(true) {
+					super.cancel();
+				}
+			}
+		};
+		
+		
+		
+		runner.runTaskTimer(Codari.INSTANCE, time.ticks(), 1);
+		
 		return false;//TODO
 	}
 	
@@ -122,5 +146,33 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		public void action() {
 			this.spawnable.spawn();
 		}
+	}
+	
+	private final static class DelayedPersistentAction implements DelayedPersistentObject {
+		private DelayedPersistentObject delayedPersistentObject;
+		private Time time;
+		private boolean override;
+		
+		public DelayedPersistentAction(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
+			this.delayedPersistentObject = delayedPersistentObject;
+			this.time = time;
+			this.override = override;
+		}
+		
+		@Override
+		public void interact() {
+			this.delayedPersistentObject.interact();
+		}
+
+		@Override
+		public void reveal() {
+			this.delayedPersistentObject.reveal();
+		}
+
+		@Override
+		public void hide() {
+			this.delayedPersistentObject.hide();
+		}
+		
 	}
 }

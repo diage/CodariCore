@@ -98,12 +98,6 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public boolean createTeam(Team team) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void registerArenaObjecto(Class<? extends ArenaObject> clazz) {
 		ArenaObjectName nemo = clazz.getAnnotation(ArenaObjectName.class);
 		if (nemo == null) {

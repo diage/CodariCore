@@ -13,6 +13,8 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.players.teams.TeamBuilder;
+import com.codari.arenacore.players.teams.TeamCore;
 
 public final class CombatantCore implements Combatant {
 	//-----Constants-----//
@@ -108,7 +110,7 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public void setTeam(Team team) {
-		// TODO Auto-generated method stub
+		TeamBuilder.invitePlayer((TeamCore) team, this.playerReference.getPlayer());
 		
 	}
 }

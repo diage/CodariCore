@@ -50,6 +50,6 @@ public final class ArenaCore implements Arena {
 
 	@Override
 	public Map<String, Team> getTeams() {
-		return teams;
+		return this.teams;
 	}
 }
