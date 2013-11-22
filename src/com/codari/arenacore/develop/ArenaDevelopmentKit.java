@@ -16,7 +16,7 @@ public class ArenaDevelopmentKit {
 	
 	public static final int INVENTORY_STARTING_PLACEMENT_SLOT = 9;
 	
-	private static ItemStack[][] arenaObjects;
+	private ItemStack[][] arenaObjects;
 	
 	//-----Constructor------//
 	public ArenaDevelopmentKit(Arena arena) {
@@ -25,58 +25,58 @@ public class ArenaDevelopmentKit {
 	
 	/* Puts the necessary objects to develop the arena in the player's inventory. */
 	public void createArenaDevelopmentObjects(Player player) {
-		arenaObjects = new ItemStack[4][];
+		this.arenaObjects = new ItemStack[4][];
 		
 		//Item Spawner
-		arenaObjects[ITEM_SPAWNER] = new ItemStack[1];
+		this.arenaObjects[ITEM_SPAWNER] = new ItemStack[1];
 		ItemStack itemSpawner = new ItemStack(Material.COAL_BLOCK);
 		
-		arenaObjects[ITEM_SPAWNER][0] = itemSpawner;
+		this.arenaObjects[ITEM_SPAWNER][0] = itemSpawner;
 		
 		//Objective Points
-		arenaObjects[OBJECTIVE_POINT] = new ItemStack[4];
+		this.arenaObjects[OBJECTIVE_POINT] = new ItemStack[4];
 		ItemStack diamondObjectivePoint = new ItemStack(Material.DIAMOND_ORE);
 		ItemStack emeraldObjectivePoint = new ItemStack(Material.EMERALD_ORE);
 		ItemStack goldObjectivePoint = new ItemStack(Material.GOLD_ORE);
 		ItemStack ironObjectivePoint = new ItemStack(Material.IRON_ORE);
 		
-		arenaObjects[OBJECTIVE_POINT][0] = diamondObjectivePoint;
-		arenaObjects[OBJECTIVE_POINT][1] = emeraldObjectivePoint;
-		arenaObjects[OBJECTIVE_POINT][2] = goldObjectivePoint;
-		arenaObjects[OBJECTIVE_POINT][3] = ironObjectivePoint;
+		this.arenaObjects[OBJECTIVE_POINT][0] = diamondObjectivePoint;
+		this.arenaObjects[OBJECTIVE_POINT][1] = emeraldObjectivePoint;
+		this.arenaObjects[OBJECTIVE_POINT][2] = goldObjectivePoint;
+		this.arenaObjects[OBJECTIVE_POINT][3] = ironObjectivePoint;
 		
 		//Traps
-		arenaObjects[TRAP] = new ItemStack[3];
+		this.arenaObjects[TRAP] = new ItemStack[3];
 		ItemStack explosionTrap = new ItemStack(Material.GOLD_BLOCK);
 		ItemStack fireTrap = new ItemStack(Material.IRON_BLOCK);
 		ItemStack poisonSnareTrap = new ItemStack(Material.EMERALD_BLOCK);
 		
-		arenaObjects[TRAP][0] = explosionTrap;
-		arenaObjects[TRAP][1] = fireTrap;
-		arenaObjects[TRAP][2] = poisonSnareTrap;
+		this.arenaObjects[TRAP][0] = explosionTrap;
+		this.arenaObjects[TRAP][1] = fireTrap;
+		this.arenaObjects[TRAP][2] = poisonSnareTrap;
 		
 		//Gate
-		arenaObjects[GATE] = new ItemStack[1];
+		this.arenaObjects[GATE] = new ItemStack[1];
 		ItemStack gate = new ItemStack(Material.GOLD_SPADE);
 		
-		arenaObjects[GATE][0] = gate;		
+		this.arenaObjects[GATE][0] = gate;		
 		
 		//Setting Display Names for all the objects
-		this.setDisplayName(arenaObjects);
+		this.setDisplayName(this.arenaObjects);
 		
 		//Putting Items in Player's Inventory
 		int counter = INVENTORY_STARTING_PLACEMENT_SLOT;
 		
-		for(int i = 0; i < arenaObjects.length; i++) {
-			for(int j = 0; j < arenaObjects[i].length; j++) {
-				player.getInventory().setItem(counter++, arenaObjects[i][j]);
+		for(int i = 0; i < this.arenaObjects.length; i++) {
+			for(int j = 0; j < this.arenaObjects[i].length; j++) {
+				player.getInventory().setItem(counter++, this.arenaObjects[i][j]);
 			}
 		}	
 	}
 	
 	private void setDisplayName(ItemStack[][] arenaObjects) {
-		for(int i = 0; i < arenaObjects.length; i ++) {
-			for(int j = 0; j < arenaObjects[i].length; j++) {
+		for(int i = 0; i < this.arenaObjects.length; i ++) {
+			for(int j = 0; j < this.arenaObjects[i].length; j++) {
 				switch(i) {
 				case 0: 
 					ItemMeta itemSpawnerMeta = arenaObjects[i][j].getItemMeta();
