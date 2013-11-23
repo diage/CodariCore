@@ -1,3 +1,17 @@
 name: Codari_Core
 version: 0.0.1-SNAPSHOT
 main: com.codari.apicore.CodariCore
+
+commands:
+  arenakit:
+    description: creates an arena development kit 
+    usage: Syntax error! Simply enter "arenakit" and the arena you would like to add objects to
+  arenakit:
+    description: makes a team
+    usage: Syntax error! Simply enter "createteam" and the name of the team you want to make
+  arenakit:
+    description: invites a player to your team
+    usage: Syntax error! Simply enter "invite" and the name of the player you would like to invite
+  arenakit:
+    description: leave your team
+    usage: Syntax error! Simply enter "leaveteam"    

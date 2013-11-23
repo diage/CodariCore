@@ -12,6 +12,10 @@ import com.codari.api5.util.PlayerReference;
 import com.codari.apicore.metadata.MetadataManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arenacore.ArenaManagerCore;
+import com.codari.arenacore.develop.ArenaDevelopmentCommand;
+import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
+import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
+import com.codari.arenacore.players.teams.commands.CommandInvitePlayerToTeam;
 
 public final class CodariCore extends JavaPlugin implements Codari {
 	//-----Static Methods-----//
@@ -42,6 +46,12 @@ public final class CodariCore extends JavaPlugin implements Codari {
 		this.staticInitialization();
 		this.arenaManager = new ArenaManagerCore();
 		this.statFactory = new StatFactoryCore();
+		
+		//-----Commands-----//
+		super.getCommand("arenakit").setExecutor(new ArenaDevelopmentCommand());
+		super.getCommand("createteam").setExecutor(new CommandCreateTeam());
+		super.getCommand("invite").setExecutor(new CommandInvitePlayerToTeam());
+		super.getCommand("leaveteam").setExecutor(new ComandLeaveTeam());
 		
 		//-----TODO debugger-----//
 		Debugger.debug();
