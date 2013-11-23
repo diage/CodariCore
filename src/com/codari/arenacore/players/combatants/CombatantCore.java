@@ -1,11 +1,11 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 
 import com.codari.api5.Codari;
-import com.codari.api5.io.CodariIO;
+import com.codari.api5.io.CodariSerialization;
+import com.codari.api5.io.CodariSerializationException;
 import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.PlayerReference;
 import com.codari.arena5.Arena;
@@ -48,8 +48,8 @@ public final class CombatantCore implements Combatant {
 	
 	public void reloadData() {
 		try {
-			this.data = (CombatantDataCore) CodariIO.deserialize(this.dataFile);
-		} catch (ClassNotFoundException | IOException ex) {
+			this.data = (CombatantDataCore) CodariSerialization.deserialize(this.dataFile);
+		} catch (CodariSerializationException ex) {
 			Codari.INSTANCE.getLogger().log(Level.WARNING, 
 					"Failed to load combatant data for " + this.playerReference, ex);
 			if (this.data == null) {
@@ -60,8 +60,8 @@ public final class CombatantCore implements Combatant {
 	
 	public void saveData() {
 		try {
-			CodariIO.serialize(this.data, this.dataFile);
-		} catch (IOException ex) {
+			CodariSerialization.serialize(this.data, this.dataFile);
+		} catch (CodariSerializationException ex) {
 			Codari.INSTANCE.getLogger().log(Level.WARNING, 
 					"Failed to save combatant data for " + this.playerReference, ex);
 		}

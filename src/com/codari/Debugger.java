@@ -29,7 +29,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.BlockIterator;
 
 import com.codari.api5.Codari;
-import com.codari.api5.io.CodariIO;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.PluginUtils;
 import com.codari.apicore.CodariCore;
