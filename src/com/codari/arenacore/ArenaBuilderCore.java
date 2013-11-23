@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.Codari;
@@ -89,21 +90,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject object, Time time, boolean override) {
-		BukkitRunnable runner = new BukkitRunnable() {
-			@Override
-			public void run() {
-				if(true) {
-					
-				}
-				if(true) {
-					super.cancel();
-				}
-			}
-		};
 		
-		
-		
-		runner.runTaskTimer(Codari.INSTANCE, time.ticks(), 1);
 		
 		return false;//TODO
 	}
@@ -161,7 +148,12 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		
 		@Override
 		public void interact() {
-			this.delayedPersistentObject.interact();
+			Bukkit.getScheduler().runTaskLater(Codari.INSTANCE, new Runnable() {
+				@Override
+				public void run() {
+					delayedPersistentObject.interact();
+				}
+			}, time.ticks());
 		}
 
 		@Override
@@ -173,6 +165,5 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		public void hide() {
 			this.delayedPersistentObject.hide();
 		}
-		
 	}
 }
