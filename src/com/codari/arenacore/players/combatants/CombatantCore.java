@@ -13,7 +13,6 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public final class CombatantCore implements Combatant {
@@ -25,6 +24,8 @@ public final class CombatantCore implements Combatant {
 	private final File dataFile;
 	private CombatantDataCore data;
 	private StatManager statManager;
+	
+	private TeamCore team;
 	
 	//-----Constructor-----//
 	public CombatantCore(PlayerReference playerReference) {
@@ -92,8 +93,7 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public Team getTeam() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.team;
 	}
 
 	@Override
@@ -110,7 +110,6 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public void setTeam(Team team) {
-		TeamBuilder.invitePlayer((TeamCore) team, this.playerReference.getPlayer());
-		
+		this.team = (TeamCore) team;
 	}
 }

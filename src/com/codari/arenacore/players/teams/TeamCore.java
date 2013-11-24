@@ -62,11 +62,13 @@ public class TeamCore implements Team {
 	
 	@Override
 	public void addToTeam(Combatant combatant) {
+		combatant.setTeam(this);
 		this.combatants.add(combatant);
 	}
 	
 	@Override
 	public void removeFromTeam(Combatant combatant) {
+		combatant.setTeam(null);
 		this.combatants.remove(combatant);
 	}
 

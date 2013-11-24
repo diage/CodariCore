@@ -16,11 +16,12 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("invite") && args.length == 1) {
 			Player player = (Player) sender;
-			TeamCore team = (TeamCore) Codari.INSTANCE.getArenaManager().getTeam(Codari.INSTANCE.getArenaManager().getCombatant(player));			
+			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
+			TeamCore team = (TeamCore) combatant.getTeam();			
 			
 			Player invitedPlayer = Bukkit.getPlayer(args[0]);
 			Combatant invitedCombatant = Codari.INSTANCE.getArenaManager().getCombatant(invitedPlayer);
-			TeamCore invitedPlayerTeam = (TeamCore) Codari.INSTANCE.getArenaManager().getTeam(invitedCombatant);
+			TeamCore invitedPlayerTeam = (TeamCore) invitedCombatant.getTeam();
 			
 			//Checks if player is already on a team
 			if(invitedPlayerTeam.getTeamName() != null) {

@@ -85,12 +85,7 @@ public class ArenaManagerCore implements ArenaManager {
 
 	@Override
 	public Team getTeam(Combatant combatant) {
-		if(this.onlyArena.getTeams().get(TeamColor.RED).getTeamMates(combatant).size() > 0) {
-			return this.onlyArena.getTeams().get(TeamColor.RED);
-		} else if (this.onlyArena.getTeams().get(TeamColor.BLUE).getTeamMates(combatant).size() > 0){
-			return this.onlyArena.getTeams().get(TeamColor.BLUE);
-		}
-		return null;
+		return combatant.getTeam();
 	}
 	
 	public void tempBuildArena(Combatant...combatants) {
