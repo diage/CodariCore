@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
+
+import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.TimedAction;
@@ -37,14 +40,9 @@ public class GameRuleCore implements GameRule {
 		this.addWinCondition(winCondition, Time.NULL, true);
 	}
 	
-	@SuppressWarnings("unused")
 	@Override
 	public boolean addWinCondition(WinCondition winCondition, Time time, boolean after) {
-		this.addWinCondition(winCondition, time, after);
-		if(true/* if win condition can possibly be met before the end of the game */) {
-			return true;
-		}
-		return false; 
+		return this.addAction(new WinConditionAction(time, winCondition, after));
 	}
 	
 	@Override
@@ -104,5 +102,31 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public RoleDelegation getRoleDelegation() {
 		return this.roleDelegation;
+	}
+	
+	//-----Win Condition Action-----//
+	private final static class WinConditionAction extends TimedAction {
+		//-----Fields-----//
+		private final WinCondition winCond;
+		private final boolean after;
+		private final Time delay;
+		
+		public WinConditionAction(Time delay, WinCondition winCond, boolean after) {
+			super(null, Time.ONE_TICK);
+			this.winCond = winCond;
+			this.after = after;
+			this.delay = delay;
+		}
+
+		@Override
+		public void action() {
+			this.winCond.setRegistered(!after);
+			Bukkit.getScheduler().runTaskLater(Codari.INSTANCE, new Runnable() {
+				@Override
+				public void run() {
+					winCond.setRegistered(after);
+				}
+			}, delay.ticks());
+		}
 	}
 }
