@@ -18,6 +18,7 @@ public class CommandCreateTeam implements CommandExecutor {
 			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 			if(combatant.getTeam() == null) {			
 				TeamBuilder.createNewTeam(player, args[0]);
+				player.sendMessage("You have created a new team named " + args[0]);
 				System.out.println("Creating a new team.");
 				return true;
 			} else {

@@ -25,7 +25,7 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 			TeamCore invitedPlayerTeam = (TeamCore) invitedCombatant.getTeam();
 			
 			//Checks if player is already on a team
-			if(invitedPlayerTeam.getTeamName() != null) {
+			if(invitedPlayerTeam != null) {
 				System.out.println("Invited Player is already on a team.");
 				player.sendMessage(invitedPlayer.getName() + " is already on a team.");
 				return true;
@@ -34,6 +34,7 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 				//Method so that player could accept or decline invite here
 				System.out.println("Player has been invited to your team.");
 				TeamBuilder.invitePlayer(team, invitedPlayer);
+				player.sendMessage(invitedPlayer.getName() + " has joined your team.");
 				return true;				
 			}
 		}
