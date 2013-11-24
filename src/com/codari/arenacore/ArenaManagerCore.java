@@ -12,6 +12,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.PlayerReference;
+import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.ArenaManager;
@@ -112,10 +113,8 @@ public class ArenaManagerCore implements ArenaManager {
 			return null;
 		}
 		try {
-			Constructor<? extends ArenaObject> constructor = clazz.getConstructor(Location.class);
-			return constructor.newInstance(location);
-		} catch (NoSuchMethodException | SecurityException |
-				InstantiationException | IllegalAccessException |
+			return Reflector.constructClass(clazz, location).getAs(ArenaObject.class);
+		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
 			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
