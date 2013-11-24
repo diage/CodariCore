@@ -26,19 +26,9 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	}
 	
 	//-----Fields-----//
-	private final Field instanceField;
 	private MetadataManagerCore metadataManager;
 	private ArenaManagerCore arenaManager;
 	private StatFactoryCore statFactory;
-	
-	//-----Constructor-----//
-	public CodariCore() {
-		try {
-			this.instanceField = Codari.class.getDeclaredField("INSTANCE");
-		} catch (NoSuchFieldException | SecurityException ex) {
-			throw new CodariException("Failed to locate instance field", ex);
-		}
-	}
 	
 	//-----Enabler-----//
 	@Override
