@@ -9,6 +9,7 @@ import com.codari.Debugger;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariException;
 import com.codari.api5.util.PlayerReference;
+import com.codari.api5.util.reflect.Reflector;
 import com.codari.apicore.metadata.MetadataManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arenacore.ArenaManagerCore;
@@ -85,16 +86,12 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	//-----Private Methods-----//
 	private void setInstanceAccess(boolean accessible) {
 		try {
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-			modifiersField.setAccessible(true);
-			modifiersField.setInt(this.instanceField, this.instanceField.getModifiers() & ~Modifier.FINAL);
 			if (accessible) {
-				this.instanceField.set(null, this);
+				Reflector.setField(Codari.class, "INSTANCE", this, true);
 			} else {
-				this.instanceField.set(null, null);
+				Reflector.setField(Codari.class, "INSTANCE", null, true);
 			}
-		} catch (NoSuchFieldException | SecurityException |
-				IllegalArgumentException | IllegalAccessException ex) {
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
 			throw new CodariException("Failed to set instance access", ex);
 		}
 	}
