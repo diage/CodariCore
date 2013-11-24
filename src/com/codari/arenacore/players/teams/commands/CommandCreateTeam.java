@@ -13,17 +13,15 @@ public class CommandCreateTeam implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("createteam") && args.length == 1) {
-			System.out.println("Going into the create team command.");
 			Player player = (Player) sender;
 			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 			if(combatant.getTeam() == null) {			
 				TeamBuilder.createNewTeam(player, args[0]);
-				player.sendMessage("You have created a new team named " + args[0]);
-				System.out.println("Creating a new team.");
+				player.sendMessage("You have created a new team named " + "\"" + args[0] + "\"");
 				return true;
 			} else {
-				System.out.println("You are already on a team.");
-				player.sendMessage("You are already on a team. You have to leave your team before you start a new one.");
+				player.sendMessage("You are already on the team: " + "\"" + combatant.getTeam().getTeamName() + "\"" + ". "
+						+ "You have to leave your team before you start a new one.");
 				return true;
 			}
 		}
