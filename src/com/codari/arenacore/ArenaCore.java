@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.codari.arena5.Arena;
+import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 
@@ -51,5 +52,10 @@ public final class ArenaCore implements Arena {
 	@Override
 	public Map<String, Team> getTeams() {
 		return this.teams;
+	}
+	
+	@Override
+	public ArenaBuilder getArenaBuilder() {
+		return this.builder;
 	}
 }

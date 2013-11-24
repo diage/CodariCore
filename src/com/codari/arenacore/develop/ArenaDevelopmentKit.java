@@ -17,10 +17,17 @@ public class ArenaDevelopmentKit {
 	public static final int INVENTORY_STARTING_PLACEMENT_SLOT = 9;
 	
 	private ItemStack[][] arenaObjects;
+	private Arena arena;
 	
 	//-----Constructor------//
 	public ArenaDevelopmentKit(Arena arena) {
-		//TODO
+		this.arena = arena;
+		new ArenaDevelopmentKitListener(arena);
+	}
+	
+	//-----Getters-----//
+	public Arena getArena() {
+		return this.arena;
 	}
 	
 	/* Puts the necessary objects to develop the arena in the player's inventory. */
