@@ -14,17 +14,15 @@ public class ComandLeaveTeam implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("leaveteam") && args.length == 0) {
-			System.out.println("Going into the leaveteam command");
 			Player player = (Player) sender;
 			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 			TeamCore team = (TeamCore) combatant.getTeam();			
 			
 			if(team != null) {	
-				System.out.println("Leaving Team");
 				TeamBuilder.removePlayer(team, player);
+				player.sendMessage("You have left " + "\"" + team.getTeamName() + "\"." );
 				return true;
 			} else {
-				System.out.println("Team is null");
 				player.sendMessage("You have not left any team because you were not part of any team.");
 				return true;
 			}

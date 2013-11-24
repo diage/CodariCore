@@ -11,11 +11,10 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
 
-public class CommandInvitePlayerToTeam implements CommandExecutor {
+public class CommandInvitePlayerToTeam implements CommandExecutor {	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("invite") && args.length == 1) {
-			System.out.println("Going into invite player command");
 			Player player = (Player) sender;
 			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
 			TeamCore team = (TeamCore) combatant.getTeam();			
@@ -26,15 +25,17 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 			
 			//Checks if player is already on a team
 			if(invitedPlayerTeam != null) {
-				System.out.println("Invited Player is already on a team.");
 				player.sendMessage(invitedPlayer.getName() + " is already on a team.");
 				return true;
 			} else {
-				invitedPlayer.sendMessage(player.getName() + " has invited you to join " + team.getTeamName() + ". Would you like to join?");
+				invitedPlayer.sendMessage(player.getName() + " has invited you to join " + "\"" + team.getTeamName() + "\". "
+						+ "Would you like to join?");
 				//Method so that player could accept or decline invite here
-				System.out.println("Player has been invited to your team.");
-				TeamBuilder.invitePlayer(team, invitedPlayer);
-				player.sendMessage(invitedPlayer.getName() + " has joined your team.");
+				
+				if(true/*invited player accepted the invite*/) {
+					TeamBuilder.invitePlayer(team, invitedPlayer);
+					player.sendMessage(invitedPlayer.getName() + " has joined your team.");
+				}
 				return true;				
 			}
 		}
