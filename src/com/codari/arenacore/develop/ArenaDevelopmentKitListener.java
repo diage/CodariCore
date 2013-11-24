@@ -22,7 +22,6 @@ import com.codari.arena5.objects.persistant.PersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
-import com.codari.arena5.players.combatants.Combatant;
 
 public class ArenaDevelopmentKitListener implements Listener {
 	//-----Fields-----//
