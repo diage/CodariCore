@@ -8,6 +8,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
@@ -137,8 +138,9 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	private final static class DelayedPersistentAction implements DelayedPersistentObject {
 		private DelayedPersistentObject delayedPersistentObject;
-		private Time time;
-		private boolean override;
+		private final Time time;
+		private final boolean override;
+		private BukkitTask task;
 		
 		public DelayedPersistentAction(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
 			this.delayedPersistentObject = delayedPersistentObject;
@@ -148,10 +150,14 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		
 		@Override
 		public void interact() {
-			Bukkit.getScheduler().runTaskLater(Codari.INSTANCE, new Runnable() {
+			if (this.override && this.task != null) {
+				this.task.cancel();
+			}
+			this.task = Bukkit.getScheduler().runTaskLater(Codari.INSTANCE, new Runnable() {
 				@Override
 				public void run() {
 					delayedPersistentObject.interact();
+					task = null;
 				}
 			}, time.ticks());
 		}
