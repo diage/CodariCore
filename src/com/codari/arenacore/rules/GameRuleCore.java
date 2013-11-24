@@ -42,7 +42,11 @@ public class GameRuleCore implements GameRule {
 	
 	@Override
 	public boolean addWinCondition(WinCondition winCondition, Time time, boolean after) {
-		return this.addAction(new WinConditionAction(time, winCondition, after));
+		if (this.addAction(new WinConditionAction(time, winCondition, after))) {
+			this.winConditions.add(winCondition);
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
