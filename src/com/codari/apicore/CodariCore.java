@@ -49,7 +49,7 @@ public final class CodariCore extends JavaPlugin implements Codari {
 		this.statFactory = new StatFactoryCore();
 		
 		//-----Commands-----//
-		super.getCommand("new2v2arena").setExecutor(new NewArenaCommand());
+		//super.getCommand("new2v2arena").setExecutor(new NewArenaCommand());
 		super.getCommand("arenakit").setExecutor(new ArenaDevelopmentCommand());
 		super.getCommand("createteam").setExecutor(new CommandCreateTeam());
 		super.getCommand("invite").setExecutor(new CommandInvitePlayerToTeam());
