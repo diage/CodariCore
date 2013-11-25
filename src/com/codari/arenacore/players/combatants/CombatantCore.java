@@ -26,6 +26,8 @@ public final class CombatantCore implements Combatant {
 	private StatManager statManager;
 	
 	private TeamCore team;
+	private Role role;
+	private String arenaName;
 	
 	//-----Constructor-----//
 	public CombatantCore(PlayerReference playerReference) {
@@ -70,19 +72,22 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public Role getRole() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.role;
 	}
 
 	@Override
 	public String getArenaName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.arenaName;
 	}
 
 	@Override
 	public boolean leaveArena() {
-		// TODO Auto-generated method stub
+		Arena arena = Codari.INSTANCE.getArenaManager().getArena(arenaName);
+		if(arena != null) {
+			//TODO - take combatant out of arena
+			this.arenaName = null;
+			return true;
+		}
 		return false;
 	}
 	
@@ -98,14 +103,17 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public boolean sendToArena(Arena arena) {
-		// TODO Auto-generated method stub
+		if(arena != null) {
+			//TODO - send combatant to arena
+			this.arenaName = arena.getName();
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public void setRole(Role role) {
-		// TODO Auto-generated method stub
-		
+		this.role = role;
 	}
 
 	@Override

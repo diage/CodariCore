@@ -18,7 +18,6 @@ import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
-import com.codari.arena5.objects.persistant.PersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
@@ -52,35 +51,35 @@ public class ArenaDevelopmentKitListener implements Listener {
 			switch(clickedSlot) {
 			case(ITEM_SPAWNER_SLOT):
 				ArenaObject itemSpawner = Codari.INSTANCE.getArenaManager().createObjecto("Item_Spawner", blockDown);	
-				new PlayerInput(player, itemSpawner, arenaBuilder);
+			new PlayerInput(player, itemSpawner, arenaBuilder);
 			break;
 			case(DIAMOND_OBJECTIVE_POINT):
 				ArenaObject diamondObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Diamond_Objective_Point", blockDown);
-				new PlayerInput(player, diamondObjectivePoint, arenaBuilder);
+			new PlayerInput(player, diamondObjectivePoint, arenaBuilder);
 			break;
 			case(EMERALD_OBJECTIVE_POINT):
 				ArenaObject emeraldObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Emerald_Objective_Point", blockDown);
-				new PlayerInput(player, emeraldObjectivePoint, arenaBuilder);
+			new PlayerInput(player, emeraldObjectivePoint, arenaBuilder);
 			break;
 			case(GOLD_OBJECTIVE_POINT):
 				ArenaObject goldObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Gold_Objective_Point", blockDown);
-				new PlayerInput(player, goldObjectivePoint, arenaBuilder);
+			new PlayerInput(player, goldObjectivePoint, arenaBuilder);
 			break;
 			case(IRON_OBJECTIVE_POINT):
 				ArenaObject ironObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Iron_Objective_Point", blockDown);
-				new PlayerInput(player, ironObjectivePoint, arenaBuilder);
+			new PlayerInput(player, ironObjectivePoint, arenaBuilder);
 			break;
 			case(EXPLOSION_TRAP):
 				ArenaObject explosionTrap = Codari.INSTANCE.getArenaManager().createObjecto("Explosion_Trap", blockDown);
-				new PlayerInput(player, explosionTrap, arenaBuilder);
+			new PlayerInput(player, explosionTrap, arenaBuilder);
 			break;
 			case(FIRE_TRAP):
 				ArenaObject fireTrap = Codari.INSTANCE.getArenaManager().createObjecto("Fire_Trap", blockDown);
-				new PlayerInput(player, fireTrap, arenaBuilder);
+			new PlayerInput(player, fireTrap, arenaBuilder);
 			break;
 			case(POISON_SNARE_TRAP):
 				ArenaObject poisonSnareTrap = Codari.INSTANCE.getArenaManager().createObjecto("Poison_Snare_Trap", blockDown);
-				new PlayerInput(player, poisonSnareTrap, arenaBuilder);
+			new PlayerInput(player, poisonSnareTrap, arenaBuilder);
 			break;
 			case(GATE):
 				ArenaObject gate = Codari.INSTANCE.getArenaManager().createObjecto("Gate", blockDown);
@@ -96,7 +95,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 		private Player player;
 		private ArenaObject arenaObject;
 		private ArenaBuilder arenaBuilder;
-		
+
 		private boolean playerInputNeeded;
 		private String objectType;
 
@@ -131,11 +130,9 @@ public class ArenaDevelopmentKitListener implements Listener {
 						objectType = "Fixed Spawnable Object";
 						player.sendMessage(fixedSpawnableObjectMessage);
 					}
-				} else if(arenaObject instanceof PersistentObject) {
-					if(arenaObject instanceof DelayedPersistentObject) {
-						objectType = "Delayed Persistent Object";
-						player.sendMessage(delayedPersistentObjectMessage);
-					}
+				} else if(arenaObject instanceof DelayedPersistentObject) {
+					objectType = "Delayed Persistent Object";
+					player.sendMessage(delayedPersistentObjectMessage);
 				}				
 				final String playerInputString = e.getMessage();
 				HandlerList.unregisterAll(this);

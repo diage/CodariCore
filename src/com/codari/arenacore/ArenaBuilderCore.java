@@ -26,7 +26,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
 	private final List<FixedSpawnableAction> fixedSpawnables;
 	private final List<ImmediatePersistentObject> immediatePersistentObjects;
-	private final List<DelayedPersistentAction> delayedPersistentObjects;
+	private final List<DelayedPersistentObject> delayedPersistentObjects;
 	
 	//-----Constructor-----//
 	public ArenaBuilderCore(GameRule rules) {
@@ -44,6 +44,11 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		actions.addAll(this.randomSpawnables.values());
 		actions.addAll(this.fixedSpawnables);
 		return actions;
+	}
+	
+	@Override
+	public GameRule getGameRule() {
+		return this.rules;
 	}
 	
 	@Override
@@ -90,9 +95,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	@Override
-	public boolean registerPersistent(DelayedPersistentObject object, Time time, boolean override) {
-		
-		
+	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
+		this.delayedPersistentObjects.add(delayedPersistentObject);
 		return false;//TODO
 	}
 	

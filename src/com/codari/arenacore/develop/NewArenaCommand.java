@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.codari.arenacore.ArenaBuilderCore;
 import com.codari.arenacore.ArenaCore;
 import com.codari.arenacore.rules.GameRuleCore;
+import com.codari.arenacore.rules.winconditions.WinCondition2v2;
 
 public class NewArenaCommand implements CommandExecutor {
 	@Override
@@ -16,11 +17,14 @@ public class NewArenaCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			String arenaName = args[0];
 			
-			//DA CHAIN OF COMMAND
+			//Setting up the 2v2 Arena
+			int teamSize = 2;
+			int numberOfPointsToWin = 100;
+			
 			GameRuleCore gameRule = new GameRuleCore();
 			gameRule.setMatchDurationInfinite();
-			gameRule.setTeamSize(2);
-			//gameRule.addWinCondition(winConditionCore);
+			gameRule.setTeamSize(teamSize);
+			gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
 			ArenaBuilderCore builder = new ArenaBuilderCore(gameRule);
 			new ArenaCore(arenaName, builder);
 			player.sendMessage("You have created a new 2v2 arena named " + args[0]);

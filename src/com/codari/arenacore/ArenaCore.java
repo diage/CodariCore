@@ -17,7 +17,7 @@ public final class ArenaCore implements Arena {
 	private final ArenaBuilderCore builder;
 	private final Map<String, Team> teams;
 	
-	//-----Constructor-----//
+	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
 		this.name = name;
 		this.builder = builder;
