@@ -12,12 +12,12 @@ import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.TimedAction;
-import com.codari.arena5.rules.WinCondition;
+import com.codari.arena5.rules.WinConditionTemplate;
 import com.codari.arena5.rules.roles.RoleDelegation;
 
 public class GameRuleCore implements GameRule {
 	//-----Fields-----//
-	private final List<WinCondition> winConditions;
+	private final List<WinConditionTemplate> winConditions;
 	private Time matchDuration;
 	private final Set<TimedAction> timedActions;
 	private int teamSize;
@@ -36,12 +36,12 @@ public class GameRuleCore implements GameRule {
 	}
 	
 	@Override
-	public void addWinCondition(WinCondition winCondition) {
+	public void addWinCondition(WinConditionTemplate winCondition) {
 		this.addWinCondition(winCondition, Time.NULL, true);
 	}
 	
 	@Override
-	public boolean addWinCondition(WinCondition winCondition, Time time, boolean after) {
+	public boolean addWinCondition(WinConditionTemplate winCondition, Time time, boolean after) {
 		if (this.addAction(new WinConditionAction(time, winCondition, after))) {
 			this.winConditions.add(winCondition);
 			return true;
@@ -50,7 +50,7 @@ public class GameRuleCore implements GameRule {
 	}
 	
 	@Override
-	public void removeWinCondition(WinCondition winCondition) {
+	public void removeWinCondition(WinConditionTemplate winCondition) {
 		this.winConditions.remove(winCondition);
 	}
 	
@@ -80,7 +80,7 @@ public class GameRuleCore implements GameRule {
 	}
 
 	@Override
-	public Collection<WinCondition> getWinConditions() {
+	public Collection<WinConditionTemplate> getWinConditions() {
 		return this.winConditions;
 	}
 
@@ -111,11 +111,11 @@ public class GameRuleCore implements GameRule {
 	//-----Win Condition Action-----//
 	private final static class WinConditionAction extends TimedAction {
 		//-----Fields-----//
-		private final WinCondition winCond;
+		private final WinConditionTemplate winCond;
 		private final boolean after;
 		private final Time delay;
 		
-		public WinConditionAction(Time delay, WinCondition winCond, boolean after) {
+		public WinConditionAction(Time delay, WinConditionTemplate winCond, boolean after) {
 			super(null, Time.ONE_TICK);
 			this.winCond = winCond;
 			this.after = after;
