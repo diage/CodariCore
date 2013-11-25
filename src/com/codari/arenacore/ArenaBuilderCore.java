@@ -46,6 +46,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		return actions;
 	}
 	
+	@Override
 	public GameRule getGameRule() {
 		return this.rules;
 	}
