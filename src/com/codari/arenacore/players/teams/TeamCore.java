@@ -3,6 +3,8 @@ package com.codari.arenacore.players.teams;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.entity.Player;
+
 import com.codari.arena5.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
@@ -58,6 +60,16 @@ public class TeamCore implements Team {
 			tempList.remove(combatant);
 		}
 		return tempList;
+	}
+	
+	@Override 
+	public List<Player> getPlayers() {
+		List<Player> players = new ArrayList<>();
+		for(Combatant combatant: combatants) {
+			Player player = combatant.getPlayerReference().getPlayer();
+			players.add(player);
+		}
+		return players;
 	}
 	
 	@Override
