@@ -23,6 +23,12 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 			Combatant invitedCombatant = Codari.INSTANCE.getArenaManager().getCombatant(invitedPlayer);
 			TeamCore invitedPlayerTeam = (TeamCore) invitedCombatant.getTeam();
 			
+			//Checks if it's not a valid player
+			if(invitedPlayer == null) {
+				player.sendMessage("Could not find the player named " + "\"" + args[0] + "\".");
+				return true;
+			}
+			
 			//Checks if player is already on a team
 			if(invitedPlayerTeam != null) {
 				player.sendMessage(invitedPlayer.getName() + " is already on a team.");
