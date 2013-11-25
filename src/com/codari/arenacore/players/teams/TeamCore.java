@@ -52,6 +52,10 @@ public class TeamCore implements Team {
 		return this.teamName;
 	}
 	
+	@Override
+	public boolean equals(Team other) {	//Made by Mhenlo - check if better method available
+		return this.getTeamName().equals(other.getTeamName());
+	}
 	
 	@Override
 	public List<Combatant> getTeamMates(Combatant combatant) {
