@@ -5,10 +5,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.codari.api5.Codari;
 import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.Arena;
 import com.codari.arenacore.ArenaBuilderCore;
-import com.codari.arenacore.ArenaCore;
 import com.codari.arenacore.rules.GameRuleCore;
 
 public class NewArenaCommand implements CommandExecutor {
@@ -28,7 +28,7 @@ public class NewArenaCommand implements CommandExecutor {
 			gameRule.setTeamSize(teamSize);
 			gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
 			ArenaBuilderCore builder = new ArenaBuilderCore(gameRule);
-			Arena arenaCore = new ArenaCore(arenaName, builder);
+			Arena arenaCore = Codari.INSTANCE.getArenaManager().buildArena(arenaName, builder);
 			player.sendMessage("You have created a new 2v2 arena named " + args[0]);
 			return true;
 		}

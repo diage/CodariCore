@@ -64,9 +64,10 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public Arena buildArena(ArenaBuilder arenaBuilder, String requestedName) {
-		
-		return null;
+	public Arena buildArena(String requestedName, ArenaBuilder arenaBuilder) {
+		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
+		arenas.put(requestedName, arena);
+		return arena;
 	}
 
 	@Override

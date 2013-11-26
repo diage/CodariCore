@@ -16,7 +16,6 @@ public class TeamCore implements Team {
 	protected final List<Combatant> combatants;
 	private Arena arena;
 	private String teamName;
-	private int teamSize;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
