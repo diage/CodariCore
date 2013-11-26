@@ -28,12 +28,14 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, Combatant> combatants;
 	private final Map<String, ArenaCore> arenas;
 	private final Map<String, Class<? extends ArenaObject>> objectos;
+	private final Map<String, ArenaBuilderCore> arenaBuilders;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
 		this.combatants = new HashMap<>();
 		this.arenas = new HashMap<>();
 		this.objectos = new HashMap<>();
+		this.arenaBuilders = new HashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
 	}
 	
@@ -61,6 +63,14 @@ public class ArenaManagerCore implements ArenaManager {
 	@Override
 	public ArenaCore getArena(String name) {
 		return this.arenas.get(name);
+	}
+	
+	public void addArenaBuilder(String playerName, ArenaBuilderCore arenaBuilder) {
+		this.arenaBuilders.put(playerName, arenaBuilder);
+	}
+	
+	public ArenaBuilderCore getArenaBuilder(String playerName) {
+		return this.arenaBuilders.get(playerName);
 	}
 
 	@Override
