@@ -90,44 +90,4 @@ public class Debugger implements Listener {
 			}
 		}
 	}
-	
-	@EventHandler
-	public void arenaMakerCommand(PlayerChatEvent e) {
-		if (e.getMessage().equalsIgnoreCase("-FIGHT-")) {
-			Player[] players = Bukkit.getOnlinePlayers();
-			Combatant[] c = new Combatant[players.length];
-			for (int i = 0; i < players.length; i++) {
-				c[i] = Codari.INSTANCE.getArenaManager().getCombatant(players[i]);
-				players[i].sendMessage("FIGHT!");
-			}
-			CodariCore.instance().getArenaManager().tempBuildArena(c);
-		}
-	}
-	
-	@EventHandler
-	public void test1(PlayerKickEvent e) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER KICK @@@@@@@@@@@@@@@@@@@@@@@");
-		Bukkit.getScheduler().runTask(Codari.INSTANCE, new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER KICK 1 TICK @@@@@@@@@@@@@@@@@@@@@@@");
-			}
-		});
-	}
-	
-	@EventHandler
-	public void test1(PlayerQuitEvent e) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER QUIT @@@@@@@@@@@@@@@@@@@@@@@");
-		Bukkit.getScheduler().runTask(Codari.INSTANCE, new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@ PLAYER QUIT 1 TICK @@@@@@@@@@@@@@@@@@@@@@@");
-			}
-		});
-	}
-	
-	public static void main(String[] args) {
-		ArenaObjectName objectName = ExplosionTrap.class.getAnnotation(ArenaObjectName.class);
-		String name = objectName.value();
-	}
 }

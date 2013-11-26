@@ -1,6 +1,5 @@
 package com.codari.arenacore;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +19,6 @@ import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arena5.players.teams.TeamColor;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
@@ -30,9 +28,6 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, Combatant> combatants;
 	private final Map<String, ArenaCore> arenas;
 	private final Map<String, Class<? extends ArenaObject>> objectos;
-	
-	//TODO
-	private Arena onlyArena = null;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
@@ -87,10 +82,6 @@ public class ArenaManagerCore implements ArenaManager {
 	@Override
 	public Team getTeam(Combatant combatant) {
 		return combatant.getTeam();
-	}
-	
-	public void tempBuildArena(Combatant...combatants) {
-		this.onlyArena = new ArenaCore("NEVER MORE THAN ONE ARENA!!", combatants);
 	}
 
 	@Override
