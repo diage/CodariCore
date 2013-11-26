@@ -74,9 +74,9 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	private void setInstanceAccess(boolean accessible) {
 		try {
 			if (accessible) {
-				Reflector.setStaticField(Codari.class, "INSTANCE", this, true);
+				Reflector.writeStaticField(Codari.class, "INSTANCE", this);
 			} else {
-				Reflector.setStaticField(Codari.class, "INSTANCE", null, true);
+				Reflector.writeStaticField(Codari.class, "INSTANCE", null);
 			}
 		} catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
 			throw new CodariException("Failed to set instance access", ex);

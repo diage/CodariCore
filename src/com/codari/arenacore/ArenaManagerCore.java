@@ -113,7 +113,7 @@ public class ArenaManagerCore implements ArenaManager {
 			return null;
 		}
 		try {
-			return Reflector.constructClass(clazz, location).getAs(ArenaObject.class);
+			return Reflector.invokeConstructor(clazz, location).fetchAs(ArenaObject.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
 			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
