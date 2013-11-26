@@ -53,8 +53,12 @@ public class TeamCore implements Team {
 	}
 	
 	@Override
-	public boolean equals(Team other) {	//Made by Mhenlo - check if better method available
-		return this.getTeamName().equals(other.getTeamName());
+	public boolean equals(Object obj) {
+		if (obj instanceof Team) {
+			Team other = (Team) obj;//You are not aloud to change the types of arguments for methods you override
+			return this.getTeamName().equals(other.getTeamName());
+		}
+		return false;
 	}
 	
 	@Override
