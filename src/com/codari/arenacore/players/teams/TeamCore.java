@@ -16,7 +16,7 @@ public class TeamCore implements Team {
 	protected final List<Combatant> combatants;
 	private Arena arena;
 	private String teamName;
-	private boolean isLeader;
+	private int teamSize;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
@@ -55,7 +55,7 @@ public class TeamCore implements Team {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Team) {
-			Team other = (Team) obj;//You are not aloud to change the types of arguments for methods you override
+			Team other = (Team) obj;
 			return this.getTeamName().equals(other.getTeamName());
 		}
 		return false;
@@ -91,14 +91,19 @@ public class TeamCore implements Team {
 		combatant.setTeam(null);
 		this.combatants.remove(combatant);
 	}
+	
+	@Override
+	public int getTeamSize() {
+		return this.combatants.size();
+	}
 
 	@Override
 	public void setLeader(Combatant combatant) {
-		this.isLeader = true;
+		combatant.setLeader(true);
 	}
 
 	@Override
 	public boolean isLeader(Combatant combatant) {
-		return this.isLeader;
+		return combatant.checkIfLeader();
 	}
 }

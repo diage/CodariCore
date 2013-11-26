@@ -1,6 +1,7 @@
 package com.codari.arenacore.players.teams.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,14 +21,15 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 			TeamCore team = (TeamCore) combatant.getTeam();			
 			
 			Player invitedPlayer = Bukkit.getPlayer(args[0]);
-			Combatant invitedCombatant = Codari.INSTANCE.getArenaManager().getCombatant(invitedPlayer);
-			TeamCore invitedPlayerTeam = (TeamCore) invitedCombatant.getTeam();
 			
 			//Checks if it's not a valid player
 			if(invitedPlayer == null) {
-				player.sendMessage("Could not find the player named " + "\"" + args[0] + "\".");
+				player.sendMessage(ChatColor.RED + "Could not find the player named " + ChatColor.BOLD + "\""  + args[0] + "\".");
 				return true;
 			}
+			
+			Combatant invitedCombatant = Codari.INSTANCE.getArenaManager().getCombatant(invitedPlayer);
+			TeamCore invitedPlayerTeam = (TeamCore) invitedCombatant.getTeam();
 			
 			//Checks if player is already on a team
 			if(invitedPlayerTeam != null) {
@@ -39,7 +41,7 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 				//Method so that player could accept or decline invite here
 				
 				if(true/*invited player accepted the invite*/) {
-					TeamBuilder.invitePlayer(team, invitedPlayer);
+					TeamBuilder.addPlayer(team, invitedPlayer);
 					player.sendMessage(invitedPlayer.getName() + " has joined your team.");
 				}
 				return true;				

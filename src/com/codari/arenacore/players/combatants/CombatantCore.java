@@ -28,6 +28,7 @@ public final class CombatantCore implements Combatant {
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
+	private boolean isLeader;
 	
 	//-----Constructor-----//
 	public CombatantCore(PlayerReference playerReference) {
@@ -119,5 +120,15 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public void setTeam(Team team) {
 		this.team = (TeamCore) team;
+	}
+	
+	@Override
+	public void setLeader(boolean isLeader) {
+		this.isLeader = isLeader;
+	}
+	
+	@Override
+	public boolean checkIfLeader() {
+		return this.isLeader;
 	}
 }
