@@ -72,8 +72,18 @@ public class PlayerRole implements Role {
 	}
 
 	@Override
-	public void swapRole(Role role) {
-		this.role = role;
+	public Role swapRole(Role role) {
+		Role tempRole = this.role;
+		if(role instanceof PlayerRole) {
+			this.role = ((PlayerRole) role).getInteriorRole();
+		} else {
+			this.role = role;
+		}
+		return tempRole;
+	}
+	
+	public Role getInteriorRole() {
+		return this.role;
 	}
 	
 	private void startCooldown() {

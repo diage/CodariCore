@@ -54,7 +54,7 @@ public class RoleCore implements Role {
 	}
 
 	@Override
-	public void swapRole(Role role) {
-		//THIS DOES NOTHING!!!
+	public Role swapRole(Role role) {
+		return null;
 	}
 }
