@@ -15,12 +15,20 @@ public class PlayerRole implements Role {
 	private Role role;
 	
 	public PlayerRole(Role role) {
-		this.role = role;
+		if(role instanceof PlayerRole) {
+			this.role = ((PlayerRole) role).getInteriorRole();
+		} else {
+			this.role = role;
+		}
 		this.MAX_COOLDOWN = 20;
 	}
 	
 	public PlayerRole(Role role, int cooldown) {
-		this.role = role;
+		if(role instanceof PlayerRole) {
+			this.role = ((PlayerRole) role).getInteriorRole();
+		} else {
+			this.role = role;
+		}
 		this.MAX_COOLDOWN = cooldown;
 	}
 	
