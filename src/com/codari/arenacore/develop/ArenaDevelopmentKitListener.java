@@ -13,6 +13,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
+import com.codari.arena.objects.role.delegation.MeleeRoleDelegation;
+import com.codari.arena.objects.role.delegation.RandomRoleDelegation;
+import com.codari.arena.objects.role.delegation.RangedRoleDelegation;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
@@ -36,6 +39,9 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int FIRE_TRAP = ITEM_SPAWNER_SLOT + 7;
 	private final int POISON_SNARE_TRAP = ITEM_SPAWNER_SLOT + 8;
 	private final int GATE = ITEM_SPAWNER_SLOT + 9;
+	private final int MELEE_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 10;
+	private final int RANGED_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 11;
+	private final int RANDOM_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 12;
 
 	public ArenaDevelopmentKitListener(Arena arena) {
 		this.arenaBuilder = arena.getArenaBuilder();
@@ -51,11 +57,11 @@ public class ArenaDevelopmentKitListener implements Listener {
 			switch(clickedSlot) {
 			case(ITEM_SPAWNER_SLOT):
 				ArenaObject itemSpawner = Codari.INSTANCE.getArenaManager().createObjecto("Item_Spawner", blockDown);	
-			new PlayerInput(player, itemSpawner, arenaBuilder);
+				new PlayerInput(player, itemSpawner, arenaBuilder);
 			break;
 			case(DIAMOND_OBJECTIVE_POINT):
 				ArenaObject diamondObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Diamond_Objective_Point", blockDown);
-			new PlayerInput(player, diamondObjectivePoint, arenaBuilder);
+				new PlayerInput(player, diamondObjectivePoint, arenaBuilder);
 			break;
 			case(EMERALD_OBJECTIVE_POINT):
 				ArenaObject emeraldObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Emerald_Objective_Point", blockDown);
@@ -63,28 +69,37 @@ public class ArenaDevelopmentKitListener implements Listener {
 			break;
 			case(GOLD_OBJECTIVE_POINT):
 				ArenaObject goldObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Gold_Objective_Point", blockDown);
-			new PlayerInput(player, goldObjectivePoint, arenaBuilder);
+				new PlayerInput(player, goldObjectivePoint, arenaBuilder);
 			break;
 			case(IRON_OBJECTIVE_POINT):
 				ArenaObject ironObjectivePoint = Codari.INSTANCE.getArenaManager().createObjecto("Iron_Objective_Point", blockDown);
-			new PlayerInput(player, ironObjectivePoint, arenaBuilder);
+				new PlayerInput(player, ironObjectivePoint, arenaBuilder);
 			break;
 			case(EXPLOSION_TRAP):
 				ArenaObject explosionTrap = Codari.INSTANCE.getArenaManager().createObjecto("Explosion_Trap", blockDown);
-			new PlayerInput(player, explosionTrap, arenaBuilder);
+				new PlayerInput(player, explosionTrap, arenaBuilder);
 			break;
 			case(FIRE_TRAP):
 				ArenaObject fireTrap = Codari.INSTANCE.getArenaManager().createObjecto("Fire_Trap", blockDown);
-			new PlayerInput(player, fireTrap, arenaBuilder);
+				new PlayerInput(player, fireTrap, arenaBuilder);
 			break;
 			case(POISON_SNARE_TRAP):
 				ArenaObject poisonSnareTrap = Codari.INSTANCE.getArenaManager().createObjecto("Poison_Snare_Trap", blockDown);
-			new PlayerInput(player, poisonSnareTrap, arenaBuilder);
+				new PlayerInput(player, poisonSnareTrap, arenaBuilder);
 			break;
 			case(GATE):
 				ArenaObject gate = Codari.INSTANCE.getArenaManager().createObjecto("Gate", blockDown);
-			this.arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
+				this.arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
 			break;
+			case(MELEE_ROLE_DELEGATION):
+				new	MeleeRoleDelegation(player);
+				break;
+			case(RANGED_ROLE_DELEGATION): 
+				new	RangedRoleDelegation(player);
+				break;
+			case(RANDOM_ROLE_DELEGATION): 
+				new	RandomRoleDelegation(player);
+				break;			
 			}
 		}	
 
