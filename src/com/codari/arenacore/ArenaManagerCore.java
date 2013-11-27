@@ -18,10 +18,12 @@ import com.codari.arena5.ArenaManager;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
+import com.codari.arenacore.players.role.RoleCore;
 
 public class ArenaManagerCore implements ArenaManager {
 	//-----Fields-----//
@@ -29,6 +31,7 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, ArenaCore> arenas;
 	private final Map<String, Class<? extends ArenaObject>> objectos;
 	private final Map<String, ArenaBuilderCore> arenaBuilders;
+	private final Map<String, Role> roleTemplates;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
@@ -36,6 +39,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenas = new HashMap<>();
 		this.objectos = new HashMap<>();
 		this.arenaBuilders = new HashMap<>();
+		this.roleTemplates = new HashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
 	}
 	
@@ -48,6 +52,16 @@ public class ArenaManagerCore implements ArenaManager {
 			this.combatants.put(name, combatant);
 		}
 		return combatant;
+	}
+	
+	@Override
+	public Role getNewRole(String name) {
+		return new RoleCore(name);
+	}
+	
+	@Override
+	public void submitRole(Role role) {
+		this.roleTemplates.put(role.getName(), role);
 	}
 	
 	@Override

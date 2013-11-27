@@ -13,6 +13,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public final class CombatantCore implements Combatant {
@@ -114,7 +115,7 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public void setRole(Role role) {
-		this.role = role;
+		this.role = new PlayerRole(role);
 	}
 
 	@Override
