@@ -56,12 +56,20 @@ public class ArenaManagerCore implements ArenaManager {
 	
 	@Override
 	public Role getNewRole(String name) {
-		return new RoleCore(name);
+		if(!this.roleTemplates.containsKey(name)) {
+			return new RoleCore(name);
+		}
+		return null;
 	}
 	
 	@Override
 	public void submitRole(Role role) {
 		this.roleTemplates.put(role.getName(), role);
+	}
+	
+	@Override
+	public Role getExistingRole(String name) {
+		return this.roleTemplates.get(name);
 	}
 	
 	@Override
