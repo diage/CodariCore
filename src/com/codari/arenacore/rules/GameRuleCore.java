@@ -13,6 +13,7 @@ import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.TimedAction;
 import com.codari.arena5.rules.WinConditionTemplate;
+import com.codari.arena5.rules.roles.RoleDeclaration;
 import com.codari.arena5.rules.roles.RoleDelegation;
 
 public class GameRuleCore implements GameRule {
@@ -132,5 +133,17 @@ public class GameRuleCore implements GameRule {
 				}
 			}, delay.ticks());
 		}
+	}
+
+	@Override
+	public boolean addRoleDeclaration(RoleDeclaration roleDeclaration) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public RoleDeclaration getRoleDeclaration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
