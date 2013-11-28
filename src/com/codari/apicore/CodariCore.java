@@ -10,6 +10,7 @@ import com.codari.api5.util.reflect.Reflector;
 import com.codari.apicore.metadata.MetadataManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arenacore.ArenaManagerCore;
+import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
@@ -26,6 +27,7 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	private MetadataManagerCore metadataManager;
 	private ArenaManagerCore arenaManager;
 	private StatFactoryCore statFactory;
+	private LibraryCore library;
 	
 	//-----Enabler-----//
 	@Override
@@ -35,6 +37,7 @@ public final class CodariCore extends JavaPlugin implements Codari {
 		this.staticInitialization();
 		this.arenaManager = new ArenaManagerCore();
 		this.statFactory = new StatFactoryCore();
+		this.library = new LibraryCore(); 
 		
 		//-----Commands-----//
 		super.getCommand("new2v2arena").setExecutor(new NewArenaCommand());
@@ -68,6 +71,11 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	@Override
 	public StatFactoryCore getStatFactory() {
 		return this.statFactory;
+	}
+	
+	@Override
+	public LibraryCore getLibrary() {
+		return this.library;
 	}
 	
 	//-----Private Methods-----//

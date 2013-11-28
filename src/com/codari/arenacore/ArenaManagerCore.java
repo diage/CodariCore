@@ -41,7 +41,6 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenaBuilders = new HashMap<>();
 		this.roleGroups = new HashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
-		
 	}
 	
 	//-----Public Methods-----//
@@ -143,6 +142,7 @@ public class ArenaManagerCore implements ArenaManager {
 	
 	//----ArenaObject Related----//
 	@Override
+	@Deprecated
 	public void registerArenaObject(Class<? extends ArenaObject> clazz) {
 		ArenaObjectName objectName = clazz.getAnnotation(ArenaObjectName.class);
 		if (objectName == null) {
@@ -156,6 +156,7 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
+	@Deprecated
 	public ArenaObject createObject(String name, Location location) {
 		Class<? extends ArenaObject> clazz = this.objects.get(name);
 		if (clazz == null) {
