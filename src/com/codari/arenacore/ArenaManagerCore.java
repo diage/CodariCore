@@ -130,6 +130,8 @@ public class ArenaManagerCore implements ArenaManager {
 		return new ArenaBuilderCore(gameRule);
 	}
 	
+	//TODO: What are these for??
+	//VVVVVVVVVVVVVVVVV
 	public void addArenaBuilder(String playerName, ArenaBuilderCore arenaBuilder) {
 		this.arenaBuilders.put(playerName, arenaBuilder);
 	}
@@ -137,7 +139,8 @@ public class ArenaManagerCore implements ArenaManager {
 	public ArenaBuilderCore getArenaBuilder(String playerName) {
 		return this.arenaBuilders.get(playerName);
 	}
-
+	//^^^^^^^^^^^^^^^^^^
+	
 	//----ArenaObject Related----//
 	@Override
 	public void registerArenaObject(Class<? extends ArenaObject> clazz) {

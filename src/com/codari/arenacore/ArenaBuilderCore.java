@@ -17,7 +17,7 @@ import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.rules.GameRule;
-import com.codari.arena5.rules.TimedAction;
+import com.codari.arena5.rules.timedaction.TimedAction;
 
 public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//

@@ -1,11 +1,11 @@
-package com.codari.arenacore.rules.roles;
+package com.codari.arenacore.rules.roledelegation;
 
 import java.util.Collection;
 import java.util.List;
 
 import com.codari.arena5.objects.persistant.RoleSelectionObject;
-import com.codari.arena5.rules.roles.RoleDelegation;
-import com.codari.arena5.rules.roles.RoleDelegationType;
+import com.codari.arena5.rules.roledelegation.RoleDelegation;
+import com.codari.arena5.rules.roledelegation.RoleDelegationType;
 
 public class RoleDelegationCore implements RoleDelegation {
 	private RoleDelegationType roleDelegationType;

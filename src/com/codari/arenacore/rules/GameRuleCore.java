@@ -11,10 +11,10 @@ import org.bukkit.Bukkit;
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
-import com.codari.arena5.rules.TimedAction;
-import com.codari.arena5.rules.WinConditionTemplate;
-import com.codari.arena5.rules.roles.RoleDeclaration;
-import com.codari.arena5.rules.roles.RoleDelegation;
+import com.codari.arena5.rules.roledelegation.RoleDeclaration;
+import com.codari.arena5.rules.roledelegation.RoleDelegation;
+import com.codari.arena5.rules.timedaction.TimedAction;
+import com.codari.arena5.rules.wincondition.WinConditionTemplate;
 
 public class GameRuleCore implements GameRule {
 	//-----Fields-----//
