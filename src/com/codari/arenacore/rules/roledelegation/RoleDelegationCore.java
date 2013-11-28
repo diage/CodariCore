@@ -14,7 +14,6 @@ public class RoleDelegationCore implements RoleDelegation {
 	@Override
 	public void setRoleDelegationType(RoleDelegationType roleDelegationType) {
 		this.roleDelegationType = roleDelegationType;
-		
 	}
 
 	@Override
@@ -40,7 +39,6 @@ public class RoleDelegationCore implements RoleDelegation {
 			if(roleSelectionObjects.size() == 0) {
 				return false;
 			}
-		case SELECT_BEFORE:
 		case RANDOM:
 			return true;
 		default:

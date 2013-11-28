@@ -1,22 +1,14 @@
 package com.codari.arenacore;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
-import com.codari.api5.CodariI;
 import com.codari.api5.util.PlayerReference;
-import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.ArenaManager;
-import com.codari.arena5.objects.ArenaObject;
-import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
@@ -29,7 +21,6 @@ public class ArenaManagerCore implements ArenaManager {
 	//-----Fields-----//
 	private final Map<String, Combatant> combatants;
 	private final Map<String, ArenaCore> arenas;
-	private final Map<String, Class<? extends ArenaObject>> objects;
 	private final Map<String, ArenaBuilderCore> arenaBuilders;
 	private final Map<String, ArenaRoleGroup> roleGroups;
 	
@@ -37,7 +28,6 @@ public class ArenaManagerCore implements ArenaManager {
 	public ArenaManagerCore() {
 		this.combatants = new HashMap<>();
 		this.arenas = new HashMap<>();
-		this.objects = new HashMap<>();
 		this.arenaBuilders = new HashMap<>();
 		this.roleGroups = new HashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
@@ -139,38 +129,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenaBuilders.get(playerName);
 	}
 	//^^^^^^^^^^^^^^^^^^
-	
-	//----ArenaObject Related----//
-	@Override
-	@Deprecated
-	public void registerArenaObject(Class<? extends ArenaObject> clazz) {
-		ArenaObjectName objectName = clazz.getAnnotation(ArenaObjectName.class);
-		if (objectName == null) {
-			throw new IllegalArgumentException("Arena Object does not contain requested object");
-		}
-		String name = objectName.value();
-		if (objects.containsKey(name)) {
-			throw new IllegalArgumentException("Arena Object named " + name + " already exists");
-		}
-		this.objects.put(name, clazz);
-	}
 
-	@Override
-	@Deprecated
-	public ArenaObject createObject(String name, Location location) {
-		Class<? extends ArenaObject> clazz = this.objects.get(name);
-		if (clazz == null) {
-			return null;
-		}
-		try {
-			return Reflector.invokeConstructor(clazz, location).fetchAs(ArenaObject.class);
-		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException ex) {
-			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
-			return null;
-		}
-	}
-	
 	public class ArenaRoleGroup {
 		private Map<String, Role> roleGroup;
 		
