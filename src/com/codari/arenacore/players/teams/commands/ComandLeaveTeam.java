@@ -21,6 +21,9 @@ public class ComandLeaveTeam implements CommandExecutor {
 			if(team != null) {	
 				TeamBuilder.removePlayer(team, player);
 				player.sendMessage("You have left " + "\"" + team.getTeamName() + "\"." );
+				for(Player teamate : team.getPlayers()) {
+					teamate.sendMessage("\"" + player.getName() + "\" has left your team.");
+				}
 				return true;
 			} else {
 				player.sendMessage("You have not left any team because you were not part of any team.");
