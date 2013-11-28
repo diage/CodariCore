@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.arena5.players.combatants.Combatant;
 
 
@@ -50,8 +50,8 @@ public class TeamSelect implements Listener {
 	
 	@EventHandler()
 	public void onPlayerRightClickTeam(InventoryClickEvent e) {
-		Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant((Player)e.getWhoClicked());
-		if(Codari.INSTANCE.getArenaManager().getTeam(combatant) == null) {
+		Combatant combatant = CodariI.INSTANCE.getArenaManager().getCombatant((Player)e.getWhoClicked());
+		if(CodariI.INSTANCE.getArenaManager().getTeam(combatant) == null) {
 			if(e.isRightClick()) {
 				if(e.getSlot() == randomTeamSelectItemStack) {
 					joinRandomTeam(combatant);

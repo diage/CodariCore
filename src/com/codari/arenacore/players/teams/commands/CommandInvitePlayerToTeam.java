@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -17,7 +17,7 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("invite") && args.length == 1) {
 			Player player = (Player) sender;
-			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
+			Combatant combatant = CodariI.INSTANCE.getArenaManager().getCombatant(player);
 			TeamCore team = (TeamCore) combatant.getTeam();			
 			
 			Player invitedPlayer = Bukkit.getPlayer(args[0]);
@@ -28,7 +28,7 @@ public class CommandInvitePlayerToTeam implements CommandExecutor {
 				return true;
 			}
 			
-			Combatant invitedCombatant = Codari.INSTANCE.getArenaManager().getCombatant(invitedPlayer);
+			Combatant invitedCombatant = CodariI.INSTANCE.getArenaManager().getCombatant(invitedPlayer);
 			TeamCore invitedPlayerTeam = (TeamCore) invitedCombatant.getTeam();
 			
 			//Checks if player is already on a team

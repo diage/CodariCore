@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import org.bukkit.Location;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
 import com.codari.arena5.objects.ArenaObject;
@@ -56,7 +56,7 @@ public class LibraryCore implements Library{
 			return Reflector.invokeConstructor(clazz, location).fetchAs(ArenaObject.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
 		}
 	}
@@ -85,7 +85,7 @@ public class LibraryCore implements Library{
 			return Reflector.invokeConstructor(clazz, location).fetchAs(RoleDeclaration.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
 			return null;
 		}
 	}
@@ -114,7 +114,7 @@ public class LibraryCore implements Library{
 			return Reflector.invokeConstructor(clazz, location).fetchAs(TimedAction.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
 			return null;
 		}
 	}
@@ -143,7 +143,7 @@ public class LibraryCore implements Library{
 			return Reflector.invokeConstructor(clazz, location).fetchAs(WinCondition.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;
 		}
 	}

@@ -4,8 +4,9 @@ import java.io.File;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.io.CodariSerializationException;
 import com.codari.api5.stats.StatManager;
@@ -38,10 +39,10 @@ public final class CombatantCore implements Combatant {
 	public CombatantCore(PlayerReference playerReference) {
 		this.playerReference = playerReference;
 		String dataFilePath = String.format(DATA_FILE_PATH, this.playerReference.getName());
-		this.dataFile = new File(Codari.INSTANCE.getDataFolder(), dataFilePath);
+		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
 		this.reloadData();
-		this.statManager = Codari.INSTANCE.getStatFactory().createStatManager(this);
-		this.role = new PlayerRole(Codari.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
+		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
+		this.role = new PlayerRole(CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 	}
 	
 	//-----Public Methods-----//
@@ -59,7 +60,7 @@ public final class CombatantCore implements Combatant {
 		try {
 			this.data = (CombatantDataCore) CodariSerialization.deserialize(this.dataFile);
 		} catch (CodariSerializationException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, 
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, 
 					"Failed to load combatant data for " + this.playerReference, ex);
 			if (this.data == null) {
 				this.data = new CombatantDataCore();
@@ -71,7 +72,7 @@ public final class CombatantCore implements Combatant {
 		try {
 			CodariSerialization.serialize(this.data, this.dataFile);
 		} catch (CodariSerializationException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, 
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, 
 					"Failed to save combatant data for " + this.playerReference, ex);
 		}
 	}
@@ -88,7 +89,7 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public boolean leaveArena() {
-		Arena arena = Codari.INSTANCE.getArenaManager().getArena(arenaName);
+		Arena arena = CodariI.INSTANCE.getArenaManager().getArena(arenaName);
 		if(arena != null) {
 			//TODO - take combatant out of arena
 			this.arenaName = null;
@@ -140,5 +141,10 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public boolean checkIfLeader() {
 		return this.isLeader;
+	}
+
+	@Override
+	public Player getPlayer() {
+		return this.playerReference.getPlayer();
 	}
 }

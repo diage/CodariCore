@@ -5,7 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -15,7 +15,7 @@ public class ComandLeaveTeam implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("leaveteam") && args.length == 0) {
 			Player player = (Player) sender;
-			Combatant combatant = Codari.INSTANCE.getArenaManager().getCombatant(player);
+			Combatant combatant = CodariI.INSTANCE.getArenaManager().getCombatant(player);
 			TeamCore team = (TeamCore) combatant.getTeam();			
 			
 			if(team != null) {	

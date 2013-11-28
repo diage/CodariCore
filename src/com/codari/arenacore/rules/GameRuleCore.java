@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
@@ -126,7 +126,7 @@ public class GameRuleCore implements GameRule {
 		@Override
 		public void action() {
 			this.winCond.setRegistered(!after);
-			Bukkit.getScheduler().runTaskLater(Codari.INSTANCE, new Runnable() {
+			Bukkit.getScheduler().runTaskLater(CodariI.INSTANCE, new Runnable() {
 				@Override
 				public void run() {
 					winCond.setRegistered(after);

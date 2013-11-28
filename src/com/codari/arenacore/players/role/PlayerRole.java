@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.skills.Skill;
@@ -143,6 +143,6 @@ public class PlayerRole implements Role {
 			}
 		};
 		
-		runner.runTaskTimer(Codari.INSTANCE, 20, 20);
+		runner.runTaskTimer(CodariI.INSTANCE, 20, 20);
 	}
 }

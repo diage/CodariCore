@@ -9,7 +9,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -156,7 +156,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			if (this.override && this.task != null) {
 				this.task.cancel();
 			}
-			this.task = Bukkit.getScheduler().runTaskLater(Codari.INSTANCE, new Runnable() {
+			this.task = Bukkit.getScheduler().runTaskLater(CodariI.INSTANCE, new Runnable() {
 				@Override
 				public void run() {
 					delayedPersistentObject.interact();

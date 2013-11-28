@@ -9,7 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Arena;
@@ -166,7 +166,7 @@ public class ArenaManagerCore implements ArenaManager {
 			return Reflector.invokeConstructor(clazz, location).fetchAs(ArenaObject.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
-			Codari.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
 		}
 	}

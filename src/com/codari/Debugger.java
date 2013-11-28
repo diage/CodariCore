@@ -28,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.BlockIterator;
 
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.PluginUtils;
 import com.codari.apicore.CodariCore;
@@ -45,7 +45,7 @@ public class Debugger implements Listener {
 	private final int NUMBER_OF_TRAPS = 3;
 	
 	public static void debug() {
-		Bukkit.getPluginManager().registerEvents(new Debugger(), Codari.INSTANCE);
+		Bukkit.getPluginManager().registerEvents(new Debugger(), CodariI.INSTANCE);
 		//Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);-
 	}
 	

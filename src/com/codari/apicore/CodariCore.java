@@ -3,7 +3,7 @@ package com.codari.apicore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.codari.Debugger;
-import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.CodariException;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.reflect.Reflector;
@@ -17,10 +17,10 @@ import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
 import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
 import com.codari.arenacore.players.teams.commands.CommandInvitePlayerToTeam;
 
-public final class CodariCore extends JavaPlugin implements Codari {
+public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Static Methods-----//
 	public static CodariCore instance() {
-		return (CodariCore) Codari.INSTANCE;
+		return (CodariCore) CodariI.INSTANCE;
 	}
 	
 	//-----Fields-----//
@@ -82,9 +82,9 @@ public final class CodariCore extends JavaPlugin implements Codari {
 	private void setInstanceAccess(boolean accessible) {
 		try {
 			if (accessible) {
-				Reflector.writeStaticField(Codari.class, "INSTANCE", this);
+				Reflector.writeStaticField(CodariI.class, "INSTANCE", this);
 			} else {
-				Reflector.writeStaticField(Codari.class, "INSTANCE", null);
+				Reflector.writeStaticField(CodariI.class, "INSTANCE", null);
 			}
 		} catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
 			throw new CodariException("Failed to set instance access", ex);
