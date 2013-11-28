@@ -49,8 +49,9 @@ public class RoleCore implements Role {
 	}
 
 	@Override
-	public void addSkill(Skill skill) {
+	public Role addSkill(Skill skill) {
 		this.skills.put(skill.getSkillActivation(), skill);
+		return this;
 	}
 
 	@Override

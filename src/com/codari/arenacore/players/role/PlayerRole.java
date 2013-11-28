@@ -10,9 +10,15 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.skills.Skill;
 
 public class PlayerRole implements Role {
+	private final int DEFAULT_MAX_COOLDOWN = 20;
 	private final int MAX_COOLDOWN;
 	private int cooldown;
 	private Role role;
+	
+	public PlayerRole() {
+		this.role = null;
+		this.MAX_COOLDOWN = this.DEFAULT_MAX_COOLDOWN;
+	}
 	
 	public PlayerRole(Role role) {
 		if(role instanceof PlayerRole) {
@@ -20,7 +26,7 @@ public class PlayerRole implements Role {
 		} else {
 			this.role = role;
 		}
-		this.MAX_COOLDOWN = 20;
+		this.MAX_COOLDOWN = this.DEFAULT_MAX_COOLDOWN;
 	}
 	
 	public PlayerRole(Role role, int cooldown) {
@@ -34,11 +40,17 @@ public class PlayerRole implements Role {
 	
 	@Override
 	public Collection<Skill> getSkills() {
+		if(this.role == null) {
+			return null;
+		}
 		return this.role.getSkills();
 	}
 
 	@Override
 	public void doubleJump(Combatant combatant) {
+		if(this.role == null) {
+			return;
+		}
 		if(this.cooldown == 0) {
 			this.role.doubleJump(combatant);
 			this.startCooldown();
@@ -47,6 +59,9 @@ public class PlayerRole implements Role {
 
 	@Override
 	public void block(Combatant combatant) {
+		if(this.role == null) {
+			return;
+		}
 		if(this.cooldown == 0) {
 			this.role.block(combatant);
 			this.startCooldown();
@@ -55,6 +70,9 @@ public class PlayerRole implements Role {
 
 	@Override
 	public void sprint(Combatant combatant) {
+		if(this.role == null) {
+			return;
+		}
 		if(this.cooldown == 0) {
 			this.role.sprint(combatant);
 			this.startCooldown();
@@ -63,6 +81,9 @@ public class PlayerRole implements Role {
 
 	@Override
 	public void sneak(Combatant combatant) {
+		if(this.role == null) {
+			return;
+		}
 		if(this.cooldown == 0) {
 			this.role.sneak(combatant);
 			this.startCooldown();
@@ -71,12 +92,18 @@ public class PlayerRole implements Role {
 
 	@Override
 	public String getName() {
+		if(this.role == null) {
+			return null;
+		}
 		return this.role.getName();
 	}
 
 	@Override
-	public void addSkill(Skill skill) {
-		this.role.addSkill(skill);
+	public Role addSkill(Skill skill) {
+		if(this.role == null) {
+			return null;
+		}
+		return this.role.addSkill(skill);
 	}
 
 	@Override
@@ -92,6 +119,14 @@ public class PlayerRole implements Role {
 	
 	public Role getInteriorRole() {
 		return this.role;
+	}
+	
+	public void setInteriorRole(Role role) {
+		if(role instanceof PlayerRole) {
+			this.role = ((PlayerRole) role).getInteriorRole();
+		} else {
+			this.role = role;
+		}
 	}
 	
 	private void startCooldown() {
