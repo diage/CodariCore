@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.codari.arenacore.players.menu.MenuSlot;
+import com.codari.arenacore.players.menu.UtilityMenuSlot;
 import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractMenuIcon;
 
 public class PartyIcon extends AbstractMenuIcon {
@@ -29,7 +29,7 @@ public class PartyIcon extends AbstractMenuIcon {
 
 	@Override
 	public final void assignIcons() {
-		for(MenuSlot menuSlot : MenuSlot.values()) {
+		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()) {
 			switch(menuSlot) {
 			//Need to add conditionality to check if person is in party, party leader, etc.
 			case EIGHT:

@@ -3,7 +3,7 @@ package com.codari.arenacore.players.menu.Icon.Interfaces;
 
 import java.util.Map;
 
-import com.codari.arenacore.players.menu.MenuSlot;
+import com.codari.arenacore.players.menu.UtilityMenuSlot;
 import com.codari.arenacore.players.menu.Icon.IconType;
 
 /**
@@ -14,9 +14,9 @@ import com.codari.arenacore.players.menu.Icon.IconType;
 public interface MenuIcon extends Icon {
 	/**
 	 * Method which returns a mapping of menu slots to the icon type which will be there upon clicking this icon.
-	 * @return The map of {@link MenuSlot} to {@link IconType} which this icon will replace.
+	 * @return The map of {@link UtilityMenuSlot} to {@link IconType} which this icon will replace.
 	 */
-	public Map<MenuSlot, IconType> getMenuIcons();
+	public Map<UtilityMenuSlot, IconType> getMenuIcons();
 	/**
 	 * Method to create the icon for the player, this handles the display name and lore.
 	 */
