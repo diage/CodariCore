@@ -1,11 +1,19 @@
 package com.codari.arenacore;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
+
+import com.codari.api5.CodariI;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.rules.timedaction.TimedAction;
 
 
 public final class ArenaCore implements Arena {
@@ -13,12 +21,14 @@ public final class ArenaCore implements Arena {
 	private final String name;
 	private final ArenaBuilderCore builder;
 	private final Map<String, Team> teams;
+	private final Set<BukkitTask> tasks;
 	
 	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
 		this.name = name;
 		this.builder = builder;
 		this.teams = new HashMap<>();
+		this.tasks = new HashSet<>();
 	}
 	
 	//-----Public Methods-----//
@@ -29,11 +39,47 @@ public final class ArenaCore implements Arena {
 
 	@Override
 	public Map<String, Team> getTeams() {
-		return this.teams;
+		return new HashMap<String, Team>(this.teams);
 	}
 	
 	@Override
 	public ArenaBuilder getArenaBuilder() {
 		return this.builder;
+	}
+	
+	@Override
+	public boolean start(Team... teams) {
+		int i = 0;//TODO
+		if (i == 0 /*match not in progress*/) {
+			if (ArrayUtils.isEmpty(teams)) {
+				return false;
+			}
+			//TODO more stuff
+			for (Team team : teams) {
+				this.teams.put(team.getTeamName(), team);
+			}
+			for (TimedAction action : this.builder.compileActions()) {
+				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
+						action.getDelay() != null ? action.getDelay().ticks() : 1l,
+						action.getPeriod() != null ? action.getPeriod().ticks() : 0l));
+				
+			}
+			//TODO more stuff
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void stop() {
+		int i = 0;//TODO
+		if (i == 0 /*match is in progress*/) {
+			//TODO more stuff
+			this.teams.clear();
+			for (BukkitTask task : this.tasks) {
+				task.cancel();
+			}
+			//TODO more stuff
+		}
 	}
 }
