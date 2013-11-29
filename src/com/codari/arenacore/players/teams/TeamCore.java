@@ -46,6 +46,10 @@ public class TeamCore implements Team {
 		return this.arena;
 	}
 	
+	public void setArena(Arena arena) {
+		this.arena = arena;
+	}
+	
 	@Override
 	public String getTeamName() {
 		return this.teamName;
