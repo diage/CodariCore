@@ -1,12 +1,9 @@
 package com.codari.arenacore.players.menu.Icon;
 
-import java.util.List;
-
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import com.codari.arenacore.players.menu.UtilityMenuSlot;
 import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractMenuIcon;
+import com.codari.arenacore.players.menu.menus.FunctionMenu;
+import com.codari.arenacore.players.menu.menus.UtilityMenu;
 
 public class PartyIcon extends AbstractMenuIcon {
 	private static IconType iconConstructor = IconType.PARTY;
@@ -16,6 +13,19 @@ public class PartyIcon extends AbstractMenuIcon {
 		this.playerName = player.getName();
 	}
 
+	@Override
+	public FunctionMenu getFunctionMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UtilityMenu getUtilityMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
 	@Override
 	public final void createIcon() {
 		ItemMeta itemMeta = this.getItemMeta();
@@ -60,7 +70,10 @@ public class PartyIcon extends AbstractMenuIcon {
 				this.menuIcons.put(menuSlot, IconType.EMPTY);
 				break;
 			case NO_SLOT:
+			default:
+				break;
 			}
 		}
 	}
+	*/
 }

@@ -1,4 +1,6 @@
-package com.codari.arenacore.players.menu;
+package com.codari.arenacore.players.menu.slots;
+
+
 
 public enum FunctionMenuSlot implements MenuSlot {
 	A_ONE(27),

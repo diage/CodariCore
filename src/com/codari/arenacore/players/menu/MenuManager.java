@@ -3,8 +3,14 @@ package com.codari.arenacore.players.menu;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.codari.arenacore.players.menu.Abstracts.Menu;
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractIcon;
+import com.codari.arenacore.players.menu.menus.FunctionMenu;
+import com.codari.arenacore.players.menu.menus.Menu;
+import com.codari.arenacore.players.menu.menus.UtilityMenu;
+import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
+import com.codari.arenacore.players.menu.slots.MenuSlot;
+import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
 @SuppressWarnings("deprecation")
 public class MenuManager {
@@ -12,8 +18,8 @@ public class MenuManager {
 	private FunctionMenu functionMenu;
 	private UtilityMenu utilityMenu;
 	
-	public MenuManager(Player player) {
-		this.player = player;
+	public MenuManager(Combatant combatant) {
+		this.player = combatant.getPlayer();
 		this.functionMenu = new FunctionMenu();
 		this.utilityMenu = new UtilityMenu();
 	}
@@ -37,6 +43,7 @@ public class MenuManager {
 			this.utilityMenu.setSlot(menuSlot, icon);
 			playerInventory.setItem(((UtilityMenuSlot) menuSlot).getSlot(), icon);
 		}
+		this.player.updateInventory();
 	}
 	
 	private void resetFunctionMenu() {

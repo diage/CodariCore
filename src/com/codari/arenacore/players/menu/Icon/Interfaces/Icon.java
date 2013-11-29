@@ -1,4 +1,5 @@
 package com.codari.arenacore.players.menu.Icon.Interfaces;
+
 /**
  * Interface which represents a basic icon, should be what is generally referenced in code.
  * @author Diage, Soren025

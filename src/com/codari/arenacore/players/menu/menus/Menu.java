@@ -1,7 +1,9 @@
-package com.codari.arenacore.players.menu.Abstracts;
+package com.codari.arenacore.players.menu.menus;
 
-import com.codari.arenacore.players.menu.MenuSlot;
+import java.util.Map;
+
 import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractIcon;
+import com.codari.arenacore.players.menu.slots.MenuSlot;
 
 
 /**
@@ -24,4 +26,6 @@ public interface Menu {
 	 * @param icon The icon to set at the menu slot.
 	 */
 	public void setSlot(MenuSlot menuSlot, AbstractIcon icon);
+	
+	public void setMenu(Map<MenuSlot, AbstractIcon> icons);
 }

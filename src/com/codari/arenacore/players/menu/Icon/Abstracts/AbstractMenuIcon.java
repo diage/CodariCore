@@ -6,9 +6,9 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.codari.arenacore.players.menu.UtilityMenuSlot;
 import com.codari.arenacore.players.menu.Icon.IconType;
 import com.codari.arenacore.players.menu.Icon.Interfaces.MenuIcon;
+import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
 /**
  * Class which represents an icon that turns into a menu.
@@ -30,15 +30,16 @@ public abstract class AbstractMenuIcon extends AbstractIcon implements MenuIcon{
 	public AbstractMenuIcon(int itemID, Player player){
 		super(itemID, player);
 		this.menuIcons = new HashMap<>(10);
-		this.createIcon();
-		this.assignIcons();
+		//this.createIcon();
+		//this.assignIcons();
 	}
 	
+	/*
 	@Override
 	public Map<UtilityMenuSlot, IconType> getMenuIcons() {
 		return this.menuIcons;
 	}
-	
+	*/
 	@Override
 	public final void click() {
 		Player player = Bukkit.getPlayer(playerName);

@@ -1,4 +1,6 @@
-package com.codari.arenacore.players.menu;
+package com.codari.arenacore.players.menu.slots;
+
+
 /**
  * Enumeration representing the menu slots located within the menu.
  * @author Diage, Soren025
