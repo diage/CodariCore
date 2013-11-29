@@ -45,7 +45,8 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int RANDOM_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 12;
 
 	public ArenaDevelopmentKitListener(Arena arena) {
-		this.arenaBuilder = arena.getArenaBuilder();
+		//TODO The arena should not exist if you are editing the builder
+		this.arenaBuilder = null;//arena.getArenaBuilder();
 	}
 
 	@EventHandler()

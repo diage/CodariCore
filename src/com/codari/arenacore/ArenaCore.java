@@ -2,6 +2,7 @@ package com.codari.arenacore;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,22 +12,24 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
 import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
 
 
 public final class ArenaCore implements Arena {
 	//-----Fields-----//
 	private final String name;
-	private final ArenaBuilderCore builder;
+	private final GameRule rules;
+	private final List<TimedAction> actions;
 	private final Map<String, Team> teams;
 	private final Set<BukkitTask> tasks;
 	
 	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
 		this.name = name;
-		this.builder = builder;
+		this.rules = builder.getGameRule();
+		this.actions = builder.compileActions();
 		this.teams = new HashMap<>();
 		this.tasks = new HashSet<>();
 	}
@@ -43,8 +46,8 @@ public final class ArenaCore implements Arena {
 	}
 	
 	@Override
-	public ArenaBuilder getArenaBuilder() {
-		return this.builder;
+	public GameRule getGameRule() {
+		return this.rules;
 	}
 	
 	@Override
@@ -58,7 +61,7 @@ public final class ArenaCore implements Arena {
 			for (Team team : teams) {
 				this.teams.put(team.getTeamName(), team);
 			}
-			for (TimedAction action : this.builder.compileActions()) {
+			for (TimedAction action : this.actions) {
 				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
 						action.getDelay() != null ? action.getDelay().ticks() : 1l,
 						action.getPeriod() != null ? action.getPeriod().ticks() : 0l));
