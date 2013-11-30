@@ -3,6 +3,7 @@ package com.codari.arenacore.players.menu.icons;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
@@ -15,8 +16,12 @@ public class MenuIcon extends Icon {
 	private FunctionMenu functionMenu;
 	private UtilityMenu utilityMenu;
 	
-	public MenuIcon(Material material, Player player) {
+	public MenuIcon(Material material, Player player, String displayName) {
 		super(material, player, IconType.MENU);
+		ItemMeta itemMeta = this.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		this.setItemMeta(itemMeta);
+		
 		this.utilityMenu = null;
 		this.functionMenu = null;
 	}

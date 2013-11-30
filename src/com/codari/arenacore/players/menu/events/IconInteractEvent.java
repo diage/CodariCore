@@ -5,18 +5,18 @@ import org.bukkit.event.HandlerList;
 
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 
-public class IconUpdateEvent extends Event {
+public class IconInteractEvent extends Event {
 	//-----Static Fields-----//
 		private static final HandlerList handlers = new HandlerList();
 		
 		//-----Static Methods-----//
 		public static HandlerList getHandlerList() {
-			return IconUpdateEvent.handlers;
+			return IconInteractEvent.handlers;
 		}
 		
 		protected Icon icon;
 		
-		public IconUpdateEvent(Icon icon) {
+		public IconInteractEvent(Icon icon) {
 			this.icon = icon;
 		}
 
@@ -26,6 +26,6 @@ public class IconUpdateEvent extends Event {
 		
 		@Override
 		public HandlerList getHandlers() {
-			return IconUpdateEvent.handlers;
+			return IconInteractEvent.handlers;
 		}	
 }

@@ -3,7 +3,7 @@ package com.codari.arenacore.players.menu.events;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 
 
-public class IconHoverUpdateEvent extends IconUpdateEvent {
+public class IconHoverUpdateEvent extends IconInteractEvent {
 	private int newInput; 
 	private int oldInput;
 	

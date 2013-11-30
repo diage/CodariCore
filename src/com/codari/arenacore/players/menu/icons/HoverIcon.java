@@ -18,7 +18,7 @@ public class HoverIcon extends Icon {
 	
 	public HoverIcon(Material material, Player player, String displayName) {
 		super(material, player, IconType.HOVER);
-		this.itemMeta = this.getItemMeta();
+		this.itemMeta = super.getItemMeta();
 		this.input = 0;
 		
 		this.itemMeta.setDisplayName(displayName);
@@ -70,6 +70,11 @@ public class HoverIcon extends Icon {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public ItemMeta getItemMeta() {
+		return this.itemMeta = super.getItemMeta();
 	}
 	
 	private void updateLore() {
