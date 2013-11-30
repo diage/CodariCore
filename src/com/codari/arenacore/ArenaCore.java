@@ -16,7 +16,6 @@ import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
 
-
 public final class ArenaCore implements Arena {
 	//-----Fields-----//
 	private final String name;
