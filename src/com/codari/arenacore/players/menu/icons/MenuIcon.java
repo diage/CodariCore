@@ -1,16 +1,17 @@
-package com.codari.arenacore.players.menu.icon.abstracts;
+package com.codari.arenacore.players.menu.icons;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import com.codari.arenacore.players.menu.icon.IconType;
-import com.codari.arenacore.players.menu.event.IconMenuClickEvent;
+import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
+import com.codari.arenacore.players.menu.icons.structure.Icon;
+import com.codari.arenacore.players.menu.icons.structure.IconType;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.Menu;
 import com.codari.arenacore.players.menu.menus.UtilityMenu;
 
-public abstract class MenuIcon extends Icon {
+public class MenuIcon extends Icon {
 	private FunctionMenu functionMenu;
 	private UtilityMenu utilityMenu;
 	

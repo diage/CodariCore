@@ -1,6 +1,6 @@
-package com.codari.arenacore.players.menu.event;
+package com.codari.arenacore.players.menu.events;
 
-import com.codari.arenacore.players.menu.icon.abstracts.Icon;
+import com.codari.arenacore.players.menu.icons.structure.Icon;
 
 
 public class IconHoverUpdateEvent extends IconUpdateEvent {

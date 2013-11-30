@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.menu.icon.abstracts.Icon;
+import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.Menu;
 import com.codari.arenacore.players.menu.menus.UtilityMenu;

@@ -1,8 +1,8 @@
-package com.codari.arenacore.players.menu.event;
+package com.codari.arenacore.players.menu.events;
 
-import com.codari.arenacore.players.menu.icon.IconType;
-import com.codari.arenacore.players.menu.icon.abstracts.Icon;
-import com.codari.arenacore.players.menu.icon.abstracts.MenuIcon;
+import com.codari.arenacore.players.menu.icons.MenuIcon;
+import com.codari.arenacore.players.menu.icons.structure.Icon;
+import com.codari.arenacore.players.menu.icons.structure.IconType;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.UtilityMenu;
 
