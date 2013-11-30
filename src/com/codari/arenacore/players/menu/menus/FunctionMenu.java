@@ -3,7 +3,7 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.codari.arenacore.players.menu.Icon.abstracts.Icon;
+import com.codari.arenacore.players.menu.icon.abstracts.Icon;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 

@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.Icon.listeners;
+package com.codari.arenacore.players.menu.icon.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import com.codari.api5.Codari;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.MenuManager;
-import com.codari.arenacore.players.menu.Icon.abstracts.MenuIcon;
+import com.codari.arenacore.players.menu.icon.abstracts.MenuIcon;
 import com.codari.arenacore.players.menu.event.IconMenuClickEvent;
 
 public class MenuIconListener implements Listener {

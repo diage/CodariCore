@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.Icon.abstracts;
+package com.codari.arenacore.players.menu.icon.abstracts;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.arenacore.players.menu.event.IconHoverUpdateEvent;
-import com.codari.arenacore.players.menu.Icon.IconType;
+import com.codari.arenacore.players.menu.icon.IconType;
 
 public abstract class HoverIcon extends Icon {
 	private int input;

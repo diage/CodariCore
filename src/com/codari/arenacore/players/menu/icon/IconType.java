@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.Icon;
+package com.codari.arenacore.players.menu.icon;
 
 public enum IconType {
 	MENU,

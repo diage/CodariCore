@@ -1,10 +1,10 @@
-package com.codari.arenacore.players.menu.Icon.abstracts;
+package com.codari.arenacore.players.menu.icon.abstracts;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import com.codari.arenacore.players.menu.Icon.IconType;
+import com.codari.arenacore.players.menu.icon.IconType;
 import com.codari.arenacore.players.menu.event.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.Menu;

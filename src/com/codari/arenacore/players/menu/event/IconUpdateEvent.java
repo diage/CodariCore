@@ -3,7 +3,7 @@ package com.codari.arenacore.players.menu.event;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.codari.arenacore.players.menu.Icon.abstracts.Icon;
+import com.codari.arenacore.players.menu.icon.abstracts.Icon;
 
 public class IconUpdateEvent extends Event {
 	//-----Static Fields-----//
