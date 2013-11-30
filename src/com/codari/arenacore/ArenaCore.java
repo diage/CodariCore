@@ -52,8 +52,7 @@ public final class ArenaCore implements Arena {
 	
 	@Override
 	public boolean start(Team... teams) {
-		int i = 0;//TODO
-		if (i == 0 /*match not in progress*/) {
+		if (!this.isMatchInProgress()) {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
@@ -72,12 +71,16 @@ public final class ArenaCore implements Arena {
 	
 	@Override
 	public void stop() {
-		int i = 0;//TODO
-		if (i == 0 /*match is in progress*/) {
+		if (this.isMatchInProgress()) {
 			this.teams.clear();
 			for (BukkitTask task : this.tasks) {
 				task.cancel();
 			}
 		}
+	}
+	
+	@Override
+	public boolean isMatchInProgress() {
+		return !this.teams.isEmpty();
 	}
 }
