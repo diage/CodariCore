@@ -147,4 +147,14 @@ public final class CombatantCore implements Combatant {
 	public Player getPlayer() {
 		return this.playerReference.getPlayer();
 	}
+
+	@Override
+	public Role swapRole(Role role) {
+		if(role instanceof PlayerRole) {
+			Bukkit.getPluginManager().callEvent(new RoleSelectEvent(((PlayerRole)role).getInteriorRole(), ((PlayerRole)this.role).getInteriorRole(), this));
+		} else {
+			Bukkit.getPluginManager().callEvent(new RoleSelectEvent(role, ((PlayerRole)this.role).getInteriorRole(), this));
+		}
+		return this.role.swapRole(role);
+	}
 }

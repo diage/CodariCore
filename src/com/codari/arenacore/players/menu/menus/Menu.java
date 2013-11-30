@@ -2,7 +2,7 @@ package com.codari.arenacore.players.menu.menus;
 
 import java.util.Map;
 
-import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractIcon;
+import com.codari.arenacore.players.menu.Icon.abstracts.Icon;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 
 
@@ -19,13 +19,13 @@ public interface Menu {
 	 * @param menuSlot The menu slot which the icon is sitting at.
 	 * @return The icon located at the provided menu slot.
 	 */
-	public AbstractIcon getIcon(MenuSlot menuSlot);
+	public Icon getIcon(MenuSlot menuSlot);
 	/**
 	 * Method to manually set the icon at a given slot.
 	 * @param menuSlot The menu slot to be set.
 	 * @param icon The icon to set at the menu slot.
 	 */
-	public void setSlot(MenuSlot menuSlot, AbstractIcon icon);
+	public void setSlot(MenuSlot menuSlot, Icon icon);
 	
-	public void setMenu(Map<MenuSlot, AbstractIcon> icons);
+	public void setMenu(Map<MenuSlot, Icon> icons);
 }

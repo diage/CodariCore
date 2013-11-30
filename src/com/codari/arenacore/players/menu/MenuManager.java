@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractIcon;
+import com.codari.arenacore.players.menu.Icon.abstracts.Icon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.Menu;
 import com.codari.arenacore.players.menu.menus.UtilityMenu;
@@ -34,7 +34,7 @@ public class MenuManager {
 		}
 	}
 	
-	public void setMenuSlot(MenuSlot menuSlot, AbstractIcon icon) {
+	public void setMenuSlot(MenuSlot menuSlot, Icon icon) {
 		PlayerInventory playerInventory = this.player.getInventory();
 		if(menuSlot instanceof FunctionMenuSlot) {
 			this.functionMenu.setSlot(menuSlot, icon);

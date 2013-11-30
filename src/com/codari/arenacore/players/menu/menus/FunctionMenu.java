@@ -3,19 +3,19 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.codari.arenacore.players.menu.Icon.Abstracts.AbstractIcon;
+import com.codari.arenacore.players.menu.Icon.abstracts.Icon;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 
 public class FunctionMenu implements Menu {
-	private Map<FunctionMenuSlot, AbstractIcon> icons;
+	private Map<FunctionMenuSlot, Icon> icons;
 	
 	public FunctionMenu() {
 		this.icons = new HashMap<>();
 	}
 	
 	@Override
-	public AbstractIcon getIcon(MenuSlot menuSlot) {
+	public Icon getIcon(MenuSlot menuSlot) {
 		if(menuSlot instanceof FunctionMenuSlot) {
 			return this.icons.get(menuSlot);
 		}
@@ -23,15 +23,15 @@ public class FunctionMenu implements Menu {
 	}
 
 	@Override
-	public void setSlot(MenuSlot menuSlot, AbstractIcon icon) {
+	public void setSlot(MenuSlot menuSlot, Icon icon) {
 		if(menuSlot instanceof FunctionMenuSlot) {
 			this.icons.put((FunctionMenuSlot) menuSlot, icon);
 		}
 	}
 
 	@Override
-	public void setMenu(Map<MenuSlot, AbstractIcon> icons) {
-		Map<FunctionMenuSlot, AbstractIcon> tempIcons = new HashMap<>();
+	public void setMenu(Map<MenuSlot, Icon> icons) {
+		Map<FunctionMenuSlot, Icon> tempIcons = new HashMap<>();
 		for(MenuSlot menuSlot : icons.keySet()) {
 			if(!(menuSlot instanceof FunctionMenuSlot)) {
 				return;
