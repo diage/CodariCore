@@ -6,10 +6,11 @@ import org.bukkit.entity.Player;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.icons.structure.IconType;
 
-public class ExecutableIcon extends Icon {
+public abstract class ExecutableIcon extends Icon {
 
 	public ExecutableIcon(Material material, Player player) {
 		super(material, player, IconType.EXECUTABLE);
 	}
-
+	
+	public abstract void click();
 }
