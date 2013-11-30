@@ -57,7 +57,6 @@ public final class ArenaCore implements Arena {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
-			//TODO more stuff
 			for (Team team : teams) {
 				this.teams.put(team.getTeamName(), team);
 			}
@@ -65,9 +64,7 @@ public final class ArenaCore implements Arena {
 				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
 						action.getDelay() != null ? action.getDelay().ticks() : 1l,
 						action.getPeriod() != null ? action.getPeriod().ticks() : 0l));
-				
 			}
-			//TODO more stuff
 			return true;
 		}
 		return false;
@@ -77,12 +74,10 @@ public final class ArenaCore implements Arena {
 	public void stop() {
 		int i = 0;//TODO
 		if (i == 0 /*match is in progress*/) {
-			//TODO more stuff
 			this.teams.clear();
 			for (BukkitTask task : this.tasks) {
 				task.cancel();
 			}
-			//TODO more stuff
 		}
 	}
 }
