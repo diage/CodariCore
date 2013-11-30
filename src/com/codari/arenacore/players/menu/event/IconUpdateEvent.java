@@ -14,7 +14,7 @@ public class IconUpdateEvent extends Event {
 			return IconUpdateEvent.handlers;
 		}
 		
-		private Icon icon;
+		protected Icon icon;
 		
 		public IconUpdateEvent(Icon icon) {
 			this.icon = icon;

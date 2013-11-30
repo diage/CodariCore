@@ -16,6 +16,10 @@ public abstract class Icon extends ItemStack {
 		this.iconType = iconType;
 	}
 	
+	public String getPlayerName() {
+		return this.playerName;
+	}
+	
 	public IconType getIconType() {
 		return this.iconType;
 	}

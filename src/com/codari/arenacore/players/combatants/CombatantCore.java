@@ -17,6 +17,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
 
@@ -29,6 +30,7 @@ public final class CombatantCore implements Combatant {
 	private final File dataFile;
 	private CombatantDataCore data;
 	private StatManager statManager;
+	private MenuManager menuManager;
 	
 	private TeamCore team;
 	private Role role;
@@ -43,6 +45,7 @@ public final class CombatantCore implements Combatant {
 		this.reloadData();
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
+		this.menuManager = new MenuManager(this);
 	}
 	
 	//-----Public Methods-----//
@@ -156,5 +159,9 @@ public final class CombatantCore implements Combatant {
 			Bukkit.getPluginManager().callEvent(new RoleSelectEvent(role, ((PlayerRole)this.role).getInteriorRole(), this));
 		}
 		return this.role.swapRole(role);
+	}
+	
+	public MenuManager getMenuManager() {
+		return this.menuManager;
 	}
 }
