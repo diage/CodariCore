@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
 import com.codari.arena5.Arena;
+import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
@@ -57,6 +58,12 @@ public final class ArenaCore implements Arena {
 			}
 			for (Team team : teams) {
 				this.teams.put(team.getTeamName(), team);
+			}
+			ArenaStartEvent e = new ArenaStartEvent(this);
+			Bukkit.getPluginManager().callEvent(e);
+			if (e.isCancelled()) {
+				this.teams.clear();
+				return false;
 			}
 			for (TimedAction action : this.actions) {
 				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
