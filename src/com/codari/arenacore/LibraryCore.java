@@ -156,20 +156,4 @@ public class LibraryCore implements Library{
 			return null;
 		}
 	}
-
-	@Override
-	public void registerStuff(LibraryRegister register) {
-		for (Class<? extends ArenaObject> clazz : register.getArenaObjects()) {
-			this.registerArenaObject(clazz);
-		}
-		for (Class<? extends RoleDeclaration> clazz : register.getRoleDeclarations()) {
-			this.registerRoleDeclaration(clazz);
-		}
-		for (Class<? extends TimedAction> clazz : register.getTimedActions()) {
-			this.registerTimedAction(clazz);
-		}
-		for (Class<? extends WinCondition> clazz : register.getWinConditions()) {
-			this.registerWinCondition(clazz);
-		}
-	}
 }
