@@ -5,8 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.codari.api5.CodariI;
-import com.codari.arena5.Arena;
+import com.codari.apicore.CodariCore;
 import com.codari.arenacore.ArenaManagerCore;
 
 public class ArenaDevelopmentCommand implements CommandExecutor {
@@ -14,7 +13,7 @@ public class ArenaDevelopmentCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("arenakit") && args.length == 1) {
 			Player player = (Player) sender;
-			ArenaManagerCore arenaManagerCore = (ArenaManagerCore) CodariI.INSTANCE.getArenaManager();
+			ArenaManagerCore arenaManagerCore = CodariCore.instance().getArenaManager();
 			//TODO You cant build an arena that is imposible for its existance to exist.
 			//Arena arena = arenaManagerCore.getArena(args[0]);
 			//if(arena == null) {
