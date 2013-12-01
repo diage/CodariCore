@@ -25,6 +25,7 @@ import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
+import com.codari.arena5.rules.GameRule;
 
 public class ArenaDevelopmentKitListener implements Listener {
 	//-----Fields-----//
@@ -44,9 +45,8 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int RANGED_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 11;
 	private final int RANDOM_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 12;
 
-	public ArenaDevelopmentKitListener(Arena arena) {
-		//TODO The arena should not exist if you are editing the builder
-		this.arenaBuilder = null;//arena.getArenaBuilder();
+	public ArenaDevelopmentKitListener(GameRule gameRule) {
+		Codari.getArenaManager().getArenaBuider(gameRule);
 	}
 
 	@EventHandler()

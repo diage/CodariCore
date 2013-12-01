@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.arena5.Arena;
+import com.codari.arena5.rules.GameRule;
 
 public class ArenaDevelopmentKit {
 	//-----Fields-----//
@@ -18,19 +19,13 @@ public class ArenaDevelopmentKit {
 	public static final int INVENTORY_STARTING_PLACEMENT_SLOT = 9;
 	
 	private ItemStack[][] arenaObjects;
-	private Arena arena;
 	
 	//-----Constructor------//
-	public ArenaDevelopmentKit(Arena arena) {
-		this.arena = arena;
-		new ArenaDevelopmentKitListener(arena);
+	public ArenaDevelopmentKit(GameRule gameRule) {
+		new ArenaDevelopmentKitListener(gameRule);
 	}
 	
 	//-----Getters-----//
-	public Arena getArena() {
-		return this.arena;
-	}
-	
 	/* Puts the necessary objects to develop the arena in the player's inventory. */
 	public void createArenaDevelopmentObjects(Player player) {
 		this.arenaObjects = new ItemStack[5][];

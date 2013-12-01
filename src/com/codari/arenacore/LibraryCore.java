@@ -10,7 +10,6 @@ import org.bukkit.Location;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
-import com.codari.arena5.LibraryRegister;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
@@ -20,7 +19,7 @@ import com.codari.arena5.rules.timedaction.TimedActionName;
 import com.codari.arena5.rules.wincondition.WinCondition;
 import com.codari.arena5.rules.wincondition.WinConditionName;
 
-public class LibraryCore implements Library{
+public class LibraryCore implements Library {
 	private final Map<String, Class<? extends ArenaObject>> objects;
 	private final Map<String, Class<? extends RoleDeclaration>> declarations;
 	private final Map<String, Class<? extends TimedAction>> actions;

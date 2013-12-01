@@ -15,13 +15,14 @@ public class ArenaDevelopmentCommand implements CommandExecutor {
 		if(sender instanceof Player && command.getName().equalsIgnoreCase("arenakit") && args.length == 1) {
 			Player player = (Player) sender;
 			ArenaManagerCore arenaManagerCore = (ArenaManagerCore) CodariI.INSTANCE.getArenaManager();
-			Arena arena = arenaManagerCore.getArena(args[0]);
-			if(arena == null) {
-				player.sendMessage("You entered the name of an arena that doesn't exist.");
-				return false;
-			}
-			ArenaDevelopmentKit arenaDevelopmentKit = new ArenaDevelopmentKit(arena);
-			arenaDevelopmentKit.createArenaDevelopmentObjects(player);
+			//TODO You cant build an arena that is imposible for its existance to exist.
+			//Arena arena = arenaManagerCore.getArena(args[0]);
+			//if(arena == null) {
+			//	player.sendMessage("You entered the name of an arena that doesn't exist.");
+			//	return false;
+			//}
+			//ArenaDevelopmentKit arenaDevelopmentKit = new ArenaDevelopmentKit(arena);
+			//arenaDevelopmentKit.createArenaDevelopmentObjects(player);
 			return true;
 		}
 		return false;
