@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
+import com.codari.arena5.LibraryRegister;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
@@ -37,11 +38,13 @@ public class LibraryCore implements Library{
 	public void registerArenaObject(Class<? extends ArenaObject> clazz) {
 		ArenaObjectName objectName = clazz.getAnnotation(ArenaObjectName.class);
 		if (objectName == null) {
-			throw new IllegalArgumentException("No such thing! - ArenaObject");
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing arena object name for " + clazz);
+			return;
 		}
 		String name = objectName.value();
-		if (objects.containsKey(name)) {
-			throw new IllegalArgumentException("Arena Object named " + name + " already exists");
+		if (this.conditions.containsKey(name)) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Arena object named " + name + " already exists");
+			return;
 		}
 		this.objects.put(name, clazz);
 	}
@@ -66,11 +69,13 @@ public class LibraryCore implements Library{
 	public void registerRoleDeclaration(Class<? extends RoleDeclaration> clazz) {
 		RoleDeclarationName declarationName = clazz.getAnnotation(RoleDeclarationName.class);
 		if (declarationName == null) {
-			throw new IllegalArgumentException("No such thing! - RoleDeclaration");
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing role declaration name for " + clazz);
+			return;
 		}
 		String name = declarationName.value();
-		if (this.declarations.containsKey(name)) {
-			throw new IllegalArgumentException("Role declaration named " + name + " already exists");
+		if (this.conditions.containsKey(name)) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Role declaration named " + name + " already exists");
+			return;
 		}
 		this.declarations.put(name, clazz);
 	}
@@ -95,11 +100,13 @@ public class LibraryCore implements Library{
 	public void registerTimedAction(Class<? extends TimedAction> clazz) {
 		TimedActionName actionName = clazz.getAnnotation(TimedActionName.class);
 		if (actionName == null) {
-			throw new IllegalArgumentException("No such thing! - TimedAction");
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing timed action name for " + clazz);
+			return;
 		}
 		String name = actionName.value();
-		if (this.actions.containsKey(name)) {
-			throw new IllegalArgumentException("Timed action named " + name + " already exists");
+		if (this.conditions.containsKey(name)) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Timed Action named " + name + " already exists");
+			return;
 		}
 		this.actions.put(name, clazz);
 	}
@@ -124,11 +131,13 @@ public class LibraryCore implements Library{
 	public void registerWinCondition(Class<? extends WinCondition> clazz) {
 		WinConditionName conditionName = clazz.getAnnotation(WinConditionName.class);
 		if (conditionName == null) {
-			throw new IllegalArgumentException("No such thing! - WinCondition");
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing win condition name for " + clazz);
+			return;
 		}
 		String name = conditionName.value();
 		if (this.conditions.containsKey(name)) {
-			throw new IllegalArgumentException("Win condition named " + name + " already exists");
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Win condition named " + name + " already exists");
+			return;
 		}
 		this.conditions.put(name, clazz);
 	}
@@ -145,6 +154,22 @@ public class LibraryCore implements Library{
 				IllegalArgumentException | InvocationTargetException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;
+		}
+	}
+
+	@Override
+	public void registerStuff(LibraryRegister register) {
+		for (Class<? extends ArenaObject> clazz : register.getArenaObjects()) {
+			this.registerArenaObject(clazz);
+		}
+		for (Class<? extends RoleDeclaration> clazz : register.getRoleDeclarations()) {
+			this.registerRoleDeclaration(clazz);
+		}
+		for (Class<? extends TimedAction> clazz : register.getTimedActions()) {
+			this.registerTimedAction(clazz);
+		}
+		for (Class<? extends WinCondition> clazz : register.getWinConditions()) {
+			this.registerWinCondition(clazz);
 		}
 	}
 }
