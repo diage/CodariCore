@@ -44,8 +44,19 @@ public class IconGroup {
 		return this.menuPages.size() <= this.page + 1;
 	}
 	
-	public Menu getPreviousPage() {
-		if(this.page > 0) {
+	public boolean hasPreviousPage() {
+		return this.menuPages.size() > 0;
+	}
+	
+	public Menu lookPreviousPage() {
+		if(this.hasPreviousPage()) {
+			return this.menuPages.get(this.page - 1);
+		}
+		return null;
+	}
+	
+	public Menu previousPage() {
+		if(this.hasPreviousPage()) {
 			this.page--;
 			return this.menuPages.get(this.page);
 		}

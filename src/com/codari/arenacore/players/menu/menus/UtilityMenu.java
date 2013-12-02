@@ -3,6 +3,9 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.entity.Player;
+
+import com.codari.arenacore.players.menu.icons.iconstore.BorderIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
@@ -11,8 +14,11 @@ import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 public class UtilityMenu implements Menu {
 	private Map<UtilityMenuSlot, Icon> icons;
 	
-	public UtilityMenu() {
+	public UtilityMenu(Player player) {
 		this.icons = new HashMap<>();
+		this.icons.put(UtilityMenuSlot.SEP_ONE, new BorderIcon(player));
+		this.icons.put(UtilityMenuSlot.SEP_TWO, new BorderIcon(player));
+		this.icons.put(UtilityMenuSlot.SEP_THREE, new BorderIcon(player));
 	}
 	
 	@Override
@@ -40,5 +46,15 @@ public class UtilityMenu implements Menu {
 			tempIcons.put((UtilityMenuSlot) menuSlot, icons.get(menuSlot));
 		}
 		this.icons = tempIcons;
+	}
+
+	@Override
+	public boolean isFull() {
+		return this.icons.size() == 12;
+	}
+
+	@Override
+	public int size() {
+		return this.icons.size();
 	}
 }

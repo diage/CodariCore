@@ -23,7 +23,7 @@ public class MenuManager {
 	public MenuManager(Combatant combatant) {
 		this.player = combatant.getPlayer();
 		this.functionMenu = new FunctionMenu();
-		this.utilityMenu = new UtilityMenu();
+		this.utilityMenu = new UtilityMenu(combatant.getPlayer());
 		this.inMenu = false;
 	}
 	
@@ -103,7 +103,7 @@ public class MenuManager {
 		if(this.inMenu) {
 			this.player.getInventory().setContents(this.savedInventory.getContents());
 			this.functionMenu = new FunctionMenu();
-			this.utilityMenu = new UtilityMenu();
+			this.utilityMenu = new UtilityMenu(this.player);
 			this.inMenu = false;
 		}
 	}

@@ -28,4 +28,8 @@ public interface Menu {
 	public void setSlot(MenuSlot menuSlot, Icon icon);
 	
 	public void setMenu(Map<MenuSlot, Icon> icons);
+	
+	public boolean isFull();
+	
+	public int size();
 }

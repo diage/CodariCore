@@ -15,11 +15,8 @@ public class SelectionIcon extends Icon {
 	private boolean isSelected;
 	
 	public SelectionIcon(Material material, Player player, String displayName) {
-		super(material, player, IconType.SELECTION);
+		super(material, player, IconType.SELECTION, displayName);
 		this.itemMeta = super.getItemMeta();
-		
-		this.itemMeta.setDisplayName(displayName);
-		super.setItemMeta(this.itemMeta);
 	}
 	
 	public void select() {

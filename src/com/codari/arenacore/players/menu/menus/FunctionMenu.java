@@ -40,4 +40,14 @@ public class FunctionMenu implements Menu {
 		}
 		this.icons = tempIcons;
 	}
+
+	@Override
+	public boolean isFull() {
+		return this.icons.size() == 15;
+	}
+
+	@Override
+	public int size() {
+		return this.icons.size();
+	}
 }

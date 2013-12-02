@@ -21,13 +21,20 @@ import com.codari.arena5.rules.timedaction.TimedAction;
 
 public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//
-	private final GameRule rules;
+	private GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
 	private final List<FixedSpawnableAction> fixedSpawnables;
 	private final List<ImmediatePersistentObject> immediatePersistentObjects;
 	private final List<DelayedPersistentObject> delayedPersistentObjects;
 	
 	//-----Constructor-----//
+	public ArenaBuilderCore() {
+		this.randomSpawnables = new HashMap<>();
+		this.fixedSpawnables = new ArrayList<>();
+		this.immediatePersistentObjects = new ArrayList<>();
+		this.delayedPersistentObjects = new ArrayList<>();
+	}
+	
 	public ArenaBuilderCore(GameRule rules) {
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
@@ -43,6 +50,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		actions.addAll(this.randomSpawnables.values());
 		actions.addAll(this.fixedSpawnables);
 		return actions;
+	}
+	
+	public void setGameRule(GameRule rule) {
+		this.rules = rule;
 	}
 	
 	@Override

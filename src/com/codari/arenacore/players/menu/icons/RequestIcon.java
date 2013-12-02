@@ -18,8 +18,8 @@ import com.codari.arenacore.players.menu.icons.structure.IconType;
 public abstract class RequestIcon extends Icon {
 	private ConversationFactory conversationFactory;
 	
-	public RequestIcon(Material material, Player player) {
-		super(material, player, IconType.REQUEST);
+	public RequestIcon(Material material, Player player, String displayName) {
+		super(material, player, IconType.REQUEST, displayName);
 		this.conversationFactory = new ConversationFactory(CodariI.INSTANCE)
 					.addConversationAbandonedListener(new ConvoListener())
 					.withTimeout(10)

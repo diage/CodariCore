@@ -5,6 +5,7 @@ public enum IconType {
 	SELECTION, 
 	HOVER,
 	REQUEST,
-	EXECUTABLE;
+	EXECUTABLE,
+	OTHER;
 	
 }

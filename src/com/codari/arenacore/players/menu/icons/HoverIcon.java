@@ -17,12 +17,9 @@ public class HoverIcon extends Icon {
 	private int inputRow;
 	
 	public HoverIcon(Material material, Player player, String displayName) {
-		super(material, player, IconType.HOVER);
+		super(material, player, IconType.HOVER, displayName);
 		this.itemMeta = super.getItemMeta();
 		this.input = 0;
-		
-		this.itemMeta.setDisplayName(displayName);
-		super.setItemMeta(this.itemMeta);
 	}
 
 	public void enterInputDigit(int input) {
