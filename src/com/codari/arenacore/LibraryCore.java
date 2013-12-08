@@ -1,6 +1,7 @@
 package com.codari.arenacore;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -48,7 +49,6 @@ public class LibraryCore implements Library {
 		this.objects.put(name, clazz);
 	}
 
-	@Override
 	public ArenaObject createObject(String name, Location location) {
 		Class<? extends ArenaObject> clazz = this.objects.get(name);
 		if (clazz == null) {
@@ -61,6 +61,10 @@ public class LibraryCore implements Library {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
 		}
+	}
+	
+	public Collection<String> getObjectNames() {
+		return this.objects.keySet();
 	}
 	
 	//-----Role Declaration Related-----//
@@ -79,7 +83,6 @@ public class LibraryCore implements Library {
 		this.declarations.put(name, clazz);
 	}
 
-	@Override
 	public RoleDeclaration createRoleDeclaration(String name, Location location) {
 		Class<? extends RoleDeclaration> clazz = this.declarations.get(name);
 		if (clazz == null) {
@@ -92,6 +95,10 @@ public class LibraryCore implements Library {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
 			return null;
 		}
+	}
+	
+	public Collection<String> getDeclarationNames() {
+		return this.declarations.keySet();
 	}
 	
 	//-----Timed Action Related-----//
@@ -110,7 +117,6 @@ public class LibraryCore implements Library {
 		this.actions.put(name, clazz);
 	}
 
-	@Override
 	public TimedAction createTimedAction(String name, Location location) {
 		Class<? extends TimedAction> clazz = this.actions.get(name);
 		if (clazz == null) {
@@ -123,6 +129,10 @@ public class LibraryCore implements Library {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
 			return null;
 		}
+	}
+	
+	public Collection<String> getActionNames() {
+		return this.actions.keySet();
 	}
 	
 	//-----Win Condition Related-----//
@@ -141,7 +151,6 @@ public class LibraryCore implements Library {
 		this.conditions.put(name, clazz);
 	}
 
-	@Override
 	public WinCondition createWinCondition(String name, Location location) {
 		Class<? extends WinCondition> clazz = this.conditions.get(name);
 		if (clazz == null) {
@@ -154,5 +163,9 @@ public class LibraryCore implements Library {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;
 		}
+	}
+	
+	public Collection<String> getConditionNames() {
+		return this.conditions.keySet();
 	}
 }

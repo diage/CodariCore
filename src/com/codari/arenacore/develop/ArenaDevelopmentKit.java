@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.codari.arena5.Arena;
 import com.codari.arena5.rules.GameRule;
 
 public class ArenaDevelopmentKit {

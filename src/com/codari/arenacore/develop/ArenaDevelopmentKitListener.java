@@ -17,7 +17,6 @@ import com.codari.api5.util.Time;
 import com.codari.arena.objects.role.delegation.MeleeRoleDelegation;
 import com.codari.arena.objects.role.delegation.RandomRoleDelegation;
 import com.codari.arena.objects.role.delegation.RangedRoleDelegation;
-import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -26,6 +25,7 @@ import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
 import com.codari.arena5.rules.GameRule;
+import com.codari.arenacore.LibraryCore;
 
 public class ArenaDevelopmentKitListener implements Listener {
 	//-----Fields-----//
@@ -58,39 +58,39 @@ public class ArenaDevelopmentKitListener implements Listener {
 
 			switch(clickedSlot) {
 			case(ITEM_SPAWNER_SLOT):
-				ArenaObject itemSpawner = Codari.getLibrary().createObject("Item_Spawner", blockDown);	
+				ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", blockDown);	
 				new PlayerInput(player, itemSpawner, arenaBuilder);
 			break;
 			case(DIAMOND_OBJECTIVE_POINT):
-				ArenaObject diamondObjectivePoint = Codari.getLibrary().createObject("Diamond_Objective_Point", blockDown);
+				ArenaObject diamondObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Diamond_Objective_Point", blockDown);
 				new PlayerInput(player, diamondObjectivePoint, arenaBuilder);
 			break;
 			case(EMERALD_OBJECTIVE_POINT):
-				ArenaObject emeraldObjectivePoint = Codari.getLibrary().createObject("Emerald_Objective_Point", blockDown);
+				ArenaObject emeraldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Emerald_Objective_Point", blockDown);
 			new PlayerInput(player, emeraldObjectivePoint, arenaBuilder);
 			break;
 			case(GOLD_OBJECTIVE_POINT):
-				ArenaObject goldObjectivePoint = Codari.getLibrary().createObject("Gold_Objective_Point", blockDown);
+				ArenaObject goldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Gold_Objective_Point", blockDown);
 				new PlayerInput(player, goldObjectivePoint, arenaBuilder);
 			break;
 			case(IRON_OBJECTIVE_POINT):
-				ArenaObject ironObjectivePoint = Codari.getLibrary().createObject("Iron_Objective_Point", blockDown);
+				ArenaObject ironObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Iron_Objective_Point", blockDown);
 				new PlayerInput(player, ironObjectivePoint, arenaBuilder);
 			break;
 			case(EXPLOSION_TRAP):
-				ArenaObject explosionTrap = Codari.getLibrary().createObject("Explosion_Trap", blockDown);
+				ArenaObject explosionTrap = ((LibraryCore)Codari.getLibrary()).createObject("Explosion_Trap", blockDown);
 				new PlayerInput(player, explosionTrap, arenaBuilder);
 			break;
 			case(FIRE_TRAP):
-				ArenaObject fireTrap = Codari.getLibrary().createObject("Fire_Trap", blockDown);
+				ArenaObject fireTrap = ((LibraryCore)Codari.getLibrary()).createObject("Fire_Trap", blockDown);
 				new PlayerInput(player, fireTrap, arenaBuilder);
 			break;
 			case(POISON_SNARE_TRAP):
-				ArenaObject poisonSnareTrap = Codari.getLibrary().createObject("Poison_Snare_Trap", blockDown);
+				ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", blockDown);
 				new PlayerInput(player, poisonSnareTrap, arenaBuilder);
 			break;
 			case(GATE):
-				ArenaObject gate = Codari.getLibrary().createObject("Gate", blockDown);
+				ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", blockDown);
 				this.arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
 			break;
 			case(MELEE_ROLE_DELEGATION):
