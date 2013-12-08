@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.icons.structure.IconType;
@@ -16,8 +16,8 @@ public class HoverIcon extends Icon {
 	private ItemMeta itemMeta;
 	private int inputRow;
 	
-	public HoverIcon(Material material, Player player, String displayName) {
-		super(material, player, IconType.HOVER, displayName);
+	public HoverIcon(Material material, Combatant combatant, String displayName) {
+		super(material, combatant, IconType.HOVER, displayName);
 		this.itemMeta = super.getItemMeta();
 		this.input = 0;
 	}

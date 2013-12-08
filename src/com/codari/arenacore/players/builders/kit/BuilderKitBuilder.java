@@ -80,11 +80,11 @@ public class BuilderKitBuilder extends IconGroup implements Listener {
 				FunctionMenu nextMenu = new FunctionMenu();
 				MenuIcon previous, next;
 				
-				next = new MenuIcon(Material.BOOK, this.combatant.getPlayer(), nextMenu, "Next");
+				next = new MenuIcon(Material.BOOK, this.combatant, nextMenu, "Next");
 				if(iconGroup.hasPreviousPage()) {
-					previous = new MenuIcon(Material.BOOK, this.combatant.getPlayer(), (FunctionMenu) iconGroup.lookPreviousPage(), "Previous");
+					previous = new MenuIcon(Material.BOOK, this.combatant, (FunctionMenu) iconGroup.lookPreviousPage(), "Previous");
 				} else {
-					previous = new MenuIcon(Material.BOOK, this.combatant.getPlayer(), ChatColor.GRAY + "Previous");
+					previous = new MenuIcon(Material.BOOK, this.combatant, ChatColor.GRAY + "Previous");
 				}
 				
 				functionMenu.setSlot(FunctionMenuSlot.C_ONE, previous);
@@ -94,7 +94,7 @@ public class BuilderKitBuilder extends IconGroup implements Listener {
 				functionMenu = nextMenu;
 				itterator = 0;
 			}
-			functionMenu.setSlot(newSlot, new SelectionIcon(Material.REDSTONE_BLOCK, this.combatant.getPlayer(), string));
+			functionMenu.setSlot(newSlot, new SelectionIcon(Material.REDSTONE_BLOCK, this.combatant, string));
 			itterator++;
 		}
 		

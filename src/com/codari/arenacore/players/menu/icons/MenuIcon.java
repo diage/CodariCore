@@ -2,8 +2,8 @@ package com.codari.arenacore.players.menu.icons;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.icons.structure.IconType;
@@ -15,15 +15,15 @@ public class MenuIcon extends Icon {
 	private FunctionMenu functionMenu;
 	private UtilityMenu utilityMenu;
 	
-	public MenuIcon(Material material, Player player, String displayName) {
-		super(material, player, IconType.MENU, displayName);
+	public MenuIcon(Material material, Combatant combatant, String displayName) {
+		super(material, combatant, IconType.MENU, displayName);
 
 		this.utilityMenu = null;
 		this.functionMenu = null;
 	}
 	
-	public MenuIcon(Material material, Player player, Menu menu, String displayName) {
-		super(material, player, IconType.MENU, displayName);
+	public MenuIcon(Material material, Combatant combatant, Menu menu, String displayName) {
+		super(material, combatant, IconType.MENU, displayName);
 		if(menu instanceof UtilityMenu) {
 			this.utilityMenu = (UtilityMenu) menu;
 			this.functionMenu = null;
@@ -36,8 +36,8 @@ public class MenuIcon extends Icon {
 		this.functionMenu = null;
 	}
 	
-	public MenuIcon(Material material, Player player, FunctionMenu functionMenu, UtilityMenu utilityMenu, String displayName) {
-		super(material, player, IconType.MENU, displayName);
+	public MenuIcon(Material material, Combatant combatant, FunctionMenu functionMenu, UtilityMenu utilityMenu, String displayName) {
+		super(material, combatant, IconType.MENU, displayName);
 		this.functionMenu = functionMenu;
 		this.utilityMenu = utilityMenu;
 

@@ -11,6 +11,7 @@ import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.icons.structure.IconType;
@@ -18,8 +19,8 @@ import com.codari.arenacore.players.menu.icons.structure.IconType;
 public abstract class RequestIcon extends Icon {
 	private ConversationFactory conversationFactory;
 	
-	public RequestIcon(Material material, Player player, String displayName) {
-		super(material, player, IconType.REQUEST, displayName);
+	public RequestIcon(Material material, Combatant combatant, String displayName) {
+		super(material, combatant, IconType.REQUEST, displayName);
 		this.conversationFactory = new ConversationFactory(CodariI.INSTANCE)
 					.addConversationAbandonedListener(new ConvoListener())
 					.withTimeout(10)

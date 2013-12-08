@@ -1,8 +1,8 @@
 package com.codari.arenacore.players.menu.menus.menustore.utility;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.MenuIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.executable.CancelIcon;
 import com.codari.arenacore.players.menu.menus.UtilityMenu;
@@ -12,14 +12,13 @@ import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
 public class TimeUMenu extends UtilityMenu {
 
-	public TimeUMenu(Player player) {
-		super(player);
-		this.setSlot(UtilityMenuSlot.ONE, new MenuIcon(Material.APPLE, player, new InitialUMenu(player), "Back"));
-		this.setSlot(UtilityMenuSlot.THREE, new CancelIcon(Material.QUARTZ_ORE, player, "Cancel"));
-		this.setSlot(UtilityMenuSlot.SEVEN, new MenuIcon(Material.BAKED_POTATO, player, new TeamSizeFMenu(), 
-					new TeamSizeUMenu(player), "Goto Set Team Size"));
-		this.setSlot(UtilityMenuSlot.NINE, new MenuIcon(Material.BLAZE_POWDER, player, new WinConditionFMenu(),
-					new WinConditionUMenu(player), "Proceed..."));
+	public TimeUMenu(Combatant combatant) {
+		super(combatant);
+		this.setSlot(UtilityMenuSlot.ONE, new MenuIcon(Material.APPLE, combatant, new InitialUMenu(combatant), "Back"));
+		this.setSlot(UtilityMenuSlot.THREE, new CancelIcon(Material.QUARTZ_ORE, combatant, "Cancel"));
+		this.setSlot(UtilityMenuSlot.SEVEN, new MenuIcon(Material.BAKED_POTATO, combatant, new TeamSizeFMenu(), 
+					new TeamSizeUMenu(combatant), "Goto Set Team Size"));
+		this.setSlot(UtilityMenuSlot.NINE, new MenuIcon(Material.BLAZE_POWDER, combatant, new WinConditionFMenu(),
+					new WinConditionUMenu(combatant), "Proceed..."));
 	}
-
 }

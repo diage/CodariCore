@@ -2,9 +2,9 @@ package com.codari.arenacore.players.menu.icons;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.events.IconSelectionEvent;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.icons.structure.IconType;
@@ -14,8 +14,8 @@ public class SelectionIcon extends Icon {
 	private ItemMeta itemMeta;
 	private boolean isSelected;
 	
-	public SelectionIcon(Material material, Player player, String displayName) {
-		super(material, player, IconType.SELECTION, displayName);
+	public SelectionIcon(Material material, Combatant combatant, String displayName) {
+		super(material, combatant, IconType.SELECTION, displayName);
 		this.itemMeta = super.getItemMeta();
 	}
 	

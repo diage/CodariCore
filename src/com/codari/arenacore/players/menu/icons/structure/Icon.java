@@ -1,22 +1,25 @@
 package com.codari.arenacore.players.menu.icons.structure;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.codari.arena5.players.combatants.Combatant;
 
 public abstract class Icon extends ItemStack {
 	private IconType iconType;
 	protected String playerName;
+	private Combatant combatant;
 	
-	public Icon(Material material, Player player, IconType iconType, String displayName) {
+	public Icon(Material material, Combatant combatant, IconType iconType, String displayName) {
 		super(material);  
 		
 		ItemMeta itemMeta = this.getItemMeta();
 		itemMeta.setDisplayName(displayName);
 		this.setItemMeta(itemMeta);
 		
-		this.playerName = player.getName();
+		this.combatant = combatant;
+		this.playerName = combatant.getPlayer().getName();
 		this.iconType = iconType;
 	}
 	
@@ -26,5 +29,9 @@ public abstract class Icon extends ItemStack {
 	
 	public IconType getIconType() {
 		return this.iconType;
+	}
+	
+	public Combatant getCombatant() {
+		return this.combatant;
 	}
 }
