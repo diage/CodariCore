@@ -64,7 +64,7 @@ public class QueueCore {
 		this.arena.start((Team[]) this.teams.toArray());
 	}
 
-	private void countDown() {
+	private void countDown() {		
 		this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
 
 			@Override
