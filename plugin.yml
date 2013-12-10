@@ -18,3 +18,6 @@ commands:
   leaveteam:
     description: leave your team
     usage: Syntax error! Simply enter "leaveteam"    
+  joinarena:
+    description: queue up for an arena
+    usage: Syntax error! Simply enter "jointeam (arenaname)"

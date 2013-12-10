@@ -23,6 +23,7 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, ArenaCore> arenas;
 	private final Map<String, ArenaBuilderCore> arenaBuilders;
 	private final Map<String, ArenaRoleGroup> roleGroups;
+	private final Map<String, QueueCore> queues;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
@@ -30,6 +31,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenas = new HashMap<>();
 		this.arenaBuilders = new HashMap<>();
 		this.roleGroups = new HashMap<>();
+		this.queues = new HashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
 	}
 	
@@ -108,9 +110,15 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 	
 	@Override
+	public boolean addToQueue(String arenaName, Team team) {
+		return this.queues.get(arenaName).addTeamToQueue(team);
+	}
+	
+	@Override
 	public Arena buildArena(String requestedName, ArenaBuilder arenaBuilder) {
 		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
-		arenas.put(requestedName, arena);
+		this.arenas.put(requestedName, arena);
+		this.queues.put(requestedName, new QueueCore(arena));
 		return arena;
 	}
 
@@ -118,17 +126,18 @@ public class ArenaManagerCore implements ArenaManager {
 	public ArenaBuilder getArenaBuider(GameRule gameRule) {
 		return new ArenaBuilderCore(gameRule);
 	}
-	
-	//TODO: What are these for??
-	//VVVVVVVVVVVVVVVVV
-	public void addArenaBuilder(String playerName, ArenaBuilderCore arenaBuilder) {
-		this.arenaBuilders.put(playerName, arenaBuilder);
+
+	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
+		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
 	}
 	
-	public ArenaBuilderCore getArenaBuilder(String playerName) {
-		return this.arenaBuilders.get(playerName);
+	public ArenaBuilderCore getArenaBuilder(String arenaName) {
+		return this.arenaBuilders.get(arenaName);
 	}
-	//^^^^^^^^^^^^^^^^^^
+	
+	public boolean containsArenaBuild(String arenaName) {
+		return this.arenaBuilders.containsKey(arenaName);
+	}
 
 	public class ArenaRoleGroup {
 		private Map<String, Role> roleGroup;

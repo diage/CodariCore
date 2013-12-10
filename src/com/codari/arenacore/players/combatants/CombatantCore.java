@@ -32,10 +32,14 @@ public final class CombatantCore implements Combatant {
 	private StatManager statManager;
 	private MenuManager menuManager;
 	
+	private boolean isLeader;
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
-	private boolean isLeader;
+	
+	//---Building Arena---//
+	private boolean isBuilding;
+	private String currentArenaBuildName;
 	
 	//-----Constructor-----//
 	public CombatantCore(PlayerReference playerReference) {
@@ -94,7 +98,6 @@ public final class CombatantCore implements Combatant {
 	public boolean leaveArena() {
 		Arena arena = CodariI.INSTANCE.getArenaManager().getArena(arenaName);
 		if(arena != null) {
-			//TODO - take combatant out of arena
 			this.arenaName = null;
 			return true;
 		}
@@ -114,7 +117,6 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public boolean sendToArena(Arena arena) {
 		if(arena != null) {
-			//TODO - send combatant to arena -- This method needs to initialize everything. 
 			this.arenaName = arena.getName();
 			return true;
 		}
@@ -159,6 +161,24 @@ public final class CombatantCore implements Combatant {
 			Bukkit.getPluginManager().callEvent(new RoleSelectEvent(role, ((PlayerRole)this.role).getInteriorRole(), this));
 		}
 		return this.role.swapRole(role);
+	}
+	
+	public void startBuilding(String arenaName) {
+		this.currentArenaBuildName = arenaName;
+		this.isBuilding = true;
+	}
+	
+	public void endBuilding() {
+		this.currentArenaBuildName = null;
+		this.isBuilding = false;
+	}
+	
+	public boolean checkIfBuilding() {
+		return this.isBuilding;
+	} 
+	
+	public String getArenaBuildName() {
+		return this.currentArenaBuildName;
 	}
 	
 	public MenuManager getMenuManager() {

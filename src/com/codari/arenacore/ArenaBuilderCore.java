@@ -150,6 +150,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private final static class DelayedPersistentAction implements DelayedPersistentObject {
 		private DelayedPersistentObject delayedPersistentObject;
 		private final Time time;

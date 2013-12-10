@@ -5,11 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
@@ -24,12 +22,13 @@ import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
-import com.codari.arena5.rules.GameRule;
+import com.codari.arenacore.ArenaManagerCore;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class ArenaDevelopmentKitListener implements Listener {
 	//-----Fields-----//
-	private ArenaBuilder arenaBuilder;
+	private PlayerInput playerInput;
 
 	//---Inventory Slots---//
 	private final int ITEM_SPAWNER_SLOT = ArenaDevelopmentKit.INVENTORY_STARTING_PLACEMENT_SLOT;
@@ -45,66 +44,69 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int RANGED_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 11;
 	private final int RANDOM_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 12;
 
-	public ArenaDevelopmentKitListener(GameRule gameRule) {
-		Codari.getArenaManager().getArenaBuider(gameRule);
+	public ArenaDevelopmentKitListener() {	
+		this.playerInput = new PlayerInput();
 	}
 
 	@EventHandler()
 	public void onPlayerRightClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
-		if(e.isRightClick()) {
-			int clickedSlot = e.getSlot();
-			Location blockDown = e.getWhoClicked().getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
+		CombatantCore combatant = (CombatantCore) Codari.getArenaManager().getCombatant(player);
+		ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(combatant.getArenaBuildName());
+		if(((CombatantCore)combatant).checkIfBuilding()) {
+			if(e.isRightClick()) {
+				int clickedSlot = e.getSlot();
+				Location blockDown = e.getWhoClicked().getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
 
-			switch(clickedSlot) {
-			case(ITEM_SPAWNER_SLOT):
-				ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", blockDown);	
-				new PlayerInput(player, itemSpawner, arenaBuilder);
-			break;
-			case(DIAMOND_OBJECTIVE_POINT):
-				ArenaObject diamondObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Diamond_Objective_Point", blockDown);
-				new PlayerInput(player, diamondObjectivePoint, arenaBuilder);
-			break;
-			case(EMERALD_OBJECTIVE_POINT):
-				ArenaObject emeraldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Emerald_Objective_Point", blockDown);
-			new PlayerInput(player, emeraldObjectivePoint, arenaBuilder);
-			break;
-			case(GOLD_OBJECTIVE_POINT):
-				ArenaObject goldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Gold_Objective_Point", blockDown);
-				new PlayerInput(player, goldObjectivePoint, arenaBuilder);
-			break;
-			case(IRON_OBJECTIVE_POINT):
-				ArenaObject ironObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Iron_Objective_Point", blockDown);
-				new PlayerInput(player, ironObjectivePoint, arenaBuilder);
-			break;
-			case(EXPLOSION_TRAP):
-				ArenaObject explosionTrap = ((LibraryCore)Codari.getLibrary()).createObject("Explosion_Trap", blockDown);
-				new PlayerInput(player, explosionTrap, arenaBuilder);
-			break;
-			case(FIRE_TRAP):
-				ArenaObject fireTrap = ((LibraryCore)Codari.getLibrary()).createObject("Fire_Trap", blockDown);
-				new PlayerInput(player, fireTrap, arenaBuilder);
-			break;
-			case(POISON_SNARE_TRAP):
-				ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", blockDown);
-				new PlayerInput(player, poisonSnareTrap, arenaBuilder);
-			break;
-			case(GATE):
-				ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", blockDown);
-				this.arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
-			break;
-			case(MELEE_ROLE_DELEGATION):
-				new	MeleeRoleDelegation(player);
-				break;
-			case(RANGED_ROLE_DELEGATION): 
-				new	RangedRoleDelegation(player);
-				break;
-			case(RANDOM_ROLE_DELEGATION): 
-				new	RandomRoleDelegation(player);
-				break;			
-			}
-		}	
-
+				switch(clickedSlot) {
+				case(ITEM_SPAWNER_SLOT): {			
+					ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", blockDown);				
+					this.playerInput.requestChat(player, itemSpawner, arenaBuilder);
+				} break;
+				case(DIAMOND_OBJECTIVE_POINT): {
+					ArenaObject diamondObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Diamond_Objective_Point", blockDown);
+					this.playerInput.requestChat(player, diamondObjectivePoint, arenaBuilder);				
+				} break;
+				case(EMERALD_OBJECTIVE_POINT): {
+					ArenaObject emeraldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Emerald_Objective_Point", blockDown);
+					this.playerInput.requestChat(player, emeraldObjectivePoint, arenaBuilder);				
+				} break;
+				case(GOLD_OBJECTIVE_POINT): {
+					ArenaObject goldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Gold_Objective_Point", blockDown);
+					this.playerInput.requestChat(player, goldObjectivePoint, arenaBuilder);
+				} break;
+				case(IRON_OBJECTIVE_POINT): {
+					ArenaObject ironObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Iron_Objective_Point", blockDown);
+					this.playerInput.requestChat(player, ironObjectivePoint, arenaBuilder);
+				} break;
+				case(EXPLOSION_TRAP): {
+					ArenaObject explosionTrap = ((LibraryCore)Codari.getLibrary()).createObject("Explosion_Trap", blockDown);
+					this.playerInput.requestChat(player, explosionTrap, arenaBuilder);
+				} break;
+				case(FIRE_TRAP): {
+					ArenaObject fireTrap = ((LibraryCore)Codari.getLibrary()).createObject("Fire_Trap", blockDown);
+					this.playerInput.requestChat(player, fireTrap, arenaBuilder);
+				} break;
+				case(POISON_SNARE_TRAP): {
+					ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", blockDown);
+					this.playerInput.requestChat(player, poisonSnareTrap, arenaBuilder);
+				} break;
+				case(GATE): {
+					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", blockDown);
+					arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
+				} break;
+				case(MELEE_ROLE_DELEGATION): {
+					new	MeleeRoleDelegation(player);
+				} break;
+				case(RANGED_ROLE_DELEGATION): {
+					new	RangedRoleDelegation(player);
+				} break;
+				case(RANDOM_ROLE_DELEGATION): {
+					new	RandomRoleDelegation(player);
+				} break;			
+				}
+			}	
+		}
 	}
 
 	private final static class PlayerInput implements Listener {
@@ -127,12 +129,11 @@ public class ArenaDevelopmentKitListener implements Listener {
 				+ "or \"10 10\" if you want the object to spawn at 10 minutes and spawn consecutively afterwards"
 				+ "every 10 minutes.";
 
-		//-----Constructor-----//
-		public PlayerInput(Player player, ArenaObject arenaObject, ArenaBuilder arenaBuilder) {
+		public void requestChat(Player player, ArenaObject arenaObject, ArenaBuilder arenaBuilder) {
 			this.player = player;
 			this.playerInputNeeded = true;
 			this.arenaObject = arenaObject;
-			this.arenaBuilder = arenaBuilder;
+			this.arenaBuilder = arenaBuilder;			
 		}
 
 		//-----Chat Event-----//
@@ -152,7 +153,6 @@ public class ArenaDevelopmentKitListener implements Listener {
 					player.sendMessage(delayedPersistentObjectMessage);
 				}				
 				final String playerInputString = e.getMessage();
-				HandlerList.unregisterAll(this);
 				Bukkit.getScheduler().runTask(CodariI.INSTANCE, new Runnable() {
 					@Override
 					public void run() {
@@ -199,13 +199,6 @@ public class ArenaDevelopmentKitListener implements Listener {
 
 					}	
 				});
-			}
-		}
-
-		@EventHandler
-		public void playerQuit(PlayerQuitEvent e) {
-			if(e.getPlayer().equals(this.player)) {
-				HandlerList.unregisterAll(this);
 			}
 		}
 	}

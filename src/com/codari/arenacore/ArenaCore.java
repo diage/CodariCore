@@ -2,8 +2,10 @@ package com.codari.arenacore;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -16,6 +18,7 @@ import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
+import com.codari.arenacore.players.teams.TeamCore;
 
 public final class ArenaCore implements Arena {
 	//-----Fields-----//
@@ -57,6 +60,7 @@ public final class ArenaCore implements Arena {
 				return false;
 			}
 			for (Team team : teams) {
+				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
 			}
 			ArenaStartEvent e = new ArenaStartEvent(this);
@@ -78,7 +82,12 @@ public final class ArenaCore implements Arena {
 	@Override
 	public void stop() {
 		if (this.isMatchInProgress()) {
-			this.teams.clear();
+			Iterator<Entry<String, Team>> teamsIterator = this.teams.entrySet().iterator();
+			for (Entry<String, Team> entry; teamsIterator.hasNext();) {
+				entry = teamsIterator.next();
+				((TeamCore) entry.getValue()).setArena(null);
+				teamsIterator.remove();
+			}
 			for (BukkitTask task : this.tasks) {
 				task.cancel();
 			}
