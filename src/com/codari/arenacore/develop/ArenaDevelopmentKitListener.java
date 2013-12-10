@@ -105,6 +105,8 @@ public class ArenaDevelopmentKitListener implements Listener {
 					new	RandomRoleDelegation(player);
 				} break;			
 				}
+				e.setCancelled(true);
+				player.sendMessage("Placed item."); //Debugging purposes
 			}	
 		}
 	}

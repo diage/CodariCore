@@ -21,7 +21,7 @@ public class NewArenaCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			String arenaName = args[0];
 
-			if(((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuild(arenaName)) {
+			if(!((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuild(arenaName)) {
 				//Gamerule construction//
 				GameRuleCore gameRule = new GameRuleCore();
 				gameRule.setMatchDurationInfinite();
@@ -31,6 +31,9 @@ public class NewArenaCommand implements CommandExecutor {
 				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
 				((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaName, arenaBuilder);
 				player.sendMessage("You have created a new 2v2 arena builder.");
+				return true;
+			} else {
+				player.sendMessage("There is already an arena with the name " + args[0]);
 				return true;
 			}
 		}
