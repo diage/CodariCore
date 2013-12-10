@@ -64,26 +64,28 @@ public class QueueCore {
 		this.arena.start((Team[]) this.teams.toArray());
 	}
 
-	private void countDown() {		
-		this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
-
-			@Override
-			public void run() {
-				for(Team team : teams) {
-					for(Player player : team.getPlayers()) {
-						player.sendMessage("Match is starting in " + countDown + " seconds.");
+	private void countDown() {
+		if (this.task == null) {
+			this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
+				@Override
+				public void run() {
+					for(Team team : teams) {
+						for(Player player : team.getPlayers()) {
+							player.sendMessage("Match is starting in " + countDown + " seconds.");
+						}
+					}
+					countDown--;
+					if(countDown == 0) {
+						startArena();
+						matchStarting = false;
+						countDown = countDownStartingValue;
+						task.cancel();
+						task = null;
 					}
 				}
-				countDown--;
-				if(countDown == 0) {
-					startArena();
-					matchStarting = false;
-					countDown = countDownStartingValue;
-					task.cancel();
-				}
-			}
-
-		}, 0, 20);		
+	
+			}, 0, 20);
+		}
 	}
 
 	private void checkIfMatchShouldStart() {
