@@ -1,5 +1,8 @@
 package com.codari.arenacore.develop;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
+import com.codari.apicore.CodariCore;
 import com.codari.arena.objects.role.delegation.MeleeRoleDelegation;
 import com.codari.arena.objects.role.delegation.RandomRoleDelegation;
 import com.codari.arena.objects.role.delegation.RangedRoleDelegation;
@@ -51,7 +55,6 @@ public class ArenaDevelopmentKitListener implements Listener {
 	public void onPlayerRightClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		CombatantCore combatant = (CombatantCore) Codari.getArenaManager().getCombatant(player);
-		ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(combatant.getArenaBuildName());
 		if(((CombatantCore)combatant).checkIfBuilding()) {
 			if(e.isRightClick()) {
 				int clickedSlot = e.getSlot();
@@ -60,40 +63,40 @@ public class ArenaDevelopmentKitListener implements Listener {
 				switch(clickedSlot) {
 				case(ITEM_SPAWNER_SLOT): {			
 					ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", player);				
-					this.playerInput.requestChat(player, itemSpawner, arenaBuilder);
+					this.requestChat(player, itemSpawner, this.playerInput);
 				} break;
 				case(DIAMOND_OBJECTIVE_POINT): {
 					ArenaObject diamondObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Diamond_Objective_Point", player);
-					this.playerInput.requestChat(player, diamondObjectivePoint, arenaBuilder);				
+					this.requestChat(player, diamondObjectivePoint, this.playerInput);				
 				} break;
 				case(EMERALD_OBJECTIVE_POINT): {
 					ArenaObject emeraldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Emerald_Objective_Point", player);
-					this.playerInput.requestChat(player, emeraldObjectivePoint, arenaBuilder);				
+					this.requestChat(player, emeraldObjectivePoint, this.playerInput);				
 				} break;
 				case(GOLD_OBJECTIVE_POINT): {
 					ArenaObject goldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Gold_Objective_Point", player);
-					this.playerInput.requestChat(player, goldObjectivePoint, arenaBuilder);
+					this.requestChat(player, goldObjectivePoint, this.playerInput);
 				} break;
 				case(IRON_OBJECTIVE_POINT): {
 					ArenaObject ironObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Iron_Objective_Point", player);
-					this.playerInput.requestChat(player, ironObjectivePoint, arenaBuilder);
+					this.requestChat(player, ironObjectivePoint, this.playerInput);
 				} break;
 				case(EXPLOSION_TRAP): {
 					ArenaObject explosionTrap = ((LibraryCore)Codari.getLibrary()).createObject("Explosion_Trap", player);
-					this.playerInput.requestChat(player, explosionTrap, arenaBuilder);
+					this.requestChat(player, explosionTrap, this.playerInput);
 				} break;
 				case(FIRE_TRAP): {
 					ArenaObject fireTrap = ((LibraryCore)Codari.getLibrary()).createObject("Fire_Trap", player);
-					this.playerInput.requestChat(player, fireTrap, arenaBuilder);
+					this.requestChat(player, fireTrap, this.playerInput);
 				} break;
 				case(POISON_SNARE_TRAP): {
 					ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", player);
-					this.playerInput.requestChat(player, poisonSnareTrap, arenaBuilder);
+					this.requestChat(player, poisonSnareTrap, this.playerInput);
 				} break;
-				case(GATE): {
-					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", player);
-					arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
-				} break;
+//				case(GATE): {
+//					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", player);
+//					arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
+//				} break;
 				case(MELEE_ROLE_DELEGATION): {
 					new	MeleeRoleDelegation(player);
 				} break;
@@ -108,55 +111,60 @@ public class ArenaDevelopmentKitListener implements Listener {
 				player.sendMessage("Placed item."); //Debugging purposes
 			}	
 		}
+		
+	}
+	
+	private void requestChat(Player player, ArenaObject arenaObject, PlayerInput playerInput) {
+		//-----Player Input Messages-----//
+		String delayedPersistentObjectMessage = "Please type in a time for the delay and true/false for the override. For example, "
+				+ "type in \"5 true\".";
+
+		String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in.";
+
+		String fixedSpawnableObjectMessage = "Please type in a time (1-99) for which to spawn the object and an optional time for "
+				+ "which to repeat the spawn. For example, type in \"10\" if you want the object to spawn at 10 minutes"
+				+ "or \"10 10\" if you want the object to spawn at 10 minutes and spawn consecutively afterwards"
+				+ "every 10 minutes.";		
+		String objectType;
+		
+		if(arenaObject instanceof SpawnableObject) {
+			if(arenaObject instanceof RandomSpawnableObject) {
+				objectType = "Random Spawnable Object";
+				player.sendMessage(randomSpawnableObjectMessage);
+				playerInput.requestChat(player, objectType, arenaObject);
+			} else if(arenaObject instanceof FixedSpawnableObject) {
+				objectType = "Fixed Spawnable Object";
+				player.sendMessage(fixedSpawnableObjectMessage);
+				playerInput.requestChat(player, objectType, arenaObject);
+			}
+		} else if(arenaObject instanceof DelayedPersistentObject) {
+			objectType = "Delayed Persistent Object";
+			player.sendMessage(delayedPersistentObjectMessage);
+			playerInput.requestChat(player, objectType, arenaObject);
+		}	
+		
 	}
 
 	private final static class PlayerInput implements Listener {
-		//-----Fields-----//
-		private Player player;
-		private ArenaObject arenaObject;
-		private ArenaBuilder arenaBuilder;
-
-		private boolean playerInputNeeded;
-		private String objectType;
-
-		//-----Player Input Messages-----//
-		private String delayedPersistentObjectMessage = "Please type in a time for the delay and true/false for the override. For example, "
-				+ "type in \"5 true\".";
-
-		private String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in.";
-
-		private String fixedSpawnableObjectMessage = "Please type in a time (1-99) for which to spawn the object and an optional time for "
-				+ "which to repeat the spawn. For example, type in \"10\" if you want the object to spawn at 10 minutes"
-				+ "or \"10 10\" if you want the object to spawn at 10 minutes and spawn consecutively afterwards"
-				+ "every 10 minutes.";
-
-		public void requestChat(Player player, ArenaObject arenaObject, ArenaBuilder arenaBuilder) {
-			this.player = player;
-			this.playerInputNeeded = true;
-			this.arenaObject = arenaObject;
-			this.arenaBuilder = arenaBuilder;			
+		private Map<String, PlayerBuildObject> playerBuildObjects = new HashMap<>();
+		
+		public void requestChat(Player player,  String objectType, ArenaObject arenaObject) {
+			this.playerBuildObjects.put(player.getName(), new PlayerBuildObject(objectType, arenaObject));
 		}
 
 		//-----Chat Event-----//
 		@EventHandler
 		public void chatty(AsyncPlayerChatEvent e) {
-			if(e.getPlayer().equals(this.player) && playerInputNeeded) {			
+			if(this.playerBuildObjects.containsKey(e.getPlayer().getName())) {
+				final Player player = e.getPlayer();
 				final String playerInputString = e.getMessage();
 				Bukkit.getScheduler().runTask(CodariI.INSTANCE, new Runnable() {
+					private String objectType = playerBuildObjects.get(player.getName()).getObjectName();
+					private ArenaObject arenaObject = playerBuildObjects.get(player.getName()).getArenaObject();
+					private ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(
+							((CombatantCore)Codari.getArenaManager().getCombatant(player.getName())).getArenaBuildName());
 					@Override
-					public void run() {
-						if(arenaObject instanceof SpawnableObject) {
-							if(arenaObject instanceof RandomSpawnableObject) {
-								objectType = "Random Spawnable Object";
-								player.sendMessage(randomSpawnableObjectMessage);
-							} else if(arenaObject instanceof FixedSpawnableObject) {
-								objectType = "Fixed Spawnable Object";
-								player.sendMessage(fixedSpawnableObjectMessage);
-							}
-						} else if(arenaObject instanceof DelayedPersistentObject) {
-							objectType = "Delayed Persistent Object";
-							player.sendMessage(delayedPersistentObjectMessage);
-						}							
+					public void run() {						
 						switch(objectType) {
 						case "Delayed Persistent Object":
 							String delayString = playerInputString.substring(0, 2);
@@ -166,13 +174,11 @@ public class ArenaDevelopmentKitListener implements Listener {
 							Time delayTime = new Time(Long.parseLong(delayString));
 							boolean override = Boolean.parseBoolean(booleanString);
 							arenaBuilder.registerPersistent((DelayedPersistentObject) arenaObject, delayTime, override);
-							playerInputNeeded = false;
 							break;
 						case "Random Spawnable Object":
 							//Random Spawnable Object with the given group name
 							String groupName = playerInputString;
 							arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, groupName);
-							playerInputNeeded = false;
 							break;
 						case "Fixed Spawnable Object":
 							Time spawnTime;
@@ -190,16 +196,33 @@ public class ArenaDevelopmentKitListener implements Listener {
 								repeatSpawnTime = new Time(Long.parseLong(spawnRepeatTimeString));
 								arenaBuilder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, spawnTime, repeatSpawnTime);
 							}
-							playerInputNeeded = false;
 							break;
 						default: 
 							player.sendMessage("Error creating object. Please try again.");
-							playerInputNeeded = true;
 							break;
 						}
 
 					}	
 				});
+			}
+			
+		}
+		
+		private final static class PlayerBuildObject {
+			String objectName;
+			ArenaObject arenaObject;
+			
+			public PlayerBuildObject(String objectName, ArenaObject arenaObject) {
+				this.objectName = objectName;
+				this.arenaObject = arenaObject;
+			}
+					
+			public String getObjectName() {
+				return this.objectName;
+			}
+			
+			public ArenaObject getArenaObject() {
+				return this.arenaObject;
 			}
 		}
 	}
