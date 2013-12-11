@@ -2,6 +2,7 @@ package com.codari.arenacore.players.role;
 
 import java.util.Collection;
 
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.CodariI;
@@ -14,19 +15,21 @@ public class PlayerRole implements Role {
 	private final int MAX_COOLDOWN;
 	private int cooldown;
 	private Role role;
+	private Player player;
 	
 	public PlayerRole() {
 		this.role = null;
 		this.MAX_COOLDOWN = this.DEFAULT_MAX_COOLDOWN;
 	}
 	
-	public PlayerRole(Role role) {
+	public PlayerRole(Combatant combatant, Role role) {
 		if(role instanceof PlayerRole) {
 			this.role = ((PlayerRole) role).getInteriorRole();
 		} else {
 			this.role = role;
 		}
 		this.MAX_COOLDOWN = this.DEFAULT_MAX_COOLDOWN;
+		this.player = combatant.getPlayer();
 	}
 	
 	public PlayerRole(Role role, int cooldown) {
@@ -133,9 +136,12 @@ public class PlayerRole implements Role {
 		this.cooldown = this.MAX_COOLDOWN;
 		
 		BukkitRunnable runner = new BukkitRunnable() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				if(cooldown != 0) {
+					player.getInventory().getItem(0).setAmount(cooldown);
+					player.updateInventory();
 					cooldown--;
 				} else {
 					super.cancel();

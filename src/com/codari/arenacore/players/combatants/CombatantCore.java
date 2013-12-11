@@ -1,14 +1,12 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
-import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
-import com.codari.api5.io.CodariSerialization;
-import com.codari.api5.io.CodariSerializationException;
 import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.PlayerReference;
 import com.codari.arena5.Arena;
@@ -27,6 +25,7 @@ public final class CombatantCore implements Combatant {
 	
 	//-----Fields-----//
 	private final PlayerReference playerReference;
+	@SuppressWarnings("unused")	//TODO
 	private final File dataFile;
 	private CombatantDataCore data;
 	private StatManager statManager;
@@ -48,7 +47,7 @@ public final class CombatantCore implements Combatant {
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
 		this.reloadData();
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
-		this.role = new PlayerRole(CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
+		this.role = new PlayerRole(this, Codari.getArenaManager().getExistingRole(null, "Non Combatant"));
 		this.menuManager = new MenuManager(this);
 	}
 	
@@ -125,7 +124,7 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public void setRole(Role role) {
-		this.role = new PlayerRole(role);
+		this.role = new PlayerRole(this, role);
 		if(role instanceof PlayerRole) {
 			Bukkit.getPluginManager().callEvent(new RoleSelectEvent(((PlayerRole)role).getInteriorRole(), this));
 		} else {
