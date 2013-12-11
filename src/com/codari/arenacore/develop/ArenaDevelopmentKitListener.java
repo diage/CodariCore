@@ -44,6 +44,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 
 	public ArenaDevelopmentKitListener() {	
 		this.playerInput = new PlayerInput();
+		Bukkit.getPluginManager().registerEvents(this.playerInput, CodariI.INSTANCE);
 	}
 
 	@EventHandler()
@@ -55,7 +56,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 			if(e.isRightClick()) {
 				int clickedSlot = e.getSlot();
 				//Location player = e.getWhoClicked().getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
-
+				
 				switch(clickedSlot) {
 				case(ITEM_SPAWNER_SLOT): {			
 					ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", player);				
@@ -139,23 +140,23 @@ public class ArenaDevelopmentKitListener implements Listener {
 		//-----Chat Event-----//
 		@EventHandler
 		public void chatty(AsyncPlayerChatEvent e) {
-			if(e.getPlayer().equals(this.player) && playerInputNeeded) {
-				if(arenaObject instanceof SpawnableObject) {
-					if(arenaObject instanceof RandomSpawnableObject) {
-						objectType = "Random Spawnable Object";
-						player.sendMessage(randomSpawnableObjectMessage);
-					} else if(arenaObject instanceof FixedSpawnableObject) {
-						objectType = "Fixed Spawnable Object";
-						player.sendMessage(fixedSpawnableObjectMessage);
-					}
-				} else if(arenaObject instanceof DelayedPersistentObject) {
-					objectType = "Delayed Persistent Object";
-					player.sendMessage(delayedPersistentObjectMessage);
-				}				
+			if(e.getPlayer().equals(this.player) && playerInputNeeded) {			
 				final String playerInputString = e.getMessage();
 				Bukkit.getScheduler().runTask(CodariI.INSTANCE, new Runnable() {
 					@Override
 					public void run() {
+						if(arenaObject instanceof SpawnableObject) {
+							if(arenaObject instanceof RandomSpawnableObject) {
+								objectType = "Random Spawnable Object";
+								player.sendMessage(randomSpawnableObjectMessage);
+							} else if(arenaObject instanceof FixedSpawnableObject) {
+								objectType = "Fixed Spawnable Object";
+								player.sendMessage(fixedSpawnableObjectMessage);
+							}
+						} else if(arenaObject instanceof DelayedPersistentObject) {
+							objectType = "Delayed Persistent Object";
+							player.sendMessage(delayedPersistentObjectMessage);
+						}							
 						switch(objectType) {
 						case "Delayed Persistent Object":
 							String delayString = playerInputString.substring(0, 2);
