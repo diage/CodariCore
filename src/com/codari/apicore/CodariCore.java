@@ -33,6 +33,7 @@ import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
 import com.codari.arenacore.develop.FinalizeCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
+import com.codari.arenacore.players.skills.SkillListener;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
 import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
 import com.codari.arenacore.players.teams.commands.CommandInvitePlayerToTeam;
@@ -79,7 +80,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		
 		//-----Listeners-----//
 		Bukkit.getPluginManager().registerEvents(new ArenaDevelopmentKitListener(), this);
-		
+		Bukkit.getPluginManager().registerEvents(new SkillListener(), this);
 		//-----Commands-----//
 		//---Arena Construction Commands---//
 		super.getCommand("new2v2arena").setExecutor(new NewArenaCommand());
