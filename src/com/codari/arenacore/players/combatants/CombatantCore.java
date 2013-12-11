@@ -1,11 +1,9 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.PlayerReference;
@@ -25,7 +23,7 @@ public final class CombatantCore implements Combatant {
 	
 	//-----Fields-----//
 	private final PlayerReference playerReference;
-	@SuppressWarnings("unused")	//TODO
+	@SuppressWarnings("unused")
 	private final File dataFile;
 	private CombatantDataCore data;
 	private StatManager statManager;
@@ -47,7 +45,7 @@ public final class CombatantCore implements Combatant {
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
 		this.reloadData();
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
-		this.role = new PlayerRole(this, Codari.getArenaManager().getExistingRole(null, "Non Combatant"));
+		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		this.menuManager = new MenuManager(this);
 	}
 	
@@ -86,6 +84,22 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public Role getRole() {
 		return ((PlayerRole)this.role).getInteriorRole();
+	}
+	
+	public void doubleJump(Combatant combatant) {
+		this.role.doubleJump(combatant);
+	}
+
+	public void block(Combatant combatant) {
+		this.role.block(combatant);
+	}
+
+	public void sprint(Combatant combatant) {
+		this.role.sprint(combatant);
+	}
+
+	public void sneak(Combatant combatant) {
+		this.role.sneak(combatant);
 	}
 
 	@Override
