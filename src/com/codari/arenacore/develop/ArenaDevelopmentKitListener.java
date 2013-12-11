@@ -1,8 +1,6 @@
 package com.codari.arenacore.develop;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,48 +50,47 @@ public class ArenaDevelopmentKitListener implements Listener {
 	public void onPlayerRightClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		CombatantCore combatant = (CombatantCore) Codari.getArenaManager().getCombatant(player);
-		Bukkit.broadcastMessage("TEST TWO - PASSES GET COMBATANT");
 		ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(combatant.getArenaBuildName());
 		if(((CombatantCore)combatant).checkIfBuilding()) {
 			if(e.isRightClick()) {
 				int clickedSlot = e.getSlot();
-				Location blockDown = e.getWhoClicked().getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
+				//Location player = e.getWhoClicked().getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
 
 				switch(clickedSlot) {
 				case(ITEM_SPAWNER_SLOT): {			
-					ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", blockDown);				
+					ArenaObject itemSpawner = ((LibraryCore)Codari.getLibrary()).createObject("Item_Spawner", player);				
 					this.playerInput.requestChat(player, itemSpawner, arenaBuilder);
 				} break;
 				case(DIAMOND_OBJECTIVE_POINT): {
-					ArenaObject diamondObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Diamond_Objective_Point", blockDown);
+					ArenaObject diamondObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Diamond_Objective_Point", player);
 					this.playerInput.requestChat(player, diamondObjectivePoint, arenaBuilder);				
 				} break;
 				case(EMERALD_OBJECTIVE_POINT): {
-					ArenaObject emeraldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Emerald_Objective_Point", blockDown);
+					ArenaObject emeraldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Emerald_Objective_Point", player);
 					this.playerInput.requestChat(player, emeraldObjectivePoint, arenaBuilder);				
 				} break;
 				case(GOLD_OBJECTIVE_POINT): {
-					ArenaObject goldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Gold_Objective_Point", blockDown);
+					ArenaObject goldObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Gold_Objective_Point", player);
 					this.playerInput.requestChat(player, goldObjectivePoint, arenaBuilder);
 				} break;
 				case(IRON_OBJECTIVE_POINT): {
-					ArenaObject ironObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Iron_Objective_Point", blockDown);
+					ArenaObject ironObjectivePoint = ((LibraryCore)Codari.getLibrary()).createObject("Iron_Objective_Point", player);
 					this.playerInput.requestChat(player, ironObjectivePoint, arenaBuilder);
 				} break;
 				case(EXPLOSION_TRAP): {
-					ArenaObject explosionTrap = ((LibraryCore)Codari.getLibrary()).createObject("Explosion_Trap", blockDown);
+					ArenaObject explosionTrap = ((LibraryCore)Codari.getLibrary()).createObject("Explosion_Trap", player);
 					this.playerInput.requestChat(player, explosionTrap, arenaBuilder);
 				} break;
 				case(FIRE_TRAP): {
-					ArenaObject fireTrap = ((LibraryCore)Codari.getLibrary()).createObject("Fire_Trap", blockDown);
+					ArenaObject fireTrap = ((LibraryCore)Codari.getLibrary()).createObject("Fire_Trap", player);
 					this.playerInput.requestChat(player, fireTrap, arenaBuilder);
 				} break;
 				case(POISON_SNARE_TRAP): {
-					ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", blockDown);
+					ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", player);
 					this.playerInput.requestChat(player, poisonSnareTrap, arenaBuilder);
 				} break;
 				case(GATE): {
-					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", blockDown);
+					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", player);
 					arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
 				} break;
 				case(MELEE_ROLE_DELEGATION): {

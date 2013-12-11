@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.Reflector;
@@ -49,13 +49,13 @@ public class LibraryCore implements Library {
 		this.objects.put(name, clazz);
 	}
 
-	public ArenaObject createObject(String name, Location location) {
+	public ArenaObject createObject(String name, Player player) {
 		Class<? extends ArenaObject> clazz = this.objects.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, location).fetchAs(ArenaObject.class);
+			return Reflector.invokeConstructor(clazz, player).fetchAs(ArenaObject.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
@@ -83,13 +83,13 @@ public class LibraryCore implements Library {
 		this.declarations.put(name, clazz);
 	}
 
-	public RoleDeclaration createRoleDeclaration(String name, Location location) {
+	public RoleDeclaration createRoleDeclaration(String name, Player player) {
 		Class<? extends RoleDeclaration> clazz = this.declarations.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, location).fetchAs(RoleDeclaration.class);
+			return Reflector.invokeConstructor(clazz, player).fetchAs(RoleDeclaration.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
@@ -117,13 +117,13 @@ public class LibraryCore implements Library {
 		this.actions.put(name, clazz);
 	}
 
-	public TimedAction createTimedAction(String name, Location location) {
+	public TimedAction createTimedAction(String name, Player player) {
 		Class<? extends TimedAction> clazz = this.actions.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, location).fetchAs(TimedAction.class);
+			return Reflector.invokeConstructor(clazz, player).fetchAs(TimedAction.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
@@ -151,13 +151,13 @@ public class LibraryCore implements Library {
 		this.conditions.put(name, clazz);
 	}
 
-	public WinCondition createWinCondition(String name, Location location) {
+	public WinCondition createWinCondition(String name, Player player) {
 		Class<? extends WinCondition> clazz = this.conditions.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, location).fetchAs(WinCondition.class);
+			return Reflector.invokeConstructor(clazz, player).fetchAs(WinCondition.class);
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);

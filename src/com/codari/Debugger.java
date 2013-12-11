@@ -48,7 +48,7 @@ public class Debugger implements Listener {
 		Bukkit.getPluginManager().registerEvents(new Debugger(), CodariI.INSTANCE);
 		//Bukkit.getPluginManager().registerEvents(new TrapListener(), Codari.INSTANCE);-
 	}
-	
+	/*
 	@EventHandler
 	public void testerbugrer(PlayerInteractEvent e) {
 		if (e.getItem() != null && e.getItem().getType() == Material.STICK) {
@@ -89,5 +89,5 @@ public class Debugger implements Listener {
 				}
 			}
 		}
-	}
+	}*/
 }
