@@ -1,5 +1,6 @@
 package com.codari.arenacore.develop;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -146,7 +147,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 	}
 
 	private final static class PlayerInput implements Listener {
-		private Map<String, PlayerBuildObject> playerBuildObjects = new HashMap<>();
+		private Map<String, PlayerBuildObject> playerBuildObjects = Collections.synchronizedMap(new HashMap<String, PlayerBuildObject>());
 		
 		public void requestChat(Player player,  String objectType, ArenaObject arenaObject) {
 			this.playerBuildObjects.put(player.getName(), new PlayerBuildObject(objectType, arenaObject));
