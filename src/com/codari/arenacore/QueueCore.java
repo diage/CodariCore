@@ -60,8 +60,9 @@ public class QueueCore {
 		}
 	}
 
-	private void startArena() {	
-		this.arena.start((Team[]) this.teams.toArray());
+	private void startArena() {
+		Team[] teamArray =  new Team[this.teams.size()];
+		this.arena.start(this.teams.toArray(teamArray));
 	}
 
 	private void countDown() {
@@ -75,7 +76,7 @@ public class QueueCore {
 						}
 					}
 					countDown--;
-					if(countDown == 0) {
+					if(countDown <= 0) {
 						startArena();
 						matchStarting = false;
 						countDown = countDownStartingValue;
