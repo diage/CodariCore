@@ -12,7 +12,6 @@ public class TeamBuilder implements Listener {
 	public static Team createNewTeam(Player player, String teamName) {
 		Combatant combatant = CodariI.INSTANCE.getArenaManager().getCombatant(player);
 		Team team = new TeamCore(teamName, combatant);
-		team.addToTeam(combatant);
 		team.setLeader(combatant); 
 		return team;
 	}

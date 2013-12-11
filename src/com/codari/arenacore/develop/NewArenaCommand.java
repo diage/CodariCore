@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
+import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arenacore.ArenaManagerCore;
@@ -28,6 +29,7 @@ public class NewArenaCommand implements CommandExecutor {
 				gameRule.setMatchDurationInfinite();
 				gameRule.setTeamSize(teamSize);		//set team size to 2
 				gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
+				gameRule.addRoleDeclaration(new ArenaRoleDeclaration());
 				//ArenaBuilder construction//
 				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
 				((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaName, arenaBuilder);
