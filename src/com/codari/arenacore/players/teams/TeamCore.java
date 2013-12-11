@@ -22,6 +22,7 @@ public class TeamCore implements Team {
 		this.combatants = new ArrayList<>();
 		this.teamName = teamName;
 		for(Combatant combatant : combatants) {
+			combatant.setTeam(this);
 			this.combatants.add(combatant);
 		}
 	}
