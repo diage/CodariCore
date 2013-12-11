@@ -26,7 +26,7 @@ public class NewArenaCommand implements CommandExecutor {
 				//Gamerule construction//
 				GameRuleCore gameRule = new GameRuleCore();
 				gameRule.setMatchDurationInfinite();
-				gameRule.setTeamSize(teamSize);
+				gameRule.setTeamSize(teamSize);		//set team size to 2
 				gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
 				//ArenaBuilder construction//
 				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);

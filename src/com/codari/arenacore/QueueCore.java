@@ -109,6 +109,8 @@ public class QueueCore {
 	private static boolean checkTeamSize(Arena arena, Team team) {
 		int teamSize = team.getTeamSize();
 		int arenaTeamSize = arena.getGameRule().getTeamSize();
+		Bukkit.broadcastMessage("Team size: " + teamSize);
+		Bukkit.broadcastMessage("Arena team size: " + arenaTeamSize);
 		if(teamSize != arenaTeamSize) {
 			for(Player player : team.getPlayers()) {
 				player.sendMessage(ChatColor.RED + "You're team has to have " + arena.getGameRule().getTeamSize() + " players to join that arena!");
