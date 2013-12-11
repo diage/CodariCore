@@ -9,6 +9,9 @@ commands:
   arenakit:
     description: creates an arena development kit 
     usage: Syntax error! Simply enter "arenakit" and the arena you would like to add objects to
+  finalize:
+    description: finalizes the creation of an arena
+    usage: Syntax error! Simply enter "finalize"
   createteam:
     description: makes a team
     usage: Syntax error! Simply enter "createteam" and the name of the team you want to make

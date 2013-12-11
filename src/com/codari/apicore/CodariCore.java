@@ -31,6 +31,7 @@ import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.commands.JoinQueueCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
+import com.codari.arenacore.develop.FinalizeCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
 import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
@@ -83,6 +84,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		//---Arena Construction Commands---//
 		super.getCommand("new2v2arena").setExecutor(new NewArenaCommand());
 		super.getCommand("arenakit").setExecutor(new ArenaDevelopmentCommand());
+		super.getCommand("finalize").setExecutor(new FinalizeCommand());
 		//---Team Commands---//
 		super.getCommand("createteam").setExecutor(new CommandCreateTeam());
 		super.getCommand("invite").setExecutor(new CommandInvitePlayerToTeam());
