@@ -52,7 +52,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 	public void onPlayerRightClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		CombatantCore combatant = (CombatantCore) Codari.getArenaManager().getCombatant(player);
-		Bukkit.broadcastMessage("TEST ONE - PASSES GET COMBATANT");
+		Bukkit.broadcastMessage("TEST TWO - PASSES GET COMBATANT");
 		ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(combatant.getArenaBuildName());
 		if(((CombatantCore)combatant).checkIfBuilding()) {
 			if(e.isRightClick()) {
