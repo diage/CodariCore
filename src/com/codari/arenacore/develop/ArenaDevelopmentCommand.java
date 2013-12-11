@@ -1,5 +1,6 @@
 package com.codari.arenacore.develop;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +16,7 @@ public class ArenaDevelopmentCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			((CombatantCore) Codari.getArenaManager().getCombatant(player)).startBuilding(args[0]);
 			ArenaDevelopmentKit.createArenaDevelopmentObjects(player);
+			Bukkit.broadcastMessage("TEST ONE - PASSES GET COMBATANT");
 			return true;
 		}
 		return false;

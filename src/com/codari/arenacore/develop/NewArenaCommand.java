@@ -1,5 +1,6 @@
 package com.codari.arenacore.develop;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,6 +32,7 @@ public class NewArenaCommand implements CommandExecutor {
 				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
 				((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaName, arenaBuilder);
 				player.sendMessage("You have created a new 2v2 arena builder.");
+				Bukkit.broadcastMessage("TEST NEW ARENA - PASSES");
 				return true;
 			} else {
 				player.sendMessage("There is already an arena with the name " + args[0]);
