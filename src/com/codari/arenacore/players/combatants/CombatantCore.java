@@ -64,7 +64,7 @@ public final class CombatantCore implements Combatant {
 	}
 	
 	public void reloadData() {
-		try {
+		/*try {
 			this.data = (CombatantDataCore) CodariSerialization.deserialize(this.dataFile);
 		} catch (CodariSerializationException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, 
@@ -72,16 +72,16 @@ public final class CombatantCore implements Combatant {
 			if (this.data == null) {
 				this.data = new CombatantDataCore();
 			}
-		}
+		}*/
 	}
 	
 	public void saveData() {
-		try {
+		/*try {
 			CodariSerialization.serialize(this.data, this.dataFile);
 		} catch (CodariSerializationException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, 
 					"Failed to save combatant data for " + this.playerReference, ex);
-		}
+		}*/
 	}
 
 	@Override
