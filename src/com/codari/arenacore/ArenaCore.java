@@ -64,8 +64,10 @@ public final class ArenaCore implements Arena {
 			for (Team team : teams) {
 				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
-				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole("test1", ArenaStatics.MELEE));
-				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole("test1", ArenaStatics.RANGED));
+				Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
+				Bukkit.broadcastMessage(team.combatants().get(1).getPlayer().getName());
+				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.MELEE));
+				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.RANGED));
 			}
 			ArenaStartEvent e = new ArenaStartEvent(this);
 			Bukkit.getPluginManager().callEvent(e);

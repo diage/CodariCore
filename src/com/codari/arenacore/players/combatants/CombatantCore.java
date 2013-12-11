@@ -184,4 +184,12 @@ public final class CombatantCore implements Combatant {
 	public MenuManager getMenuManager() {
 		return this.menuManager;
 	}
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof CombatantCore) {
+			CombatantCore combatant = (CombatantCore) obj;
+			return (combatant.getPlayer().getName().equalsIgnoreCase(this.getPlayer().getName()));
+		}
+		return false;
+	}
 }

@@ -137,8 +137,8 @@ public class GameRuleCore implements GameRule {
 
 	@Override
 	public boolean addRoleDeclaration(RoleDeclaration roleDeclaration) {
-		// TODO Auto-generated method stub
-		return false;
+		roleDeclaration.initalizeRoles();
+		return true; 	//TODO
 	}
 
 	@Override
