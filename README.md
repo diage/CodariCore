@@ -4,6 +4,16 @@ VERSION: 0.0.1
 ===========
 
 ===========
+---NOTES---
+===========
+0.1.n will be upgraded upon bugs or QOL objectives being crossed off. 
+NOTE! Bugs should be added to this list whenever found
+
+===========
+Version 0.1 Goals
+===========
+
+===========
 : Bugs to fix :
 ===========
 Objective Spawners need fixed
@@ -12,6 +22,7 @@ Sprinting dilemma needs figured out
 Death needs handled
 Player leave needs handled
 Preventing interacting with inventory needs applied
+Add serialization to arenas
 
 ===========
   : QOL :
@@ -26,13 +37,17 @@ fix Role Switch Object placement problem
 Create spawning
 Improve chat colors and item colors
 Figure out the correct time to name an arena
+Set blocks above objective point to glass
 
 ===========
----NOTES---
+Version 0.2 Goals
 ===========
-0.1.0 will be achieved once Spawning is implemented and all objects can be properly spawned as well as basic listeners.
-0.1.n will be upgraded upon bugs or QOL objectives being crossed off. 
-NOTE! Bugs should be added to this list and can prevent 0.1 from coming. 
+
+===========
+: Bugs to fix :
+===========
+Improve and test Menu system
+
 
 ===========
 LOGIN INFO
