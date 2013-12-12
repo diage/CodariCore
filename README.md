@@ -1,53 +1,137 @@
 CodariCore 
 ===========
-VERSION: 0.0.1
+CURRENT VERSION: 0.0.1
 ===========
 
 ===========
 ---NOTES---
 ===========
-0.1.n will be upgraded upon bugs or QOL objectives being crossed off. 
-NOTE! Bugs should be added to this list whenever found
+r.x.n
+R will increase upon Significant updates
+X will increase based on below scheduling
+N will increase for any bug fixes 
+QOL changes are things which aren't required to move up, but ought to be done to improve the overall gameplay. 
+
 
 ===========
 Version 0.1 Goals
 ===========
+-All objects are able to be placed and work
+-ArenaBuilder and Arena are correctly implemented
+-Deaths and inventory interactions are handled
+-CodariArena implementation is working per current API standards
 
-===========
+---------------
 : Bugs to fix :
-===========
+---------------
 Objective Spawners need fixed
 Random Spawnable groups need to be creatable
 Sprinting dilemma needs figured out
 Death needs handled
 Player leave needs handled
 Preventing interacting with inventory needs applied
-Add serialization to arenas
+Fix spawn location of objectives
+fix Role Switch Object placement problem
+Figure out the correct time to name an arena
 
-===========
-  : QOL :
-===========
+---------------
+    : QOL :
+---------------
 Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 Improve damage from shield skill (make it actually cause damage)
 Fix colors for item Spawners
-Improve .equals methods
 Improve command syntax
-Fix spawn location of objectives
-fix Role Switch Object placement problem
-Create spawning
 Improve chat colors and item colors
-Figure out the correct time to name an arena
 Set blocks above objective point to glass
 
 ===========
 Version 0.2 Goals
 ===========
+-Add Persistence
+-Team Spawn locations added
+-Improve Arena Construction options
+-Begin abstraction of roles
 
-===========
+---------------
 : Bugs to fix :
-===========
-Improve and test Menu system
+---------------
+Improve .equals methods
 
+---------------
+    : QOL :
+---------------
+
+===========
+Version 0.3 Goals
+===========
+-Improve role abstraction
+-Create KitBuilder (menu based) Abstraction
+-Begin bug testing Icons
+
+---------------
+: Bugs to fix :
+---------------
+
+---------------
+    : QOL :
+---------------
+
+===========
+Version 0.4 Goals
+===========
+-Finalize role abstraction
+-Finalize menu based arena construction
+-Start to develop permission system
+
+---------------
+: Bugs to fix :
+---------------
+
+---------------
+    : QOL :
+---------------
+
+===========
+Version 0.5 Goals
+===========
+-Finalize permission system
+-Begin item abstraction
+-Tie in win statistics
+
+---------------
+: Bugs to fix :
+---------------
+
+---------------
+    : QOL :
+---------------
+
+===========
+Version 0.6 Goals
+===========
+-Finalize item abstraction
+-Introduce stat system (Strength and etc.)
+
+---------------
+: Bugs to fix :
+---------------
+
+---------------
+    : QOL :
+---------------
+
+===========
+Version 0.7 Goals
+===========
+-Final bug testing and all QOL improvements to prepare for 1.0 release
+
+---------------
+: Bugs to fix :
+---------------
+
+---------------
+    : QOL :
+---------------
 
 ===========
 LOGIN INFO
