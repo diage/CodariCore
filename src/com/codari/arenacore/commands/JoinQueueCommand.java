@@ -40,7 +40,7 @@ public class JoinQueueCommand implements CommandExecutor {
 			
 			if(checkIfArenaIsValid(arena, player) && checkIfPlayerHasTeam(team, player)) {  				
 				if(Codari.getArenaManager().addToQueue(args[0], team)) {
-					player.sendMessage(ChatColor.GREEN + "Your player was successfully added to the queue!");
+					player.sendMessage(ChatColor.GREEN + "Your team, " +  team.getTeamName() + ", was successfully added to the queue!");
 					return true;
 				}			
 			}

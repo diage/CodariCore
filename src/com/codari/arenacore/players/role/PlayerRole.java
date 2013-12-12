@@ -2,8 +2,6 @@ package com.codari.arenacore.players.role;
 
 import java.util.Collection;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -75,7 +73,6 @@ public class PlayerRole implements Role {
 
 	@Override
 	public void sprint(Combatant combatant) {
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Going into SPRINT method!");
 		if(this.role == null) {
 			return;
 		}
@@ -142,7 +139,7 @@ public class PlayerRole implements Role {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
-				if(cooldown != 0) {
+				if(cooldown > 0) {
 					player.getInventory().getItem(0).setAmount(cooldown);
 					player.updateInventory();
 					cooldown--;

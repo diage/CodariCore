@@ -110,4 +110,6 @@ public class TeamCore implements Team {
 	public boolean isLeader(Combatant combatant) {
 		return combatant.checkIfLeader();
 	}
+	
+	//TODO - Implement equals method
 }

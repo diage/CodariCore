@@ -176,7 +176,8 @@ public class ArenaDevelopmentKitListener implements Listener {
 							break;
 						case "Random Spawnable Object":
 							//Random Spawnable Object with the given group name
-							String groupName = playerInputString;
+							String groupName = playerInputString;	
+							//Group Names - trap, objective, spawner
 							arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, groupName);
 							break;
 						case "Fixed Spawnable Object":
