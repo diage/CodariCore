@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
 import com.codari.api5.Codari;
-import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arena5.players.hotbar.HotbarSlot;
@@ -16,7 +15,6 @@ import com.codari.arena5.players.hotbar.HotbarSlot;
 public class HotbarListener implements Listener {
 	//-----Constants-----//
 	private final static int DEFAULT_SLOT = 7;
-	private final static float GLOBAL_COOLDOWN = 0.5f;
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	private void hotbarSelect(PlayerItemHeldEvent e) {
@@ -27,8 +25,9 @@ public class HotbarListener implements Listener {
 				int slotSelection = e.getNewSlot();
 				if (HotbarSlot.isHotbarSlot(slotSelection)) {
 					HotbarSlot slot = HotbarSlot.fromInventorySlot(slotSelection);
-					Bukkit.getPluginManager().callEvent(new HotbarSelectEvent(combatant, slot));
-					combatant.setHotbarCooldown(BukkitTime.SECOND.tickValue(GLOBAL_COOLDOWN));
+					HotbarSelectEvent event = new HotbarSelectEvent(combatant, slot);
+					Bukkit.getPluginManager().callEvent(event);
+					slot.setItem(combatant.getPlayer(), event.getItem());
 				}
 			}
 		}
