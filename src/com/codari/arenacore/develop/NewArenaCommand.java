@@ -21,7 +21,7 @@ public class NewArenaCommand implements CodariCommand {
 	public boolean execute(CommandSender sender, String[] args) {
 		if(sender instanceof Player && args[0].equalsIgnoreCase(COMMAND_NAME) && args.length == 2) {
 			Player player = (Player) sender;
-			String arenaName = args[0];
+			String arenaName = args[1];
 
 			if(!((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuild(arenaName)) {
 				//Gamerule construction//
