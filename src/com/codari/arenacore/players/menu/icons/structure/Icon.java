@@ -19,7 +19,7 @@ public abstract class Icon extends ItemStack {
 		this.setItemMeta(itemMeta);
 		
 		this.combatant = combatant;
-		this.playerName = combatant.getPlayer().getName();
+		this.playerName = combatant.getPlayerReference().getName();
 		this.iconType = iconType;
 	}
 	
