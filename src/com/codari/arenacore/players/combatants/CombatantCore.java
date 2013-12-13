@@ -1,6 +1,8 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
+
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -34,6 +36,9 @@ public final class CombatantCore implements Combatant {
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
+	
+	//---Hotbar---//
+	private boolean activeHotbar;
 	
 	//---Building Arena---//
 	private boolean isBuilding;
@@ -199,10 +204,13 @@ public final class CombatantCore implements Combatant {
 		return this.menuManager;
 	}
 	
+	public int hashCode() {
+		return new HashCodeBuilder().append(this.player).toHashCode();
+	}
+	
 	public boolean equals(Object obj) {
 		if(obj instanceof CombatantCore) {
-			CombatantCore combatant = (CombatantCore) obj;
-			return this.player.equals(combatant.player);
+			return this.player.equals(((CombatantCore) obj).player);
 		}
 		return false;
 	}

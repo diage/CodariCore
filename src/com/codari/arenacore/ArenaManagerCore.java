@@ -41,6 +41,7 @@ public class ArenaManagerCore implements ArenaManager {
 	//----Combatant Related----//
 	@Override
 	public Combatant getCombatant(String name) {
+		name = name.toLowerCase();
 		Combatant combatant = this.combatants.get(name);
 		if (combatant == null) {
 			combatant = new CombatantCore(name);
