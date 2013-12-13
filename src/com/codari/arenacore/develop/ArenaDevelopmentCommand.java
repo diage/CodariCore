@@ -24,17 +24,6 @@ public class ArenaDevelopmentCommand implements CodariCommand {
 
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME + " (arenaname)\"";
+		return "Provides a player with the necessary items to construct an arena for the given arena. #arenaname";
 	}
-	//	@Override
-	//	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-	//		if(sender instanceof Player && command.getName().equalsIgnoreCase("arenakit") && args.length == 1) {
-	//			Player player = (Player) sender;
-	//			((CombatantCore) Codari.getArenaManager().getCombatant(player)).startBuilding(args[0]);
-	//			ArenaDevelopmentKit.createArenaDevelopmentObjects(player);
-	//			Bukkit.broadcastMessage("TEST ONE - PASSES GET COMBATANT");
-	//			return true;
-	//		}
-	//		return false;
-	//	} 	
 }

@@ -36,6 +36,6 @@ public class ComandLeaveTeam implements CodariCommand {
 
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME;
+		return "Leave your team.";
 	}
 }

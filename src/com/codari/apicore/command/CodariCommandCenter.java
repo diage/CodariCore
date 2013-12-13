@@ -21,6 +21,7 @@ public class CodariCommandCenter implements CommandExecutor {
 				((Player)sender).sendMessage(ChatColor.AQUA + commands + 
 						ChatColor.DARK_AQUA + ": " + ((CodariCore)CodariI.INSTANCE).getCommandRegister().getCommand(commands).usage());
 			}
+			return true;
 		}
 		return false;
 	}

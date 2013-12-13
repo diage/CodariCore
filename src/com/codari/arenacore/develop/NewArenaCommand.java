@@ -13,7 +13,7 @@ import com.codari.arenacore.ArenaManagerCore;
 import com.codari.arenacore.rules.GameRuleCore;
 
 public class NewArenaCommand implements CodariCommand {
-	public static final String COMMAND_NAME = "new";
+	public static final String COMMAND_NAME = "n";
 	
 	private static int teamSize = 2;
 	private static int numberOfPointsToWin = 100;
@@ -47,6 +47,6 @@ public class NewArenaCommand implements CodariCommand {
 	}
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME + " (arenaname)\"";
+		return "Create a new 2v2 arena. #arenaname";
 	}
 }

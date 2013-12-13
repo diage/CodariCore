@@ -10,7 +10,7 @@ import com.codari.arena5.ArenaBuilder;
 import com.codari.arenacore.ArenaManagerCore;
 
 public class FinalizeCommand implements CodariCommand {
-	public static final String COMMAND_NAME = "finalize";
+	public static final String COMMAND_NAME = "f";
 	
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
@@ -28,6 +28,6 @@ public class FinalizeCommand implements CodariCommand {
 
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME + " (arenabuilder)\"";
+		return "Finalizes the creation of the provided arena. #arenaname";
 	}
 }

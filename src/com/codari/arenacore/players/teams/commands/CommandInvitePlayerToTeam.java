@@ -53,6 +53,6 @@ public class CommandInvitePlayerToTeam implements CodariCommand {
 
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME + " (playername)\"";
+		return "Invite the specified player to your team. #playername";
 	}	
 }

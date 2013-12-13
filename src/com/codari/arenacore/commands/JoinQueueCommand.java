@@ -31,7 +31,7 @@ public class JoinQueueCommand implements CodariCommand {
 	
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME + " (arenaname)\"";
+		return "Join the queue of the provided arena. #arenaname";
 	}
 
 	private static boolean checkIfArenaIsValid(Arena arena, Player player) {

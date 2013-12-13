@@ -32,6 +32,6 @@ public class CommandCreateTeam implements CodariCommand {
 
 	@Override
 	public String usage() {
-		return "Type in \"ca " + COMMAND_NAME + " (teamname)\"";
+		return "Create a team with the specified team name. #teamname";
 	}
 }
