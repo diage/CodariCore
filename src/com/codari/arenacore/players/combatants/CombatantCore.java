@@ -33,7 +33,7 @@ public final class CombatantCore implements Combatant {
 	private StatManager statManager;
 	private MenuManager menuManager;
 	
-	private boolean isLeader;
+	private boolean isLeader, inArena;
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
@@ -58,6 +58,8 @@ public final class CombatantCore implements Combatant {
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		//this.menuManager = new MenuManager(this);
+		
+		this.inArena = false;
 	}
 	
 	//-----Public Methods-----//
@@ -123,6 +125,7 @@ public final class CombatantCore implements Combatant {
 		Arena arena = CodariI.INSTANCE.getArenaManager().getArena(arenaName);
 		if(arena != null) {
 			this.arenaName = null;
+			this.inArena = false;
 			return true;
 		}
 		return false;
@@ -142,6 +145,7 @@ public final class CombatantCore implements Combatant {
 	public boolean sendToArena(Arena arena) {
 		if(arena != null) {
 			this.arenaName = arena.getName();
+			this.inArena = true;
 			return true;
 		}
 		return false;
@@ -241,5 +245,10 @@ public final class CombatantCore implements Combatant {
 			this.hotbarCooldown.cancel();
 		}
 		this.hotbarCooldown.runTaskLater(ticks, true);
+	}
+
+	@Override
+	public boolean inArena() {
+		return this.inArena;
 	}
 }
