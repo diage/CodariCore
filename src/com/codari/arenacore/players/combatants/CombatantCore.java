@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.codari.api5.CodariI;
 import com.codari.api5.player.CodariPlayers;
 import com.codari.api5.stats.StatManager;
+import com.codari.api5.util.scheduler.CodariRunnable;
 import com.codari.apicore.player.OfflineCodariPlayerCore;
 import com.codari.arena5.Arena;
 import com.codari.arena5.events.RoleSelectEvent;
@@ -39,6 +40,7 @@ public final class CombatantCore implements Combatant {
 	
 	//---Hotbar---//
 	private boolean activeHotbar;
+	private final CodariRunnable hotbarCooldown;
 	
 	//---Building Arena---//
 	private boolean isBuilding;
@@ -49,7 +51,10 @@ public final class CombatantCore implements Combatant {
 		this.player = (OfflineCodariPlayerCore) CodariPlayers.getOfflineCodariPlayer(name);
 		String dataFilePath = String.format(DATA_FILE_PATH, this.player.getName());
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
-		this.reloadData();
+		
+		this.activeHotbar = false;
+		this.hotbarCooldown = new CodariRunnable(CodariI.INSTANCE) {public void run() {}};
+		
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		this.menuManager = new MenuManager(this);
@@ -213,5 +218,28 @@ public final class CombatantCore implements Combatant {
 			return this.player.equals(((CombatantCore) obj).player);
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isHotbarActive() {
+		return this.activeHotbar;
+	}
+
+	@Override
+	public void setHotbarActibe(boolean active) {
+		this.activeHotbar = active;
+	}
+	
+	@Override
+	public boolean isHotbarOnCooldown() {
+		return this.hotbarCooldown.isRunning();
+	}
+
+	@Override
+	public void setHotbarCooldown(long ticks) {
+		if (ticks <= 0) {
+			this.hotbarCooldown.cancel();
+		}
+		this.hotbarCooldown.runTaskLater(ticks, true);
 	}
 }
