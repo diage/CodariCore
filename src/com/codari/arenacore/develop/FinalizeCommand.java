@@ -14,7 +14,7 @@ public class FinalizeCommand implements CodariCommand {
 	
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
-		if(sender instanceof Player && args[0ew].equalsIgnoreCase(COMMAND_NAME) && args.length == 2) {
+		if(sender instanceof Player && args[0].equalsIgnoreCase(COMMAND_NAME) && args.length == 2) {
 			ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(args[1]);
 
 			Codari.getArenaManager().buildArena(args[1], arenaBuilder);
