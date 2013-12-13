@@ -12,6 +12,8 @@ import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 public class HotbarTest implements Listener {
 	public HotbarTest() {
 		Codari.getArenaManager().getCombatant("Soren_Endon").setHotbarActibe(true);
+		Codari.getArenaManager().getCombatant("Diage").setHotbarActibe(true);
+		Codari.getArenaManager().getCombatant("Soren025").setHotbarActibe(true);
 	}
 	
 	private final PotionEffect shield = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, (int) BukkitTime.HOUR.tickUnit(), 125);
@@ -21,42 +23,40 @@ public class HotbarTest implements Listener {
 	
 	@EventHandler
 	private void hotbarTest(HotbarSelectEvent e) {
-		if (e.getCombatant().getPlayerReference().getName().equalsIgnoreCase("Soren_Endon")) {
-			switch (e.getSlot()) {
-			case HOTBAR_1:
-				e.getCombatant().getPlayer().addPotionEffect(damage);
-				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
-				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
-				break;
-			case HOTBAR_2:
-				e.getCombatant().getPlayer().addPotionEffect(shield);
-				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
-				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
-				break;
-			case HOTBAR_3:
-				e.getCombatant().getPlayer().addPotionEffect(regen);
-				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
-				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
-				break;
-			case HOTBAR_4:
-				e.getCombatant().getPlayer().addPotionEffect(health);
-				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
-				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
-				break;
-			case HOTBAR_5:
-				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
-				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
-				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
-				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
-				break;
-			case HOTBAR_6:
-				e.getCombatant().getPlayer().setOp(true);
-				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
-				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
-				break;
-			}
+		switch (e.getSlot()) {
+		case HOTBAR_1:
+			e.getCombatant().getPlayer().addPotionEffect(damage);
+			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+			break;
+		case HOTBAR_2:
+			e.getCombatant().getPlayer().addPotionEffect(shield);
+			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+			break;
+		case HOTBAR_3:
+			e.getCombatant().getPlayer().addPotionEffect(regen);
+			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+			break;
+		case HOTBAR_4:
+			e.getCombatant().getPlayer().addPotionEffect(health);
+			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+			break;
+		case HOTBAR_5:
+			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
+			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
+			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+			break;
+		case HOTBAR_6:
+			e.getCombatant().getPlayer().setOp(true);
+			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+			break;
 		}
 	}
 }
