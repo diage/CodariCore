@@ -48,6 +48,10 @@ public class TeamCore implements Team {
 	}
 	
 	public void setArena(Arena arena) {
+		if(arena == null) {
+			this.leaveArena();
+			return;
+		}
 		this.arena = arena;
 	}
 	
@@ -111,5 +115,10 @@ public class TeamCore implements Team {
 		return combatant.checkIfLeader();
 	}
 	
-	//TODO - Implement equals method
+	public void leaveArena() {
+		this.arena = null;
+		for(Combatant combatant : this.combatants) {
+			combatant.leaveArena();
+		}
+	}
 }
