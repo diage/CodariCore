@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.0.1
+CURRENT VERSION: 0.0.3
 ===========
 
 ===========
@@ -24,7 +24,7 @@ Version 0.1 Goals
 ---------------
 : Bugs to fix :
 ---------------
-Objective Spawners need fixed
+Objective Spawners needs to add points
 Random Spawnable groups need to be creatable
 Sprinting dilemma needs figured out
 Death needs handled
