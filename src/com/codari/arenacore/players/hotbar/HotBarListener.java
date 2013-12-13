@@ -7,7 +7,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
 public class HotBarListener implements Listener {
-	
 	@EventHandler(priority = EventPriority.MONITOR)
 	private void hotbarSelect(PlayerItemHeldEvent e) {
 		e.getPlayer().getInventory().setHeldItemSlot(7);
