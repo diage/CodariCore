@@ -13,7 +13,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arena5.players.hotbar.HotbarSlot;
 
-public class HotBarListener implements Listener {
+public class HotbarListener implements Listener {
 	//-----Constants-----//
 	private final static int DEFAULT_SLOT = 7;
 	
