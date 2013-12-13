@@ -1,6 +1,5 @@
 package com.codari.arenacore;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +8,7 @@ import java.util.logging.Level;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
+import com.codari.api5.util.reflect.ReflectionException;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
 import com.codari.arena5.objects.ArenaObject;
@@ -55,9 +55,8 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).fetchAs(ArenaObject.class);
-		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException ex) {
+			return Reflector.invokeConstructor(clazz, player).getHandleAs(ArenaObject.class);
+		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
 		}
@@ -89,9 +88,8 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).fetchAs(RoleDeclaration.class);
-		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException ex) {
+			return Reflector.invokeConstructor(clazz, player).getHandleAs(RoleDeclaration.class);
+		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
 			return null;
 		}
@@ -123,9 +121,8 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).fetchAs(TimedAction.class);
-		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException ex) {
+			return Reflector.invokeConstructor(clazz, player).getHandleAs(TimedAction.class);
+		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
 			return null;
 		}
@@ -157,9 +154,8 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).fetchAs(WinCondition.class);
-		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException ex) {
+			return Reflector.invokeConstructor(clazz, player).getHandleAs(WinCondition.class);
+		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;
 		}

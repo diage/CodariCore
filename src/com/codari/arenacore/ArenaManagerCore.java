@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
-import com.codari.api5.util.PlayerReference;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.ArenaManager;
@@ -44,7 +43,7 @@ public class ArenaManagerCore implements ArenaManager {
 	public Combatant getCombatant(String name) {
 		Combatant combatant = this.combatants.get(name);
 		if (combatant == null) {
-			combatant = new CombatantCore(PlayerReference.instanceOf(name));
+			combatant = new CombatantCore(name);
 			this.combatants.put(name, combatant);
 		}
 		return combatant;
@@ -53,11 +52,6 @@ public class ArenaManagerCore implements ArenaManager {
 	@Override
 	public Combatant getCombatant(OfflinePlayer player) {
 		return this.getCombatant(player.getName());
-	}
-	
-	@Override
-	public Combatant getCombatant(PlayerReference playerReference) {
-		return this.getCombatant(playerReference.getName());
 	}
 	
 	@Override

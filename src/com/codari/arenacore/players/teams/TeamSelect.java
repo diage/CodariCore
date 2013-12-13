@@ -80,13 +80,13 @@ public class TeamSelect implements Listener {
 	
 	private void joinBlueTeam(Combatant combatant) {
 		//combatant.setTeam(TeamColor.BLUE);
-		Player player = combatant.getPlayerReference().getPlayer();
+		Player player = combatant.getPlayer();
 		player.sendMessage(ChatColor.BLUE + "You are on the blue team.");
 	}
 	
 	private void joinRedTeam(Combatant combatant) {
 		//combatant.setTeam(TeamColor.RED);
-		Player player = combatant.getPlayerReference().getPlayer();
+		Player player = combatant.getPlayer();
 		player.sendMessage(ChatColor.RED + "You are on the red team.");
 	}
 }

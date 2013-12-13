@@ -3,13 +3,10 @@ package com.codari.apicore;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.codari.Debugger;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
-import com.codari.api5.CodariException;
-import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.reflect.Reflector;
-import com.codari.apicore.metadata.MetadataManagerCore;
+import com.codari.apicore.player.CodariPlayerManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arena.objects.gates.Gate;
 import com.codari.arena.objects.itemspawner.MainItemSpawner;
@@ -45,17 +42,22 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	//-----Fields-----//
-	private MetadataManagerCore metadataManager;
+	private CodariPlayerManagerCore codariPlayerManager;
 	private ArenaManagerCore arenaManager;
 	private StatFactoryCore statFactory;
 	private LibraryCore library;
+	
+	//-----Loader-----//
+	@Override
+	public void onLoad() {
+		this.codariPlayerManager = new CodariPlayerManagerCore();
+	}
 	
 	//-----Enabler-----//
 	@Override
 	public void onEnable() {
 		this.setInstanceAccess(true);
-		this.metadataManager = new MetadataManagerCore();
-		this.staticInitialization();
+		this.codariPlayerManager.registerPlayerListeners();
 		this.arenaManager = new ArenaManagerCore();
 		this.statFactory = new StatFactoryCore();
 		this.library = new LibraryCore(); 
@@ -91,9 +93,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		super.getCommand("invite").setExecutor(new CommandInvitePlayerToTeam());
 		super.getCommand("leaveteam").setExecutor(new ComandLeaveTeam());
 		super.getCommand("joinarena").setExecutor(new JoinQueueCommand());
-				
-		//-----TODO debugger-----//
-		Debugger.debug();
 	}
 	
 	//-----Disabler-----//
@@ -105,8 +104,8 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	
 	//-----Public Methods-----//
 	@Override
-	public MetadataManagerCore getMetadataManager() {
-		return this.metadataManager;
+	public CodariPlayerManagerCore getCodariPlayerManager() {
+		return this.codariPlayerManager;
 	}
 	
 	@Override
@@ -126,18 +125,10 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	
 	//-----Private Methods-----//
 	private void setInstanceAccess(boolean accessible) {
-		try {
-			if (accessible) {
-				Reflector.writeStaticField(CodariI.class, "INSTANCE", this);
-			} else {
-				Reflector.writeStaticField(CodariI.class, "INSTANCE", null);
-			}
-		} catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-			throw new CodariException("Failed to set instance access", ex);
+		if (accessible) {
+			Reflector.writeStaticField(CodariI.class, "INSTANCE", this);
+		} else {
+			Reflector.writeStaticField(CodariI.class, "INSTANCE", null);
 		}
-	}
-	
-	private void staticInitialization() {
-		PlayerReference._();
 	}
 }

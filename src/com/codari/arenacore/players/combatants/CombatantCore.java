@@ -5,8 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
+import com.codari.api5.player.CodariPlayers;
 import com.codari.api5.stats.StatManager;
-import com.codari.api5.util.PlayerReference;
+import com.codari.apicore.player.OfflineCodariPlayerCore;
 import com.codari.arena5.Arena;
 import com.codari.arena5.events.RoleSelectEvent;
 import com.codari.arena5.players.combatants.Combatant;
@@ -22,7 +23,7 @@ public final class CombatantCore implements Combatant {
 	private final static String DATA_FILE_PATH = "Combatants" + File.separator + "%s" + ".dat";
 	
 	//-----Fields-----//
-	private final PlayerReference playerReference;
+	private final OfflineCodariPlayerCore player;
 	@SuppressWarnings("unused")
 	private final File dataFile;
 	private CombatantDataCore data;
@@ -39,9 +40,9 @@ public final class CombatantCore implements Combatant {
 	private String currentArenaBuildName;
 	
 	//-----Constructor-----//
-	public CombatantCore(PlayerReference playerReference) {
-		this.playerReference = playerReference;
-		String dataFilePath = String.format(DATA_FILE_PATH, this.playerReference.getName());
+	public CombatantCore(String name) {
+		this.player = (OfflineCodariPlayerCore) CodariPlayers.getOfflineCodariPlayer(name);
+		String dataFilePath = String.format(DATA_FILE_PATH, this.player.getName());
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
 		this.reloadData();
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
@@ -51,8 +52,8 @@ public final class CombatantCore implements Combatant {
 	
 	//-----Public Methods-----//
 	@Override
-	public PlayerReference getPlayerReference() {
-		return this.playerReference;
+	public OfflineCodariPlayerCore getPlayerReference() {
+		return this.player;
 	}
 	
 	@Override
@@ -163,7 +164,7 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public Player getPlayer() {
-		return this.playerReference.getPlayer();
+		return this.player.getPlayer();
 	}
 
 	@Override
@@ -201,7 +202,7 @@ public final class CombatantCore implements Combatant {
 	public boolean equals(Object obj) {
 		if(obj instanceof CombatantCore) {
 			CombatantCore combatant = (CombatantCore) obj;
-			return (combatant.getPlayer().getName().equalsIgnoreCase(this.getPlayer().getName()));
+			return this.player.equals(combatant.player);
 		}
 		return false;
 	}

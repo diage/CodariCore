@@ -26,7 +26,7 @@ public class TeamBuilder implements Listener {
 		if(combatant.checkIfLeader() && team.getTeamSize() > 1) {
 			Combatant teamMate = team.getTeamMates(combatant).get(0);
 			teamMate.setLeader(true);
-			teamMate.getPlayerReference().getPlayer().sendMessage("You are now the leader of " + "\"" + team.getTeamName() + "\"");
+			teamMate.getPlayer().sendMessage("You are now the leader of " + "\"" + team.getTeamName() + "\"");
 		}
 		team.removeFromTeam(combatant);		
 	}

@@ -78,7 +78,7 @@ public class TeamCore implements Team {
 	public List<Player> getPlayers() {
 		List<Player> players = new ArrayList<>();
 		for(Combatant combatant: combatants) {
-			Player player = combatant.getPlayerReference().getPlayer();
+			Player player = combatant.getPlayer();
 			players.add(player);
 		}
 		return players;
