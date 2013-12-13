@@ -95,20 +95,16 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 		//-----Event Handlers-----//
 		@EventHandler(priority = EventPriority.LOWEST)
 		private void playerJoin(PlayerJoinEvent e) {
-			CodariPlayerCore player = new CodariPlayerCore(e.getPlayer().getName());
-			CodariPlayerCore old = onlineCodariPlayers.put(e.getPlayer().getName().toLowerCase(), player);
-			if (old != null) {
-				old.invalidate();
-			}
-			getOfflineCodariPlayer(e.getPlayer()).update();
+			OfflineCodariPlayerCore offlineInstance = getOfflineCodariPlayer(e.getPlayer());
+			onlineCodariPlayers.put(offlineInstance.getName().toLowerCase(), null);
+			offlineInstance.update();
+			CodariPlayerCore codariPlayer = new CodariPlayerCore(offlineInstance);
+			onlineCodariPlayers.put(offlineInstance.getName().toLowerCase(), codariPlayer);
 		}
 		
 		@EventHandler(priority = EventPriority.MONITOR)
 		private void playerQuit(PlayerQuitEvent e) {
-			CodariPlayerCore player = onlineCodariPlayers.remove(e.getPlayer().getName().toLowerCase());
-			if (player != null) {
-				player.invalidate();
-			}
+			onlineCodariPlayers.remove(e.getPlayer().getName().toLowerCase()).invalidate();
 			getOfflineCodariPlayer(e.getPlayer()).update();
 		}
 	}

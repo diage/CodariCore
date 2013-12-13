@@ -151,7 +151,7 @@ public final class OfflineCodariPlayerCore implements OfflineCodariPlayer {
 		MetadataUtils.getPlayerMetadataStore().setMetadata(this, metadataKey, newMetadataValue);
 	}
 	
-	public void update() {
+	void update() {
 		this.online = CodariPlayers.isOnline(this);
 	}
 	

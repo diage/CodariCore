@@ -69,14 +69,19 @@ public final class CodariPlayerCore implements CodariPlayer {
 	private boolean validPlayer;
 	
 	//-----Constructor-----//
-	public CodariPlayerCore(String name) {
-		this.offlineInstance = (OfflineCodariPlayerCore) CodariPlayers.getOfflineCodariPlayer(name);
+	public CodariPlayerCore(OfflineCodariPlayerCore offlineInstance) {
+		this.offlineInstance = offlineInstance;
 		this.handle = new WeakReference<>(this.offlineInstance.getPlayer());
 		this.hash = new HashCodeBuilder()
 			.append(this.offlineInstance)
 			.append(this.getHandle().getEntityId())
 			.toHashCode();
 		this.validPlayer = true;
+	}
+	
+	void invalidate() {
+		this.validPlayer = false;
+		this.offlineInstance.update();
 	}
 	
 	//-----Public Methods-----//
@@ -1239,10 +1244,6 @@ public final class CodariPlayerCore implements CodariPlayer {
 	@Override
 	public void sendPluginMessage(Plugin source, String channel, byte[] message) {
 		this.getHandle().sendPluginMessage(source, channel, message);
-	}
-	
-	public void invalidate() {
-		this.validPlayer = false;
 	}
 	
 	//-----Utility Methods-----//
