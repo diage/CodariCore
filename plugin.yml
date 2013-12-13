@@ -3,24 +3,6 @@ version: 0.0.1-SNAPSHOT
 main: com.codari.apicore.CodariCore
 
 commands:
-  new2v2arena:
-    description: creates a 2v2 arena with the given name
-    usage: Syntax error! Simply enter "new2v2arena" and the name you would like it to be called
-  arenakit:
-    description: creates an arena development kit 
-    usage: Syntax error! Simply enter "arenakit" and the arena you would like to add objects to
-  finalize:
-    description: finalizes the creation of an arena
-    usage: Syntax error! Simply enter "finalize"
-  createteam:
-    description: makes a team
-    usage: Syntax error! Simply enter "createteam" and the name of the team you want to make
-  invite:
-    description: invites a player to your team
-    usage: Syntax error! Simply enter "invite" and the name of the player you would like to invite
-  leaveteam:
-    description: leave your team
-    usage: Syntax error! Simply enter "leaveteam"    
-  joinarena:
-    description: queue up for an arena
-    usage: Syntax error! Simply enter "jointeam (arenaname)"
+  ca:
+    description: get all the comands for Codari Arena
+    usage: Simply type in "/ca"
