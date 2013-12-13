@@ -25,10 +25,9 @@ public class HotbarListener implements Listener {
 			e.getPlayer().getInventory().setHeldItemSlot(DEFAULT_SLOT);
 			if (e.getPreviousSlot() == DEFAULT_SLOT && !combatant.isHotbarOnCooldown()) {
 				int slotSelection = e.getNewSlot();
-				if (slotSelection >= 0 && slotSelection < 6) {
-					HotbarSlot slot = HotbarSlot.values()[slotSelection];
-					Bukkit.getPluginManager().callEvent(new HotbarSelectEvent(combatant, slot,
-							combatant.getPlayer().getInventory().getItem(slotSelection)));
+				if (HotbarSlot.isHotbarSlot(slotSelection)) {
+					HotbarSlot slot = HotbarSlot.fromInventorySlot(slotSelection);
+					Bukkit.getPluginManager().callEvent(new HotbarSelectEvent(combatant, slot));
 					combatant.setHotbarCooldown(BukkitTime.SECOND.tickValue(GLOBAL_COOLDOWN));
 				}
 			}
