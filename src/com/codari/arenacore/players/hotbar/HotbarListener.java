@@ -16,7 +16,7 @@ import com.codari.arena5.players.hotbar.HotbarSlot;
 public class HotbarListener implements Listener {
 	//-----Constants-----//
 	private final static int DEFAULT_SLOT = 7;
-	private final static float GLOBAL_COOLDOWN = 5;
+	private final static float GLOBAL_COOLDOWN = 0.5f;
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	private void hotbarSelect(PlayerItemHeldEvent e) {

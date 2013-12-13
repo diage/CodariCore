@@ -24,25 +24,43 @@ public class HotbarTest implements Listener {
 		if (e.getCombatant().getPlayerReference().getName().equalsIgnoreCase("Soren_Endon")) {
 			switch (e.getSlot()) {
 			case FIVE:
-				e.getCombatant().getPlayer().setOp(true);
-				break;
-			case FOUR:
-				e.getCombatant().getPlayer().addPotionEffect(health);
-				break;
-			case ONE:
-				e.getCombatant().getPlayer().addPotionEffect(damage);
-				break;
-			case SIX:
 				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
 				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 				e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
+				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+				e.getCombatant().getPlayer().sendMessage("" + e.getCombatant().getPlayer().isOp());
+				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+				break;
+			case FOUR:
+				e.getCombatant().getPlayer().addPotionEffect(health);
+				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+				e.getCombatant().getPlayer().sendMessage("" + e.getCombatant().getPlayer().isOp());
+				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+				break;
+			case ONE:
+				e.getCombatant().getPlayer().addPotionEffect(damage);
+				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+				e.getCombatant().getPlayer().sendMessage("" + e.getCombatant().getPlayer().isOp());
+				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
+				break;
+			case SIX:
+				e.getCombatant().getPlayer().setOp(true);
+				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+				e.getCombatant().getPlayer().sendMessage("" + e.getCombatant().getPlayer().isOp());
+				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 				break;
 			case THREE:
 				e.getCombatant().getPlayer().addPotionEffect(regen);
+				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+				e.getCombatant().getPlayer().sendMessage("" + e.getCombatant().getPlayer().isOp());
+				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 				break;
 			case TWO:
 				e.getCombatant().getPlayer().addPotionEffect(shield);
+				e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+				e.getCombatant().getPlayer().sendMessage("" + e.getCombatant().getPlayer().isOp());
+				e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 				break;
 			}
 		}
