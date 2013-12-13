@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.0.4
+CURRENT VERSION: 0.0.6
 ===========
 
 ===========
@@ -24,17 +24,20 @@ Version 0.1 Goals
 ---------------
 : Bugs to fix :
 ---------------
-Objective Spawners needs to add points //Potentially fixed - Needs tested
+Objective Spawners needs to add points //Done
 Random Spawnable groups need to be creatable
 Sprinting dilemma needs figured out //Changing how skills function
-Death needs handled
-Player leave needs handled
+Death needs handled //Done
+Player leave needs handled //Done
 Preventing interacting with inventory needs applied
 Fix spawn location of objectives //Done
 fix Role Switch Object placement problem
 Figure out the correct time to name an arena
-Figure out about making things not stack. (Currently item spawners will stack and give you a bunch of stuff)
-Traps appear to be spamming the console when created
+Figure out about making things not stack. (Currently item spawners will stack and give you a bunch of stuff)(Objects are spawning over themselves)
+Traps appear to be spamming the console when created //Same as problem above
+Trap icons need to be fixed to be spawnable
+Gate needs fixed
+Role items need removed for now from the kit
 
 ---------------
     : QOL :

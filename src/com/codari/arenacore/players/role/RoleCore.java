@@ -12,12 +12,12 @@ import com.codari.arena5.players.skills.SkillActivation;
 public class RoleCore implements Role {
 	private Map<SkillActivation, Skill> skills;
 	private String name;
-	
+
 	public RoleCore(String name) {
 		this.name = name;
 		this.skills = new HashMap<>();
 	}
-	
+
 	@Override
 	public Collection<Skill> getSkills() {
 		return this.skills.values();
@@ -25,22 +25,30 @@ public class RoleCore implements Role {
 
 	@Override
 	public void doubleJump(Combatant combatant) {
-		this.skills.get(SkillActivation.DOUBLE_JUMP).activateSkill(combatant);
+		if(this.skills.containsKey(SkillActivation.DOUBLE_JUMP)) {
+			this.skills.get(SkillActivation.DOUBLE_JUMP).activateSkill(combatant);
+		}
 	}
 
 	@Override
 	public void block(Combatant combatant) {
-		this.skills.get(SkillActivation.BLOCK).activateSkill(combatant);
+		if(this.skills.containsKey(SkillActivation.BLOCK)) {
+			this.skills.get(SkillActivation.BLOCK).activateSkill(combatant);
+		}
 	}
 
 	@Override
 	public void sprint(Combatant combatant) {
-		this.skills.get(SkillActivation.SPRINT).activateSkill(combatant);
+		if(this.skills.containsKey(SkillActivation.SPRINT)) {
+			this.skills.get(SkillActivation.SPRINT).activateSkill(combatant);
+		}
 	}
 
 	@Override
 	public void sneak(Combatant combatant) {
-		this.skills.get(SkillActivation.SNEAK).activateSkill(combatant);
+		if(this.skills.containsKey(SkillActivation.SNEAK)) {
+			this.skills.get(SkillActivation.SNEAK).activateSkill(combatant);
+		}
 	}
 
 	@Override

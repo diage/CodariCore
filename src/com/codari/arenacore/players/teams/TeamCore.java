@@ -53,6 +53,10 @@ public class TeamCore implements Team {
 			return;
 		}
 		this.arena = arena;
+		for(Combatant combatant : this.combatants) {
+			combatant.sendToArena(arena);
+		}
+		
 	}
 	
 	@Override
