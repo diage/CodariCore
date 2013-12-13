@@ -9,6 +9,8 @@ import com.codari.api5.CodariI;
 import com.codari.api5.CodariException;
 import com.codari.api5.util.PlayerReference;
 import com.codari.api5.util.reflect.Reflector;
+import com.codari.apicore.command.CodariCommandCenter;
+import com.codari.apicore.command.CommandRegister;
 import com.codari.apicore.metadata.MetadataManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arena.objects.gates.Gate;
@@ -49,6 +51,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private ArenaManagerCore arenaManager;
 	private StatFactoryCore statFactory;
 	private LibraryCore library;
+	private CommandRegister commandRegister;
 	
 	//-----Enabler-----//
 	@Override
@@ -59,6 +62,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.arenaManager = new ArenaManagerCore();
 		this.statFactory = new StatFactoryCore();
 		this.library = new LibraryCore(); 
+		this.commandRegister = new CommandRegister();
 		
 		//---Arena Objects---//
 		Codari.getLibrary().registerArenaObject(Gate.class);
@@ -81,17 +85,18 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		//-----Listeners-----//
 		Bukkit.getPluginManager().registerEvents(new ArenaDevelopmentKitListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SkillListener(), this);
+		
 		//-----Commands-----//
-		//---Arena Construction Commands---//
-		super.getCommand("new2v2arena").setExecutor(new NewArenaCommand());
-		super.getCommand("arenakit").setExecutor(new ArenaDevelopmentCommand());
-		super.getCommand("finalize").setExecutor(new FinalizeCommand());
-		//---Team Commands---//
-		super.getCommand("createteam").setExecutor(new CommandCreateTeam());
-		super.getCommand("invite").setExecutor(new CommandInvitePlayerToTeam());
-		super.getCommand("leaveteam").setExecutor(new ComandLeaveTeam());
-		super.getCommand("joinarena").setExecutor(new JoinQueueCommand());
-				
+		super.getCommand("ca").setExecutor(new CodariCommandCenter());
+		
+		this.commandRegister.registerCommand(JoinQueueCommand.COMMAND_NAME, new JoinQueueCommand());
+		this.commandRegister.registerCommand(NewArenaCommand.COMMAND_NAME, new NewArenaCommand());
+		this.commandRegister.registerCommand(FinalizeCommand.COMMAND_NAME, new FinalizeCommand());
+		this.commandRegister.registerCommand(ArenaDevelopmentCommand.COMMAND_NAME, new ArenaDevelopmentCommand());
+		this.commandRegister.registerCommand(CommandCreateTeam.COMMAND_NAME, new CommandCreateTeam());
+		this.commandRegister.registerCommand(CommandInvitePlayerToTeam.COMMAND_NAME, new CommandInvitePlayerToTeam());
+		this.commandRegister.registerCommand(ComandLeaveTeam.COMMAND_NAME, new ComandLeaveTeam());
+		
 		//-----TODO debugger-----//
 		Debugger.debug();
 	}
@@ -122,6 +127,10 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	@Override
 	public LibraryCore getLibrary() {
 		return this.library;
+	}
+	
+	public CommandRegister getCommandRegister() {
+		return this.commandRegister;
 	}
 	
 	//-----Private Methods-----//
