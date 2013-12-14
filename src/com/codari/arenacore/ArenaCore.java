@@ -1,6 +1,7 @@
 package com.codari.arenacore;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,7 +43,7 @@ public final class ArenaCore implements Arena {
 		this.tasks = new HashSet<>();
 	}
 	
-	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		this.teams = new HashMap<>();
 		this.tasks = new HashSet<>();
