@@ -1,5 +1,6 @@
 package com.codari.arenacore;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,7 +24,8 @@ import com.codari.arena5.rules.timedaction.TimedAction;
 import com.codari.arena5.rules.wincondition.WinCondition;
 import com.codari.arenacore.players.teams.TeamCore;
 
-public final class ArenaCore implements Arena {
+public final class ArenaCore implements Arena, Serializable {
+	private static final long serialVersionUID = -177761288968831586L;
 	//-----Fields-----//
 	private final String name;
 	private final GameRule rules;

@@ -1,5 +1,6 @@
 package com.codari.arenacore.rules;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import com.codari.arena5.rules.timedaction.TimedAction;
 import com.codari.arena5.rules.wincondition.WinConditionTemplate;
 
 public class GameRuleCore implements GameRule {
+	private static final long serialVersionUID = 3141996300251217554L;
 	//-----Fields-----//
 	private final List<WinConditionTemplate> winConditions;
 	private Time matchDuration;
