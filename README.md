@@ -42,10 +42,10 @@ Figure out what spams the console about arena objects
 ---------------
 Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 Improve damage from shield skill (make it actually cause damage)
-Fix colors for item Spawners
+Fix colors for item Spawners //Done
 Improve command syntax //Done
 Improve chat colors and item colors
-Set blocks above objective point to glass
+Set blocks above objective point to glass //Done
 
 ===========
 Version 0.2 Goals

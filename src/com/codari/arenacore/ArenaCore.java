@@ -109,7 +109,8 @@ public final class ArenaCore implements Arena {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
-			if (teams.length > this.spawns.size()) {
+			if (teams.length > this.spawns.size()) {//TODO
+				Bukkit.broadcastMessage(ChatColor.DARK_RED + "Not enough spawns?!");
 				return false;
 			}
 			for (Team team : teams) {

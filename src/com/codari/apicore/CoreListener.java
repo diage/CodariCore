@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +52,8 @@ public class CoreListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void playerRevive(PlayerRespawnEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
-		if(combatant.inArena()) {
+		if(combatant.inArena()) { //TODO
+			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "The respawn did in fact work perfectly fine, as expected!! Duh...");
 			e.getPlayer().getInventory().setContents(this.inventories.get(e.getPlayer().getName()));
 			e.setRespawnLocation(((ArenaCore) combatant.getTeam().getArena()).getSpawn(combatant));
 			e.getPlayer().updateInventory();
@@ -71,7 +73,6 @@ public class CoreListener implements Listener {
 	@EventHandler()
 	private void playerClickInventory(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player) {
-			Bukkit.broadcastMessage("You didn't get to click!");
 			Combatant combatant = Codari.getArenaManager().getCombatant((Player)e.getWhoClicked());
 			if(combatant.inArena()) {
 				e.setCancelled(true);
