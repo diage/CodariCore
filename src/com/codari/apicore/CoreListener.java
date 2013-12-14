@@ -3,6 +3,8 @@ package com.codari.apicore;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,9 +16,15 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
+import com.codari.arena5.ArenaEndEvent;
+import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.teams.Team;
 
+@SuppressWarnings("deprecation")
 public class CoreListener implements Listener {
+	private final static int MAX_HEALTH = 100;
+	
 	private Map<String, ItemStack[]> inventories;
 
 	public CoreListener() {
@@ -57,6 +65,7 @@ public class CoreListener implements Listener {
 	@EventHandler()
 	public void playerClickInventory(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player) {
+			Bukkit.broadcastMessage("You didn't get to click!");
 			Combatant combatant = Codari.getArenaManager().getCombatant((Player)e.getWhoClicked());
 			if(combatant.inArena()) {
 				e.setCancelled(true);
@@ -64,7 +73,6 @@ public class CoreListener implements Listener {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler()
 	public void playerInteract(BlockPlaceEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
@@ -74,6 +82,41 @@ public class CoreListener implements Listener {
 			e.getPlayer().getInventory().setItem(heldItem, e.getItemInHand());
 			e.getPlayer().updateInventory();
 			e.setCancelled(true);
+		}
+	}
+	
+	@EventHandler()
+	public void arenaBegin(ArenaStartEvent e) {
+		for(Team team : e.getArena().getTeams().values()) {
+			for(Combatant combatant : team.combatants()) {
+				Player player = combatant.getPlayer();
+				player.setAllowFlight(true);
+				player.setFlying(false);
+				player.setGameMode(GameMode.SURVIVAL);
+				player.setMaxHealth(MAX_HEALTH);
+				player.setHealth(MAX_HEALTH);
+				player.setWalkSpeed(.3f);
+				player.setTotalExperience(0);
+				player.setFoodLevel(1);
+				//TODO create a runnable for food level
+			}
+		}
+	}
+	
+	@EventHandler()
+	public void arenaEnd(ArenaEndEvent e) {
+		for(Team team : e.getArena().getTeams().values()) {
+			for(Combatant combatant : team.combatants()) {
+				Player player = combatant.getPlayer();
+				player.setAllowFlight(false);
+				player.resetMaxHealth();
+				player.setHealth(player.getMaxHealth());
+				player.setWalkSpeed(.2f);
+				player.setTotalExperience(0);
+				player.setFoodLevel(10);
+				player.getInventory().clear();
+				player.updateInventory();
+			}
 		}
 	}
 }
