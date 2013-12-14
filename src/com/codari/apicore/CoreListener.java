@@ -24,6 +24,7 @@ import com.codari.arena5.ArenaEndEvent;
 import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.ArenaCore;
 
 @SuppressWarnings("deprecation")
 public class CoreListener implements Listener {
@@ -52,7 +53,7 @@ public class CoreListener implements Listener {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {
 			e.getPlayer().getInventory().setContents(this.inventories.get(e.getPlayer().getName()));
-			e.setRespawnLocation(combatant.getTeam().getTeamMates(combatant).get(0).getPlayer().getLocation());
+			e.setRespawnLocation(((ArenaCore) combatant.getTeam().getArena()).getSpawn(combatant));
 			e.getPlayer().updateInventory();
 			this.inventories.remove(e.getPlayer().getName());
 		}

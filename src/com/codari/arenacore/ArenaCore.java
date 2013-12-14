@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,15 +16,18 @@ import java.util.Set;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
+import com.codari.api5.util.SerializableLocation;
 import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.objects.ArenaObject;
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
@@ -37,6 +41,7 @@ public final class ArenaCore implements Arena {
 	private final GameRule rules;
 	private final List<TimedAction> actions;
 	private final List<ArenaObject> objects;
+	private final List<SerializableLocation> spawns;
 	private transient Map<String, Team> teams;
 	private transient Set<BukkitTask> tasks;
 	
@@ -46,13 +51,14 @@ public final class ArenaCore implements Arena {
 		this.rules = builder.getGameRule();
 		this.actions = builder.compileActions();
 		this.objects = builder.compileObjects();
-		this.teams = new HashMap<>();
+		this.spawns = builder.compileSpawners();
+		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
-		this.teams = new HashMap<>();
+		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
 	}
 	
@@ -80,10 +86,30 @@ public final class ArenaCore implements Arena {
 		Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "ARENA BYTE SIZE = " + arenaByte.length);
 	}
 	
+	public Location getSpawn(Combatant combatant) {
+		if (!this.isMatchInProgress()) {
+			return null;
+		}
+		Team team = combatant.getTeam();
+		int i = 0;
+		Location result = null;
+		for (Entry<String, Team> teamEntry : this.teams.entrySet()) {
+			if (teamEntry.getValue().equals(team)) {
+				result = this.spawns.get(i).getLocation();
+				break;
+			}
+			i++;
+		}
+		return result;
+	}
+	
 	@Override
 	public boolean start(Team... teams) {
 		if (!this.isMatchInProgress()) {
 			if (ArrayUtils.isEmpty(teams)) {
+				return false;
+			}
+			if (teams.length > this.spawns.size()) {
 				return false;
 			}
 			for (Team team : teams) {
@@ -93,6 +119,9 @@ public final class ArenaCore implements Arena {
 				Bukkit.broadcastMessage(team.combatants().get(1).getPlayer().getName());
 				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.MELEE));
 				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.RANGED));
+				for (Combatant combatant : team.combatants()) {
+					combatant.getPlayer().teleport(this.getSpawn(combatant));
+				}
 			}
 			ArenaStartEvent e = new ArenaStartEvent(this);
 			Bukkit.getPluginManager().callEvent(e);

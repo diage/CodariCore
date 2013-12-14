@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
+import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
@@ -30,6 +32,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<ImmediatePersistentObject> immediatePersistentObjects;
 	private final List<DelayedPersistentObject> delayedPersistentObjects;
 	private final List<ArenaObject> objects;
+	private final List<SerializableLocation> spawners;
 	
 	//-----Constructor-----//
 	public ArenaBuilderCore(GameRule rules) {
@@ -39,6 +42,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.immediatePersistentObjects = new ArrayList<>();
 		this.delayedPersistentObjects = new ArrayList<>();
 		this.objects = new ArrayList<>();
+		this.spawners = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
@@ -52,6 +56,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	public List<ArenaObject> compileObjects() {
 		return CodariSerialization.clone(this.objects);
+	}
+	
+	public List<SerializableLocation> compileSpawners() {
+		return CodariSerialization.clone(this.spawners);
 	}
 	
 	public void setGameRule(GameRule rule) {
@@ -199,5 +207,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		public void hide() {
 			this.delayedPersistentObject.hide();
 		}
+	}
+
+	@Override
+	public void addSpawnLocation(Location location) {
+		this.spawners.add(new SerializableLocation(location));
 	}
 }
