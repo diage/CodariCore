@@ -1,6 +1,6 @@
 package com.codari.arenacore;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -24,20 +24,26 @@ import com.codari.arena5.rules.timedaction.TimedAction;
 import com.codari.arena5.rules.wincondition.WinCondition;
 import com.codari.arenacore.players.teams.TeamCore;
 
-public final class ArenaCore implements Arena, Serializable {
+public final class ArenaCore implements Arena {
 	private static final long serialVersionUID = -177761288968831586L;
 	//-----Fields-----//
 	private final String name;
 	private final GameRule rules;
 	private final List<TimedAction> actions;
-	private final Map<String, Team> teams;
-	private final Set<BukkitTask> tasks;
+	private transient Map<String, Team> teams;
+	private transient Set<BukkitTask> tasks;
 	
 	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
 		this.name = name;
 		this.rules = builder.getGameRule();
 		this.actions = builder.compileActions();
+		this.teams = new HashMap<>();
+		this.tasks = new HashSet<>();
+	}
+	
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
 		this.teams = new HashMap<>();
 		this.tasks = new HashSet<>();
 	}

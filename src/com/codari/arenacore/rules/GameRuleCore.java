@@ -112,6 +112,7 @@ public class GameRuleCore implements GameRule {
 	
 	//-----Win Condition Action-----//
 	private final static class WinConditionAction extends TimedAction {
+		private static final long serialVersionUID = 5391314571661514449L;
 		//-----Fields-----//
 		private final WinConditionTemplate winCond;
 		private final boolean after;

@@ -20,6 +20,7 @@ import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
 
 public class ArenaBuilderCore implements ArenaBuilder {
+	private static final long serialVersionUID = 4720468390178286776L;
 	//-----Fields-----//
 	private GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
@@ -112,6 +113,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
+		private static final long serialVersionUID = -1455939781657809306L;
+
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
 		
 		//-----Fields-----//
@@ -138,6 +141,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	private final static class FixedSpawnableAction extends TimedAction {
+		private static final long serialVersionUID = 3857488726629177537L;
 		//-----Fields-----//
 		private final FixedSpawnableObject spawnable;
 		
@@ -154,6 +158,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@SuppressWarnings("unused")
 	private final static class DelayedPersistentAction implements DelayedPersistentObject {
+		private static final long serialVersionUID = 2824909986948144853L;
 		private DelayedPersistentObject delayedPersistentObject;
 		private final Time time;
 		private final boolean override;
