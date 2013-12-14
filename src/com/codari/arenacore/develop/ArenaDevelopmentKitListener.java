@@ -30,14 +30,14 @@ public class ArenaDevelopmentKitListener implements Listener {
 
 	//---Inventory Slots---//
 	private final int ITEM_SPAWNER_SLOT = ArenaDevelopmentKit.INVENTORY_STARTING_PLACEMENT_SLOT;
-	private final int DIAMOND_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 2;
-	private final int EMERALD_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 3;
-	private final int GOLD_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 4;
-	private final int IRON_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 5;
-	private final int EXPLOSION_TRAP = ITEM_SPAWNER_SLOT + 6;
-	private final int FIRE_TRAP = ITEM_SPAWNER_SLOT + 7;
-	private final int POISON_SNARE_TRAP = ITEM_SPAWNER_SLOT + 8;
-	private final int GATE = ITEM_SPAWNER_SLOT + 9;
+	private final int DIAMOND_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 1;
+	private final int EMERALD_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 2;
+	private final int GOLD_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 3;
+	private final int IRON_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 4;
+	private final int EXPLOSION_TRAP = ITEM_SPAWNER_SLOT + 5;
+	private final int FIRE_TRAP = ITEM_SPAWNER_SLOT + 6;
+	private final int POISON_SNARE_TRAP = ITEM_SPAWNER_SLOT + 7;
+	private final int GATE = ITEM_SPAWNER_SLOT + 8;
 
 	public ArenaDevelopmentKitListener() {	
 		this.playerInput = new PlayerInput();
