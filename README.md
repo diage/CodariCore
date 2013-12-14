@@ -29,12 +29,11 @@ Random Spawnable groups need to be creatable
 Sprinting dilemma needs figured out //Changing how skills function
 Death needs handled //Done
 Player leave needs handled //Done
-Preventing interacting with inventory needs applied
+Preventing interacting with inventory needs applied //Done
 Fix spawn location of objectives //Done
-fix Role Switch Object placement problem
+fix Role Switch Object placement problem //Done
 Figure out the correct time to name an arena
 Figure out about making things not stack. (Currently item spawners will stack and give you a bunch of stuff)(Objects are spawning over themselves)
-Traps appear to be spamming the console when created //Same as problem above
 Trap icons need to be fixed to be spawnable
 Gate needs fixed
 Role items need removed for now from the kit
