@@ -10,8 +10,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
+import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.Time;
 import com.codari.arena5.ArenaBuilder;
+import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
@@ -27,21 +29,16 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<FixedSpawnableAction> fixedSpawnables;
 	private final List<ImmediatePersistentObject> immediatePersistentObjects;
 	private final List<DelayedPersistentObject> delayedPersistentObjects;
+	private final List<ArenaObject> objects;
 	
 	//-----Constructor-----//
-	public ArenaBuilderCore() {
-		this.randomSpawnables = new HashMap<>();
-		this.fixedSpawnables = new ArrayList<>();
-		this.immediatePersistentObjects = new ArrayList<>();
-		this.delayedPersistentObjects = new ArrayList<>();
-	}
-	
 	public ArenaBuilderCore(GameRule rules) {
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
 		this.fixedSpawnables = new ArrayList<>();
 		this.immediatePersistentObjects = new ArrayList<>();
 		this.delayedPersistentObjects = new ArrayList<>();
+		this.objects = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
@@ -50,7 +47,11 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		actions.addAll(this.rules.getTimedActions());
 		actions.addAll(this.randomSpawnables.values());
 		actions.addAll(this.fixedSpawnables);
-		return actions;
+		return CodariSerialization.clone(actions);
+	}
+	
+	public List<ArenaObject> compileObjects() {
+		return CodariSerialization.clone(this.objects);
 	}
 	
 	public void setGameRule(GameRule rule) {
@@ -84,11 +85,13 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return false;
 		}
 		randomTimelineGroup.spawns.add(object);
+		this.objects.add(object);
 		return true;
 	}
 	
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time) {
+		this.objects.add(object);
 		return this.registerFixedSpawnable(object, time, Time.NULL);
 	}
 	
@@ -96,19 +99,22 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
 		//TODO check time
 		this.fixedSpawnables.add(new FixedSpawnableAction(object, time, repeatTime));
+		this.objects.add(object);
 		return true;
 	}
 	
 	@Override
 	public boolean registerPersistent(ImmediatePersistentObject immediatePersistentObject) {
 		this.immediatePersistentObjects.add(immediatePersistentObject);
+		this.objects.add(immediatePersistentObject);
 		return true;
 	}
 	
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
 		this.delayedPersistentObjects.add(delayedPersistentObject);
-		return false;//TODO
+		this.objects.add(delayedPersistentObject);
+		return true;//TODO
 	}
 	
 	//-----Random Timeline Group-----//

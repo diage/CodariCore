@@ -20,7 +20,6 @@ import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.icongroup.IconGroup;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
-@SuppressWarnings("unused")
 public class BuilderKitBuilder extends IconGroup implements Listener {
 	
 	private ArenaBuilder arenaBuilder;
@@ -31,7 +30,7 @@ public class BuilderKitBuilder extends IconGroup implements Listener {
 	private Map<String, Class<? extends WinCondition>> conditions;
 	
 	public BuilderKitBuilder(Combatant combatant) {
-		this.arenaBuilder = new ArenaBuilderCore();
+		//this.arenaBuilder = new ArenaBuilderCore();
 		this.combatant = combatant;
 		this.objects = new HashMap<>();
 		this.declarations = new HashMap<>();

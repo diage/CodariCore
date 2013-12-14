@@ -23,6 +23,7 @@ import com.codari.api5.io.CodariSerialization;
 import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaStartEvent;
+import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
@@ -35,6 +36,7 @@ public final class ArenaCore implements Arena {
 	private final String name;
 	private final GameRule rules;
 	private final List<TimedAction> actions;
+	private final List<ArenaObject> objects;
 	private transient Map<String, Team> teams;
 	private transient Set<BukkitTask> tasks;
 	
@@ -43,6 +45,7 @@ public final class ArenaCore implements Arena {
 		this.name = name;
 		this.rules = builder.getGameRule();
 		this.actions = builder.compileActions();
+		this.objects = builder.compileObjects();
 		this.teams = new HashMap<>();
 		this.tasks = new HashSet<>();
 	}
@@ -118,6 +121,9 @@ public final class ArenaCore implements Arena {
 				entry = teamsIterator.next();
 				((TeamCore) entry.getValue()).setArena(null);
 				teamsIterator.remove();
+			}
+			for (ArenaObject o : this.objects) {
+				o.hide();
 			}
 			for (BukkitTask task : this.tasks) {
 				task.cancel();
