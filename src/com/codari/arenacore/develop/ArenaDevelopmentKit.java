@@ -11,7 +11,6 @@ public class ArenaDevelopmentKit {
 	private final static int OBJECTIVE_POINT = 1;
 	private final static int TRAP = 2;
 	private final static int GATE = 3;
-	private final static int ROLE_DELEGATION = 4;
 	
 	public static final int INVENTORY_STARTING_PLACEMENT_SLOT = 9;
 	
@@ -20,7 +19,7 @@ public class ArenaDevelopmentKit {
 	//-----Getters-----//
 	/* Puts the necessary objects to develop the arena in the player's inventory. */
 	public static void createArenaDevelopmentObjects(Player player) {
-		arenaObjects = new ItemStack[5][];
+		arenaObjects = new ItemStack[4][];
 		
 		//Item Spawner
 		arenaObjects[ITEM_SPAWNER] = new ItemStack[1];
@@ -42,9 +41,9 @@ public class ArenaDevelopmentKit {
 		
 		//Traps
 		arenaObjects[TRAP] = new ItemStack[3];
-		ItemStack explosionTrap = new ItemStack(Material.PISTON_EXTENSION);
-		ItemStack fireTrap = new ItemStack(Material.PISTON_BASE);
-		ItemStack poisonSnareTrap = new ItemStack(Material.PISTON_MOVING_PIECE);
+		ItemStack explosionTrap = new ItemStack(Material.RECORD_10);
+		ItemStack fireTrap = new ItemStack(Material.RECORD_11);
+		ItemStack poisonSnareTrap = new ItemStack(Material.RECORD_12);
 		
 		arenaObjects[TRAP][0] = explosionTrap;
 		arenaObjects[TRAP][1] = fireTrap;
@@ -55,17 +54,6 @@ public class ArenaDevelopmentKit {
 		ItemStack gate = new ItemStack(Material.GOLD_SPADE);
 		
 		arenaObjects[GATE][0] = gate;		
-		
-		//Role Delegation Objects
-		arenaObjects[ROLE_DELEGATION] = new ItemStack[3];
-		ItemStack meleeRoleDelegation = new ItemStack(Material.GOLD_BLOCK);
-		ItemStack rangedRoleDelegation = new ItemStack(Material.EMERALD_BLOCK);
-		ItemStack randomRoleDelegation = new ItemStack(Material.DIAMOND_BLOCK);
-		
-		arenaObjects[ROLE_DELEGATION][0] = meleeRoleDelegation;
-		arenaObjects[ROLE_DELEGATION][1] = rangedRoleDelegation;
-		arenaObjects[ROLE_DELEGATION][2] = randomRoleDelegation;
-		
 		
 		//Setting Display Names for all the objects
 		setDisplayName(arenaObjects);
@@ -99,10 +87,13 @@ public class ArenaDevelopmentKit {
 					switch(j) {
 					case 0: 
 						trapMeta.setDisplayName("Place an explosion trap.");
+						break;
 					case 1: 
 						trapMeta.setDisplayName("Place a fire trap.");
+						break;
 					case 2: 
 						trapMeta.setDisplayName("Place a poison snare trap.");	
+						break;
 					}
 					
 					arenaObjects[i][j].setItemMeta(trapMeta);
@@ -112,17 +103,6 @@ public class ArenaDevelopmentKit {
 					gateMeta.setDisplayName("Place a redstone used to activate a gate.");
 					arenaObjects[i][j].setItemMeta(gateMeta);
 					break;
-				case 4:
-					ItemMeta roleDelegationMeta = arenaObjects[i][j].getItemMeta();
-					switch(j) {
-					case 0: 
-						roleDelegationMeta.setDisplayName("Place a melee role delegation object.");
-					case 1: 
-						roleDelegationMeta.setDisplayName("Place a ranged role delegation object.");
-					case 2: 
-						roleDelegationMeta.setDisplayName("Place a random role delegation object.");
-					}
-					arenaObjects[i][j].setItemMeta(roleDelegationMeta);
 				default:
 					return;
 				}
