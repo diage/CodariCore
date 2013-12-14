@@ -1,5 +1,6 @@
 package com.codari.arenacore;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
+import com.codari.api5.io.CodariSerialization;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.ArenaManager;
@@ -121,6 +123,13 @@ public class ArenaManagerCore implements ArenaManager {
 		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
 		this.arenas.put(requestedName, arena);
 		this.queues.put(requestedName, new QueueCore(arena));
+		return arena;
+	}
+	
+	public Arena loadArena(File file) {
+		ArenaCore arena = (ArenaCore) CodariSerialization.deserialize(file);
+		this.arenas.put(arena.getName(), arena);
+		this.queues.put(arena.getName(), new QueueCore(arena));
 		return arena;
 	}
 
