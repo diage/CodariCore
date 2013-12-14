@@ -1,6 +1,5 @@
 package com.codari.arenacore.rules;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;

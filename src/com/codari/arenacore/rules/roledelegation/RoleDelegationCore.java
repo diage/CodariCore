@@ -8,6 +8,7 @@ import com.codari.arena5.rules.roledelegation.RoleDelegation;
 import com.codari.arena5.rules.roledelegation.RoleDelegationType;
 
 public class RoleDelegationCore implements RoleDelegation {
+	private static final long serialVersionUID = 4448694982876919961L;
 	private RoleDelegationType roleDelegationType;
 	private List<RoleSelectionObject> roleSelectionObjects;
 	
