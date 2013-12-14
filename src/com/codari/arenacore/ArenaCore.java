@@ -20,6 +20,7 @@ import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.timedaction.TimedAction;
+import com.codari.arena5.rules.wincondition.WinCondition;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public final class ArenaCore implements Arena {
@@ -74,6 +75,9 @@ public final class ArenaCore implements Arena {
 			if (e.isCancelled()) {
 				this.teams.clear();
 				return false;
+			}
+			for (WinCondition winCond : this.rules.getWinConditions()) {
+				winCond.initialize(this);
 			}
 			for (TimedAction action : this.actions) {
 				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
