@@ -16,27 +16,26 @@ QOL changes are things which aren't required to move up, but ought to be done to
 ===========
 Version 0.1 Goals
 ===========
--All objects are able to be placed and work
--ArenaBuilder and Arena are correctly implemented
+-All objects are able to be placed and work 
+-ArenaBuilder and Arena are correctly implemented //Done
 -Deaths and inventory interactions are handled
--CodariArena implementation is working per current API standards
+-CodariArena implementation is working per current API standards //Done
 
 ---------------
 : Bugs to fix :
 ---------------
 Objective Spawners needs to add points //Done
-Random Spawnable groups need to be creatable
-Sprinting dilemma needs figured out //Changing how skills function
+Sprinting dilemma needs figured out //Done
 Death needs handled //Done
 Player leave needs handled //Done
 Preventing interacting with inventory needs applied //Done
 Fix spawn location of objectives //Done
 fix Role Switch Object placement problem //Done
-Figure out the correct time to name an arena
-Figure out about making things not stack. (Currently item spawners will stack and give you a bunch of stuff)(Objects are spawning over themselves)
-Trap icons need to be fixed to be spawnable
-Gate needs fixed							  //Implemented - needs testing
+Figure out about making things not stack. //Done
+Trap icons need to be fixed to be spawnable //Done
+Gate needs fixed	//Done
 Role items need removed for now from the kit  //Done
+Figure out what spams the console about arena objects
 
 ---------------
     : QOL :
@@ -44,14 +43,14 @@ Role items need removed for now from the kit  //Done
 Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 Improve damage from shield skill (make it actually cause damage)
 Fix colors for item Spawners
-Improve command syntax
+Improve command syntax //Done
 Improve chat colors and item colors
 Set blocks above objective point to glass
 
 ===========
 Version 0.2 Goals
 ===========
--Add Persistence
+-Add Persistence //Done
 -Team Spawn locations added
 -Improve Arena Construction options
 -Begin abstraction of roles
@@ -60,6 +59,8 @@ Version 0.2 Goals
 : Bugs to fix :
 ---------------
 Improve .equals methods
+Figure out the correct time to name an arena
+Random Spawnable groups need to be creatable
 
 ---------------
     : QOL :

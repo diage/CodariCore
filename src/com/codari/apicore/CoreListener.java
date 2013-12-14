@@ -2,11 +2,13 @@ package com.codari.apicore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -14,8 +16,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.arena5.ArenaEndEvent;
 import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
@@ -32,7 +36,7 @@ public class CoreListener implements Listener {
 	}
 
 	@EventHandler()
-	public void playerDeath(PlayerDeathEvent e) {
+	private void playerDeath(PlayerDeathEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getEntity());
 		if(combatant.inArena()) {
 			e.setKeepLevel(true);
@@ -43,18 +47,19 @@ public class CoreListener implements Listener {
 		}
 	}
 
-	@EventHandler() 
-	public void playerRevive(PlayerRespawnEvent e) {
+	@EventHandler(priority = EventPriority.HIGHEST) 
+	private void playerRevive(PlayerRespawnEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {
 			e.getPlayer().getInventory().setContents(this.inventories.get(e.getPlayer().getName()));
 			e.setRespawnLocation(combatant.getTeam().getTeamMates(combatant).get(0).getPlayer().getLocation());
+			e.getPlayer().updateInventory();
 			this.inventories.remove(e.getPlayer().getName());
 		}
 	}
 
 	@EventHandler() 
-	public void playerLeave(PlayerQuitEvent e) {
+	private void playerLeave(PlayerQuitEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {
 			Codari.getArenaManager().getArena(combatant.getArenaName()).stop();
@@ -63,7 +68,7 @@ public class CoreListener implements Listener {
 	}
 
 	@EventHandler()
-	public void playerClickInventory(InventoryClickEvent e) {
+	private void playerClickInventory(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player) {
 			Bukkit.broadcastMessage("You didn't get to click!");
 			Combatant combatant = Codari.getArenaManager().getCombatant((Player)e.getWhoClicked());
@@ -74,7 +79,7 @@ public class CoreListener implements Listener {
 	}
 	
 	@EventHandler()
-	public void playerInteract(BlockPlaceEvent e) {
+	private void playerInteract(BlockPlaceEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {
 			int heldItem;
@@ -86,10 +91,11 @@ public class CoreListener implements Listener {
 	}
 	
 	@EventHandler()
-	public void arenaBegin(ArenaStartEvent e) {
-		for(Team team : e.getArena().getTeams().values()) {
+	private void arenaBegin(ArenaStartEvent e) {
+		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
+			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
-				Player player = combatant.getPlayer();
+				final Player player = combatant.getPlayer();
 				player.setAllowFlight(true);
 				player.setFlying(false);
 				player.setGameMode(GameMode.SURVIVAL);
@@ -98,14 +104,26 @@ public class CoreListener implements Listener {
 				player.setWalkSpeed(.3f);
 				player.setTotalExperience(0);
 				player.setFoodLevel(1);
-				//TODO create a runnable for food level
+				BukkitRunnable runner = new BukkitRunnable() {
+					
+					@Override
+					public void run() {
+						player.setFoodLevel(1);
+						if(!Codari.getArenaManager().getCombatant(player).inArena()) {
+							super.cancel();
+						}
+					}
+				};
+				
+				runner.runTaskTimer(CodariI.INSTANCE, 1, 1);
 			}
 		}
 	}
 	
 	@EventHandler()
-	public void arenaEnd(ArenaEndEvent e) {
-		for(Team team : e.getArena().getTeams().values()) {
+	private void arenaEnd(ArenaEndEvent e) {
+		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
+			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
 				Player player = combatant.getPlayer();
 				player.setAllowFlight(false);
