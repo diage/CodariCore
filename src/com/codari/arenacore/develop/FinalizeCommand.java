@@ -23,7 +23,9 @@ public class FinalizeCommand implements CodariCommand {
 			ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(args[1]);
 
 			Arena arena = Codari.getArenaManager().buildArena(args[1], arenaBuilder);
-			((ArenaCore) arena).serializeTest(new File(CodariI.INSTANCE.getDataFolder(), "ARENA.dat"));
+			File file = new File(CodariI.INSTANCE.getDataFolder(), "ARENA.dat");
+			CodariI.INSTANCE.getDataFolder().mkdirs();
+			((ArenaCore) arena).serializeTest(file);
 
 			Bukkit.broadcastMessage("Finalized!");
 			return true;
