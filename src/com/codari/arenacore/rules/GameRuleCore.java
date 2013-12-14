@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
+import com.codari.arena5.Arena;
+import com.codari.arena5.ArenaEndEvent;
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.rules.roledelegation.RoleDelegation;
@@ -43,8 +46,29 @@ public class GameRuleCore implements GameRule {
 	}
 	
 	@Override
-	public boolean addWinCondition(WinConditionTemplate winCondition, Time time, boolean after) {
+	public boolean addWinCondition(final WinConditionTemplate winCondition, Time time, boolean after) {
 		if (this.addAction(new WinConditionAction(time, winCondition, after))) {
+			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
+				private static final long serialVersionUID = -3268071058821069399L;
+				@Override
+				public void action() {
+					if (winCondition.conditionMet()) {
+						Collection<Combatant> winners = winCondition.getWinners();
+						Arena arena = null;
+						for (Combatant c : winners) {
+							if (c.getTeam().getArena() != null) {
+								arena = c.getTeam().getArena();
+								break;
+							}
+						}
+						if (arena == null) {
+							return;
+						}
+						Bukkit.getPluginManager().callEvent(new ArenaEndEvent(arena, winners));
+						arena.stop();
+					}
+				}
+			});
 			this.winConditions.add(winCondition);
 			return true;
 		}
