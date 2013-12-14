@@ -48,7 +48,7 @@ public class CoreListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST) 
+	@EventHandler(priority = EventPriority.HIGHEST)
 	private void playerRevive(PlayerRespawnEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {

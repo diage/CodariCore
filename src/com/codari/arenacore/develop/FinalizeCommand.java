@@ -3,6 +3,7 @@ package com.codari.arenacore.develop;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,6 +17,7 @@ import com.codari.arenacore.ArenaManagerCore;
 
 public class FinalizeCommand implements CodariCommand {
 	public final static String COMMAND_NAME = "f";
+	public final static String LOAD_NAME = "fl";
 	
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
@@ -29,6 +31,11 @@ public class FinalizeCommand implements CodariCommand {
 
 			Bukkit.broadcastMessage("Finalized!");
 			return true;
+		} else if(sender instanceof Player && args[0].equalsIgnoreCase(LOAD_NAME) && args.length == 2) {
+			File file = new File(CodariI.INSTANCE.getDataFolder(), args[1] + ".dat");
+			((ArenaManagerCore)Codari.getArenaManager()).loadArena(file);
+			sender.sendMessage("" + ChatColor.UNDERLINE + ChatColor.BOLD +
+					ChatColor.LIGHT_PURPLE + "LOADED ARENA NAMED FROM " + file);
 		}
 		return false;
 	}

@@ -1,5 +1,9 @@
 package com.codari.arenacore.develop;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +15,7 @@ public class ArenaDevelopmentKit {
 	private final static int OBJECTIVE_POINT = 1;
 	private final static int TRAP = 2;
 	private final static int GATE = 3;
+	private final static int SPAWN = 4;
 	
 	public static final int INVENTORY_STARTING_PLACEMENT_SLOT = 9;
 	
@@ -19,41 +24,32 @@ public class ArenaDevelopmentKit {
 	//-----Getters-----//
 	/* Puts the necessary objects to develop the arena in the player's inventory. */
 	public static void createArenaDevelopmentObjects(Player player) {
-		arenaObjects = new ItemStack[4][];
+		arenaObjects = new ItemStack[5][];
 		
 		//Item Spawner
 		arenaObjects[ITEM_SPAWNER] = new ItemStack[1];
-		ItemStack itemSpawner = new ItemStack(Material.COAL_BLOCK);
-		
-		arenaObjects[ITEM_SPAWNER][0] = itemSpawner;
+		arenaObjects[ITEM_SPAWNER][0] =  new ItemStack(Material.COAL_BLOCK);
 		
 		//Objective Points
 		arenaObjects[OBJECTIVE_POINT] = new ItemStack[4];
-		ItemStack diamondObjectivePoint = new ItemStack(Material.DIAMOND_ORE);
-		ItemStack emeraldObjectivePoint = new ItemStack(Material.EMERALD_ORE);
-		ItemStack goldObjectivePoint = new ItemStack(Material.GOLD_ORE);
-		ItemStack ironObjectivePoint = new ItemStack(Material.IRON_ORE);
-		
-		arenaObjects[OBJECTIVE_POINT][0] = diamondObjectivePoint;
-		arenaObjects[OBJECTIVE_POINT][1] = emeraldObjectivePoint;
-		arenaObjects[OBJECTIVE_POINT][2] = goldObjectivePoint;
-		arenaObjects[OBJECTIVE_POINT][3] = ironObjectivePoint;
+		arenaObjects[OBJECTIVE_POINT][0] = new ItemStack(Material.DIAMOND_ORE);
+		arenaObjects[OBJECTIVE_POINT][1] = new ItemStack(Material.EMERALD_ORE);
+		arenaObjects[OBJECTIVE_POINT][2] = new ItemStack(Material.GOLD_ORE);
+		arenaObjects[OBJECTIVE_POINT][3] = new ItemStack(Material.IRON_ORE);
 		
 		//Traps
 		arenaObjects[TRAP] = new ItemStack[3];
-		ItemStack explosionTrap = new ItemStack(Material.RECORD_10);
-		ItemStack fireTrap = new ItemStack(Material.RECORD_11);
-		ItemStack poisonSnareTrap = new ItemStack(Material.RECORD_12);
-		
-		arenaObjects[TRAP][0] = explosionTrap;
-		arenaObjects[TRAP][1] = fireTrap;
-		arenaObjects[TRAP][2] = poisonSnareTrap;
+		arenaObjects[TRAP][0] = new ItemStack(Material.RECORD_10);
+		arenaObjects[TRAP][1] = new ItemStack(Material.RECORD_11);
+		arenaObjects[TRAP][2] = new ItemStack(Material.RECORD_12);
 		
 		//Gate
 		arenaObjects[GATE] = new ItemStack[1];
-		ItemStack gate = new ItemStack(Material.GOLD_SPADE);
+		arenaObjects[GATE][0] = new ItemStack(Material.GOLD_SPADE);	
 		
-		arenaObjects[GATE][0] = gate;		
+		//Spawn
+		arenaObjects[SPAWN] = new ItemStack[1];
+		arenaObjects[SPAWN][0] = new ItemStack(Material.BAKED_POTATO);
 		
 		//Setting Display Names for all the objects
 		setDisplayName(arenaObjects);
@@ -74,25 +70,25 @@ public class ArenaDevelopmentKit {
 				switch(i) {
 				case 0: 
 					ItemMeta itemSpawnerMeta = arenaObjects[i][j].getItemMeta();
-					itemSpawnerMeta.setDisplayName("Place an item spawner.");
+					itemSpawnerMeta.setDisplayName(ChatColor.GOLD + "Place an item spawner.");
 					arenaObjects[i][j].setItemMeta(itemSpawnerMeta);
 					break;
 				case 1:
 					ItemMeta objectivePointMeta = arenaObjects[i][j].getItemMeta();
-					objectivePointMeta.setDisplayName("Place an objective point.");
+					objectivePointMeta.setDisplayName(ChatColor.GOLD + "Place an objective point.");
 					arenaObjects[i][j].setItemMeta(objectivePointMeta);
 					break;
 				case 2:
 					ItemMeta trapMeta = arenaObjects[i][j].getItemMeta();
 					switch(j) {
 					case 0: 
-						trapMeta.setDisplayName("Place an explosion trap.");
+						trapMeta.setDisplayName(ChatColor.GOLD + "Place an explosion trap.");
 						break;
 					case 1: 
-						trapMeta.setDisplayName("Place a fire trap.");
+						trapMeta.setDisplayName(ChatColor.GOLD + "Place a fire trap.");
 						break;
 					case 2: 
-						trapMeta.setDisplayName("Place a poison snare trap.");	
+						trapMeta.setDisplayName(ChatColor.GOLD + "Place a poison snare trap.");	
 						break;
 					}
 					
@@ -100,8 +96,16 @@ public class ArenaDevelopmentKit {
 					break;
 				case 3:
 					ItemMeta gateMeta = arenaObjects[i][j].getItemMeta();
-					gateMeta.setDisplayName("Place a redstone used to activate a gate.");
+					gateMeta.setDisplayName(ChatColor.GOLD + "Place a redstone used to activate a gate.");
 					arenaObjects[i][j].setItemMeta(gateMeta);
+					break;
+				case 4:
+					ItemMeta playerSpawnMeta = arenaObjects[i][j].getItemMeta();
+					List<String> lore = new ArrayList<>();
+					playerSpawnMeta.setDisplayName(ChatColor.GOLD + "Player Spawn Location");
+					lore.add(ChatColor.RED + "BAKED POTATOE!!!");
+					playerSpawnMeta.setLore(lore);
+					arenaObjects[i][j].setItemMeta(playerSpawnMeta);
 					break;
 				default:
 					return;

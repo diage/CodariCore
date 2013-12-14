@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,6 +39,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int FIRE_TRAP = ITEM_SPAWNER_SLOT + 6;
 	private final int POISON_SNARE_TRAP = ITEM_SPAWNER_SLOT + 7;
 	private final int GATE = ITEM_SPAWNER_SLOT + 8;
+	private final int SPAWNNNN = ITEM_SPAWNER_SLOT + 9;
 
 	public ArenaDevelopmentKitListener() {	
 		this.playerInput = new PlayerInput();
@@ -89,7 +91,10 @@ public class ArenaDevelopmentKitListener implements Listener {
 				case(GATE): {
 					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", player);
 					this.requestChat(player, gate, this.playerInput);
-				} break;			
+				} break;
+				case(SPAWNNNN): {
+					this.requestChat(player, null, this.playerInput);
+				}
 				}
 				e.setCancelled(true);
 				player.sendMessage("Placed item."); //Debugging purposes
@@ -114,18 +119,22 @@ public class ArenaDevelopmentKitListener implements Listener {
 		if(arenaObject instanceof SpawnableObject) {
 			if(arenaObject instanceof RandomSpawnableObject) {
 				objectType = "Random Spawnable Object";
-				player.sendMessage(randomSpawnableObjectMessage);
+				player.sendMessage(ChatColor.GRAY + randomSpawnableObjectMessage);
 				playerInput.requestChat(player, objectType, arenaObject);
 			} else if(arenaObject instanceof FixedSpawnableObject) {
 				objectType = "Fixed Spawnable Object";
-				player.sendMessage(fixedSpawnableObjectMessage);
+				player.sendMessage(ChatColor.GRAY + fixedSpawnableObjectMessage);
 				playerInput.requestChat(player, objectType, arenaObject);
 			}
 		} else if(arenaObject instanceof DelayedPersistentObject) {
 			objectType = "Delayed Persistent Object";
-			player.sendMessage(delayedPersistentObjectMessage);
+			player.sendMessage(ChatColor.GRAY + delayedPersistentObjectMessage);
 			playerInput.requestChat(player, objectType, arenaObject);
-		}	
+		} else if(arenaObject == null) { 
+			objectType = "Spawner";
+			player.sendMessage(ChatColor.GRAY + "You have placed a spawner!");
+			playerInput.requestChat(player, objectType, arenaObject);
+		}
 		
 	}
 
@@ -182,6 +191,8 @@ public class ArenaDevelopmentKitListener implements Listener {
 								arenaBuilder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, spawnTime, repeatSpawnTime);
 							}
 							break;
+						case "Spawner":
+							this.arenaBuilder.addSpawnLocation(player.getLocation());
 						default: 
 							player.sendMessage("Error creating object. Please try again.");
 							break;
