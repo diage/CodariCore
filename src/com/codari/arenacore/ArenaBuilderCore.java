@@ -130,7 +130,9 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			if (!this.spawns.isEmpty()) {
 				int i = this.random.nextInt(this.spawns.size());
 				RandomSpawnableObject o = this.spawns.get(i);
-				o.spawn();
+				if (!o.isSpawned()) {
+					o.spawn();
+				}
 			}
 		}
 	}
