@@ -14,9 +14,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
-import com.codari.arena.objects.role.delegation.MeleeRoleDelegation;
-import com.codari.arena.objects.role.delegation.RandomRoleDelegation;
-import com.codari.arena.objects.role.delegation.RangedRoleDelegation;
 import com.codari.arena5.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -40,10 +37,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int EXPLOSION_TRAP = ITEM_SPAWNER_SLOT + 6;
 	private final int FIRE_TRAP = ITEM_SPAWNER_SLOT + 7;
 	private final int POISON_SNARE_TRAP = ITEM_SPAWNER_SLOT + 8;
-	//private final int GATE = ITEM_SPAWNER_SLOT + 9;
-	private final int MELEE_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 10;
-	private final int RANGED_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 11;
-	private final int RANDOM_ROLE_DELEGATION = ITEM_SPAWNER_SLOT + 12;
+	private final int GATE = ITEM_SPAWNER_SLOT + 9;
 
 	public ArenaDevelopmentKitListener() {	
 		this.playerInput = new PlayerInput();
@@ -92,18 +86,9 @@ public class ArenaDevelopmentKitListener implements Listener {
 					ArenaObject poisonSnareTrap = ((LibraryCore)Codari.getLibrary()).createObject("Poison_Snare_Trap", player);
 					this.requestChat(player, poisonSnareTrap, this.playerInput);
 				} break;
-//				case(GATE): {
-//					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", player);
-//					arenaBuilder.registerPersistent((ImmediatePersistentObject) gate);
-//				} break;
-				case(MELEE_ROLE_DELEGATION): {
-					new	MeleeRoleDelegation(player);
-				} break;
-				case(RANGED_ROLE_DELEGATION): {
-					new	RangedRoleDelegation(player);
-				} break;
-				case(RANDOM_ROLE_DELEGATION): {
-					new	RandomRoleDelegation(player);
+				case(GATE): {
+					ArenaObject gate = ((LibraryCore)Codari.getLibrary()).createObject("Gate", player);
+					this.requestChat(player, gate, this.playerInput);
 				} break;			
 				}
 				e.setCancelled(true);
