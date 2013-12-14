@@ -35,8 +35,8 @@ fix Role Switch Object placement problem //Done
 Figure out the correct time to name an arena
 Figure out about making things not stack. (Currently item spawners will stack and give you a bunch of stuff)(Objects are spawning over themselves)
 Trap icons need to be fixed to be spawnable
-Gate needs fixed
-Role items need removed for now from the kit
+Gate needs fixed							  //Implemented - needs testing
+Role items need removed for now from the kit  //Done
 
 ---------------
     : QOL :
