@@ -36,6 +36,7 @@ public class FinalizeCommand implements CodariCommand {
 			((ArenaManagerCore)Codari.getArenaManager()).loadArena(file);
 			sender.sendMessage("" + ChatColor.UNDERLINE + ChatColor.BOLD +
 					ChatColor.LIGHT_PURPLE + "LOADED ARENA NAMED FROM " + file);
+			return true;
 		}
 		return false;
 	}
