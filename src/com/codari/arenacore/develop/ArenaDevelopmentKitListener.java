@@ -94,10 +94,11 @@ public class ArenaDevelopmentKitListener implements Listener {
 				} break;
 				case(SPAWNNNN): {
 					this.requestChat(player, null, this.playerInput);
+					//TODO
+					Bukkit.broadcastMessage(ChatColor.MAGIC + "DEBUG" + ChatColor.RESET + ": Debug");
 				}
 				}
 				e.setCancelled(true);
-				player.sendMessage("Placed item."); //Debugging purposes
 			}	
 		}
 		
@@ -193,6 +194,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 							break;
 						case "Spawner":
 							this.arenaBuilder.addSpawnLocation(player.getLocation());
+							break;
 						default: 
 							player.sendMessage("Error creating object. Please try again.");
 							break;

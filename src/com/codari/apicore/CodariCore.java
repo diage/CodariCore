@@ -105,6 +105,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.commandRegister.registerCommand(CommandCreateTeam.COMMAND_NAME, new CommandCreateTeam());
 		this.commandRegister.registerCommand(CommandInvitePlayerToTeam.COMMAND_NAME, new CommandInvitePlayerToTeam());
 		this.commandRegister.registerCommand(ComandLeaveTeam.COMMAND_NAME, new ComandLeaveTeam());
+		this.commandRegister.registerCommand(FinalizeCommand.LOAD_NAME, new FinalizeCommand());
 	}
 	
 	//-----Disabler-----//
