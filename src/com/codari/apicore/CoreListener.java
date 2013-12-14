@@ -3,6 +3,7 @@ package com.codari.apicore;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,6 +65,7 @@ public class CoreListener implements Listener {
 	@EventHandler()
 	public void playerClickInventory(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player) {
+			Bukkit.broadcastMessage("You didn't get to click!");
 			Combatant combatant = Codari.getArenaManager().getCombatant((Player)e.getWhoClicked());
 			if(combatant.inArena()) {
 				e.setCancelled(true);
