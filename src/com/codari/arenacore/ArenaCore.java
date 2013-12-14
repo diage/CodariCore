@@ -1,7 +1,9 @@
 package com.codari.arenacore;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,10 +14,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
+import com.codari.api5.io.CodariSerialization;
 import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaStartEvent;
@@ -63,6 +67,14 @@ public final class ArenaCore implements Arena {
 	@Override
 	public GameRule getGameRule() {
 		return this.rules;
+	}
+	
+	public void serializeTest(File file) {
+		CodariSerialization.serialize(file, this);
+		byte[] arenaByte = CodariSerialization.serialize(this);
+		Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "ARENA BYTE SIZE = " + arenaByte.length);
+		Bukkit.broadcastMessage(ChatColor.GREEN + Arrays.toString(arenaByte));
+		Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "ARENA BYTE SIZE = " + arenaByte.length);
 	}
 	
 	@Override
