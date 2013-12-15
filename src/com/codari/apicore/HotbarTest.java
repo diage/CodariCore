@@ -57,6 +57,8 @@ public class HotbarTest implements Listener {
 			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
+		default:
+			break;
 		}
 	}
 }
