@@ -59,35 +59,13 @@ public class PlayerRole implements Role {
 		}
 		return false;
 	}
-
+	
 	@Override
-	public boolean block(Combatant combatant) {
+	public boolean skill(Combatant combatant) {
 		if(this.role != null) {
 			if(this.cooldown == 0) {
 				this.startCooldown();
-				return this.role.block(combatant);
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean sprint(Combatant combatant) {
-		if(this.role != null) {
-			if(this.cooldown == 0) {
-				this.startCooldown();
-				return this.role.sprint(combatant);
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean sneak(Combatant combatant) {
-		if(this.role != null) {
-			if(this.cooldown == 0) {
-				this.startCooldown();
-				return this.role.sneak(combatant);
+				return this.role.skill(combatant);
 			}
 		}
 		return false;

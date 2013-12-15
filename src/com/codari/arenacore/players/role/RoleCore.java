@@ -33,27 +33,9 @@ public class RoleCore implements Role {
 	}
 
 	@Override
-	public boolean block(Combatant combatant) {
-		if(this.skills.containsKey(SkillActivation.BLOCK)) {
-			this.skills.get(SkillActivation.BLOCK).activateSkill(combatant);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean sprint(Combatant combatant) {
-		if(this.skills.containsKey(SkillActivation.SPRINT)) {
-			this.skills.get(SkillActivation.SPRINT).activateSkill(combatant);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean sneak(Combatant combatant) {
-		if(this.skills.containsKey(SkillActivation.SNEAK)) {
-			this.skills.get(SkillActivation.SNEAK).activateSkill(combatant);
+	public boolean skill(Combatant combatant) {
+		if(this.skills.containsKey(SkillActivation.SKILL)) {
+			this.skills.get(SkillActivation.SKILL).activateSkill(combatant);
 			return true;
 		}
 		return false;

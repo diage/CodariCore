@@ -99,20 +99,13 @@ public final class CombatantCore implements Combatant {
 		return ((PlayerRole)this.role).getInteriorRole();
 	}
 	
-	public void doubleJump(Combatant combatant) {
-		this.role.doubleJump(combatant);
+	public void doubleJump() {
+		this.role.doubleJump(this);
 	}
-
-	public void block(Combatant combatant) {
-		this.role.block(combatant);
-	}
-
-	public void sprint(Combatant combatant) {
-		this.role.sprint(combatant);
-	}
-
-	public void sneak(Combatant combatant) {
-		this.role.sneak(combatant);
+	
+	@Override
+	public void skill() {
+		this.role.skill(this);
 	}
 
 	@Override
