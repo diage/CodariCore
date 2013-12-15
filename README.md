@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.0.9
+CURRENT VERSION: 0.0.12
 ===========
 
 ===========
@@ -64,7 +64,7 @@ Version 0.2 Goals
 ---------------
 : Bugs to fix :
 ---------------
-Improve .equals methods
+Improve .equals methods //DONE
 Figure out the correct time to name an arena
 Random Spawnable groups need to be creatable
 
