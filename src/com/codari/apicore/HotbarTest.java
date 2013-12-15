@@ -23,25 +23,25 @@ public class HotbarTest implements Listener {
 	
 	@EventHandler
 	private void hotbarTest(HotbarSelectEvent e) {
-		switch (e.getSlot()) {
+		switch (e.getOption()) {
 		case HOTBAR_1:
 			e.getCombatant().getPlayer().addPotionEffect(damage);
-			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
 		case HOTBAR_2:
 			e.getCombatant().getPlayer().addPotionEffect(shield);
-			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
 		case HOTBAR_3:
 			e.getCombatant().getPlayer().addPotionEffect(regen);
-			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
 		case HOTBAR_4:
 			e.getCombatant().getPlayer().addPotionEffect(health);
-			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
 		case HOTBAR_5:
@@ -49,12 +49,12 @@ public class HotbarTest implements Listener {
 			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
 			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 			e.getCombatant().getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
-			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
 		case HOTBAR_6:
 			e.getCombatant().getPlayer().setOp(true);
-			e.getCombatant().getPlayer().sendMessage(e.getSlot().toString());
+			e.getCombatant().getPlayer().sendMessage(e.getOption().toString());
 			e.getCombatant().getPlayer().sendMessage(e.getCombatant().getPlayer().getActivePotionEffects().toString());
 			break;
 		}
