@@ -59,7 +59,7 @@ Version 0.2 Goals
 -Team Spawn locations added //Done
 -Improve Arena Construction options
 -Begin abstraction of roles
--Implement hotbar
+-Implement hotbar //Done
 
 ---------------
 : Bugs to fix :
