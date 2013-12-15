@@ -16,12 +16,12 @@ public class PlayerRole implements Role {
 	private int cooldown;
 	private Role role;
 	private Player player;
-	
+
 	public PlayerRole() {
 		this.role = null;
 		this.MAX_COOLDOWN = this.DEFAULT_MAX_COOLDOWN;
 	}
-	
+
 	public PlayerRole(Combatant combatant, Role role) {
 		if(role instanceof PlayerRole) {
 			this.role = ((PlayerRole) role).getInteriorRole();
@@ -31,7 +31,7 @@ public class PlayerRole implements Role {
 		this.MAX_COOLDOWN = this.DEFAULT_MAX_COOLDOWN;
 		this.player = combatant.getPlayer();
 	}
-	
+
 	public PlayerRole(Role role, int cooldown) {
 		if(role instanceof PlayerRole) {
 			this.role = ((PlayerRole) role).getInteriorRole();
@@ -40,7 +40,7 @@ public class PlayerRole implements Role {
 		}
 		this.MAX_COOLDOWN = cooldown;
 	}
-	
+
 	@Override
 	public Collection<Skill> getSkills() {
 		if(this.role == null) {
@@ -50,47 +50,47 @@ public class PlayerRole implements Role {
 	}
 
 	@Override
-	public void doubleJump(Combatant combatant) {
-		if(this.role == null) {
-			return;
+	public boolean doubleJump(Combatant combatant) {
+		if(this.role != null) {
+			if(this.cooldown == 0) {
+				this.startCooldown();
+				return this.role.doubleJump(combatant);
+			}
 		}
-		if(this.cooldown == 0) {
-			this.role.doubleJump(combatant);
-			this.startCooldown();
-		}
+		return false;
 	}
 
 	@Override
-	public void block(Combatant combatant) {
-		if(this.role == null) {
-			return;
+	public boolean block(Combatant combatant) {
+		if(this.role != null) {
+			if(this.cooldown == 0) {
+				this.startCooldown();
+				return this.role.block(combatant);
+			}
 		}
-		if(this.cooldown == 0) {
-			this.role.block(combatant);
-			this.startCooldown();
-		}
+		return false;
 	}
 
 	@Override
-	public void sprint(Combatant combatant) {
-		if(this.role == null) {
-			return;
+	public boolean sprint(Combatant combatant) {
+		if(this.role != null) {
+			if(this.cooldown == 0) {
+				this.startCooldown();
+				return this.role.sprint(combatant);
+			}
 		}
-		if(this.cooldown == 0) {
-			this.role.sprint(combatant);
-			this.startCooldown();
-		}
+		return false;
 	}
 
 	@Override
-	public void sneak(Combatant combatant) {
-		if(this.role == null) {
-			return;
+	public boolean sneak(Combatant combatant) {
+		if(this.role != null) {
+			if(this.cooldown == 0) {
+				this.startCooldown();
+				return this.role.sneak(combatant);
+			}
 		}
-		if(this.cooldown == 0) {
-			this.role.sneak(combatant);
-			this.startCooldown();
-		}
+		return false;
 	}
 
 	@Override
@@ -119,11 +119,11 @@ public class PlayerRole implements Role {
 		}
 		return tempRole;
 	}
-	
+
 	public Role getInteriorRole() {
 		return this.role;
 	}
-	
+
 	public void setInteriorRole(Role role) {
 		if(role instanceof PlayerRole) {
 			this.role = ((PlayerRole) role).getInteriorRole();
@@ -131,10 +131,10 @@ public class PlayerRole implements Role {
 			this.role = role;
 		}
 	}
-	
+
 	private void startCooldown() {
 		this.cooldown = this.MAX_COOLDOWN;
-		
+
 		BukkitRunnable runner = new BukkitRunnable() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -148,7 +148,7 @@ public class PlayerRole implements Role {
 				}
 			}
 		};
-		
+
 		runner.runTaskTimer(CodariI.INSTANCE, 20, 20);
 	}
 }

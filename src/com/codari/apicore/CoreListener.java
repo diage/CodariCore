@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -30,7 +31,7 @@ import com.codari.arenacore.ArenaCore;
 @SuppressWarnings("deprecation")
 public class CoreListener implements Listener {
 	private final static int MAX_HEALTH = 100;
-	
+
 	private Map<String, ItemStack[]> inventories;
 
 	public CoreListener() {
@@ -79,7 +80,7 @@ public class CoreListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler()
 	private void playerInteract(BlockPlaceEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
@@ -91,7 +92,7 @@ public class CoreListener implements Listener {
 			e.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler()
 	private void arenaBegin(ArenaStartEvent e) {
 		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
@@ -107,7 +108,7 @@ public class CoreListener implements Listener {
 				player.setTotalExperience(0);
 				player.setFoodLevel(1);
 				BukkitRunnable runner = new BukkitRunnable() {
-					
+
 					@Override
 					public void run() {
 						player.setFoodLevel(1);
@@ -116,12 +117,12 @@ public class CoreListener implements Listener {
 						}
 					}
 				};
-				
+
 				runner.runTaskTimer(CodariI.INSTANCE, 1, 1);
 			}
 		}
 	}
-	
+
 	@EventHandler()
 	private void arenaEnd(ArenaEndEvent e) {
 		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
@@ -138,5 +139,21 @@ public class CoreListener implements Listener {
 				player.updateInventory();
 			}
 		}
+	}
+
+	@EventHandler()
+	private void playerDamagePlayer(EntityDamageByEntityEvent e) {
+		if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+			Player attacker = (Player)e.getDamager(), victim = (Player)e.getEntity();
+			Combatant attackerCombatant = Codari.getArenaManager().getCombatant(attacker);
+			Combatant victimCombatant = Codari.getArenaManager().getCombatant(victim);
+			if(attackerCombatant.inArena() && victimCombatant.inArena()) {
+				if(attackerCombatant.getTeam().equals(victimCombatant.getTeam())) {
+					e.setCancelled(true);
+				}
+			} else {
+				e.setCancelled(true);
+			} 
+		}	
 	}
 }

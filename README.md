@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.0.6
+CURRENT VERSION: 0.0.9
 ===========
 
 ===========
@@ -16,10 +16,11 @@ QOL changes are things which aren't required to move up, but ought to be done to
 ===========
 Version 0.1 Goals
 ===========
--All objects are able to be placed and work 
+-All objects are able to be placed and work //Done
 -ArenaBuilder and Arena are correctly implemented //Done
 -Deaths and inventory interactions are handled //Done
 -CodariArena implementation is working per current API standards //Done
+-Teams don't hurt each other!  //Done - needs testing  
 
 ---------------
 : Bugs to fix :
@@ -36,16 +37,16 @@ Trap icons need to be fixed to be spawnable //Done
 Gate needs fixed	//Done
 Role items need removed for now from the kit  //Done
 Figure out what spams the console about arena objects
-Need to repair roles (it sends on a cooldown no matter what skill type is used)
-fix anvils (item spawner stuff)
-figure out how to make only one objective spawn at a time
+Need to repair roles (it sends on a cooldown no matter what skill type is used)  //Done - needs testing
+fix anvils (item spawner stuff)  //Done - needs testing 
+figure out how to make only one objective spawn at a time  //Done - needs testing
 
 
 ---------------
     : QOL :
 ---------------
 Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
-Improve damage from shield skill (make it actually cause damage)
+Improve damage from shield skill (make it actually cause damage)  //Done - needs testing
 Fix colors for item Spawners //Done
 Improve command syntax //Done
 Improve chat colors and item colors
@@ -55,9 +56,10 @@ Set blocks above objective point to glass //Done
 Version 0.2 Goals
 ===========
 -Add Persistence //Done
--Team Spawn locations added
+-Team Spawn locations added //Done
 -Improve Arena Construction options
 -Begin abstraction of roles
+-Implement hotbar
 
 ---------------
 : Bugs to fix :
