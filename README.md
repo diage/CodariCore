@@ -18,7 +18,7 @@ Version 0.1 Goals
 ===========
 -All objects are able to be placed and work 
 -ArenaBuilder and Arena are correctly implemented //Done
--Deaths and inventory interactions are handled
+-Deaths and inventory interactions are handled //Done
 -CodariArena implementation is working per current API standards //Done
 
 ---------------
@@ -36,6 +36,10 @@ Trap icons need to be fixed to be spawnable //Done
 Gate needs fixed	//Done
 Role items need removed for now from the kit  //Done
 Figure out what spams the console about arena objects
+Need to repair roles (it sends on a cooldown no matter what skill type is used)
+fix anvils (item spawner stuff)
+figure out how to make only one objective spawn at a time
+
 
 ---------------
     : QOL :
