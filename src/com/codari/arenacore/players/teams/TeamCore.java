@@ -3,6 +3,7 @@ package com.codari.arenacore.players.teams;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.entity.Player;
 
 import com.codari.arena5.Arena;
@@ -71,6 +72,11 @@ public class TeamCore implements Team {
 			return this.getTeamName().equals(other.getTeamName());
 		}
 		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(this.getTeamName()).toHashCode();
 	}
 	
 	@Override
