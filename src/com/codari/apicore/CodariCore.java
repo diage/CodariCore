@@ -22,6 +22,7 @@ import com.codari.arena.objects.traps.ExplosionTrap;
 import com.codari.arena.objects.traps.FireTrap;
 import com.codari.arena.objects.traps.PoisonSnareTrap;
 import com.codari.arena.objects.traps.structure.TrapListener;
+import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.roleswitch.RoleSwitchListener;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
@@ -86,6 +87,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Bukkit.getPluginManager().registerEvents(new TrapListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ItemSpawnerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HotbarListener(), this);
+		Bukkit.getPluginManager().registerEvents(new RoleHotbarListener(), this);
 		
 		//Bukkit.getPluginManager().registerEvents(new HotbarTest(), this);
 		

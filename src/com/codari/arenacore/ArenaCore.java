@@ -23,6 +23,7 @@ import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
+import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaStartEvent;
@@ -122,6 +123,8 @@ public final class ArenaCore implements Arena {
 				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.RANGED));
 				for (Combatant combatant : team.combatants()) {
 					combatant.getPlayer().teleport(this.getSpawn(combatant));
+					combatant.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));
+					combatant.setHotbarActibe(true);
 				}
 			}
 			ArenaStartEvent e = new ArenaStartEvent(this);
@@ -151,6 +154,9 @@ public final class ArenaCore implements Arena {
 				entry = teamsIterator.next();
 				((TeamCore) entry.getValue()).setArena(null);
 				teamsIterator.remove();
+				for (Combatant combatant : entry.getValue().combatants()) {
+					combatant.setHotbarActibe(false);
+				}
 			}
 			for (ArenaObject o : this.objects) {
 				o.hide();
