@@ -55,7 +55,7 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).getHandleAs(ArenaObject.class);
+			return (ArenaObject) Reflector.invokeConstructor(clazz, player).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
@@ -88,7 +88,7 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).getHandleAs(RoleDeclaration.class);
+			return (RoleDeclaration) Reflector.invokeConstructor(clazz, player).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
 			return null;
@@ -121,7 +121,7 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).getHandleAs(TimedAction.class);
+			return (TimedAction) Reflector.invokeConstructor(clazz, player).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
 			return null;
@@ -154,7 +154,7 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return Reflector.invokeConstructor(clazz, player).getHandleAs(WinCondition.class);
+			return (WinCondition) Reflector.invokeConstructor(clazz, player).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;
