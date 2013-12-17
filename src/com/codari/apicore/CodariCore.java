@@ -8,6 +8,7 @@ import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.apicore.command.CodariCommandCenter;
 import com.codari.apicore.command.CommandRegister;
+import com.codari.apicore.enchantment.EnchantmentManagerCore;
 import com.codari.apicore.player.CodariPlayerManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arena.objects.gate.Gate;
@@ -50,11 +51,13 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private ArenaManagerCore arenaManager;
 	private StatFactoryCore statFactory;
 	private LibraryCore library;
+	private EnchantmentManagerCore enchantmentManager;
 	
 	//-----Loader-----//
 	@Override
 	public void onLoad() {
 		this.codariPlayerManager = new CodariPlayerManagerCore();
+		this.enchantmentManager = new EnchantmentManagerCore();
 	}
 	
 	private CommandRegister commandRegister;
@@ -118,6 +121,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	//-----Public Methods-----//
+	@Override
+	public EnchantmentManagerCore getEnchantmentManager() {
+		return this.enchantmentManager;
+	}
+	
 	@Override
 	public CodariPlayerManagerCore getCodariPlayerManager() {
 		return this.codariPlayerManager;
