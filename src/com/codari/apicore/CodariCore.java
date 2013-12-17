@@ -117,7 +117,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	@Override
 	public void onDisable() {
 		this.setInstanceAccess(false);
-		//PlayerReference.kickAllPlayers();
+		this.enchantmentManager.unregisterCustomEnchantments();
 	}
 	
 	//-----Public Methods-----//
