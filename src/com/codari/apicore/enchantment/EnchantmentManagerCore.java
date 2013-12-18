@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,32 +45,42 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 				PacketContainer packet = event.getPacket();
 				boolean visibleCustom = false;
 				switch (event.getPacketID()) {
-				case Packets.Server.SET_SLOT: // Set slot
+				case Packets.Server.SET_SLOT:
+					Bukkit.broadcastMessage("PACKET SET_SLOT SENT =O");
 					ItemStack item = packet.getItemModifier().read(0);
-					for (CustomEnchantment enchantment : customEnchantments) {
-						if (item.containsEnchantment(enchantment)) {
-							item.removeEnchantment(enchantment);
-							if (enchantment.isVisible()) {
-								visibleCustom = true;
+					if (item != null) {
+						for (CustomEnchantment enchantment : customEnchantments) {
+							if (item.containsEnchantment(enchantment)) {
+								Bukkit.broadcastMessage("HAS ENCHANT " + enchantment.getName());
+								item.removeEnchantment(enchantment);
+								if (enchantment.isVisible()) {
+									visibleCustom = true;
+								}
 							}
 						}
-						if (!item.getItemMeta().hasEnchants() && visibleCustom) {
+						if (visibleCustom) {
+							Bukkit.broadcastMessage("NBT STUFF IS HAPPENING");
 							NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
 							compound.put(NbtFactory.ofList("ench"));
 						}
 					}
 					break;
-				case Packets.Server.WINDOW_ITEMS: // Set Window Items
+				case Packets.Server.WINDOW_ITEMS:
+					Bukkit.broadcastMessage("PACKET WINDOW_ITEMS SENT =O");
 					ItemStack[] elements = packet.getItemArrayModifier().read(0);
 					for (ItemStack elementItem : elements) {
-						for (CustomEnchantment enchantment : customEnchantments) {
-							if (elementItem.containsEnchantment(enchantment)) {
-								elementItem.removeEnchantment(enchantment);
-								if (enchantment.isVisible()) {
-									visibleCustom = true;
+						if (elementItem != null) {
+							for (CustomEnchantment enchantment : customEnchantments) {
+								if (elementItem.containsEnchantment(enchantment)) {
+									Bukkit.broadcastMessage("HAS ENCHANT " + enchantment.getName());
+									elementItem.removeEnchantment(enchantment);
+									if (enchantment.isVisible()) {
+										visibleCustom = true;
+									}
 								}
 							}
-							if (!elementItem.getItemMeta().hasEnchants() && visibleCustom) {
+							if (visibleCustom) {
+								Bukkit.broadcastMessage("NBT STUFF IS HAPPENING");
 								NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(elementItem);
 								compound.put(NbtFactory.ofList("ench"));
 							}

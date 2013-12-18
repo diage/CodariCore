@@ -94,6 +94,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Bukkit.getPluginManager().registerEvents(new RoleHotbarListener(), this);
 		
 		//Bukkit.getPluginManager().registerEvents(new HotbarTest(), this);
+		Bukkit.getPluginManager().registerEvents(new EnchantmentTest(), this);
 		
 		//-----Listeners-----//
 		Bukkit.getPluginManager().registerEvents(new ArenaDevelopmentKitListener(), this);
