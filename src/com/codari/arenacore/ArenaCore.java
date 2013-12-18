@@ -3,7 +3,6 @@ package com.codari.arenacore;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -115,8 +114,8 @@ public final class ArenaCore implements Arena {
 				this.teams.put(team.getTeamName(), team);
 				Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
 				Bukkit.broadcastMessage(team.combatants().get(1).getPlayer().getName());
-				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.MELEE));
-				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole("2v2", ArenaStatics.RANGED));
+				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.MELEE));
+				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.RANGED));
 				for (Combatant combatant : team.combatants()) {
 					combatant.getPlayer().teleport(this.getSpawn(combatant));
 					combatant.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));

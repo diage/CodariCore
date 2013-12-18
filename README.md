@@ -40,7 +40,9 @@ Figure out what spams the console about arena objects
 Need to repair roles (it sends on a cooldown no matter what skill type is used)  //Done - needs testing
 fix anvils (item spawner stuff)  //Done - needs testing 
 figure out how to make only one objective spawn at a time  //Done - needs testing
-
+game is not ending
+role switching is not working currently
+broadcasts double points
 
 ---------------
     : QOL :
@@ -51,6 +53,7 @@ Fix colors for item Spawners //Done
 Improve command syntax //Done
 Improve chat colors and item colors
 Set blocks above objective point to glass //Done
+Make potions not hurt yourself or allies
 
 ===========
 Version 0.2 Goals

@@ -105,13 +105,16 @@ public class CoreListener implements Listener {
 				player.setMaxHealth(MAX_HEALTH);
 				player.setHealth(MAX_HEALTH);
 				player.setWalkSpeed(.3f);
-				player.setTotalExperience(0);
+				player.setExp(0);
+				player.setLevel(0);
 				player.setFoodLevel(1);
+				player.setExhaustion(0);
 				BukkitRunnable runner = new BukkitRunnable() {
 
 					@Override
 					public void run() {
 						player.setFoodLevel(1);
+						player.setExhaustion(0);
 						if(!Codari.getArenaManager().getCombatant(player).inArena()) {
 							super.cancel();
 						}
