@@ -32,8 +32,7 @@ public class ItemDataTest implements Listener {
 			case RIGHT_CLICK_BLOCK:
 				Codari.getItemDataManager().setItemData(item, atd);
 				break;
-			case PHYSICAL:
-				Bukkit.broadcastMessage(Codari.getItemDataManager().getItemData(item).toString());
+			default:
 				break;
 			}
 		}
