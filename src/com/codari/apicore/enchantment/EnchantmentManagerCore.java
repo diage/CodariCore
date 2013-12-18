@@ -46,12 +46,10 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 				boolean visibleCustom = false;
 				switch (event.getPacketID()) {
 				case Packets.Server.SET_SLOT:
-					Bukkit.broadcastMessage("PACKET SET_SLOT SENT =O");
 					ItemStack item = packet.getItemModifier().read(0);
 					if (item != null) {
 						for (CustomEnchantment enchantment : customEnchantments) {
 							if (item.containsEnchantment(enchantment)) {
-								Bukkit.broadcastMessage("HAS ENCHANT " + enchantment.getName());
 								item.removeEnchantment(enchantment);
 								if (enchantment.isVisible()) {
 									visibleCustom = true;
@@ -59,20 +57,17 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 							}
 						}
 						if (visibleCustom) {
-							Bukkit.broadcastMessage("NBT STUFF IS HAPPENING");
 							NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
 							compound.put(NbtFactory.ofList("ench"));
 						}
 					}
 					break;
 				case Packets.Server.WINDOW_ITEMS:
-					Bukkit.broadcastMessage("PACKET WINDOW_ITEMS SENT =O");
 					ItemStack[] elements = packet.getItemArrayModifier().read(0);
 					for (ItemStack elementItem : elements) {
 						if (elementItem != null) {
 							for (CustomEnchantment enchantment : customEnchantments) {
 								if (elementItem.containsEnchantment(enchantment)) {
-									Bukkit.broadcastMessage("HAS ENCHANT " + enchantment.getName());
 									elementItem.removeEnchantment(enchantment);
 									if (enchantment.isVisible()) {
 										visibleCustom = true;
@@ -80,7 +75,6 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 								}
 							}
 							if (visibleCustom) {
-								Bukkit.broadcastMessage("NBT STUFF IS HAPPENING");
 								NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(elementItem);
 								compound.put(NbtFactory.ofList("ench"));
 							}

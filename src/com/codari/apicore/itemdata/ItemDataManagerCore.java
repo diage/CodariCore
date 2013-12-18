@@ -37,9 +37,14 @@ public class ItemDataManagerCore implements ItemDataManager {
 		if (item == null) {
 			throw new IllegalArgumentException("Null ItemStack");
 		}
-		if (!this.dataMap.containsKey(id)) {
+		ItemData data = this.dataMap.get(id);
+		if (data == null) {
 			throw new IllegalArgumentException("No registered ItemData exists with the id " + id);
 		}
+		if (!data.canBeAppliedTo(item)) {
+			throw new IllegalArgumentException("Can not apply item data id " + id + " to " + item.getType());
+		}
+		data.onApplication(item);
 		item.addEnchantment(this.itemDataEnchantment, id);
 		return item;
 	}
