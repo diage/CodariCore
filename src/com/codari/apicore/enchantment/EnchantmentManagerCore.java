@@ -117,5 +117,6 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 			this.byId.invoke("remove", enchantment.getId());
 			this.byName.invoke("remove", enchantment.getName());
 		}
+		this.customEnchantments.clear();
 	}
 }
