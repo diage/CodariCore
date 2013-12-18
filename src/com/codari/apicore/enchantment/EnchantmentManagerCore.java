@@ -101,6 +101,16 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 		Reflector.writeFieldObject(this.acceptingNew, null, false);
 	}
 	
+	@Override
+	public boolean containsCustomEnchantment(ItemStack itemStack) {
+		for (CustomEnchantment enchantment : this.customEnchantments) {
+			if (itemStack.containsEnchantment(enchantment)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void unregisterCustomEnchantments() {
 		for (CustomEnchantment enchantment : this.customEnchantments) {
