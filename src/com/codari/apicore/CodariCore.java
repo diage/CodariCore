@@ -67,6 +67,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	public void onEnable() {
 		this.setInstanceAccess(true);
 		this.codariPlayerManager.registerPlayerListeners();
+		this.enchantmentManager.packetStuff();
 		this.arenaManager = new ArenaManagerCore();
 		this.statFactory = new StatFactoryCore();
 		this.library = new LibraryCore(); 

@@ -5,10 +5,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 
+import com.codari.api5.CodariI;
 import com.codari.api5.enchantment.CustomEnchantment;
 import com.codari.api5.enchantment.EnchantmentManager;
 import com.codari.api5.util.reflect.Reflector;
+import com.comphenix.protocol.Packets;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ConnectionSide;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.nbt.NbtCompound;
+import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 
 public class EnchantmentManagerCore implements EnchantmentManager {
 	//-----Fields-----//
@@ -23,6 +33,52 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 		this.acceptingNew = Reflector.getFieldObject(Enchantment.class, "acceptingNew");
 		this.byId = Reflector.readStaticField(Enchantment.class, "byId");
 		this.byName = Reflector.readStaticField(Enchantment.class, "byName");
+	}
+	
+	public void packetStuff() {
+		ProtocolLibrary.getProtocolManager().addPacketListener(
+				new PacketAdapter(CodariI.INSTANCE, ConnectionSide.SERVER_SIDE,
+						Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS) {        
+			@Override
+			public void onPacketSending(PacketEvent event) {
+				PacketContainer packet = event.getPacket();
+				boolean visibleCustom = false;
+				switch (event.getPacketID()) {
+				case Packets.Server.SET_SLOT: // Set slot
+					ItemStack item = packet.getItemModifier().read(0);
+					for (CustomEnchantment enchantment : customEnchantments) {
+						if (item.containsEnchantment(enchantment)) {
+							item.removeEnchantment(enchantment);
+							if (enchantment.isVisible()) {
+								visibleCustom = true;
+							}
+						}
+						if (!item.getItemMeta().hasEnchants() && visibleCustom) {
+							NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
+							compound.put(NbtFactory.ofList("ench"));
+						}
+					}
+					break;
+				case Packets.Server.WINDOW_ITEMS: // Set Window Items
+					ItemStack[] elements = packet.getItemArrayModifier().read(0);
+					for (ItemStack elementItem : elements) {
+						for (CustomEnchantment enchantment : customEnchantments) {
+							if (elementItem.containsEnchantment(enchantment)) {
+								elementItem.removeEnchantment(enchantment);
+								if (enchantment.isVisible()) {
+									visibleCustom = true;
+								}
+							}
+							if (!elementItem.getItemMeta().hasEnchants() && visibleCustom) {
+								NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(elementItem);
+								compound.put(NbtFactory.ofList("ench"));
+							}
+						}
+					}
+					break;
+				}
+			}
+		});
 	}
 	
 	//-----Methods-----//
