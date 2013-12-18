@@ -9,6 +9,7 @@ import com.codari.api5.util.reflect.Reflector;
 import com.codari.apicore.command.CodariCommandCenter;
 import com.codari.apicore.command.CommandRegister;
 import com.codari.apicore.enchantment.EnchantmentManagerCore;
+import com.codari.apicore.itemdata.ItemDataManagerCore;
 import com.codari.apicore.player.CodariPlayerManagerCore;
 import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arena.objects.gate.Gate;
@@ -52,6 +53,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private StatFactoryCore statFactory;
 	private LibraryCore library;
 	private EnchantmentManagerCore enchantmentManager;
+	private ItemDataManagerCore itemDataManager;
 	
 	//-----Loader-----//
 	@Override
@@ -68,6 +70,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.setInstanceAccess(true);
 		this.codariPlayerManager.registerPlayerListeners();
 		this.enchantmentManager.packetStuff();
+		this.itemDataManager = new ItemDataManagerCore();
 		this.arenaManager = new ArenaManagerCore();
 		this.statFactory = new StatFactoryCore();
 		this.library = new LibraryCore(); 
@@ -94,7 +97,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Bukkit.getPluginManager().registerEvents(new RoleHotbarListener(), this);
 		
 		//Bukkit.getPluginManager().registerEvents(new HotbarTest(), this);
-		Bukkit.getPluginManager().registerEvents(new EnchantmentTest(), this);
+		//Bukkit.getPluginManager().registerEvents(new EnchantmentTest(), this);
 		
 		//-----Listeners-----//
 		Bukkit.getPluginManager().registerEvents(new ArenaDevelopmentKitListener(), this);
@@ -126,6 +129,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	@Override
 	public EnchantmentManagerCore getEnchantmentManager() {
 		return this.enchantmentManager;
+	}
+	
+	@Override
+	public ItemDataManagerCore getItemDataManager() {
+		return this.itemDataManager;
 	}
 	
 	@Override
