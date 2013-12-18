@@ -81,10 +81,6 @@ public final class ArenaCore implements Arena {
 	
 	public void serializeTest(File file) {
 		CodariSerialization.serialize(file, this);
-		byte[] arenaByte = CodariSerialization.serialize(this);
-		Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "ARENA BYTE SIZE = " + arenaByte.length);
-		Bukkit.broadcastMessage(ChatColor.GREEN + Arrays.toString(arenaByte));
-		Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "ARENA BYTE SIZE = " + arenaByte.length);
 	}
 	
 	public Location getSpawn(Combatant combatant) {
