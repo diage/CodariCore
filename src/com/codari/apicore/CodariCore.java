@@ -28,6 +28,7 @@ import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.roleswitch.RoleSwitchListener;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
+import com.codari.arenacore.AntiTroyListener;
 import com.codari.arenacore.ArenaManagerCore;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.commands.JoinQueueCommand;
@@ -95,10 +96,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Bukkit.getPluginManager().registerEvents(new ItemSpawnerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HotbarListener(), this);
 		Bukkit.getPluginManager().registerEvents(new RoleHotbarListener(), this);
+		Bukkit.getPluginManager().registerEvents(new AntiTroyListener(), this);
 		
 		//Bukkit.getPluginManager().registerEvents(new HotbarTest(), this);
 		//Bukkit.getPluginManager().registerEvents(new EnchantmentTest(), this);
-		Bukkit.getPluginManager().registerEvents(new ItemDataTest(), this);
+		//Bukkit.getPluginManager().registerEvents(new ItemDataTest(), this);
 		
 		//-----Listeners-----//
 		Bukkit.getPluginManager().registerEvents(new ArenaDevelopmentKitListener(), this);

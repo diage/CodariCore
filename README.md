@@ -42,7 +42,7 @@ fix anvils (item spawner stuff)  //Done - needs testing
 figure out how to make only one objective spawn at a time  //Done - needs testing
 game is not ending
 role switching is not working currently
-broadcasts double points
+broadcasts double points  //Done
 
 ---------------
     : QOL :
