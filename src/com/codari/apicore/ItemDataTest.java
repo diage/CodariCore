@@ -35,6 +35,7 @@ public class ItemDataTest implements Listener {
 			default:
 				break;
 			}
+			Bukkit.broadcastMessage(Codari.getItemDataManager().getItemData(item).toString());
 		}
 	}
 	
