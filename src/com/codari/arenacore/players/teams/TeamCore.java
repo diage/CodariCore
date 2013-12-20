@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.codari.arena5.Arena;
@@ -48,15 +50,20 @@ public class TeamCore implements Team {
 		return this.arena;
 	}
 	
-	public void setArena(Arena arena) {
+	public boolean setArena(Arena arena) {
 		if(arena == null) {
 			this.leaveArena();
-			return;
+			return false;
 		}
 		this.arena = arena;
 		for(Combatant combatant : this.combatants) {
-			combatant.sendToArena(arena);
+			if(!combatant.sendToArena(arena)) {
+				Bukkit.broadcastMessage(ChatColor.RED + "ERROR: Failed to add " 
+						+ combatant.getPlayerReference().getName() + " to the arena!");
+				return false;
+			}
 		}
+		return true;
 		
 	}
 	

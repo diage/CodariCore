@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.codari.api5.CodariI;
 import com.codari.api5.player.CodariPlayers;
 import com.codari.api5.stats.StatManager;
+import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
 import com.codari.apicore.player.OfflineCodariPlayerCore;
 import com.codari.arena5.Arena;
@@ -17,6 +18,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.ArenaCore;
 import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -139,6 +141,9 @@ public final class CombatantCore implements Combatant {
 		if(arena != null) {
 			this.arenaName = arena.getName();
 			this.inArena = true;
+			this.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));
+			this.setHotbarActibe(true);
+			this.getPlayer().teleport(((ArenaCore)arena).getSpawn(this));
 			return true;
 		}
 		return false;

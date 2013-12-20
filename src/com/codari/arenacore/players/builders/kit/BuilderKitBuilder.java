@@ -13,14 +13,15 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.rules.timedaction.TimedAction;
 import com.codari.arena5.rules.wincondition.WinCondition;
-import com.codari.arenacore.ArenaBuilderCore;
 import com.codari.arenacore.players.menu.icons.MenuIcon;
 import com.codari.arenacore.players.menu.icons.SelectionIcon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.icongroup.IconGroup;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
+@SuppressWarnings("unused")
 public class BuilderKitBuilder extends IconGroup implements Listener {
+	
 	
 	private ArenaBuilder arenaBuilder;
 	private Combatant combatant;

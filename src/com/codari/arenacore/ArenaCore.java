@@ -21,7 +21,6 @@ import org.bukkit.scheduler.BukkitTask;
 import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
-import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaEndEvent;
 import com.codari.arena5.ArenaStartEvent;
@@ -109,21 +108,22 @@ public final class ArenaCore implements Arena {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
-			if (teams.length > this.spawns.size()) {//TODO
-				Bukkit.broadcastMessage(ChatColor.DARK_RED + "Not enough spawns?!");
+			
+			if (!(teams.length == this.spawns.size())) {//TODO
+				Bukkit.broadcastMessage(ChatColor.DARK_RED + "Incorrect number of spawns!");
 				return false;
 			}
 			Bukkit.broadcastMessage(ChatColor.YELLOW + "Passed basic checks...");
+			
 			for (Team team : teams) {
-				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
-				for (Combatant combatant : team.combatants()) {
-					combatant.getPlayer().teleport(this.getSpawn(combatant));
-					combatant.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));
-					combatant.setHotbarActibe(true);
+				if(!((TeamCore) team).setArena(this)) {
+					Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT! Failed to set arena for team " + team.getTeamName() + "!");
+					return false;
 				}
 			}
 			Bukkit.broadcastMessage("" + ChatColor.GREEN + this.teams.size() + " teams have been added to the arena...");
+			
 			ArenaStartEvent e = new ArenaStartEvent(this);
 			Bukkit.getPluginManager().callEvent(e);
 			if (e.isCancelled()) {
@@ -131,16 +131,21 @@ public final class ArenaCore implements Arena {
 				return false;
 			}
 			Bukkit.broadcastMessage(ChatColor.BLUE + "Event successfully called...");
+			
 			for (WinCondition winCond : this.rules.getWinConditions()) {
 				winCond.initialize(this);
 				Bukkit.broadcastMessage(ChatColor.AQUA + "WinCondition " + winCond.getClass().getSimpleName() + " succesfully initialized...");
 			}
+			
 			for (TimedAction action : this.actions) {
-				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
-						action.getDelay() != null ? action.getDelay().ticks() : 1l,
-						action.getPeriod() != null ? action.getPeriod().ticks() : 0l));
+				long delay, period;
+				delay = action.getDelay() != null ? action.getDelay().ticks() : 1l;
+				period = action.getPeriod() != null ? action.getPeriod().ticks() : 0l;
+				
+				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action, delay, period));
 			}
 			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "Arena fully started!");
+			
 			return true;
 		}
 		return false;
