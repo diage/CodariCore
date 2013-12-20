@@ -28,7 +28,6 @@ import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.roleswitch.RoleSwitchListener;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
-import com.codari.arenacore.AntiTroyListener;
 import com.codari.arenacore.ArenaManagerCore;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.commands.JoinQueueCommand;
