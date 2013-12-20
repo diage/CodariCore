@@ -108,8 +108,7 @@ public final class ArenaCore implements Arena {
 	public boolean start(Team... teams) {
 		Bukkit.broadcastMessage(ChatColor.RED + "Attempting to start Arena...");
 		if (!this.isMatchInProgress()) {
-			if		Bukkit.broadcastMessage(ChatColor.RED + "Attempting to start Arena...");
- (ArrayUtils.isEmpty(teams)) {
+			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
 			if (teams.length > this.spawns.size()) {//TODO
@@ -120,8 +119,7 @@ public final class ArenaCore implements Arena {
 			for (Team team : teams) {
 				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
-				Bukkit.broadcastMessage(ChatColor.YELLOW + "Passed basic checks...");
-			Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
+				Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
 				Bukkit.broadcastMessage(team.combatants().get(1).getPlayer().getName());
 				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.MELEE));
 				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.RANGED));
@@ -138,13 +136,8 @@ public final class ArenaCore implements Arena {
 				this.teams.clear();
 				return false;
 			}
-<<<<<<< HEAD
-			for (WinConditio			Bukkit.broadcastMessage("" + ChatColor.GREEN + this.teams.size() + " teams have been added to the arena...");
-n winCond : this.rules.getWinConditions()) {
-=======
 			Bukkit.broadcastMessage(ChatColor.BLUE + "Event successfully called...");
 			for (WinCondition winCond : this.rules.getWinConditions()) {
->>>>>>> branch 'master' of https://github.com/diage/CodariCore.git
 				winCond.initialize(this);
 				Bukkit.broadcastMessage(ChatColor.AQUA + "WinCondition " + winCond.getClass().getSimpleName() + " succesfully initialized...");
 			}
