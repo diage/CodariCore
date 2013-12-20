@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaEndEvent;
+import com.codari.arena5.ArenaWinEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
@@ -27,11 +27,13 @@ public class GameRuleCore implements GameRule {
 	private final Set<TimedAction> timedActions;
 	private int teamSize;
 	private RoleDelegation roleDelegation;
+	private List<RoleDeclaration> roleDeclarations;
 	
 	//-----Constructor-----//
 	public GameRuleCore() {
 		this.winConditions = new ArrayList<>();
 		this.timedActions = new HashSet<>();
+		this.roleDeclarations = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
@@ -64,7 +66,7 @@ public class GameRuleCore implements GameRule {
 						if (arena == null) {
 							return;
 						}
-						Bukkit.getPluginManager().callEvent(new ArenaEndEvent(arena, winners));
+						Bukkit.getPluginManager().callEvent(new ArenaWinEvent(arena, winners));
 						arena.stop();
 					}
 				}
@@ -164,12 +166,12 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public boolean addRoleDeclaration(RoleDeclaration roleDeclaration) {
 		roleDeclaration.initalizeRoles();
+		this.roleDeclarations.add(roleDeclaration);
 		return true; 	//TODO
 	}
 
 	@Override
-	public RoleDeclaration getRoleDeclaration() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RoleDeclaration> getRoleDeclaration() {
+		return this.roleDeclarations;
 	}
 }

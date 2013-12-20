@@ -25,11 +25,13 @@ import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
+import com.codari.arena5.ArenaEndEvent;
 import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.rules.GameRule;
+import com.codari.arena5.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.rules.timedaction.TimedAction;
 import com.codari.arena5.rules.wincondition.WinCondition;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -60,6 +62,9 @@ public final class ArenaCore implements Arena {
 		in.defaultReadObject();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
+		for(RoleDeclaration roleDeclaration : this.rules.getRoleDeclaration()) {
+			roleDeclaration.initalizeRoles();
+		}
 	}
 	
 	//-----Public Methods-----//
@@ -102,7 +107,8 @@ public final class ArenaCore implements Arena {
 	@Override
 	public boolean start(Team... teams) {
 		if (!this.isMatchInProgress()) {
-			if (ArrayUtils.isEmpty(teams)) {
+			if		Bukkit.broadcastMessage(ChatColor.RED + "Attempting to start Arena...");
+ (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
 			if (teams.length > this.spawns.size()) {//TODO
@@ -112,7 +118,8 @@ public final class ArenaCore implements Arena {
 			for (Team team : teams) {
 				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
-				Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
+				Bukkit.broadcastMessage(ChatColor.YELLOW + "Passed basic checks...");
+			Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
 				Bukkit.broadcastMessage(team.combatants().get(1).getPlayer().getName());
 				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.MELEE));
 				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.RANGED));
@@ -128,7 +135,8 @@ public final class ArenaCore implements Arena {
 				this.teams.clear();
 				return false;
 			}
-			for (WinCondition winCond : this.rules.getWinConditions()) {
+			for (WinConditio			Bukkit.broadcastMessage("" + ChatColor.GREEN + this.teams.size() + " teams have been added to the arena...");
+n winCond : this.rules.getWinConditions()) {
 				winCond.initialize(this);
 			}
 			for (TimedAction action : this.actions) {
