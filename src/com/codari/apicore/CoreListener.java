@@ -8,13 +8,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -28,6 +32,8 @@ import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.ArenaCore;
+import com.codari.arenacore.players.teams.TeamBuilder;
+import com.codari.arenacore.players.teams.TeamCore;
 
 @SuppressWarnings("deprecation")
 public class CoreListener implements Listener {
@@ -71,6 +77,7 @@ public class CoreListener implements Listener {
 		if(combatant.inArena()) {
 			Codari.getArenaManager().getArena(combatant.getArenaName()).stop();
 			combatant.leaveArena();
+			TeamBuilder.removePlayer((TeamCore)combatant.getTeam(), combatant.getPlayer());
 		}
 	}
 
@@ -163,17 +170,68 @@ public class CoreListener implements Listener {
 
 	@EventHandler()
 	private void playerDamagePlayer(EntityDamageByEntityEvent e) {
+		//Prevent Teamates from melee attacking eachother
 		if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
 			Player attacker = (Player)e.getDamager(), victim = (Player)e.getEntity();
 			Combatant attackerCombatant = Codari.getArenaManager().getCombatant(attacker);
 			Combatant victimCombatant = Codari.getArenaManager().getCombatant(victim);
-			if(attackerCombatant.inArena() && victimCombatant.inArena()) {
-				if(attackerCombatant.getTeam().equals(victimCombatant.getTeam())) {
+			if(checkIfInArena(attackerCombatant, victimCombatant)) {
+				if(checkIfSameTeam(attackerCombatant, victimCombatant)) {
 					e.setCancelled(true);
 				}
 			} else {
 				e.setCancelled(true);
 			} 
+		//Prevent teamates from shooting arrows at eachother
+		} else if (e.getDamager() instanceof Projectile && e.getEntity() instanceof Player) {
+			Projectile proj = (Projectile) e.getDamager();
+			if(proj instanceof Arrow) {
+				Arrow arrow = (Arrow) proj;
+				if(arrow.getShooter() instanceof Player) {
+					Combatant shooter = Codari.getArenaManager().getCombatant(((Player)proj.getShooter()));
+					Combatant victim = Codari.getArenaManager().getCombatant((Player)e.getEntity());
+					if(checkIfInArena(shooter, victim)) {
+						if(checkIfSameTeam(shooter, victim)) {
+							e.setCancelled(true);
+						}
+					} else {
+						e.setCancelled(true);
+					}
+				}
+			}
 		}	
+	}
+	
+	//Prevent teamates from throwing potions at eachother
+	@EventHandler()
+	public void onPotionSplash(PotionSplashEvent e) {
+		if(e.getPotion().getShooter() instanceof Player) {
+			Combatant shooter = Codari.getArenaManager().getCombatant(((Player)e.getPotion().getShooter()));
+			for(LivingEntity entity : e.getAffectedEntities()) {
+				if(entity instanceof Player) {
+					Combatant victim = Codari.getArenaManager().getCombatant(((Player)entity));
+					if(checkIfInArena(shooter, victim)) {
+						if(checkIfSameTeam(shooter, victim)) {
+							e.setIntensity(victim.getPlayer(), 0);
+						}						
+					} else {
+						e.setIntensity(victim.getPlayer(), 0);
+					}
+				}
+			}
+		}
+	}
+		
+	private static boolean checkIfInArena(Combatant attacker, Combatant victim) {
+		if(attacker.inArena() && victim.inArena()) {
+			return true;
+		}
+		return false;
+	}
+	private static boolean checkIfSameTeam(Combatant attacker, Combatant victim) {
+		if(attacker.getTeam().equals(victim.getTeam())) {
+			return true;
+		}
+		return false;
 	}
 }
