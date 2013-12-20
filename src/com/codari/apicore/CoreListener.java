@@ -33,9 +33,11 @@ public class CoreListener implements Listener {
 	private final static int MAX_HEALTH = 100;
 
 	private Map<String, ItemStack[]> inventories;
+	private Map<String, Map<String, ItemStack[]>> inGameInventories;
 
 	public CoreListener() {
 		this.inventories = new HashMap<>();
+		this.inGameInventories = new HashMap<>();
 	}
 
 	@EventHandler()
@@ -95,10 +97,15 @@ public class CoreListener implements Listener {
 
 	@EventHandler()
 	private void arenaBegin(ArenaStartEvent e) {
+		Map<String, ItemStack[]> playerInventories = new HashMap<>();
 		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
 			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
 				final Player player = combatant.getPlayer();
+				
+				playerInventories.put(player.getName(), player.getInventory().getContents());
+				player.getInventory().clear();
+				player.updateInventory();
 				player.setAllowFlight(true);
 				player.setFlying(false);
 				player.setGameMode(GameMode.SURVIVAL);
@@ -109,6 +116,8 @@ public class CoreListener implements Listener {
 				player.setLevel(0);
 				player.setFoodLevel(1);
 				player.setExhaustion(0);
+				playerInventories.put(player.getName(), player.getInventory().getContents());
+				player.getInventory().clear();
 				BukkitRunnable runner = new BukkitRunnable() {
 
 					@Override
@@ -124,24 +133,29 @@ public class CoreListener implements Listener {
 				runner.runTaskTimer(CodariI.INSTANCE, 1, 1);
 			}
 		}
+		this.inGameInventories.put(e.getArena().getName(), playerInventories);
 	}
 
 	@EventHandler()
 	private void arenaEnd(ArenaEndEvent e) {
+		Map<String, ItemStack[]> playerInventories = this.inGameInventories.get(e.getArena().getName());
 		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
 			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
 				Player player = combatant.getPlayer();
+				
+				player.getInventory().setContents(playerInventories.get(player.getName()));
+				player.updateInventory();
 				player.setAllowFlight(false);
 				player.resetMaxHealth();
 				player.setHealth(player.getMaxHealth());
 				player.setWalkSpeed(.2f);
 				player.setTotalExperience(0);
 				player.setFoodLevel(10);
-				player.getInventory().clear();
-				player.updateInventory();
+				player.setExhaustion(10);
 			}
 		}
+		this.inGameInventories.remove(e.getArena().getName());
 	}
 
 	@EventHandler()

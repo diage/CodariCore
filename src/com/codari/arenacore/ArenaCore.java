@@ -25,6 +25,7 @@ import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
+import com.codari.arena5.ArenaEndEvent;
 import com.codari.arena5.ArenaStartEvent;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.combatants.Combatant;
@@ -101,6 +102,7 @@ public final class ArenaCore implements Arena {
 	
 	@Override
 	public boolean start(Team... teams) {
+		Bukkit.broadcastMessage(ChatColor.RED + "Attempting to start Arena...");
 		if (!this.isMatchInProgress()) {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
@@ -109,6 +111,7 @@ public final class ArenaCore implements Arena {
 				Bukkit.broadcastMessage(ChatColor.DARK_RED + "Not enough spawns?!");
 				return false;
 			}
+			Bukkit.broadcastMessage(ChatColor.YELLOW + "Passed basic checks...");
 			for (Team team : teams) {
 				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
@@ -122,20 +125,24 @@ public final class ArenaCore implements Arena {
 					combatant.setHotbarActibe(true);
 				}
 			}
+			Bukkit.broadcastMessage("" + ChatColor.GREEN + this.teams.size() + " teams have been added to the arena...");
 			ArenaStartEvent e = new ArenaStartEvent(this);
 			Bukkit.getPluginManager().callEvent(e);
 			if (e.isCancelled()) {
 				this.teams.clear();
 				return false;
 			}
+			Bukkit.broadcastMessage(ChatColor.BLUE + "Event successfully called...");
 			for (WinCondition winCond : this.rules.getWinConditions()) {
 				winCond.initialize(this);
+				Bukkit.broadcastMessage(ChatColor.AQUA + "WinCondition " + winCond.getClass().getSimpleName() + " succesfully initialized...");
 			}
 			for (TimedAction action : this.actions) {
 				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action,
 						action.getDelay() != null ? action.getDelay().ticks() : 1l,
 						action.getPeriod() != null ? action.getPeriod().ticks() : 0l));
 			}
+			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "Arena fully started!");
 			return true;
 		}
 		return false;
@@ -143,7 +150,12 @@ public final class ArenaCore implements Arena {
 	
 	@Override
 	public void stop() {
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT: Match attempting to end!");
 		if (this.isMatchInProgress()) {
+			Bukkit.broadcastMessage(ChatColor.RED + "First check passed...");
+			ArenaEndEvent e = new ArenaEndEvent(this);
+			Bukkit.getPluginManager().callEvent(e);
+			Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "Event called...");
 			Iterator<Entry<String, Team>> teamsIterator = this.teams.entrySet().iterator();
 			for (Entry<String, Team> entry; teamsIterator.hasNext();) {
 				entry = teamsIterator.next();
@@ -153,12 +165,15 @@ public final class ArenaCore implements Arena {
 					combatant.setHotbarActibe(false);
 				}
 			}
+			Bukkit.broadcastMessage("" + ChatColor.DARK_GRAY + this.teams.size() + " teams remain after clearing...");
 			for (ArenaObject o : this.objects) {
 				o.hide();
 			}
+			Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "Objects removed...");
 			for (BukkitTask task : this.tasks) {
 				task.cancel();
 			}
+			Bukkit.broadcastMessage("Arena successfully ended!");
 		}
 	}
 	

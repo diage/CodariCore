@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaEndEvent;
+import com.codari.arena5.ArenaWinEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;
@@ -64,7 +64,7 @@ public class GameRuleCore implements GameRule {
 						if (arena == null) {
 							return;
 						}
-						Bukkit.getPluginManager().callEvent(new ArenaEndEvent(arena, winners));
+						Bukkit.getPluginManager().callEvent(new ArenaWinEvent(arena, winners));
 						arena.stop();
 					}
 				}
