@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.player.CodariPlayers;
 import com.codari.api5.stats.StatManager;
@@ -117,10 +118,11 @@ public final class CombatantCore implements Combatant {
 
 	@Override
 	public boolean leaveArena() {
-		Arena arena = CodariI.INSTANCE.getArenaManager().getArena(arenaName);
+		Arena arena = Codari.getArenaManager().getArena(arenaName);
 		if(arena != null) {
 			this.arenaName = null;
 			this.inArena = false;
+			this.setRole(null);
 			return true;
 		}
 		return false;

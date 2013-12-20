@@ -116,8 +116,14 @@ public final class ArenaCore implements Arena {
 			Bukkit.broadcastMessage(ChatColor.YELLOW + "Passed basic checks...");
 			
 			for (Team team : teams) {
+				if(!(team.getTeamSize() == this.rules.getTeamSize())) {
+					Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT! Not enough players for team "+ team.getTeamName() + "!");
+					this.teams.clear();
+					return false;
+				}
 				this.teams.put(team.getTeamName(), team);
 				if(!((TeamCore) team).setArena(this)) {
+					this.teams.clear();
 					Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT! Failed to set arena for team " + team.getTeamName() + "!");
 					return false;
 				}
