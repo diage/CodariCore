@@ -55,9 +55,7 @@ public class QueueCore {
 	}
 
 	public void removeAllTeamsFromQueue() {
-		for(int i = 0; i < this.teams.size(); i++) {
-			this.teams.remove(i--);
-		}
+		this.teams.clear();
 	}
 
 	private void startArena() {
