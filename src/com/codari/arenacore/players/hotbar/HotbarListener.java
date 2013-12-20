@@ -46,6 +46,7 @@ public class HotbarListener implements Listener {
 	private void hotbarDrop(PlayerDropItemEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if (combatant.isHotbarActive()) {
+			e.getPlayer().setItemInHand(e.getItemDrop().getItemStack());
 			e.setCancelled(true);
 			Bukkit.getPluginManager().callEvent(new HotbarSelectEvent(combatant, HotbarOption.HOTBAR_DROP));
 		}

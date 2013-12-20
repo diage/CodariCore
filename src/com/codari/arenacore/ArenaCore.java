@@ -18,12 +18,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.scheduler.BukkitTime;
-import com.codari.arena.ArenaStatics;
 import com.codari.arena5.Arena;
 import com.codari.arena5.ArenaEndEvent;
 import com.codari.arena5.ArenaStartEvent;
@@ -119,10 +117,6 @@ public final class ArenaCore implements Arena {
 			for (Team team : teams) {
 				((TeamCore) team).setArena(this);
 				this.teams.put(team.getTeamName(), team);
-				Bukkit.broadcastMessage(team.combatants().get(0).getPlayer().getName());
-				Bukkit.broadcastMessage(team.combatants().get(1).getPlayer().getName());
-				team.combatants().get(0).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.MELEE));
-				team.combatants().get(1).setRole(Codari.getArenaManager().getExistingRole(ArenaStatics.ARENA_NAME, ArenaStatics.RANGED));
 				for (Combatant combatant : team.combatants()) {
 					combatant.getPlayer().teleport(this.getSpawn(combatant));
 					combatant.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));

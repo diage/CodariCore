@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -105,6 +106,7 @@ public class CoreListener implements Listener {
 				
 				playerInventories.put(player.getName(), player.getInventory().getContents());
 				player.getInventory().clear();
+				player.getInventory().setItem(7, new ItemStack(Material.STICK));
 				player.updateInventory();
 				player.setAllowFlight(true);
 				player.setFlying(false);
@@ -133,6 +135,7 @@ public class CoreListener implements Listener {
 				runner.runTaskTimer(CodariI.INSTANCE, 1, 1);
 			}
 		}
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Arena has succesfully been started!");
 		this.inGameInventories.put(e.getArena().getName(), playerInventories);
 	}
 
