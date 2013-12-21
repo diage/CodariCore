@@ -53,7 +53,7 @@ Fix colors for item Spawners //Done
 Improve command syntax //Done
 Improve chat colors and item colors
 Set blocks above objective point to glass //Done
-Make potions not hurt yourself or allies
+Make potions not hurt yourself or allies  //Done - needs testing
 
 ===========
 Version 0.2 Goals
