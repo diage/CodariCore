@@ -78,7 +78,7 @@ public class ArenaDevelopmentKit {
 		
 		List<String> randomSpawnableLore = new ArrayList<>();
 		randomSpawnableLore.add(ChatColor.RED + "To make a new random spawnable group");
-		randomSpawnableLore.add(ChatColor.RED + "Type \"(groupName):(delayTime):(repeatTime)\".");
+		randomSpawnableLore.add(ChatColor.RED + "Type \"(groupName):(delayTime):(repeatTime)\"");
 		randomSpawnableLore.add(ChatColor.RED + "Example: \"objective:30:30\"");		
 		randomSpawnableLore.add(ChatColor.RED + "To add to an existing group");
 		randomSpawnableLore.add(ChatColor.RED + "Type \"(groupName)\"");
