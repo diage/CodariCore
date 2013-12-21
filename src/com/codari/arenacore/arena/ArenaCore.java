@@ -1,4 +1,4 @@
-package com.codari.arenacore;
+package com.codari.arenacore.arena;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import org.bukkit.scheduler.BukkitTask;
 import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
-import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaEndEvent;
-import com.codari.arena5.ArenaStartEvent;
+import com.codari.arena5.arena.Arena;
+import com.codari.arena5.arena.ArenaEndEvent;
+import com.codari.arena5.arena.ArenaStartEvent;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;

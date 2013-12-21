@@ -8,8 +8,8 @@ import com.codari.api5.util.Time;
 import com.codari.apicore.command.CodariCommand;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
-import com.codari.arena5.ArenaBuilder;
-import com.codari.arenacore.ArenaManagerCore;
+import com.codari.arena5.arena.ArenaBuilder;
+import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.rules.GameRuleCore;
 
 public class NewArenaCommand implements CodariCommand {

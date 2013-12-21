@@ -1,4 +1,4 @@
-package com.codari.arenacore.commands;
+package com.codari.arenacore.players.teams.queue;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

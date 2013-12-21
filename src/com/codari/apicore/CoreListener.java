@@ -27,11 +27,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
-import com.codari.arena5.ArenaEndEvent;
-import com.codari.arena5.ArenaStartEvent;
+import com.codari.arena5.arena.ArenaEndEvent;
+import com.codari.arena5.arena.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arenacore.ArenaCore;
+import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
 

@@ -28,18 +28,18 @@ import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.roleswitch.RoleSwitchListener;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
-import com.codari.arenacore.ArenaManagerCore;
 import com.codari.arenacore.LibraryCore;
-import com.codari.arenacore.commands.JoinQueueCommand;
+import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
 import com.codari.arenacore.develop.FinalizeCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
-import com.codari.arenacore.players.hotbar.HotbarListener;
+import com.codari.arenacore.players.menu.hotbar.HotbarListener;
 import com.codari.arenacore.players.skills.SkillListener;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
 import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
 import com.codari.arenacore.players.teams.commands.CommandInvitePlayerToTeam;
+import com.codari.arenacore.players.teams.queue.JoinQueueCommand;
 
 public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Static Methods-----//

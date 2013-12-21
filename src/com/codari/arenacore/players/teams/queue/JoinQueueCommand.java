@@ -1,4 +1,4 @@
-package com.codari.arenacore.commands;
+package com.codari.arenacore.players.teams.queue;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.apicore.command.CodariCommand;
-import com.codari.arena5.Arena;
+import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.teams.Team;
 
 public class JoinQueueCommand implements CodariCommand {

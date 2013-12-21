@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.apicore.command.CodariCommand;
-import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaBuilder;
-import com.codari.arenacore.ArenaCore;
-import com.codari.arenacore.ArenaManagerCore;
+import com.codari.arena5.arena.Arena;
+import com.codari.arena5.arena.ArenaBuilder;
+import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class FinalizeCommand implements CodariCommand {
 	public final static String COMMAND_NAME = "f";

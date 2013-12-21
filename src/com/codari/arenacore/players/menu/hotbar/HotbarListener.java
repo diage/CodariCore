@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.hotbar;
+package com.codari.arenacore.players.menu.hotbar;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

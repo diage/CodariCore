@@ -10,8 +10,8 @@ import org.bukkit.Bukkit;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
-import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaWinEvent;
+import com.codari.arena5.arena.Arena;
+import com.codari.arena5.arena.ArenaWinEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.rules.GameRule;
 import com.codari.arena5.rules.roledelegation.RoleDeclaration;

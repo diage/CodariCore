@@ -1,4 +1,4 @@
-package com.codari.arenacore;
+package com.codari.arenacore.arena;
 
 import java.io.File;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import com.codari.api5.io.CodariSerialization;
-import com.codari.arena5.Arena;
-import com.codari.arena5.ArenaBuilder;
-import com.codari.arena5.ArenaManager;
+import com.codari.arena5.arena.Arena;
+import com.codari.arena5.arena.ArenaBuilder;
+import com.codari.arena5.arena.ArenaManager;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
@@ -20,6 +20,7 @@ import com.codari.arena5.rules.GameRule;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
 import com.codari.arenacore.players.role.RoleCore;
+import com.codari.arenacore.players.teams.queue.QueueCore;
 
 public class ArenaManagerCore implements ArenaManager {
 	//-----Fields-----//

@@ -1,4 +1,4 @@
-package com.codari.arenacore;
+package com.codari.arenacore.players.teams.queue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
-import com.codari.arena5.Arena;
+import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.teams.Team;
 
 public class QueueCore {

@@ -1,4 +1,4 @@
-package com.codari.arenacore;
+package com.codari.arenacore.arena;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
-import com.codari.arena5.ArenaBuilder;
+import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;

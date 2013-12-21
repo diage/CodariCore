@@ -15,14 +15,14 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
-import com.codari.arena5.ArenaBuilder;
+import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
-import com.codari.arenacore.ArenaManagerCore;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class ArenaDevelopmentKitListener implements Listener {
