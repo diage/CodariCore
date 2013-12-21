@@ -15,7 +15,8 @@ import com.codari.arenacore.arena.rules.GameRuleCore;
 public class NewArenaCommand implements CodariCommand {
 	public static final String COMMAND_NAME = "n";
 	
-	private static int teamSize = 2;
+	private static byte teamSize = 2;
+	private static byte numberOfTeams = 2;
 	private static int numberOfPointsToWin = 100;
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
@@ -28,6 +29,7 @@ public class NewArenaCommand implements CodariCommand {
 				GameRuleCore gameRule = new GameRuleCore();
 				gameRule.setMatchDurationInfinite();
 				gameRule.setTeamSize(teamSize);		//set team size to 2
+				gameRule.setNumberOfTeams(numberOfTeams);
 				gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
 				gameRule.addRoleDeclaration(new ArenaRoleDeclaration());
 				//ArenaBuilder construction//

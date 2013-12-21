@@ -16,16 +16,17 @@ import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.arena.rules.roledelegation.RoleDelegation;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
+import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
 
 public class GameRuleCore implements GameRule {
 	private static final long serialVersionUID = 3141996300251217554L;
 	//-----Fields-----//
-	private final List<WinConditionTemplate> winConditions;
+	private final List<WinCondition> winConditions;
 	private Time matchDuration;
 	private final Set<TimedAction> timedActions;
-	private int teamSize;
+	private byte teamSize, numberOfTeams;
 	private RoleDelegation roleDelegation;
 	private List<RoleDeclaration> roleDeclarations;
 	
@@ -38,18 +39,18 @@ public class GameRuleCore implements GameRule {
 	
 	//-----Public Methods-----//
 	@Override
-	public void setTeamSize(int teamSize) {
+	public void setTeamSize(byte teamSize) {
 		this.teamSize = teamSize;
 	}
 	
 	@Override
-	public void addWinCondition(WinConditionTemplate winCondition) {
+	public void addWinCondition(WinCondition winCondition) {
 		this.addWinCondition(winCondition, Time.NULL, true);
 	}
 	
 	@Override
-	public boolean addWinCondition(final WinConditionTemplate winCondition, Time time, boolean after) {
-		if (this.addAction(new WinConditionAction(time, winCondition, after))) {
+	public boolean addWinCondition(final WinCondition winCondition, Time time, boolean after) {
+		if (this.addAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
 			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
 				private static final long serialVersionUID = -3268071058821069399L;
 				@Override
@@ -78,7 +79,7 @@ public class GameRuleCore implements GameRule {
 	}
 	
 	@Override
-	public void removeWinCondition(WinConditionTemplate winCondition) {
+	public void removeWinCondition(WinCondition winCondition) {
 		this.winConditions.remove(winCondition);
 	}
 	
@@ -99,7 +100,9 @@ public class GameRuleCore implements GameRule {
 	
 	@Override
 	public boolean isValid() {
-		return this.matchDuration != null && !this.winConditions.isEmpty();
+		return this.matchDuration != null && !this.winConditions.isEmpty() 
+				&& this.numberOfTeams > 1 && this.teamSize > 1
+				&& this.numberOfTeams < 16 && this.teamSize < 16;
 	}
 
 	@Override
@@ -108,12 +111,12 @@ public class GameRuleCore implements GameRule {
 	}
 
 	@Override
-	public Collection<WinConditionTemplate> getWinConditions() {
+	public Collection<WinCondition> getWinConditions() {
 		return this.winConditions;
 	}
 
 	@Override
-	public int getTeamSize() {
+	public byte getTeamSize() {
 		return this.teamSize;
 	}
 
@@ -173,5 +176,16 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public List<RoleDeclaration> getRoleDeclaration() {
 		return this.roleDeclarations;
+	}
+
+	@Override
+	public void setNumberOfTeams(byte numberOfTeams) {
+		this.numberOfTeams = numberOfTeams; //TODO check valid inputs
+		
+	}
+
+	@Override
+	public byte getNumberOfTeams() {
+		return this.numberOfTeams;
 	}
 }

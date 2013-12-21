@@ -20,6 +20,7 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -48,6 +49,7 @@ public final class CombatantCore implements Combatant {
 	//---Building Arena---//
 	private boolean isBuilding;
 	private String currentArenaBuildName;
+	private KitManager kitManager;
 	
 	//-----Constructor-----//
 	public CombatantCore(String name) {
@@ -61,6 +63,8 @@ public final class CombatantCore implements Combatant {
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		//this.menuManager = new MenuManager(this);
+		
+		this.kitManager = new KitManager(this);
 		
 		this.inArena = false;
 	}
@@ -207,6 +211,10 @@ public final class CombatantCore implements Combatant {
 	
 	public String getArenaBuildName() {
 		return this.currentArenaBuildName;
+	}
+	
+	public KitManager getKitManager() {
+		return this.kitManager;
 	}
 	
 	public MenuManager getMenuManager() {
