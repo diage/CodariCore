@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 
-import com.codari.arena5.rules.GameRule;
-import com.codari.arenacore.rules.GameRuleCore;
+import com.codari.arena5.arena.rules.GameRule;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 
 public class KitBuilder implements Listener {
 	private String name;
@@ -28,4 +28,6 @@ public class KitBuilder implements Listener {
 			return null;
 		}
 	}
+	
+	
 }

@@ -22,15 +22,15 @@ import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.ArenaEndEvent;
-import com.codari.arena5.arena.ArenaStartEvent;
+import com.codari.arena5.arena.events.ArenaEndEvent;
+import com.codari.arena5.arena.events.ArenaStartEvent;
+import com.codari.arena5.arena.rules.GameRule;
+import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
+import com.codari.arena5.arena.rules.timedaction.TimedAction;
+import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arena5.rules.GameRule;
-import com.codari.arena5.rules.roledelegation.RoleDeclaration;
-import com.codari.arena5.rules.timedaction.TimedAction;
-import com.codari.arena5.rules.wincondition.WinCondition;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public final class ArenaCore implements Arena {

@@ -1,12 +1,14 @@
 package com.codari.arenacore.players.builders.kit;
 
+import org.bukkit.event.Listener;
+
 import com.codari.api5.Codari;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.ArenaBuilder;
-import com.codari.arena5.rules.GameRule;
+import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 
-public class Kit {
+public class Kit implements Listener {
 	private String name;
 	private ArenaBuilder arenaBuilder;
 	

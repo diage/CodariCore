@@ -11,14 +11,14 @@ import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.ReflectionException;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
+import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
+import com.codari.arena5.arena.rules.roledelegation.RoleDeclarationName;
+import com.codari.arena5.arena.rules.timedaction.TimedAction;
+import com.codari.arena5.arena.rules.timedaction.TimedActionName;
+import com.codari.arena5.arena.rules.wincondition.WinCondition;
+import com.codari.arena5.arena.rules.wincondition.WinConditionName;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
-import com.codari.arena5.rules.roledelegation.RoleDeclaration;
-import com.codari.arena5.rules.roledelegation.RoleDeclarationName;
-import com.codari.arena5.rules.timedaction.TimedAction;
-import com.codari.arena5.rules.timedaction.TimedActionName;
-import com.codari.arena5.rules.wincondition.WinCondition;
-import com.codari.arena5.rules.wincondition.WinConditionName;
 
 public class LibraryCore implements Library {
 	private final Map<String, Class<? extends ArenaObject>> objects;

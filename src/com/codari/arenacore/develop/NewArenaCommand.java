@@ -10,7 +10,7 @@ import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arenacore.arena.ArenaManagerCore;
-import com.codari.arenacore.rules.GameRuleCore;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 
 public class NewArenaCommand implements CodariCommand {
 	public static final String COMMAND_NAME = "n";

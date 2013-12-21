@@ -15,13 +15,13 @@ import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.ArenaBuilder;
+import com.codari.arena5.arena.rules.GameRule;
+import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
-import com.codari.arena5.rules.GameRule;
-import com.codari.arena5.rules.timedaction.TimedAction;
 
 public class ArenaBuilderCore implements ArenaBuilder {
 	private static final long serialVersionUID = 4720468390178286776L;

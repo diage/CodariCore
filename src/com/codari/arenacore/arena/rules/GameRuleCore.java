@@ -1,4 +1,4 @@
-package com.codari.arenacore.rules;
+package com.codari.arenacore.arena.rules;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,13 +11,13 @@ import org.bukkit.Bukkit;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.ArenaWinEvent;
+import com.codari.arena5.arena.events.ArenaWinEvent;
+import com.codari.arena5.arena.rules.GameRule;
+import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
+import com.codari.arena5.arena.rules.roledelegation.RoleDelegation;
+import com.codari.arena5.arena.rules.timedaction.TimedAction;
+import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arena5.rules.GameRule;
-import com.codari.arena5.rules.roledelegation.RoleDeclaration;
-import com.codari.arena5.rules.roledelegation.RoleDelegation;
-import com.codari.arena5.rules.timedaction.TimedAction;
-import com.codari.arena5.rules.wincondition.WinConditionTemplate;
 
 public class GameRuleCore implements GameRule {
 	private static final long serialVersionUID = 3141996300251217554L;
