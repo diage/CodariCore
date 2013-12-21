@@ -68,8 +68,8 @@ public class ArenaDevelopmentKit {
 //		String delayedPersistentObjectMessage = "Please type in a time for the delay and true/false for the override. For example, "
 //				+ "type in \"5 true\".";
 
-		String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in. If"
-				+ "you would like to create a random spawnable group, simply time in \"(groupName):(delayTime):(repeatTime)\".";
+//		String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in. If"
+//				+ "you would like to create a random spawnable group, simply time in \"(groupName):(delayTime):(repeatTime)\".";
 
 //		String fixedSpawnableObjectMessage = "Please type in a time (1-99) for which to spawn the object and an optional time for "
 //				+ "which to repeat the spawn. For example, type in \"10\" if you want the object to spawn at 10 minutes"
@@ -77,7 +77,10 @@ public class ArenaDevelopmentKit {
 //				+ "every 10 minutes.";			
 		
 		List<String> randomSpawnableLore = new ArrayList<>();
-		randomSpawnableLore.add(ChatColor.RED + randomSpawnableObjectMessage);
+		randomSpawnableLore.add(ChatColor.RED + "Please type in the group of random spawnables you would like this one to be in.");
+		randomSpawnableLore.add(ChatColor.RED + "If you would like to create a random spawnable group, ");
+		randomSpawnableLore.add(ChatColor.RED + "simply type in \"(groupName):(delayTime):(repeatTime)\".");
+		randomSpawnableLore.add(ChatColor.RED + "For example, type in: \"objective:30:30\"");
 		
 		for(int i = 0; i < arenaObjects.length; i ++) {
 			for(int j = 0; j < arenaObjects[i].length; j++) {
