@@ -171,31 +171,26 @@ public class ArenaDevelopmentKitListener implements Listener {
 							arenaBuilder.registerPersistent((DelayedPersistentObject) arenaObject, delayTime, override);
 							break;
 						case "Random Spawnable Object":
-							String incomingString = playerInputString.replaceAll(" ", "");
-							int indexFirst = incomingString.indexOf(":");
-							if(indexFirst != -1 && incomingString.length() > indexFirst + 1) {
-								int indexSecond = incomingString.indexOf(":", indexFirst + 1);
-								
-								//Create new Random Spawnable Group
-								if(indexSecond != -1) {
-									String groupName = playerInputString.substring(0, indexFirst - 1);
-									if(!arenaBuilder.checkForRandomSpawnableGroup(groupName)) {
-										int delayTimeRS = Integer.parseInt(incomingString.substring(indexFirst, indexSecond - 1));
-										int repeatTimeRS = Integer.parseInt(incomingString.substring(indexSecond));
-										arenaBuilder.createRandomTimelineGroup(groupName, new Time(0, delayTimeRS), new Time(0, repeatTimeRS));
-										Bukkit.broadcastMessage(ChatColor.GREEN + "Created Random Spawnable Group named " + groupName + " Delay Time: " + delayTimeRS + " Repeat Time " + repeatTimeRS);
-										arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, groupName);
-										Bukkit.broadcastMessage(arenaObject.getClass().getSimpleName() + " has been registered inside " + groupName);
-									} else {
-										player.sendMessage(ChatColor.RED + "Did not work - There is already a random spawnable group with the name " + groupName);
-									}
+							String[] args = playerInputString.replaceAll(" ", "").split(":");
+							//Create new Random Spawnable Group
+							if(args.length == 3) {
+								String groupName = args[0];
+								if(!arenaBuilder.checkForRandomSpawnableGroup(groupName)) {
+									int delayTimeRS = Integer.parseInt(args[1]);
+									int repeatTimeRS = Integer.parseInt(args[2]);
+									arenaBuilder.createRandomTimelineGroup(groupName, new Time(0, delayTimeRS), new Time(0, repeatTimeRS));
+									Bukkit.broadcastMessage(ChatColor.GREEN + "Created Random Spawnable Group named " + groupName + " Delay Time: " + delayTimeRS + " Repeat Time " + repeatTimeRS);
+									arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, groupName);
+									Bukkit.broadcastMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered inside " + groupName);
 								} else {
-									player.sendMessage(ChatColor.RED + "Did not work - You forgot to include a repeat period!");
+									player.sendMessage(ChatColor.RED + "Did not work - There is already a random spawnable group with the name " + groupName);
 								}
 								//Add RandomSpawnableObject to an already existing random spawnable group
-							} else if(arenaBuilder.checkForRandomSpawnableGroup(incomingString)) {
-								arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, incomingString);
-								Bukkit.broadcastMessage(arenaObject.getClass().getSimpleName() + " has been registered inside " + incomingString);
+							} else if(arenaBuilder.checkForRandomSpawnableGroup(args[0])) {
+								arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, args[0]);
+								Bukkit.broadcastMessage(arenaObject.getClass().getSimpleName() + " has been registered inside " + args[0]);
+							} else {
+								player.sendMessage(ChatColor.RED + "Invalid - please try again.");
 							}
 							break;
 						case "Fixed Spawnable Object":
