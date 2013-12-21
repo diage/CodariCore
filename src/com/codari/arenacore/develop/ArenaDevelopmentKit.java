@@ -77,10 +77,13 @@ public class ArenaDevelopmentKit {
 //				+ "every 10 minutes.";			
 		
 		List<String> randomSpawnableLore = new ArrayList<>();
-		randomSpawnableLore.add(ChatColor.RED + "Please type in the group of random spawnables you would like this one to be in.");
+		randomSpawnableLore.add(ChatColor.RED + "Please type in the group of random");
+		randomSpawnableLore.add(ChatColor.RED + "spawnables you would like this on to be in.");
 		randomSpawnableLore.add(ChatColor.RED + "If you would like to create a random spawnable group, ");
-		randomSpawnableLore.add(ChatColor.RED + "simply type in \"(groupName):(delayTime):(repeatTime)\".");
+		randomSpawnableLore.add(ChatColor.RED + "type in \"(groupName):(delayTime):(repeatTime)\".");
 		randomSpawnableLore.add(ChatColor.RED + "For example, type in: \"objective:30:30\"");
+		randomSpawnableLore.add(ChatColor.RED + "Once you have a group you can add it to that group.");
+		randomSpawnableLore.add(ChatColor.RED + "For example, type in: \"objective\"");
 		
 		for(int i = 0; i < arenaObjects.length; i ++) {
 			for(int j = 0; j < arenaObjects[i].length; j++) {
