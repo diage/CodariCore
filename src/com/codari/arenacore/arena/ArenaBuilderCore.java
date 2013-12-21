@@ -98,6 +98,14 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	@Override
+	public boolean checkForRandomSpawnableGroup(String name) {
+		if(this.randomSpawnables.containsKey(name)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time) {
 		this.objects.add(object);
 		return this.registerFixedSpawnable(object, time, Time.NULL);
