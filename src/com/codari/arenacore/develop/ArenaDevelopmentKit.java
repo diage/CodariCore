@@ -65,21 +65,38 @@ public class ArenaDevelopmentKit {
 	}
 	
 	private static void setDisplayName(ItemStack[][] arenaObjects) {
+//		String delayedPersistentObjectMessage = "Please type in a time for the delay and true/false for the override. For example, "
+//				+ "type in \"5 true\".";
+
+		String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in. If"
+				+ "you would like to create a random spawnable group, simply time in \"(groupName):(delayTime):(repeatTime)\".";
+
+//		String fixedSpawnableObjectMessage = "Please type in a time (1-99) for which to spawn the object and an optional time for "
+//				+ "which to repeat the spawn. For example, type in \"10\" if you want the object to spawn at 10 minutes"
+//				+ "or \"10 10\" if you want the object to spawn at 10 minutes and spawn consecutively afterwards"
+//				+ "every 10 minutes.";			
+		
+		List<String> randomSpawnableLore = new ArrayList<>();
+		randomSpawnableLore.add(ChatColor.RED + randomSpawnableObjectMessage);
+		
 		for(int i = 0; i < arenaObjects.length; i ++) {
 			for(int j = 0; j < arenaObjects[i].length; j++) {
 				switch(i) {
 				case 0: 
 					ItemMeta itemSpawnerMeta = arenaObjects[i][j].getItemMeta();
 					itemSpawnerMeta.setDisplayName(ChatColor.GOLD + "Place an item spawner.");
+					itemSpawnerMeta.setLore(randomSpawnableLore);
 					arenaObjects[i][j].setItemMeta(itemSpawnerMeta);
 					break;
 				case 1:
 					ItemMeta objectivePointMeta = arenaObjects[i][j].getItemMeta();
 					objectivePointMeta.setDisplayName(ChatColor.GOLD + "Place an objective point.");
+					objectivePointMeta.setLore(randomSpawnableLore);
 					arenaObjects[i][j].setItemMeta(objectivePointMeta);
 					break;
 				case 2:
 					ItemMeta trapMeta = arenaObjects[i][j].getItemMeta();
+					trapMeta.setLore(randomSpawnableLore);
 					switch(j) {
 					case 0: 
 						trapMeta.setDisplayName(ChatColor.GOLD + "Place an explosion trap.");
@@ -97,6 +114,7 @@ public class ArenaDevelopmentKit {
 				case 3:
 					ItemMeta gateMeta = arenaObjects[i][j].getItemMeta();
 					gateMeta.setDisplayName(ChatColor.GOLD + "Place a redstone used to activate a gate.");
+					gateMeta.setLore(randomSpawnableLore);
 					arenaObjects[i][j].setItemMeta(gateMeta);
 					break;
 				case 4:

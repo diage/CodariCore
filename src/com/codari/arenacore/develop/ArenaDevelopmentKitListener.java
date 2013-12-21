@@ -104,40 +104,25 @@ public class ArenaDevelopmentKitListener implements Listener {
 		
 	}
 	
-	private void requestChat(Player player, ArenaObject arenaObject, PlayerInput playerInput) {
-		//-----Player Input Messages-----//
-		String delayedPersistentObjectMessage = "Please type in a time for the delay and true/false for the override. For example, "
-				+ "type in \"5 true\".";
-
-		String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in. If"
-				+ "you would like to create a random spawnable group, simply time in \"(groupName):(delayTime):(repeatTime)\".";
-
-		String fixedSpawnableObjectMessage = "Please type in a time (1-99) for which to spawn the object and an optional time for "
-				+ "which to repeat the spawn. For example, type in \"10\" if you want the object to spawn at 10 minutes"
-				+ "or \"10 10\" if you want the object to spawn at 10 minutes and spawn consecutively afterwards"
-				+ "every 10 minutes.";		
+	private void requestChat(Player player, ArenaObject arenaObject, PlayerInput playerInput) {	
 		String objectType;
 		
 		if(arenaObject instanceof SpawnableObject) {
 			if(arenaObject instanceof RandomSpawnableObject) {
 				objectType = "Random Spawnable Object";
-				player.sendMessage(ChatColor.GRAY + randomSpawnableObjectMessage);
 				playerInput.requestChat(player, objectType, arenaObject);
 			} else if(arenaObject instanceof FixedSpawnableObject) {
 				objectType = "Fixed Spawnable Object";
-				player.sendMessage(ChatColor.GRAY + fixedSpawnableObjectMessage);
 				playerInput.requestChat(player, objectType, arenaObject);
 			}
 		} else if(arenaObject instanceof DelayedPersistentObject) {
 			objectType = "Delayed Persistent Object";
-			player.sendMessage(ChatColor.GRAY + delayedPersistentObjectMessage);
 			playerInput.requestChat(player, objectType, arenaObject);
 		} else if(arenaObject == null) { 
 			objectType = "Spawner";
 			player.sendMessage(ChatColor.GRAY + "You have placed a spawner!");
 			playerInput.requestChat(player, objectType, arenaObject);
-		}
-		
+		}		
 	}
 
 	private final static class PlayerInput implements Listener {

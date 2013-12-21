@@ -4,7 +4,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
-import com.codari.api5.util.Time;
 import com.codari.apicore.command.CodariCommand;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
@@ -35,9 +34,6 @@ public class NewArenaCommand implements CodariCommand {
 				//ArenaBuilder construction//
 				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
 				((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaName, arenaBuilder);
-				arenaBuilder.createRandomTimelineGroup("trap", new Time(0, 30), new Time(0, 30));
-				arenaBuilder.createRandomTimelineGroup("objective", new Time(0, 30), new Time(0, 30));
-				arenaBuilder.createRandomTimelineGroup("spawner", new Time(0, 30), new Time(0, 30));
 				player.sendMessage("You have created a new 2v2 arena builder.");
 				return true;
 			} else {
