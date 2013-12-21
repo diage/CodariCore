@@ -176,6 +176,12 @@ public class ArenaDevelopmentKitListener implements Listener {
 							if(args.length == 3) {
 								String groupName = args[0];
 								if(!arenaBuilder.checkForRandomSpawnableGroup(groupName)) {
+									try {
+										Integer.parseInt(args[1]);
+										Integer.parseInt(args[2]);
+									} catch(NumberFormatException e) {
+										player.sendMessage(ChatColor.RED + "Invalid parameters - please try again.");
+									}	
 									int delayTimeRS = Integer.parseInt(args[1]);
 									int repeatTimeRS = Integer.parseInt(args[2]);
 									arenaBuilder.createRandomTimelineGroup(groupName, new Time(0, delayTimeRS), new Time(0, repeatTimeRS));
