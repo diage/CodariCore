@@ -2,6 +2,7 @@ package com.codari.arenacore.players.role;
 
 import java.util.Collection;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,6 +53,7 @@ public class PlayerRole implements Role {
 	@Override
 	public boolean doubleJump(Combatant combatant) {
 		if(this.role != null) {
+			Bukkit.broadcastMessage("You did a double jump!!");
 			if(this.cooldown == 0) {
 				this.startCooldown();
 				return this.role.doubleJump(combatant);

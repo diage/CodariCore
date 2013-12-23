@@ -13,14 +13,17 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.Codari;
@@ -77,6 +80,15 @@ public class CoreListener implements Listener {
 			TeamBuilder.removePlayer((TeamCore)combatant.getTeam(), combatant.getPlayer());
 		}
 	}
+	
+	@EventHandler()
+	private void stopSorenTryingToBeGay(PlayerGameModeChangeEvent e) {
+		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
+		if(combatant.inArena()) {
+			combatant.getPlayer().setGameMode(GameMode.SURVIVAL);
+			e.setCancelled(true);
+		}
+	}
 
 	@EventHandler()
 	private void playerClickInventory(InventoryClickEvent e) {
@@ -111,7 +123,7 @@ public class CoreListener implements Listener {
 				playerInventories.put(player.getName(), player.getInventory().getContents());
 				player.getInventory().clear();
 				player.getInventory().setItem(7, new ItemStack(Material.STICK));
-				player.updateInventory();
+				player.getInventory().setHeldItemSlot(7);
 				player.setAllowFlight(true);
 				player.setFlying(false);
 				player.setGameMode(GameMode.SURVIVAL);
@@ -122,8 +134,13 @@ public class CoreListener implements Listener {
 				player.setLevel(0);
 				player.setFoodLevel(1);
 				player.setExhaustion(0);
-				playerInventories.put(player.getName(), player.getInventory().getContents());
-				player.getInventory().clear();
+				for (PotionEffect type : player.getActivePotionEffects()) {
+					player.removePotionEffect(type.getType());
+				}
+				player.getInventory().setArmorContents(new ItemStack[4]);
+				player.updateInventory();
+				
+				
 				BukkitRunnable runner = new BukkitRunnable() {
 
 					@Override
@@ -137,6 +154,7 @@ public class CoreListener implements Listener {
 				};
 
 				runner.runTaskTimer(CodariI.INSTANCE, 1, 1);
+				
 			}
 		}
 		this.inGameInventories.put(e.getArena().getName(), playerInventories);
@@ -178,7 +196,7 @@ public class CoreListener implements Listener {
 			} else {
 				e.setCancelled(true);
 			} 
-		//Prevent teamates from shooting arrows at eachother
+		//Prevent Teamates from shooting arrows at eachother
 		} else if (e.getDamager() instanceof Projectile && e.getEntity() instanceof Player) {
 			Projectile proj = (Projectile) e.getDamager();
 			if(proj instanceof Arrow) {
@@ -198,9 +216,9 @@ public class CoreListener implements Listener {
 		}	
 	}
 	
-	//Prevent teamates from throwing potions at eachother
+	//Prevent Teamates from throwing potions at eachother
 	@EventHandler()
-	public void onPotionSplash(PotionSplashEvent e) {
+	private void onPotionSplash(PotionSplashEvent e) {
 		if(e.getPotion().getShooter() instanceof Player) {
 			Combatant shooter = Codari.getArenaManager().getCombatant(((Player)e.getPotion().getShooter()));
 			for(LivingEntity entity : e.getAffectedEntities()) {
@@ -215,6 +233,14 @@ public class CoreListener implements Listener {
 					}
 				}
 			}
+		}
+	}
+	
+	@EventHandler()
+	private void preventBlockDestruction(BlockBreakEvent e) {
+		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
+		if(combatant.inArena()) {
+			e.setCancelled(true);
 		}
 	}
 		

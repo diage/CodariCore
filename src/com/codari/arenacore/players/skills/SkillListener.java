@@ -1,6 +1,5 @@
 package com.codari.arenacore.players.skills;
 
-import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
@@ -12,10 +11,11 @@ import com.codari.arenacore.players.combatants.CombatantCore;
 public class SkillListener implements Listener {
 	@EventHandler()
 	public void triggerDoubleJump(PlayerToggleFlightEvent e) {
-		if(!(e.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
+		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
+		if(combatant.inArena()) {
 			e.getPlayer().setFlying(false);
-			Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 			((CombatantCore)combatant).doubleJump();
+			e.setCancelled(true);
 		}
 	}
 }
