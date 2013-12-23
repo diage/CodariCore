@@ -38,7 +38,8 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 	public void packetStuff() {
 		ProtocolLibrary.getProtocolManager().addPacketListener(
 				new PacketAdapter(CodariI.INSTANCE, ConnectionSide.SERVER_SIDE,
-						Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS) {        
+						Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS,
+						Packets.Server.UPDATE_HEALTH) {        
 			@Override
 			public void onPacketSending(PacketEvent event) {
 				PacketContainer packet = event.getPacket();
@@ -80,6 +81,9 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 							}
 						}
 					}
+					break;
+				case Packets.Server.UPDATE_HEALTH:
+					packet.getIntegers().write(0, 20);
 					break;
 				}
 			}
