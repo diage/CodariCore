@@ -7,7 +7,6 @@ public class TeamSizeUMenu extends UtilityMenu {
 
 	public TeamSizeUMenu(Combatant combatant) {
 		super(combatant);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -77,7 +77,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean createRandomTimelineGroup(String groupName, Time time, Time repeatTime) {
-		//TODO check time
+		//FIXME - check time
 		if (this.randomSpawnables.containsKey(groupName)) {
 			return false;
 		}
@@ -112,7 +112,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
-		//TODO check time
+		//FIXME - check time
 		this.fixedSpawnables.add(new FixedSpawnableAction(object, time, repeatTime));
 		this.objects.add(object);
 		return true;

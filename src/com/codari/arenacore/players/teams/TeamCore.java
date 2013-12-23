@@ -89,7 +89,7 @@ public class TeamCore implements Team {
 	@Override
 	public List<Combatant> getTeamMates(Combatant combatant) {
 		List<Combatant> tempList = new ArrayList<>(this.combatants);
-		if(this.combatants.contains(combatant)) {	//TODO - need to properly implement equals
+		if(this.combatants.contains(combatant)) {	//FIXME - need to properly implement equals (combatant)
 			tempList.remove(combatant);			
 		}
 		return tempList;

@@ -23,16 +23,16 @@ public class KitBuilderBuilder implements Listener {
 
 	@EventHandler()
 	private void getName(IconRequestEvent e) {
-		if(true /*TODO will need to design and check if it is the correct icon type*/) {
+		if(true /*FIXME will need to design and check if it is the correct icon type*/) {
 			((CombatantCore)e.getIcon().getCombatant()).getKitManager().createKitBuilder(e.getPlayerInput());
-			//TODO Will need to then create a new Icon which can be added to the KitBuilder page. 
+			//FIXME Will need to then create a new Icon which can be added to the KitBuilder page. 
 		}
 	}
 
 	@EventHandler()
 	private void selectKitBuilderIcon(IconSelectionEvent e) {
 		String combatantName = e.getIcon().getCombatant().getPlayerReference().getName();
-		if(true /*TODO check if it is the correct icon type*/) {
+		if(true /*FIXME check if it is the correct icon type*/) {
 			List<Icon> selectedIcons;
 			if(!this.selectedBuilders.containsKey(combatantName)) {
 				this.selectedBuilders.put(combatantName, new ArrayList<Icon>());
@@ -41,12 +41,12 @@ public class KitBuilderBuilder implements Listener {
 			if(e.isSelected()) {
 				selectedIcons.add(e.getIcon());
 			} else {
-				selectedIcons.remove(e.getIcon()); //TODO Implement .equals()
+				selectedIcons.remove(e.getIcon()); //FIXME Implement .equals()
 			}
 		}
 	}
 	
-	public List<Icon> getSelectedIcons(Combatant combatant) { //TODO will be used for delete or other functions such as rename or use
+	public List<Icon> getSelectedIcons(Combatant combatant) { //FIXME will be used for delete or other functions such as rename or use
 		return this.selectedBuilders.get(combatant.getPlayerReference().getName());
 	}
 }
