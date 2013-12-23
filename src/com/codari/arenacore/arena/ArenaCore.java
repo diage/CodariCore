@@ -103,32 +103,27 @@ public final class ArenaCore implements Arena {
 	
 	@Override
 	public boolean start(Team... teams) {
-		Bukkit.broadcastMessage(ChatColor.RED + "Attempting to start Arena...");
 		if (!this.isMatchInProgress()) {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
 			
-			if (!(teams.length == this.spawns.size())) {//TODO
+			if (!(teams.length == this.spawns.size())) {
 				Bukkit.broadcastMessage(ChatColor.DARK_RED + "Incorrect number of spawns!");
 				return false;
 			}
-			Bukkit.broadcastMessage(ChatColor.YELLOW + "Passed basic checks...");
 			
 			for (Team team : teams) {
 				if(!(team.getTeamSize() == this.rules.getTeamSize())) {
-					Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT! Not enough players for team "+ team.getTeamName() + "!");
 					this.teams.clear();
 					return false;
 				}
 				this.teams.put(team.getTeamName(), team);
 				if(!((TeamCore) team).setArena(this)) {
 					this.teams.clear();
-					Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT! Failed to set arena for team " + team.getTeamName() + "!");
 					return false;
 				}
 			}
-			Bukkit.broadcastMessage("" + ChatColor.GREEN + this.teams.size() + " teams have been added to the arena...");
 			
 			ArenaStartEvent e = new ArenaStartEvent(this);
 			Bukkit.getPluginManager().callEvent(e);
@@ -136,11 +131,9 @@ public final class ArenaCore implements Arena {
 				this.teams.clear();
 				return false;
 			}
-			Bukkit.broadcastMessage(ChatColor.BLUE + "Event successfully called...");
 			
 			for (WinCondition winCond : this.rules.getWinConditions()) {
 				winCond.initialize(this);
-				Bukkit.broadcastMessage(ChatColor.AQUA + "WinCondition " + winCond.getClass().getSimpleName() + " succesfully initialized...");
 			}
 			
 			for (TimedAction action : this.actions) {
@@ -150,7 +143,6 @@ public final class ArenaCore implements Arena {
 				
 				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action, delay, period));
 			}
-			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "Arena fully started!");
 			
 			return true;
 		}
@@ -159,12 +151,9 @@ public final class ArenaCore implements Arena {
 	
 	@Override
 	public void stop() {
-		Bukkit.broadcastMessage(ChatColor.DARK_RED + "ALERT: Match attempting to end!");
 		if (this.isMatchInProgress()) {
-			Bukkit.broadcastMessage(ChatColor.RED + "First check passed...");
 			ArenaEndEvent e = new ArenaEndEvent(this);
 			Bukkit.getPluginManager().callEvent(e);
-			Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "Event called...");
 			Iterator<Entry<String, Team>> teamsIterator = this.teams.entrySet().iterator();
 			for (Entry<String, Team> entry; teamsIterator.hasNext();) {
 				entry = teamsIterator.next();
@@ -174,15 +163,12 @@ public final class ArenaCore implements Arena {
 					combatant.setHotbarActibe(false);
 				}
 			}
-			Bukkit.broadcastMessage("" + ChatColor.DARK_GRAY + this.teams.size() + " teams remain after clearing...");
 			for (ArenaObject o : this.objects) {
 				o.hide();
 			}
-			Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "Objects removed...");
 			for (BukkitTask task : this.tasks) {
 				task.cancel();
 			}
-			Bukkit.broadcastMessage("Arena successfully ended!");
 		}
 	}
 	

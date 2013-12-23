@@ -129,7 +129,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
 		this.delayedPersistentObjects.add(delayedPersistentObject);
 		this.objects.add(delayedPersistentObject);
-		return true;//TODO
+		return true;
 	}
 	
 	//-----Random Timeline Group-----//

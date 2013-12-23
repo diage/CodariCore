@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -113,8 +112,7 @@ public class ArenaManagerCore implements ArenaManager {
 	@Override
 	public boolean addToQueue(String arenaName, Team team) {
 		if(!this.queues.containsKey(arenaName)) {
-			//TODO
-			Bukkit.broadcastMessage(ChatColor.BLUE + "The arena " + arenaName + " is null!");
+			team.getPlayers().get(0).sendMessage(ChatColor.BLUE + "The arena " + arenaName + " is null!");
 		}
 		return this.queues.get(arenaName).addTeamToQueue(team);
 	}

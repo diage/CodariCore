@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -62,8 +60,7 @@ public class CoreListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void playerRevive(PlayerRespawnEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
-		if(combatant.inArena()) { //TODO
-			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "The respawn did in fact work perfectly fine, as expected!! Duh...");
+		if(combatant.inArena()) { 
 			e.getPlayer().getInventory().setContents(this.inventories.get(e.getPlayer().getName()));
 			e.setRespawnLocation(((ArenaCore) combatant.getTeam().getArena()).getSpawn(combatant));
 			e.getPlayer().updateInventory();
@@ -142,7 +139,6 @@ public class CoreListener implements Listener {
 				runner.runTaskTimer(CodariI.INSTANCE, 1, 1);
 			}
 		}
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Arena has succesfully been started!");
 		this.inGameInventories.put(e.getArena().getName(), playerInventories);
 	}
 

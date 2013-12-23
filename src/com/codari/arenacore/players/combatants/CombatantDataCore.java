@@ -11,7 +11,7 @@ public final class CombatantDataCore implements CombatantStats, ConfigurationSer
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new LinkedHashMap<>();
-		//TODO
+		//FIXME
 		return result;
 	}
 }

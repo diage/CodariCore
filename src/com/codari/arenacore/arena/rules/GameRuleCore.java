@@ -170,7 +170,7 @@ public class GameRuleCore implements GameRule {
 	public boolean addRoleDeclaration(RoleDeclaration roleDeclaration) {
 		roleDeclaration.initalizeRoles();
 		this.roleDeclarations.add(roleDeclaration);
-		return true; 	//TODO
+		return true; 	//FIXME - improve overall role declaration
 	}
 
 	@Override
@@ -180,8 +180,7 @@ public class GameRuleCore implements GameRule {
 
 	@Override
 	public void setNumberOfTeams(byte numberOfTeams) {
-		this.numberOfTeams = numberOfTeams; //TODO check valid inputs
-		
+		this.numberOfTeams = numberOfTeams; 
 	}
 
 	@Override

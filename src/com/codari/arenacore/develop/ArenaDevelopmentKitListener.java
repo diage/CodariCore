@@ -94,8 +94,6 @@ public class ArenaDevelopmentKitListener implements Listener {
 				} break;
 				case(SPAWNNNN): {
 					this.requestChat(player, null, this.playerInput);
-					//TODO
-					Bukkit.broadcastMessage(ChatColor.MAGIC + "DEBUG" + ChatColor.RESET + ": Debug");
 				}
 				}
 				e.setCancelled(true);
@@ -170,16 +168,16 @@ public class ArenaDevelopmentKitListener implements Listener {
 									int delayTimeRS = Integer.parseInt(args[1]);
 									int repeatTimeRS = Integer.parseInt(args[2]);
 									arenaBuilder.createRandomTimelineGroup(groupName, new Time(0, delayTimeRS), new Time(0, repeatTimeRS));
-									Bukkit.broadcastMessage(ChatColor.GREEN + "Created Random Spawnable Group named " + groupName + " Delay Time: " + delayTimeRS + " Repeat Time " + repeatTimeRS);
+									player.sendMessage(ChatColor.GREEN + "Created Random Spawnable Group named " + groupName + " Delay Time: " + delayTimeRS + " Repeat Time " + repeatTimeRS);
 									arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, groupName);
-									Bukkit.broadcastMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered inside " + groupName);
+									player.sendMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered inside " + groupName);
 								} else {
 									player.sendMessage(ChatColor.RED + "Did not work - There is already a random spawnable group with the name " + groupName);
 								}
 								//Add RandomSpawnableObject to an already existing random spawnable group
 							} else if(arenaBuilder.checkForRandomSpawnableGroup(args[0])) {
 								arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, args[0]);
-								Bukkit.broadcastMessage(arenaObject.getClass().getSimpleName() + " has been registered inside " + args[0]);
+								player.sendMessage(arenaObject.getClass().getSimpleName() + " has been registered inside " + args[0]);
 							} else {
 								player.sendMessage(ChatColor.RED + "Invalid - please try again.");
 							}
