@@ -42,11 +42,11 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 			@Override
 			public void onPacketSending(PacketEvent event) {
 				PacketContainer packet = event.getPacket();
-				boolean visibleCustom = false;
 				switch (event.getPacketID()) {
 				case Packets.Server.SET_SLOT:
 					ItemStack item = packet.getItemModifier().read(0);
 					if (item != null) {
+						boolean visibleCustom = false;
 						for (CustomEnchantment enchantment : customEnchantments) {
 							if (item.containsEnchantment(enchantment)) {
 								item.removeEnchantment(enchantment);
@@ -65,6 +65,7 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 					ItemStack[] elements = packet.getItemArrayModifier().read(0);
 					for (ItemStack elementItem : elements) {
 						if (elementItem != null) {
+							boolean visibleCustom = false;
 							for (CustomEnchantment enchantment : customEnchantments) {
 								if (elementItem.containsEnchantment(enchantment)) {
 									elementItem.removeEnchantment(enchantment);
