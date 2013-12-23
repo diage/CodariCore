@@ -48,7 +48,6 @@ public class HotbarListener implements Listener {
 		if (combatant.isHotbarActive()) {
 			e.getPlayer().setItemInHand(e.getItemDrop().getItemStack());
 			e.getItemDrop().remove();
-			//e.setCancelled(true);
 			Bukkit.getPluginManager().callEvent(new HotbarSelectEvent(combatant, HotbarOption.HOTBAR_DROP));
 		}
 	}
