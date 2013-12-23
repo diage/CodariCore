@@ -11,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
-import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.ArenaBuilder;
@@ -51,15 +50,15 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		actions.addAll(this.rules.getTimedActions());
 		actions.addAll(this.randomSpawnables.values());
 		actions.addAll(this.fixedSpawnables);
-		return CodariSerialization.clone(actions);
+		return actions;
 	}
 	
 	public List<ArenaObject> compileObjects() {
-		return CodariSerialization.clone(this.objects);
+		return this.objects;
 	}
 	
 	public List<SerializableLocation> compileSpawners() {
-		return CodariSerialization.clone(this.spawners);
+		return this.spawners;
 	}
 	
 	public void setGameRule(GameRule rule) {
