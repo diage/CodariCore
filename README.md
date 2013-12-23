@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.0.12
+CURRENT VERSION: 0.1.5
 ===========
 
 ===========
@@ -20,7 +20,7 @@ Version 0.1 Goals
 -ArenaBuilder and Arena are correctly implemented //Done
 -Deaths and inventory interactions are handled //Done
 -CodariArena implementation is working per current API standards //Done
--Teams don't hurt each other!  //Done - needs testing  
+-Teams don't hurt each other!  //Done 
 
 ---------------
 : Bugs to fix :
@@ -36,22 +36,21 @@ Figure out about making things not stack. //Done
 Trap icons need to be fixed to be spawnable //Done
 Gate needs fixed	//Done
 Role items need removed for now from the kit  //Done
-Figure out what spams the console about arena objects
-Need to repair roles (it sends on a cooldown no matter what skill type is used)  //Done - needs testing
-fix anvils (item spawner stuff)  //Done - needs testing 
-figure out how to make only one objective spawn at a time  //Done - needs testing
-game is not ending
-role switching is not working currently
+Figure out what spams the console about arena objects //Done
+Need to repair roles (it sends on a cooldown no matter what skill type is used)  //Done 
+fix anvils (item spawner stuff)  //Done REMOVED
+figure out how to make only one objective spawn at a time  //Done 
+game is not ending //Done
 broadcasts double points  //Done
+
 
 ---------------
     : QOL :
 ---------------
-Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 Improve damage from shield skill (make it actually cause damage)  //Done - needs testing
 Fix colors for item Spawners //Done
 Improve command syntax //Done
-Improve chat colors and item colors
+Improve chat colors and item colors //Done
 Set blocks above objective point to glass //Done
 Make potions not hurt yourself or allies  //Done - needs testing
 
@@ -61,19 +60,28 @@ Version 0.2 Goals
 -Add Persistence //Done
 -Team Spawn locations added //Done
 -Improve Arena Construction options
--Begin abstraction of roles
+-Begin abstraction of roles //Done
 -Implement hotbar //Done
 
 ---------------
 : Bugs to fix :
 ---------------
 Improve .equals methods //DONE
-Figure out the correct time to name an arena
-Random Spawnable groups need to be creatable
+Figure out the correct time to name an arena //Done
+Random Spawnable groups need to be creatable //Done
+Need to remove armor //Done
+Need to remove effects //Done
+set main hand to stick //Done
+block break //Done
+set slot to 7 on load //Done
+
+check if double jump is working
+role switching is not working currently
 
 ---------------
     : QOL :
 ---------------
+Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 
 ===========
 Version 0.3 Goals

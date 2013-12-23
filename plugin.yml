@@ -1,5 +1,5 @@
 name: Codari_Core
-version: 0.0.12
+version: 0.1.5
 main: com.codari.apicore.CodariCore
 depend: [ProtocolLib]
 
