@@ -37,6 +37,7 @@ import com.codari.arenacore.develop.NewArenaCommand;
 import com.codari.arenacore.players.menu.hotbar.HotbarListener;
 import com.codari.arenacore.players.skills.SkillListener;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
+import com.codari.arenacore.players.teams.commands.CommandCheckTeam;
 import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
 import com.codari.arenacore.players.teams.commands.CommandInvitePlayerToTeam;
 import com.codari.arenacore.players.teams.queue.JoinQueueCommand;
@@ -117,6 +118,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.commandRegister.registerCommand(CommandCreateTeam.COMMAND_NAME, new CommandCreateTeam());
 		this.commandRegister.registerCommand(CommandInvitePlayerToTeam.COMMAND_NAME, new CommandInvitePlayerToTeam());
 		this.commandRegister.registerCommand(ComandLeaveTeam.COMMAND_NAME, new ComandLeaveTeam());
+		this.commandRegister.registerCommand(CommandCheckTeam.COMMAND_NAME, new CommandCheckTeam());
 		this.commandRegister.registerCommand(FinalizeCommand.LOAD_NAME, new FinalizeCommand());
 	}
 	
