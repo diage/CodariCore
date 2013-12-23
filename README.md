@@ -74,9 +74,17 @@ Need to remove effects //Done
 set main hand to stick //Done
 block break //Done
 set slot to 7 on load //Done
+check if double jump is working //Partially
 
-check if double jump is working
+Figure out what is wrong with double jump
 role switching is not working currently
+Lose equipment when you die
+get rid of aoe debug
+turn off effects when game ends
+set hunger to full after game ends
+Test serialization
+
+BUG! Glass started counting down
 
 ---------------
     : QOL :
