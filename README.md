@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.1.5
+CURRENT VERSION: 0.1.7
 ===========
 
 ===========
@@ -74,14 +74,14 @@ Need to remove effects //Done
 set main hand to stick //Done
 block break //Done
 set slot to 7 on load //Done
-check if double jump is working //Partially
+check if double jump is working //Done
+Lose equipment when you die //Done
+turn off effects when game ends //Done
+set hunger to full after game ends //Done
+get rid of aoe debug //Done
 
-Figure out what is wrong with double jump
+Figure out what is wrong with double jump - Soren can't do it!
 role switching is not working currently
-Lose equipment when you die
-get rid of aoe debug
-turn off effects when game ends
-set hunger to full after game ends
 Test serialization
 
 BUG! Glass started counting down

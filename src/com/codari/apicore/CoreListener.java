@@ -31,6 +31,7 @@ import com.codari.api5.CodariI;
 import com.codari.arena5.arena.events.ArenaEndEvent;
 import com.codari.arena5.arena.events.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.hotbar.HotbarOption;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.teams.TeamBuilder;
@@ -52,10 +53,24 @@ public class CoreListener implements Listener {
 	private void playerDeath(PlayerDeathEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getEntity());
 		if(combatant.inArena()) {
+			Player player = e.getEntity();
+			
 			e.setKeepLevel(true);
 			e.setNewExp(0);
 			e.setDroppedExp(0);
 			e.getDrops().clear();
+			
+			for(HotbarOption option : HotbarOption.values()) {
+				if(option.isInventorySlot() && !option.equals(HotbarOption.HOTBAR_1)) {
+					player.getInventory().setItem(option.getInventorySlot(), null);
+				}
+			}
+			for (PotionEffect type : player.getActivePotionEffects()) {
+				player.removePotionEffect(type.getType());
+			}
+			player.getInventory().setItem(7, new ItemStack(Material.STICK));
+			player.getEquipment().clear();
+			player.updateInventory();
 			this.inventories.put(e.getEntity().getName(), e.getEntity().getInventory().getContents());
 		}
 	}
@@ -86,6 +101,7 @@ public class CoreListener implements Listener {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {
 			combatant.getPlayer().setGameMode(GameMode.SURVIVAL);
+			combatant.getPlayer().setAllowFlight(true);
 			e.setCancelled(true);
 		}
 	}
@@ -134,10 +150,12 @@ public class CoreListener implements Listener {
 				player.setLevel(0);
 				player.setFoodLevel(1);
 				player.setExhaustion(0);
+				player.setSaturation(0);
 				for (PotionEffect type : player.getActivePotionEffects()) {
 					player.removePotionEffect(type.getType());
 				}
-				player.getInventory().setArmorContents(new ItemStack[4]);
+				player.getEquipment().clear(); //XXX Test to see if this works
+				//player.getInventory().setArmorContents(new ItemStack[4]);
 				player.updateInventory();
 				
 				
@@ -147,6 +165,7 @@ public class CoreListener implements Listener {
 					public void run() {
 						player.setFoodLevel(1);
 						player.setExhaustion(0);
+						player.setSaturation(0);
 						if(!Codari.getArenaManager().getCombatant(player).inArena()) {
 							super.cancel();
 						}
@@ -171,12 +190,16 @@ public class CoreListener implements Listener {
 				player.getInventory().setContents(playerInventories.get(player.getName()));
 				player.updateInventory();
 				player.setAllowFlight(false);
-				player.resetMaxHealth();
+				player.setMaxHealth(20);
 				player.setHealth(player.getMaxHealth());
 				player.setWalkSpeed(.2f);
 				player.setTotalExperience(0);
+				player.setSaturation(10f);
 				player.setFoodLevel(10);
-				player.setExhaustion(10);
+				player.setExhaustion(10f);
+				for (PotionEffect type : player.getActivePotionEffects()) {
+					player.removePotionEffect(type.getType());
+				}
 			}
 		}
 		this.inGameInventories.remove(e.getArena().getName());
