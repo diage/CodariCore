@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
@@ -36,58 +37,58 @@ public class EnchantmentManagerCore implements EnchantmentManager {
 	}
 	
 	public void packetStuff() {
-		ProtocolLibrary.getProtocolManager().addPacketListener(
-				new PacketAdapter(CodariI.INSTANCE, ConnectionSide.SERVER_SIDE,
-						Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS,
-						Packets.Server.UPDATE_HEALTH) {        
-			@Override
-			public void onPacketSending(PacketEvent event) {
-				PacketContainer packet = event.getPacket();
-				switch (event.getPacketID()) {
-				case Packets.Server.SET_SLOT:
-					ItemStack item = packet.getItemModifier().read(0);
-					if (item != null) {
-						boolean visibleCustom = false;
-						for (CustomEnchantment enchantment : customEnchantments) {
-							if (item.containsEnchantment(enchantment)) {
-								item.removeEnchantment(enchantment);
-								if (enchantment.isVisible()) {
-									visibleCustom = true;
-								}
-							}
-						}
-						if (visibleCustom) {
-							NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
-							compound.put(NbtFactory.ofList("ench"));
-						}
-					}
-					break;
-				case Packets.Server.WINDOW_ITEMS:
-					ItemStack[] elements = packet.getItemArrayModifier().read(0);
-					for (ItemStack elementItem : elements) {
-						if (elementItem != null) {
-							boolean visibleCustom = false;
-							for (CustomEnchantment enchantment : customEnchantments) {
-								if (elementItem.containsEnchantment(enchantment)) {
-									elementItem.removeEnchantment(enchantment);
-									if (enchantment.isVisible()) {
-										visibleCustom = true;
-									}
-								}
-							}
-							if (visibleCustom) {
-								NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(elementItem);
-								compound.put(NbtFactory.ofList("ench"));
-							}
-						}
-					}
-					break;
-				case Packets.Server.UPDATE_HEALTH:
-					packet.getIntegers().write(0, 20);
-					break;
-				}
-			}
-		});
+//		ProtocolLibrary.getProtocolManager().addPacketListener(
+//				new PacketAdapter(CodariI.INSTANCE, ConnectionSide.SERVER_SIDE,
+//						Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS) {        
+//			@Override
+//			public void onPacketSending(PacketEvent event) {
+//				PacketContainer packet = event.getPacket();
+//				switch (event.getPacketID()) {
+//				case Packets.Server.SET_SLOT:
+//					ItemStack itemOriginal = packet.getItemModifier().read(0);
+//					if (itemOriginal != null) {
+//						ItemStack item = new ItemStack(itemOriginal);
+//						boolean visibleCustom = false;
+//						for (CustomEnchantment enchantment : customEnchantments) {
+//							if (item.containsEnchantment(enchantment)) {
+//								item.removeEnchantment(enchantment);
+//								if (enchantment.isVisible()) {
+//									visibleCustom = true;
+//								}
+//							}
+//						}
+//						if (visibleCustom) {
+//							NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
+//							compound.put(NbtFactory.ofList("ench"));
+//						}
+//						packet.getItemModifier().write(0, item);
+//					}
+//					break;
+//				case Packets.Server.WINDOW_ITEMS:
+//					ItemStack[] elements = packet.getItemArrayModifier().read(0);
+//					for (int i = 0; i < elements.length; i++) {
+//						if (elements[i] != null) {
+//							ItemStack elementItem = new ItemStack(elements[i]);
+//							boolean visibleCustom = false;
+//							for (CustomEnchantment enchantment : customEnchantments) {
+//								if (elementItem.containsEnchantment(enchantment)) {
+//									elementItem.removeEnchantment(enchantment);
+//									if (enchantment.isVisible()) {
+//										visibleCustom = true;
+//									}
+//								}
+//							}
+//							if (visibleCustom) {
+//								NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(elementItem);
+//								compound.put(NbtFactory.ofList("ench"));
+//							}
+//							elements[i] = elementItem;
+//						}
+//					}
+//					break;
+//				}
+//			}
+//		});
 	}
 	
 	//-----Methods-----//
