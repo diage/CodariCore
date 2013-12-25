@@ -59,7 +59,7 @@ Version 0.2 Goals
 ===========
 -Add Persistence //Done
 -Team Spawn locations added //Done
--Improve Arena Construction options
+-Improve Arena Construction options //Done
 -Begin abstraction of roles //Done
 -Implement hotbar //Done
 
@@ -83,6 +83,7 @@ get rid of aoe debug //Done
 Figure out what is wrong with double jump - Soren can't do it!
 role switching is not working currently
 Test serialization
+fix potions - good ones should help allies and not enemies!
 
 BUG! Glass started counting down
 

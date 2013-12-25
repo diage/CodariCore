@@ -4,22 +4,12 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import com.codari.api5.CodariI;
 import com.codari.api5.enchantment.CustomEnchantment;
 import com.codari.api5.enchantment.EnchantmentManager;
 import com.codari.api5.util.reflect.Reflector;
-import com.comphenix.protocol.Packets;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ConnectionSide;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 
 public class EnchantmentManagerCore implements EnchantmentManager {
 	//-----Fields-----//
