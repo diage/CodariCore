@@ -163,10 +163,11 @@ public class CoreListener implements Listener {
 
 					@Override
 					public void run() {
-						player.setFoodLevel(1);
-						player.setExhaustion(0);
-						player.setSaturation(0);
-						if(!Codari.getArenaManager().getCombatant(player).inArena()) {
+						if(Codari.getArenaManager().getCombatant(player).inArena()) {
+							player.setFoodLevel(1);
+							player.setExhaustion(0);
+							player.setSaturation(0);
+						} else {
 							super.cancel();
 						}
 					}
