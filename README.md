@@ -53,6 +53,7 @@ Improve command syntax //Done
 Improve chat colors and item colors //Done
 Set blocks above objective point to glass //Done
 Make potions not hurt yourself or allies  //Done - needs testing
+Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 
 ===========
 Version 0.2 Goals
@@ -80,13 +81,10 @@ turn off effects when game ends //Done
 set hunger to full after game ends //Done
 get rid of aoe debug //Done
 Figure out what is wrong with double jump - Soren can't do it! //Done
+Fix double jump flying/cooldown //Done
+role switching is not working currently //Done
 
-Fix double jump flying/cooldown
-role switching is not working currently
 Test serialization
-fix potions - good ones should help allies and not enemies!
-
-BUG! Glass started counting down
 
 ---------------
     : QOL :
@@ -103,10 +101,12 @@ Version 0.3 Goals
 ---------------
 : Bugs to fix :
 ---------------
+fix potions - good ones should help allies and not enemies!
 
 ---------------
     : QOL :
 ---------------
+Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 
 ===========
 Version 0.4 Goals
