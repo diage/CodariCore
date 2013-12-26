@@ -79,8 +79,9 @@ Lose equipment when you die //Done
 turn off effects when game ends //Done
 set hunger to full after game ends //Done
 get rid of aoe debug //Done
+Figure out what is wrong with double jump - Soren can't do it! //Done
 
-Figure out what is wrong with double jump - Soren can't do it!
+Fix double jump flying/cooldown
 role switching is not working currently
 Test serialization
 fix potions - good ones should help allies and not enemies!

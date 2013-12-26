@@ -114,7 +114,7 @@ public class PlayerRole implements Role {
 
 	private void startCooldown() {
 		this.cooldown = this.MAX_COOLDOWN;
-
+		this.player.setAllowFlight(false);
 		BukkitRunnable runner = new BukkitRunnable() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -124,6 +124,7 @@ public class PlayerRole implements Role {
 					player.updateInventory();
 					cooldown--;
 				} else {
+					player.setAllowFlight(true);
 					super.cancel();
 				}
 			}
