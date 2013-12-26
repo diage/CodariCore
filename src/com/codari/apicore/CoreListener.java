@@ -194,9 +194,8 @@ public class CoreListener implements Listener {
 				player.setHealth(player.getMaxHealth());
 				player.setWalkSpeed(.2f);
 				player.setTotalExperience(0);
-				player.setSaturation(10f);
-				player.setFoodLevel(10);
-				player.setExhaustion(10f);
+				player.setSaturation(20f);
+				player.setFoodLevel(20);
 				for (PotionEffect type : player.getActivePotionEffects()) {
 					player.removePotionEffect(type.getType());
 				}
