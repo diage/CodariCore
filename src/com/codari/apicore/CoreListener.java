@@ -55,6 +55,26 @@ public class CoreListener implements Listener {
 		if(combatant.inArena()) {
 			Player player = e.getEntity();
 			
+			{//TODO Uncomment this in 1.7, It is an auto respawn thingy
+/*		        try {
+		            Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
+		            Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+		            Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+		 
+		            for(Object ob : enumClass.getEnumConstants()){
+		                if(ob.toString().equals("PERFORM_RESPAWN")){
+		                    packet = packet.getClass().getConstructor(enumClass).newInstance(ob);
+		                }
+		            }
+		 
+		            Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+		            con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
+		        }
+		        catch(Throwable t){
+		            t.printStackTrace();
+		        }*/
+			}
+			
 			e.setKeepLevel(true);
 			e.setNewExp(0);
 			e.setDroppedExp(0);
@@ -187,7 +207,6 @@ public class CoreListener implements Listener {
 			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
 				Player player = combatant.getPlayer();
-				
 				player.getInventory().setContents(playerInventories.get(player.getName()));
 				player.updateInventory();
 				player.setAllowFlight(false);
