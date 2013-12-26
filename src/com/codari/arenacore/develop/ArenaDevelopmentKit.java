@@ -67,14 +67,6 @@ public class ArenaDevelopmentKit {
 	private static void setDisplayName(ItemStack[][] arenaObjects) {
 //		String delayedPersistentObjectMessage = "Please type in a time for the delay and true/false for the override. For example, "
 //				+ "type in \"5 true\".";
-
-//		String randomSpawnableObjectMessage = "Please type in the group of random spawnables you would like this one to be in. If"
-//				+ "you would like to create a random spawnable group, simply time in \"(groupName):(delayTime):(repeatTime)\".";
-
-//		String fixedSpawnableObjectMessage = "Please type in a time (1-99) for which to spawn the object and an optional time for "
-//				+ "which to repeat the spawn. For example, type in \"10\" if you want the object to spawn at 10 minutes"
-//				+ "or \"10 10\" if you want the object to spawn at 10 minutes and spawn consecutively afterwards"
-//				+ "every 10 minutes.";			
 		
 		List<String> randomSpawnableLore = new ArrayList<>();
 		randomSpawnableLore.add(ChatColor.RED + "To make a new random spawnable group");
@@ -83,6 +75,13 @@ public class ArenaDevelopmentKit {
 		randomSpawnableLore.add(ChatColor.RED + "To add to an existing group");
 		randomSpawnableLore.add(ChatColor.RED + "Type \"(groupName)\"");
 		randomSpawnableLore.add(ChatColor.RED + "Example: \"objective\"");
+		
+		List<String> fixedSpawnableLore = new ArrayList<>();
+		fixedSpawnableLore.add(ChatColor.BLUE + "To place a fixed spawnable object");
+		fixedSpawnableLore.add(ChatColor.BLUE + "Type a delay time and optional repeat time");
+		fixedSpawnableLore.add(ChatColor.BLUE + "Type \"(delayTime):(repeatTime)\"");
+		fixedSpawnableLore.add(ChatColor.BLUE + "Example: \"10\"");
+		fixedSpawnableLore.add(ChatColor.BLUE + "Example: \"20:30\"");
 		
 		for(int i = 0; i < arenaObjects.length; i ++) {
 			for(int j = 0; j < arenaObjects[i].length; j++) {
@@ -119,7 +118,7 @@ public class ArenaDevelopmentKit {
 				case 3:
 					ItemMeta gateMeta = arenaObjects[i][j].getItemMeta();
 					gateMeta.setDisplayName(ChatColor.GOLD + "Place a redstone used to activate a gate.");
-					gateMeta.setLore(randomSpawnableLore);
+					gateMeta.setLore(fixedSpawnableLore);
 					arenaObjects[i][j].setItemMeta(gateMeta);
 					break;
 				case 4:

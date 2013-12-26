@@ -164,6 +164,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 										Integer.parseInt(args[2]);
 									} catch(NumberFormatException e) {
 										player.sendMessage(ChatColor.RED + "Invalid parameters - please try again.");
+										return;
 									}	
 									int delayTimeRS = Integer.parseInt(args[1]);
 									int repeatTimeRS = Integer.parseInt(args[2]);
@@ -173,30 +174,45 @@ public class ArenaDevelopmentKitListener implements Listener {
 									player.sendMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered inside " + groupName);
 								} else {
 									player.sendMessage(ChatColor.RED + "Did not work - There is already a random spawnable group with the name " + groupName);
+									return;
 								}
 								//Add RandomSpawnableObject to an already existing random spawnable group
 							} else if(arenaBuilder.checkForRandomSpawnableGroup(args[0])) {
 								arenaBuilder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, args[0]);
-								player.sendMessage(arenaObject.getClass().getSimpleName() + " has been registered inside " + args[0]);
+								player.sendMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered inside " + args[0]);
 							} else {
 								player.sendMessage(ChatColor.RED + "Invalid - please try again.");
+								return;
 							}
 							break;
 						case "Fixed Spawnable Object":
-							Time spawnTime;
-							Time repeatSpawnTime;
-							if(playerInputString.length() < 3) {
-								//Fixed Spawnable Object w/ time
-								spawnTime = new Time(Long.parseLong(playerInputString));
-								arenaBuilder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, spawnTime);
-							}  else {
-								String spawnTimeString = playerInputString.substring(0, 2);
-								String spawnRepeatTimeString = playerInputString.substring(3);
-
-								//Fixed Spawnable Object w/ time and repeat time
-								spawnTime = new Time(Long.parseLong(spawnTimeString));
-								repeatSpawnTime = new Time(Long.parseLong(spawnRepeatTimeString));
-								arenaBuilder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, spawnTime, repeatSpawnTime);
+							int delayTimeFS, repeatTimeFS;
+							String[] fixedSpawnableObjectArgs = playerInputString.replaceAll(" ","").split(":");
+							try {
+								Integer.parseInt(fixedSpawnableObjectArgs[0]);
+							} catch(NumberFormatException e) {
+								player.sendMessage(ChatColor.RED + "Invalid parameters - please try again.");
+								return;
+							}
+							delayTimeFS = Integer.parseInt(fixedSpawnableObjectArgs[0]);
+							if(fixedSpawnableObjectArgs.length == 1) {
+								//Fixed Spawnable Object w/ delay time
+								arenaBuilder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, delayTimeFS));
+								player.sendMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered");
+							} else if(fixedSpawnableObjectArgs.length == 2) {
+								try {
+									Integer.parseInt(fixedSpawnableObjectArgs[1]);
+								} catch(NumberFormatException e) {
+									player.sendMessage(ChatColor.RED + "Invalid parameters - please try again.");
+									return;
+								}
+								repeatTimeFS = Integer.parseInt(fixedSpawnableObjectArgs[1]);
+								//Fixed Spawnable Object w/ delay time and respawn time
+								arenaBuilder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, delayTimeFS), new Time(0, repeatTimeFS));
+								player.sendMessage(ChatColor.GREEN + arenaObject.getClass().getSimpleName() + " has been registered");
+							} else {
+								player.sendMessage(ChatColor.RED + "Invalid - please try again.");
+								return;
 							}
 							break;
 						case "Spawner":
