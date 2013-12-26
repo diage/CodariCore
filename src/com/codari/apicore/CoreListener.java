@@ -102,6 +102,7 @@ public class CoreListener implements Listener {
 			e.getPlayer().getInventory().setContents(this.inventories.get(e.getPlayer().getName()));
 			e.setRespawnLocation(((ArenaCore) combatant.getTeam().getArena()).getSpawn(combatant));
 			e.getPlayer().updateInventory();
+			e.getPlayer().setWalkSpeed(0.3f);
 			this.inventories.remove(e.getPlayer().getName());
 		}
 	}
