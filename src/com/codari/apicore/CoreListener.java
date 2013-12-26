@@ -160,6 +160,7 @@ public class CoreListener implements Listener {
 				player.getInventory().clear();
 				player.getInventory().setItem(7, new ItemStack(Material.STICK));
 				player.getInventory().setHeldItemSlot(7);
+				player.getInventory().setItem(25, new ItemStack(Material.ARROW));
 				player.setAllowFlight(true);
 				player.setFlying(false);
 				player.setGameMode(GameMode.SURVIVAL);
