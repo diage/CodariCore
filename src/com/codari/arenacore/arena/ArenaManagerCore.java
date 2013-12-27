@@ -117,6 +117,10 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.queues.get(arenaName).addTeamToQueue(team);
 	}
 	
+	public QueueCore getQueue(String arenaName) {
+		return this.queues.get(arenaName);
+	}
+	
 	@Override
 	public Arena buildArena(String requestedName, ArenaBuilder arenaBuilder) {
 		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
