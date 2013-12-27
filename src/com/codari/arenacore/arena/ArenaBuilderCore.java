@@ -1,5 +1,6 @@
 package com.codari.arenacore.arena;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -167,7 +168,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 		
 		//THINK OF MARBLES IN A BAG
-		private final class Marble {
+		private final class Marble implements Serializable {
+			private static final long serialVersionUID = 2120469391762175063L;
 			private final RandomSpawnableObject object;
 			public Marble(RandomSpawnableObject object) {
 				this.object = object;
