@@ -20,7 +20,7 @@ public class QueueCore {
 	private boolean matchStarting;
 	private BukkitTask task;
 	private int countDown;
-	private static int countDownStartingValue = 10;
+	private static int countDownStartingValue = 30;
 
 	//-----Constructor-----//
 	public QueueCore(Arena arena) {
@@ -32,8 +32,7 @@ public class QueueCore {
 
 	//-----Public Methods-----//
 	public boolean addTeamToQueue(Team team) {
-		if(checkIfMatchIsNotInProgress(this.arena, team) &&		//check if the match is not already in progress
-				checkTeamSize(this.arena, team) &&				//check if the player's team size matches the arena's team size
+		if(checkTeamSize(this.arena, team) &&				//check if the player's team size matches the arena's team size
 				checkIfTeamIsNotAlreadyInAnArena(team) &&	//check to make sure a team doesn't join two arenas at the same time
 				checkIfArenaHasAvailableSlots(this.arena, team, teams.size())) {
 			this.teams.add(team);
@@ -61,6 +60,7 @@ public class QueueCore {
 	private void startArena() {
 		Team[] teamArray =  new Team[this.teams.size()];
 		this.arena.start(this.teams.toArray(teamArray));
+		this.removeAllTeamsFromQueue();
 	}
 
 	private void countDown() {
@@ -87,19 +87,24 @@ public class QueueCore {
 		}
 	}
 
-	private void checkIfMatchShouldStart() {
+	public void checkIfMatchShouldStart() {
 		if(this.teams.size() == this.arenaTeamSize) {
+			if(checkIfMatchIsNotInProgress(this.arena)) {		//check if the match is not already in progress
 			this.matchStarting = true;
 			this.countDown();
+			} else {
+				for(Team team : teams) {
+					for(Player player : team.getPlayers()) {
+						player.sendMessage(ChatColor.BLUE + "Waiting for the arena to end.");
+					}
+				}	
+			}
 		}		
 	}	
-
+	
 	//-----Static Methods-----//
-	private static boolean checkIfMatchIsNotInProgress(Arena arena, Team team) {
+	private static boolean checkIfMatchIsNotInProgress(Arena arena) {
 		if(arena.isMatchInProgress()) {
-			for(Player player : team.getPlayers()) {
-				player.sendMessage(ChatColor.RED + "The arena you're trying to join is already in progress.");
-			}
 			return false;
 		}
 		return true;

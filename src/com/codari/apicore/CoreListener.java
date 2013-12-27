@@ -120,7 +120,7 @@ public class CoreListener implements Listener {
 	@EventHandler()
 	private void stopSorenTryingToBeGay(PlayerGameModeChangeEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
-		if(combatant.inArena()) {
+		if(combatant.inArena() && !e.getNewGameMode().equals(GameMode.SURVIVAL)) {
 			combatant.getPlayer().setGameMode(GameMode.SURVIVAL);
 			combatant.getPlayer().setAllowFlight(true);
 			e.setCancelled(true);
