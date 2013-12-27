@@ -1,5 +1,6 @@
 package com.codari.apicore;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,6 +25,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.Codari;
@@ -269,12 +271,16 @@ public class CoreListener implements Listener {
 				if(entity instanceof Player) {
 					Combatant victim = Codari.getArenaManager().getCombatant(((Player)entity));
 					if(checkIfInArena(shooter, victim)) {
-						if(checkIfSameTeam(shooter, victim)) {
-							e.setIntensity(victim.getPlayer(), 0);
-						}						
-					} else {
-						e.setIntensity(victim.getPlayer(), 0);
-					}
+						if(!checkIfBeneficialPotion(e.getPotion().getEffects())) {
+							if(checkIfSameTeam(shooter, victim)) {
+								e.setIntensity(victim.getPlayer(), 0);
+							}						
+						} else {
+							if(!checkIfSameTeam(shooter, victim)) {
+								e.setIntensity(victim.getPlayer(), 0);	
+							}
+						}
+					} 
 				}
 			}
 		}
@@ -297,6 +303,39 @@ public class CoreListener implements Listener {
 	private static boolean checkIfSameTeam(Combatant attacker, Combatant victim) {
 		if(attacker.getTeam().equals(victim.getTeam())) {
 			return true;
+		}
+		return false;
+	}
+	
+	private static boolean checkIfBeneficialPotion(Collection<PotionEffect> potionEffects) {
+		for(PotionEffect potionEffect : potionEffects) {
+			PotionType type = PotionType.getByEffect(potionEffect.getType());
+			switch(type) {
+			case FIRE_RESISTANCE:
+				return true;
+			case INSTANT_DAMAGE:
+				return false;
+			case INSTANT_HEAL:
+				return true;
+			case INVISIBILITY:
+				return true;
+			case NIGHT_VISION:
+				return true;
+			case POISON:
+				return false;
+			case REGEN:
+				return true;
+			case SLOWNESS:
+				return false;
+			case SPEED:
+				return true;
+			case STRENGTH:
+				return true;
+			case WATER:
+				return true;
+			case WEAKNESS:
+				return false;
+			}
 		}
 		return false;
 	}
