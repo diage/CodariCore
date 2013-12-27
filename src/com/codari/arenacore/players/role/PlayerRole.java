@@ -120,10 +120,7 @@ public class PlayerRole implements Role {
 			@Override
 			public void run() {
 				if(cooldown > 0) {
-					//if(player.getInventory().getItem(0) == null) {
-					//	player.getInventory().setItem(0, RoleSwitchObj);
-					//}
-					player.getInventory().getItem(0).setAmount(cooldown);
+					player.getInventory().getItem(0).setAmount(cooldown); //FIXME - getting Null Pointer Exceptions here
 					player.updateInventory();
 					cooldown--;
 				} else {
