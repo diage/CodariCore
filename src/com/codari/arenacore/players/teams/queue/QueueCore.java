@@ -36,7 +36,7 @@ public class QueueCore {
 		if(checkTeamSize(this.arena, team) &&										//check if the player's team size matches the arena's team size
 				checkIfTeamIsNotAlreadyInAnArena(team) &&							//check to make sure a team doesn't join two arenas at the same time
 				checkIfArenaHasAvailableSlots(this.arena, team, teams.size()) &&	//check to see whether an arena has available slots
-				!((TeamCore)team).checkIfInQueue()) {								//check to make sure the team is not already in a queue
+				checkIfTeamIsNotInQueue(team)) {									//check to make sure the team is not already in a queue
 			this.teams.add(team);
 			((TeamCore)team).setInQueue(true);
 			this.checkIfMatchShouldStart();
@@ -148,6 +148,16 @@ public class QueueCore {
 			}
 			return false;
 		}	
+		return true;
+	}
+	
+	private static boolean checkIfTeamIsNotInQueue(Team team) {
+		if(((TeamCore)team).checkIfInQueue()) {
+			for(Player player : team.getPlayers()) {
+				player.sendMessage(ChatColor.RED + "Your team can't join another queue while your team is already part of one!");
+			}
+			return false;
+		}
 		return true;
 	}
 }
