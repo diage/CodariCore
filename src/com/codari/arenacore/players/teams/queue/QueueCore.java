@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 import com.codari.api5.CodariI;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.players.teams.TeamCore;
 
 public class QueueCore {
 	//-----Fields-----//
@@ -20,7 +21,7 @@ public class QueueCore {
 	private boolean matchStarting;
 	private BukkitTask task;
 	private int countDown;
-	private static int countDownStartingValue = 30;
+	private static int countDownStartingValue = 10;
 
 	//-----Constructor-----//
 	public QueueCore(Arena arena) {
@@ -32,10 +33,12 @@ public class QueueCore {
 
 	//-----Public Methods-----//
 	public boolean addTeamToQueue(Team team) {
-		if(checkTeamSize(this.arena, team) &&				//check if the player's team size matches the arena's team size
-				checkIfTeamIsNotAlreadyInAnArena(team) &&	//check to make sure a team doesn't join two arenas at the same time
-				checkIfArenaHasAvailableSlots(this.arena, team, teams.size())) {
+		if(checkTeamSize(this.arena, team) &&										//check if the player's team size matches the arena's team size
+				checkIfTeamIsNotAlreadyInAnArena(team) &&							//check to make sure a team doesn't join two arenas at the same time
+				checkIfArenaHasAvailableSlots(this.arena, team, teams.size()) &&	//check to see whether an arena has available slots
+				!((TeamCore)team).checkIfInQueue()) {								//check to make sure the team is not already in a queue
 			this.teams.add(team);
+			((TeamCore)team).setInQueue(true);
 			this.checkIfMatchShouldStart();
 			return true;
 		}	
@@ -50,11 +53,14 @@ public class QueueCore {
 			return false;
 		}
 		this.teams.remove(team);
+		((TeamCore)team).setInQueue(false);
 		return true;
 	}
 
 	public void removeAllTeamsFromQueue() {
-		this.teams.clear();
+		for(Team team : this.teams) {
+			this.removeTeamFromQueue(team);
+		}
 	}
 
 	private void startArena() {
