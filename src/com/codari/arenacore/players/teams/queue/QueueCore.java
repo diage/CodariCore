@@ -66,6 +66,7 @@ public class QueueCore {
 	private void startArena() {
 		Team[] teamArray =  new Team[this.teams.size()];
 		this.arena.start(this.teams.toArray(teamArray));
+		this.matchStarting = false;
 		this.removeAllTeamsFromQueue();
 	}
 
@@ -82,7 +83,6 @@ public class QueueCore {
 					countDown--;
 					if(countDown <= 0) {
 						startArena();
-						matchStarting = false;
 						countDown = countDownStartingValue;
 						task.cancel();
 						task = null;
