@@ -91,7 +91,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		if (randomTimelineGroup == null) {
 			return false;
 		}
-		randomTimelineGroup.spawns.add(object);
+		randomTimelineGroup.addObject(object);
 		this.objects.add(object);
 		return true;
 	}
@@ -139,24 +139,38 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
 		
 		//-----Fields-----//
-		private final List<RandomSpawnableObject> spawns;
+		private final List<Marble> bagOfMarbles;
 		private final Random random;
 		
 		//-----Constructor-----//
 		public RandomTimelineGroup(Time delay, Time period) {
 			super(null, delay, period);
-			this.spawns = new ArrayList<>();
+			this.bagOfMarbles = new ArrayList<>();
 			this.random = new Random(System.currentTimeMillis() + globalRandom.nextInt());
 		}
 
 		@Override
 		public void action() {
-			if (!this.spawns.isEmpty()) {
-				int i = this.random.nextInt(this.spawns.size());
-				RandomSpawnableObject o = this.spawns.get(i);
-				if (!o.isSpawned()) {
-					o.spawn();
+			if (!this.bagOfMarbles.isEmpty()) {
+				int i = this.random.nextInt(this.bagOfMarbles.size());
+				Marble marble = this.bagOfMarbles.get(i);
+				if (!marble.object.isSpawned()) {
+					marble.object.spawn();
 				}
+			}
+		}
+		
+		private void addObject(RandomSpawnableObject object) {
+			for (int i = 0; i < object.getWeight(); i++) {
+				this.bagOfMarbles.add(new Marble(object));
+			}
+		}
+		
+		//THINK OF MARBLES IN A BAG
+		private final class Marble {
+			private final RandomSpawnableObject object;
+			public Marble(RandomSpawnableObject object) {
+				this.object = object;
 			}
 		}
 	}
