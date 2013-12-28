@@ -178,7 +178,6 @@ public class CoreListener implements Listener {
 				for (PotionEffect type : player.getActivePotionEffects()) {
 					player.removePotionEffect(type.getType());
 				}
-				//player.getEquipment().clear(); //XXX Test to see if this works
 				player.getInventory().setArmorContents(new ItemStack[4]);
 				player.updateInventory();
 				
