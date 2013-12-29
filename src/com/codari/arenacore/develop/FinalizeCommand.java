@@ -29,7 +29,7 @@ public class FinalizeCommand implements CodariCommand {
 			CodariI.INSTANCE.getDataFolder().mkdirs();
 			((ArenaCore) arena).serializeTest(file);
 
-			Bukkit.broadcastMessage("Finalized!");
+			Bukkit.broadcastMessage("Finalized!");	//TODO
 			return true;
 		} else if(sender instanceof Player && args[0].equalsIgnoreCase(LOAD_NAME) && args.length == 2) {
 			File file = new File(CodariI.INSTANCE.getDataFolder(), args[1] + ".dat");

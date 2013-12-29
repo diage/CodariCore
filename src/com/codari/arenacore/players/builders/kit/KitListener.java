@@ -8,21 +8,21 @@ import org.bukkit.event.Listener;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateFixedDelayMinutesIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateFixedDelaySecondsIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateFixedDelayTicksIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateFixedRepeatMinutesIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateFixedRepeatSecondsIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateFixedRepeatTicksIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdatePersistentDelayMinutesIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdatePersistentDelaySecondsIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdatePersistentDelayTicksIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateRandomDelayMinutesIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateRandomDelaySecondsIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateRandomDelayTicksIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateRandomRepeatMinutesIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateRandomRepeatSecondsIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kit.hovericons.UpdateRandomRepeatTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateFixedDelayMinutesIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateFixedDelaySecondsIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateFixedDelayTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateFixedRepeatMinutesIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateFixedRepeatSecondsIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateFixedRepeatTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdatePersistentDelayMinutesIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdatePersistentDelaySecondsIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdatePersistentDelayTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateRandomDelayMinutesIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateRandomDelaySecondsIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateRandomDelayTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateRandomRepeatMinutesIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateRandomRepeatSecondsIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons.UpdateRandomRepeatTicksIcon;
 
 public class KitListener implements Listener {
 	private static Map<String, Kit> currentKits = new HashMap<>();

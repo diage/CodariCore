@@ -37,4 +37,8 @@ public class KitManager {
 		this.kits.put(name, newKit);
 		return newKit;
 	}
+	
+	public boolean containsKit(String kitName) {
+		return this.kitBuilders.containsKey(kitName);
+	}
 }

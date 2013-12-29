@@ -12,6 +12,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.events.IconSelectionEvent;
+import com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.KitBuilderBuilderIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 
 public class KitBuilderBuilder implements Listener {
@@ -23,7 +24,7 @@ public class KitBuilderBuilder implements Listener {
 
 	@EventHandler()
 	private void getName(IconRequestEvent e) {
-		if(true /*FIXME will need to design and check if it is the correct icon type*/) {
+		if(e.getIcon() instanceof KitBuilderBuilderIcon) {
 			((CombatantCore)e.getIcon().getCombatant()).getKitManager().createKitBuilder(e.getPlayerInput());
 			//FIXME Will need to then create a new Icon which can be added to the KitBuilder page. 
 		}
