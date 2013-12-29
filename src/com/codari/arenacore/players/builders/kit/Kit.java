@@ -40,10 +40,13 @@ public class Kit implements Listener {
 		return this.name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public Arena buildArena() {
 		return Codari.getArenaManager().buildArena(name, this.arenaBuilder);
 	}
-	
 	
 	//-----Random TimeLine Group-----//
 	public boolean createRandomTimeLineGroup() {		

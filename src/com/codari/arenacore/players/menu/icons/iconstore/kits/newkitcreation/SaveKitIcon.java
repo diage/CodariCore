@@ -35,7 +35,10 @@ public class SaveKitIcon extends ExecutableIcon implements Listener {
 
 	@EventHandler()
 	public void setKitName(IconRequestEvent e) {
-		if(e.getIcon() instanceof SelectKitNameIcon)
-		this.kitName = e.getPlayerInput();
+		if(e.getIcon() instanceof SelectKitNameIcon) {
+			if(e.getIcon().getCombatant().equals(this.getCombatant())) {
+				this.kitName = e.getPlayerInput();
+			}
+		}
 	}
 }

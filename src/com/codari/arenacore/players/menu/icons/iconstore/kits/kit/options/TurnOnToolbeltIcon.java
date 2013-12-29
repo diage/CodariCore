@@ -7,15 +7,14 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class TurnOnToolbeltIcon extends ExecutableIcon {
 
-	public TurnOnToolbeltIcon(Material material, Combatant combatant,
-			String displayName) {
-		super(material, combatant, displayName);
+	public TurnOnToolbeltIcon(Combatant combatant) {
+		super(Material.REDSTONE_BLOCK, combatant, "Turn on Toolbelt");
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void click() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

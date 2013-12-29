@@ -1,13 +1,13 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.hovericons;
+package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset;
 
 import org.bukkit.Material;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.HoverIcon;
 
-public class UpdateRandomRepeatSecondsIcon extends HoverIcon {
+public class UpdatePersistentDelaySecondsIcon extends HoverIcon {
 
-	public UpdateRandomRepeatSecondsIcon(Material material,
+	public UpdatePersistentDelaySecondsIcon(Material material,
 			Combatant combatant, String displayName) {
 		super(material, combatant, displayName);
 		// TODO Auto-generated constructor stub

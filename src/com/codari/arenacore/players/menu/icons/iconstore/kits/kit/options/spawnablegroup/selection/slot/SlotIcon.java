@@ -1,14 +1,14 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options;
+package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.selection.slot;
 
 import org.bukkit.Material;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
-public class TurnOffToolbeltIcon extends ExecutableIcon {
+public class SlotIcon extends ExecutableIcon {
 
-	public TurnOffToolbeltIcon(Combatant combatant) {
-		super(Material.OBSIDIAN, combatant, "Turn off toolbelt");
+	public SlotIcon(Material material, Combatant combatant, int slotNumber) {
+		super(material, combatant, "Slot " + slotNumber);
 		// TODO Auto-generated constructor stub
 	}
 
