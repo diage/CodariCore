@@ -54,8 +54,12 @@ public class KitManager {
 	//-----TOOL BAR STUFF-----//
 	@SuppressWarnings("deprecation")
 	public void enableToolBar(String kitName) {
-		ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
 		Kit kit = this.kits.get(kitName);
+		if (kit == null) {
+			throw new IllegalArgumentException("no kit exists with the name " + kitName +
+					" for the player " + this.combatant.getPlayer());
+		}
+		ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
 		ItemStack[] tools = kit.getTools();
 		for (int i = 0; i < this.savedHotbar.length; i++) {
 			if (!this.isToolBarEnabled()) {

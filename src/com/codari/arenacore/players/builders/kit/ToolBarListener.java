@@ -10,7 +10,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
+import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.hotbar.HotbarSelectEvent;
+import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
@@ -42,11 +44,11 @@ public class ToolBarListener implements Listener {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null) {
 			KitManager kitManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getKitManager();
 			if (kitManager.isToolBarEnabled()) {
-				ArenaBuilderCore builder = kitManager.getToolbarKit().getArenaBuilder();
 				String objectName = e.getItem().getItemMeta().getDisplayName();
-				List<String> extraInformation = e.getItem().getItemMeta().getLore();
 				Location location = e.getClickedBlock().getLocation();
-				//Need arena objects converted to accept location
+				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+				ArenaBuilderCore builder = kitManager.getToolbarKit().getArenaBuilder();
+				List<String> extraInformation = e.getItem().getItemMeta().getLore();
 				//Filter what type of object and stuff and make use of extra information
 			}
 		}
