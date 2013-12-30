@@ -19,13 +19,13 @@ public class KitManager {
 	
 	public void setSelectedKitBuilder(String name) {
 		this.selectedBuilder = this.kitBuilders.get(name);
-		KitBuilderListener.changeKit(combatant, this.selectedBuilder);
+		KitBuilderListener.changeKitBuilder(combatant, this.selectedBuilder);
 	}
 	
 	public void createKitBuilder(String name) {
 		this.selectedBuilder = new KitBuilder(name);
 		this.kitBuilders.put(name, this.selectedBuilder);
-		KitBuilderListener.changeKit(combatant, this.selectedBuilder);
+		KitBuilderListener.changeKitBuilder(combatant, this.selectedBuilder);
 	}
 	
 	public Kit selectKit(String name) {
@@ -36,5 +36,9 @@ public class KitManager {
 		Kit newKit = this.selectedBuilder.buildKit(name);
 		this.kits.put(name, newKit);
 		return newKit;
+	}
+	
+	public boolean containsKit(String kitName) {
+		return this.kitBuilders.containsKey(kitName);
 	}
 }

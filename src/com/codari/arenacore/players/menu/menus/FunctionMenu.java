@@ -3,14 +3,15 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 
 public class FunctionMenu implements Menu {
-	private Map<FunctionMenuSlot, Icon> icons;
+	protected Map<FunctionMenuSlot, Icon> icons;
 	
-	public FunctionMenu() {
+	public FunctionMenu(Combatant combatant) {
 		this.icons = new HashMap<>();
 	}
 	

@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.executable;
+package com.codari.arenacore.players.menu.icons.iconstore.utilitymenu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -7,9 +7,9 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
-public class CancelIcon extends ExecutableIcon{
+public class ExitIcon extends ExecutableIcon{
 
-	public CancelIcon(Material material, Combatant combatant, String displayName) {
+	public ExitIcon(Material material, Combatant combatant, String displayName) {
 		super(material, combatant, displayName);
 	}
 

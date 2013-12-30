@@ -25,7 +25,7 @@ public class MenuManager {
 	
 	public MenuManager(Combatant combatant) {
 		this.combatant = combatant;
-		this.functionMenu = new FunctionMenu();
+		this.functionMenu = new FunctionMenu(combatant);
 		this.utilityMenu = new UtilityMenu(combatant);
 		this.inMenu = false;
 		
@@ -111,7 +111,7 @@ public class MenuManager {
 	public void exitMenu() {
 		if(this.inMenu) {
 			this.combatant.getPlayer().getInventory().setContents(this.savedInventory.getContents());
-			this.functionMenu = new FunctionMenu();
+			this.functionMenu = new FunctionMenu(this.combatant);
 			this.utilityMenu = new UtilityMenu(this.combatant);
 			this.inMenu = false;
 			this.setMenuIconExit();

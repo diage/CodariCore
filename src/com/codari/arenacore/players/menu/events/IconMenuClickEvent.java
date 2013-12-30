@@ -6,8 +6,7 @@ import com.codari.arenacore.players.menu.icons.structure.IconType;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.menus.UtilityMenu;
 
-public class IconMenuClickEvent extends IconInteractEvent {
-
+public class IconMenuClickEvent extends IconInteractEvent {	
 	public IconMenuClickEvent(Icon icon) {
 		super(icon);
 	}
@@ -24,5 +23,5 @@ public class IconMenuClickEvent extends IconInteractEvent {
 			return ((MenuIcon)this.icon).getUtilityMenu();
 		}
 		return null;
-	}	
+	}
 }

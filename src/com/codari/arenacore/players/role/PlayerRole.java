@@ -111,7 +111,7 @@ public class PlayerRole implements Role {
 			this.role = role;
 		}
 	}
-
+	
 	private void startCooldown() {
 		this.cooldown = this.MAX_COOLDOWN;
 		this.player.setAllowFlight(false);
@@ -119,8 +119,12 @@ public class PlayerRole implements Role {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
+				if(!player.isOnline()) {
+					cooldown = 0;
+					super.cancel();
+				}
 				if(cooldown > 0) {
-					player.getInventory().getItem(0).setAmount(cooldown);
+					player.getInventory().getItem(0).setAmount(cooldown); 
 					player.updateInventory();
 					cooldown--;
 				} else {

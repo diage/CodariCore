@@ -12,7 +12,7 @@ import com.codari.arenacore.players.menu.events.*;
 public class KitBuilderListener implements Listener {
 	private static Map<String, KitBuilder> currentKitBuilders = new HashMap<>();
 	
-	public static void changeKit(Combatant combatant, KitBuilder kitBuilder) {
+	public static void changeKitBuilder(Combatant combatant, KitBuilder kitBuilder) {
 		currentKitBuilders.put(combatant.getPlayerReference().getName(), kitBuilder);
 	}
 	

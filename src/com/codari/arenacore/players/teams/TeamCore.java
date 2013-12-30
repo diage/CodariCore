@@ -19,6 +19,7 @@ public class TeamCore implements Team {
 	protected final List<Combatant> combatants;
 	private Arena arena;
 	private String teamName;
+	private boolean inQueue;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
@@ -137,5 +138,13 @@ public class TeamCore implements Team {
 		for(Combatant combatant : this.combatants) {
 			combatant.leaveArena();
 		}
+	}
+	
+	public void setInQueue(boolean inQueue) {
+		this.inQueue = inQueue;
+	}
+	
+	public boolean checkIfInQueue() {
+		return this.inQueue;
 	}
 }
