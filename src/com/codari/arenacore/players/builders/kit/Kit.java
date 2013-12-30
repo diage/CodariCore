@@ -13,7 +13,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 
@@ -41,7 +40,6 @@ public class Kit implements Listener {
 	
 	//-----Tool Bar-----//
 	private final ItemStack[] tools;
-	private int selectedTool;
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
@@ -199,13 +197,6 @@ public class Kit implements Listener {
 		ItemStack item = new ItemStack(Material.STICK);
 		item.setItemMeta(meta);
 		this.tools[slot] = item;
-	}
-	
-	public void setSelectedTool(int slot) throws IllegalArgumentException {
-		if (slot < 0 || slot >= 5) {
-			throw new IllegalArgumentException("Slot must be between 0 and 4");
-		}
-		this.selectedTool = slot;
 	}
 	
 	public ItemStack[] getTools() {

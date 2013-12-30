@@ -3,10 +3,7 @@ package com.codari.arenacore.players.builders.kit;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.arena5.players.combatants.Combatant;
 
