@@ -1,7 +1,6 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
-import java.util.Map;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;

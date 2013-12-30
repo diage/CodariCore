@@ -50,6 +50,10 @@ public class KitManager {
 		return this.kitBuilders.containsKey(kitName);
 	}
 	
+	public Map<String, Kit> getKits() {
+		return new HashMap<>(this.kits);
+	}
+	
 	//-----TOOL BAR STUFF-----//
 	public void enableToolBar(String kitName) {
 		ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
