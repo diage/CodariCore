@@ -44,6 +44,7 @@ public class KitSelection extends FunctionMenu {
 		while (i < 10 && iterator.hasNext()) {
 			String kitName = iterator.next();
 			this.addKitIcon(combatant, kitName);
+			iterator.remove();
 			i++;
 		}
 		
@@ -62,6 +63,7 @@ public class KitSelection extends FunctionMenu {
 		while (i < 10 && iterator.hasNext()) {
 			String kitName = iterator.next();
 			this.addKitIcon(combatant, kitName);
+			iterator.remove();
 			i++;
 		}
 		

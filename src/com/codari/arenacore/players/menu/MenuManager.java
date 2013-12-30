@@ -121,7 +121,9 @@ public class MenuManager {
 	private void resetFunctionMenu() {
 		PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 		for(FunctionMenuSlot menuSlot : FunctionMenuSlot.values()){
-			playerInventory.setItem(menuSlot.getSlot(), this.functionMenu.getIcon(menuSlot));
+			if(menuSlot != FunctionMenuSlot.NO_SLOT) {
+				playerInventory.setItem(menuSlot.getSlot(), this.functionMenu.getIcon(menuSlot));
+			}
 		}
 		this.combatant.getPlayer().updateInventory();
 	}
@@ -129,7 +131,9 @@ public class MenuManager {
 	private void resetUtilityMenu() {
 		PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()){
-			playerInventory.setItem(menuSlot.getSlot(), this.utilityMenu.getIcon(menuSlot));
+			if(menuSlot != UtilityMenuSlot.NO_SLOT) {
+				playerInventory.setItem(menuSlot.getSlot(), this.utilityMenu.getIcon(menuSlot));
+			}
 		}
 		this.combatant.getPlayer().updateInventory();
 	}
