@@ -40,12 +40,13 @@ public class Kit implements Listener {
 	private boolean override;
 	
 	//-----Tool Bar-----//
-	private ItemStack[] tools;
+	private final ItemStack[] tools;
 	private int selectedTool;
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
 		this.arenaBuilder = new ArenaBuilderCore(gameRule);
+		this.tools = new ItemStack[9];
 	}
 	
 	public String getName() {

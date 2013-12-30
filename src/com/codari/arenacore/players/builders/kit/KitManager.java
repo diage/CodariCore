@@ -63,11 +63,7 @@ public class KitManager {
 			if (!this.isToolBarEnabled()) {
 				this.savedHotbar[i] = inventoryContents[i];
 			}
-			if (i < tools.length) {
-				inventoryContents[i] = tools[i];
-			} else {
-				inventoryContents[i] = null;
-			}
+			inventoryContents[i] = tools[i];
 		}
 		this.combatant.getPlayer().getInventory().setContents(inventoryContents);
 		this.toolbarKit = kit;
