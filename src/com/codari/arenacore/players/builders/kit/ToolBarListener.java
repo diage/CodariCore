@@ -46,7 +46,7 @@ public class ToolBarListener implements Listener {
 				List<String> extraInformation = e.getItem().getItemMeta().getLore();
 				Location location = e.getClickedBlock().getLocation();
 				//Need arena objects converted to accept location
-				//Filter what type of object and stuff
+				//Filter what type of object and stuff and make use of extra information
 			}
 		}
 	}
