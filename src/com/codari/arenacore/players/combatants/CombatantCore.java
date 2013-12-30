@@ -1,10 +1,12 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
@@ -43,8 +45,11 @@ public final class CombatantCore implements Combatant {
 	private String arenaName;
 	
 	//---Hotbar---//
+	//Skill Bar
 	private boolean activeHotbar;
 	private final CodariRunnable hotbarCooldown;
+	
+	//Arena Tool Bar
 	
 	//---Building Arena---//
 	private boolean isBuilding;
@@ -258,5 +263,9 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public boolean inArena() {
 		return this.inArena;
+	}
+	
+	public void setToolBar(ItemStack[] tools) {
+		
 	}
 }
