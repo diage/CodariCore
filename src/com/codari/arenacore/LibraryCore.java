@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
@@ -56,7 +57,20 @@ public class LibraryCore implements Library {
 			return null;
 		}
 		try {
-			return (ArenaObject) Reflector.invokeConstructor(clazz, player).getHandle();
+			return (ArenaObject) Reflector.invokeConstructor(clazz, player.getLocation()).getHandle();
+		} catch (ReflectionException ex) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
+			return null;
+		}
+	}
+	
+	public ArenaObject createObject(String name, Location location) {
+		Class<? extends ArenaObject> clazz = this.objects.get(name);
+		if (clazz == null) {
+			return null;
+		}
+		try {
+			return (ArenaObject) Reflector.invokeConstructor(clazz, location).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
 			return null;
