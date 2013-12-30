@@ -1,7 +1,7 @@
 package com.codari.arenacore.players.menu.menus.menustore.function;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,12 +12,11 @@ import com.codari.arenacore.players.menu.icons.iconstore.common.NextIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.PreviousIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.selectionmenu.KitIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.selectionmenu.NewKitIcon;
+import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class KitSelection extends FunctionMenu {
-	private List<String> kitNames = new ArrayList<>();
-	
 	/**
 	 *  Construct the first page for a Kit Selection Menu.
 	 *  
@@ -29,57 +28,63 @@ public class KitSelection extends FunctionMenu {
 		this.addIcons(combatant);
 		Bukkit.broadcastMessage(ChatColor.BLUE + "First page!");	//TODO
 	}
-	
+
 	/* This will construct any further needed pages for Kit Selection. */
-	private KitSelection(Combatant combatant, List<String> kitNames) {
+	private KitSelection(Combatant combatant, Icon previous, Set<String> kitNames) {
 		super(combatant);
-		this.kitNames = kitNames;
-		this.addIcons(combatant);
-		this.addPreviousIcon(combatant);
+		this.addIcons(combatant, previous, kitNames);
 	}
-	
+
 	private void addIcons(Combatant combatant) {
 		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant)));
+		Set<String> kitNames = ((CombatantCore)combatant).getKitManager().getKits().keySet();
 		
-		this.kitNames.addAll(((CombatantCore)combatant).getKitManager().getKits().keySet());
-		if(this.kitNames.size() <= 10) {
-			for(int i = 0; i < this.kitNames.size(); i++) {
-				this.addKitIcon(combatant, this.kitNames.get(0));
-				this.kitNames.remove(0);
-			}
-		} else {
-			for(int i = 0; i < 9; i++) {
-				this.addKitIcon(combatant, this.kitNames.get(0));
-				this.kitNames.remove(0);
-			}	
-			this.addNextIcon(combatant);
+		int i = 0;
+		Iterator<String> iterator = kitNames.iterator();
+		while (i < 10 && iterator.hasNext()) {
+			String kitName = iterator.next();
+			this.addKitIcon(combatant, kitName);
+			i++;
+		}
+		
+		if(kitNames.size() > 0) {
+			Icon prevIcon = new PreviousIcon(combatant, this);
+			Icon nextIcon = new NextIcon(combatant, new KitSelection(combatant, prevIcon, kitNames));
+			this.addNextIcon(nextIcon);
 		}
 	}
-	
+
+	private void addIcons(Combatant combatant, Icon previous, Set<String> kitNames) {
+		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant)));
+		
+		int i = 0;
+		Iterator<String> iterator = kitNames.iterator();
+		while (i < 10 && iterator.hasNext()) {
+			String kitName = iterator.next();
+			this.addKitIcon(combatant, kitName);
+			i++;
+		}
+		
+		if(kitNames.size() > 0) {
+			Icon prevIcon = new PreviousIcon(combatant, this);
+			Icon nextIcon = new NextIcon(combatant, new KitSelection(combatant, prevIcon, kitNames));
+			this.addNextIcon(nextIcon);
+			this.addPreviousIcon(previous);
+		}
+	}
+
 	private void addKitIcon(Combatant combatant, String kitName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
 			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitCreation(combatant), kitName));
 		} 
 	}
-	
-	private void addPreviousIcon(Combatant combatant) {
-		List<String> tempList = new ArrayList<>();
-		tempList.addAll(((CombatantCore)combatant).getKitManager().getKits().keySet());
-		int index = tempList.indexOf(this.kitNames.get(0)) - 10;
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Should be a multiple of 10: " + index);	//TODO
-		if(index == 0) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "Second page!");	//TODO
-			super.setSlot(FunctionMenuSlot.C_ONE, new PreviousIcon(combatant, new KitSelection(combatant)));
-		} else {
-			for(int i = 0; i < index; i ++) {
-				tempList.remove(index);
-			}
-			super.setSlot(FunctionMenuSlot.C_ONE, new PreviousIcon(combatant, new KitSelection(combatant, tempList)));	
-			Bukkit.broadcastMessage(ChatColor.YELLOW + "Page " + ((index / 10) + 2));
-		}
+
+
+	private void addNextIcon(Icon icon) {
+		super.setSlot(FunctionMenuSlot.C_FIVE, icon);
 	}
 	
-	private void addNextIcon(Combatant combatant) {
-		super.setSlot(FunctionMenuSlot.C_FIVE, new NextIcon(combatant, new KitSelection(combatant, this.kitNames)));
+	private void addPreviousIcon(Icon icon) {
+		super.setSlot(FunctionMenuSlot.C_ONE, icon);
 	}
 }

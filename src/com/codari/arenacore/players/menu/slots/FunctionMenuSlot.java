@@ -3,21 +3,21 @@ package com.codari.arenacore.players.menu.slots;
 
 
 public enum FunctionMenuSlot implements MenuSlot {
-	A_ONE(27),
-	A_TWO(28),
-	A_THREE(29),
-	A_FOUR(30),
-	A_FIVE(31),
+	A_ONE(9),
+	A_TWO(10),
+	A_THREE(11),
+	A_FOUR(12),
+	A_FIVE(13),
 	B_ONE(18),
 	B_TWO(19),
 	B_THREE(20),
 	B_FOUR(21),
 	B_FIVE(22),
-	C_ONE(9),
-	C_TWO(10),
-	C_THREE(11),
-	C_FOUR(12),
-	C_FIVE(13),
+	C_ONE(27), 
+	C_TWO(28), 
+	C_THREE(29),
+	C_FOUR(30),
+	C_FIVE(31),
 	NO_SLOT(-1);
 
 	private int slot;

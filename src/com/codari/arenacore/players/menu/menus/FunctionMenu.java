@@ -3,6 +3,9 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
@@ -55,10 +58,9 @@ public class FunctionMenu implements Menu {
 	/** Gets the next available slot from the top two function menu rows.
 	 * If there is no available slot, the method returns NO_SLOT */
 	public FunctionMenuSlot getNextAvailableSlot() {
-		//FIXME: DIAGE CHECK OUT THIS AMAZING METHOD I MADE - Mhenlo
 		int counter = 0;
 		for(FunctionMenuSlot functionMenuSlot : this.icons.keySet()) {
-			if(functionMenuSlot.getSlot() >= 18) {
+			if(functionMenuSlot.getSlot() >= 9 && functionMenuSlot.getSlot() <= 22) {
 				counter++;
 			}
 		}
@@ -84,6 +86,7 @@ public class FunctionMenu implements Menu {
 		case 9:
 			return FunctionMenuSlot.B_FIVE;
 		default:
+			Bukkit.broadcastMessage(ChatColor.RED + "NO SLOT!");	//TODO
 			return FunctionMenuSlot.NO_SLOT;
 		}
 	}

@@ -83,24 +83,23 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.createKit("Hopefully");
 		this.kitManager.createKit("it");
 		this.kitManager.createKit("works");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("This");
+		this.kitManager.createKit("This1");
+		this.kitManager.createKit("This2");
+		this.kitManager.createKit("This3");
+		this.kitManager.createKit("This4");
+		this.kitManager.createKit("This5");
+		this.kitManager.createKit("This6");
+		this.kitManager.createKit("This7");
+		this.kitManager.createKit("This8");
+		this.kitManager.createKit("This9");
+		this.kitManager.createKit("This10");
+		this.kitManager.createKit("This11");
+		this.kitManager.createKit("This12");
 		this.kitManager.createKit("22 Kits");
 		
 		UtilMenu utilMenu = new UtilMenu(this);
 		KitSelection kitSelection = new KitSelection(this);
-		menuManager.setMenu(kitSelection);
-		menuManager.enterMenu(utilMenu, kitSelection);
+		this.menuManager.enterMenu(utilMenu, kitSelection);
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
