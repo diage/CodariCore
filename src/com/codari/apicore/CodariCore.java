@@ -34,6 +34,7 @@ import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
 import com.codari.arenacore.develop.FinalizeCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
+import com.codari.arenacore.players.menu.events.listeners.IconListenerRegister;
 import com.codari.arenacore.players.menu.hotbar.HotbarListener;
 import com.codari.arenacore.players.skills.SkillListener;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
@@ -96,6 +97,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Bukkit.getPluginManager().registerEvents(new ItemSpawnerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HotbarListener(), this);
 		Bukkit.getPluginManager().registerEvents(new RoleHotbarListener(), this);
+		new IconListenerRegister(this);
 		//Bukkit.getPluginManager().registerEvents(new AntiTroyListener(), this);
 		
 		//Bukkit.getPluginManager().registerEvents(new HotbarTest(), this);
