@@ -1,5 +1,8 @@
 package com.codari.arenacore.players.builders.kit;
 
+import java.util.Arrays;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,7 +38,6 @@ public class Kit implements Listener {
 	//-----Tool Bar-----//
 	private String[] tools;
 	private int selectedTool;
-	private ItemStack[] savedHotbar;
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
@@ -188,5 +190,9 @@ public class Kit implements Listener {
 			throw new IllegalArgumentException("Slot must be between 0 and 4");
 		}
 		this.selectedTool = slot;
+	}
+	
+	public String[] getTools() {
+		return ArrayUtils.clone(this.tools);
 	}
 }
