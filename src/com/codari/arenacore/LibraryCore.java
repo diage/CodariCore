@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
@@ -48,7 +49,8 @@ public class LibraryCore implements Library {
 		}
 		this.objects.put(name, clazz);
 	}
-
+	
+	@Deprecated
 	public ArenaObject createObject(String name, Player player) {
 		Class<? extends ArenaObject> clazz = this.objects.get(name);
 		if (clazz == null) {
@@ -81,7 +83,8 @@ public class LibraryCore implements Library {
 		}
 		this.declarations.put(name, clazz);
 	}
-
+	
+	@Deprecated
 	public RoleDeclaration createRoleDeclaration(String name, Player player) {
 		Class<? extends RoleDeclaration> clazz = this.declarations.get(name);
 		if (clazz == null) {
@@ -114,7 +117,8 @@ public class LibraryCore implements Library {
 		}
 		this.actions.put(name, clazz);
 	}
-
+	
+	@Deprecated
 	public TimedAction createTimedAction(String name, Player player) {
 		Class<? extends TimedAction> clazz = this.actions.get(name);
 		if (clazz == null) {
@@ -147,7 +151,8 @@ public class LibraryCore implements Library {
 		}
 		this.conditions.put(name, clazz);
 	}
-
+	
+	@Deprecated
 	public WinCondition createWinCondition(String name, Player player) {
 		Class<? extends WinCondition> clazz = this.conditions.get(name);
 		if (clazz == null) {

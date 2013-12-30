@@ -1,6 +1,7 @@
 package com.codari.arenacore.players.builders.kit;
 
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
@@ -30,6 +31,11 @@ public class Kit implements Listener {
 	private long persistentDelayMinutes, persistentDelaySeconds, persistentDelayTicks;
 	private Time persistentDelayTime;
 	private boolean override;
+	
+	//-----Tool Bar-----//
+	private String[] tools;
+	private int selectedTool;
+	private ItemStack[] savedHotbar;
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
@@ -170,5 +176,17 @@ public class Kit implements Listener {
 	
 	public boolean getOverride() {
 		return this.override;
+	}
+	
+	//-----TOOL BAR STUFF-----//
+	public void setTool(int slot, String objectName) throws ArrayIndexOutOfBoundsException {
+		this.tools[slot] = objectName;
+	}
+	
+	public void setSelectedTool(int slot) throws IllegalArgumentException {
+		if (slot < 0 || slot >= 5) {
+			throw new IllegalArgumentException("Slot must be between 0 and 4");
+		}
+		this.selectedTool = slot;
 	}
 }
