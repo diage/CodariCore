@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
 import com.codari.arena5.players.hotbar.HotbarSelectEvent;
+import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class ToolBarListener implements Listener {
@@ -41,7 +42,7 @@ public class ToolBarListener implements Listener {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null) {
 			KitManager kitManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getKitManager();
 			if (kitManager.isToolBarEnabled()) {
-				Kit kit = kitManager.getToolbarKit();
+				ArenaBuilderCore builder = kitManager.getToolbarKit().getArenaBuilder();
 				String objectName = e.getItem().getItemMeta().getDisplayName();
 				List<String> extraInformation = e.getItem().getItemMeta().getLore();
 				Location location = e.getClickedBlock().getLocation();
