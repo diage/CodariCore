@@ -9,8 +9,8 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class ExitIcon extends ExecutableIcon{
 
-	public ExitIcon(Material material, Combatant combatant, String displayName) {
-		super(material, combatant, displayName);
+	public ExitIcon(Material material, Combatant combatant) {
+		super(material, combatant, "Exit");
 	}
 
 	@Override

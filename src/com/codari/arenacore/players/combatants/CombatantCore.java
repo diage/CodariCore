@@ -21,8 +21,10 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.builders.kit.KitBuilder;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.menu.MenuManager;
+import com.codari.arenacore.players.menu.menus.menustore.utility.UtilMenu;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
 
@@ -66,9 +68,37 @@ public final class CombatantCore implements Combatant {
 		
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
-		//this.menuManager = new MenuManager(this);
+		this.menuManager = new MenuManager(this);
 		
 		this.kitManager = new KitManager(this);
+		
+		//FIXME - for testing
+		new KitBuilder("2v2");
+		this.kitManager.setSelectedKitBuilder("2v2");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("is");
+		this.kitManager.createKit("for");
+		this.kitManager.createKit("testing");
+		this.kitManager.createKit("Please");
+		this.kitManager.createKit("ignore");
+		this.kitManager.createKit("Hopefully");
+		this.kitManager.createKit("it");
+		this.kitManager.createKit("works");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("This");
+		this.kitManager.createKit("22 Kits");
+		
+		menuManager.setMenu(new UtilMenu(this));
 		
 		this.inArena = false;
 	}

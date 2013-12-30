@@ -9,7 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+//import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.codari.api5.Codari;
@@ -21,7 +21,7 @@ import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.objects.spawnable.SpawnableObject;
-import com.codari.arenacore.LibraryCore;
+//import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
@@ -30,7 +30,7 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private PlayerInput playerInput;
 
 	//---Inventory Slots---//
-	private final int ITEM_SPAWNER_SLOT = ArenaDevelopmentKit.INVENTORY_STARTING_PLACEMENT_SLOT;
+/*	private final int ITEM_SPAWNER_SLOT = ArenaDevelopmentKit.INVENTORY_STARTING_PLACEMENT_SLOT;
 	private final int DIAMOND_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 1;
 	private final int EMERALD_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 2;
 	private final int GOLD_OBJECTIVE_POINT = ITEM_SPAWNER_SLOT + 3;
@@ -40,12 +40,14 @@ public class ArenaDevelopmentKitListener implements Listener {
 	private final int POISON_SNARE_TRAP = ITEM_SPAWNER_SLOT + 7;
 	private final int GATE = ITEM_SPAWNER_SLOT + 8;
 	private final int SPAWNNNN = ITEM_SPAWNER_SLOT + 9;
+*/
 
 	public ArenaDevelopmentKitListener() {	
 		this.playerInput = new PlayerInput();
 		Bukkit.getPluginManager().registerEvents(this.playerInput, CodariI.INSTANCE);
 	}
 
+	/*
 	@EventHandler()
 	public void onPlayerRightClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
@@ -101,7 +103,8 @@ public class ArenaDevelopmentKitListener implements Listener {
 		}
 		
 	}
-	
+	*/
+	@SuppressWarnings("unused")
 	private void requestChat(Player player, ArenaObject arenaObject, PlayerInput playerInput) {	
 		String objectType;
 		

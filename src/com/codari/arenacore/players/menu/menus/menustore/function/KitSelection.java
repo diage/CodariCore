@@ -74,7 +74,8 @@ public class KitSelection extends FunctionMenu {
 			for(int i = 0; i < index; i ++) {
 				tempList.remove(index);
 			}
-			super.setSlot(FunctionMenuSlot.C_ONE, new PreviousIcon(combatant, new KitSelection(combatant, tempList)));			
+			super.setSlot(FunctionMenuSlot.C_ONE, new PreviousIcon(combatant, new KitSelection(combatant, tempList)));	
+			Bukkit.broadcastMessage(ChatColor.YELLOW + "Page " + ((index / 10) + 2));
 		}
 	}
 	
