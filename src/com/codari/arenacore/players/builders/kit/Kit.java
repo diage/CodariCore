@@ -1,10 +1,14 @@
 package com.codari.arenacore.players.builders.kit;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
@@ -15,7 +19,7 @@ import com.codari.arenacore.arena.ArenaBuilderCore;
 
 public class Kit implements Listener {
 	private String name;
-	private ArenaBuilder arenaBuilder;
+	private ArenaBuilderCore arenaBuilder;
 	
 	//-----Random TimeLine Group-----//
 	private String groupName;
@@ -36,7 +40,7 @@ public class Kit implements Listener {
 	private boolean override;
 	
 	//-----Tool Bar-----//
-	private String[] tools;
+	private ItemStack[] tools;
 	private int selectedTool;
 	
 	public Kit(String name, GameRule gameRule) {
@@ -180,9 +184,20 @@ public class Kit implements Listener {
 		return this.override;
 	}
 	
+	public ArenaBuilderCore getArenaBuilder() {
+		return this.arenaBuilder;
+	}
+	
 	//-----TOOL BAR STUFF-----//
-	public void setTool(int slot, String objectName) throws ArrayIndexOutOfBoundsException {
-		this.tools[slot] = objectName;
+	public void setTool(int slot, String objectName, String... extraInformation) throws ArrayIndexOutOfBoundsException {
+		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
+		meta.setDisplayName(objectName);
+		extraInformation = ArrayUtils.nullToEmpty(extraInformation);
+		List<String> lore = Arrays.asList(extraInformation);
+		meta.setLore(lore);
+		ItemStack item = new ItemStack(Material.STICK);
+		item.setItemMeta(meta);
+		this.tools[slot] = item;
 	}
 	
 	public void setSelectedTool(int slot) throws IllegalArgumentException {
@@ -192,7 +207,7 @@ public class Kit implements Listener {
 		this.selectedTool = slot;
 	}
 	
-	public String[] getTools() {
+	public ItemStack[] getTools() {
 		return ArrayUtils.clone(this.tools);
 	}
 }

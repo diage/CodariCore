@@ -36,11 +36,14 @@ public class ToolBarListener implements Listener {
 	
 	@EventHandler
 	public void placeObject(PlayerInteractEvent e) {
-		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null) {
 			KitManager kitManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getKitManager();
 			if (kitManager.isToolBarEnabled()) {
+				Kit kit = kitManager.getToolbarKit();
+				String objectName = e.getItem().getItemMeta().getDisplayName();
 				Location location = e.getClickedBlock().getLocation();
-				//TODO Need arena objects converted to accept location
+				//Need arena objects converted to accept location
+				//Filter what type of object and stuff
 			}
 		}
 	}
