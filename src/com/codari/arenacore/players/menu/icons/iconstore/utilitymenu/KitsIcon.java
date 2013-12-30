@@ -4,14 +4,14 @@ import org.bukkit.Material;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.MenuIcon;
-import com.codari.arenacore.players.menu.menus.menustore.utility.InitialUMenu;
+import com.codari.arenacore.players.menu.menus.Menu;
 /* 
  * Icon to display all the kits
  * */
 public class KitsIcon extends MenuIcon {
 
-	public KitsIcon(Combatant combatant) {
-		super(Material.OBSIDIAN, combatant, new InitialUMenu(combatant), "Kits");
+	public KitsIcon(Combatant combatant, Menu menu) {
+		super(Material.OBSIDIAN, combatant, menu, "Kits");
 		// TODO Auto-generated constructor stub
 	}
 

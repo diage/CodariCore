@@ -5,7 +5,6 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.event.Listener;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
@@ -16,10 +15,9 @@ import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
-public class ConstructIcon extends ExecutableIcon implements Listener {
+public class ConstructIcon extends ExecutableIcon {
 	private String arenaName;
 	private ArenaBuilder arenaBuilder;
-	//private Combatant combatant;
 	
 	public ConstructIcon(Combatant combatant, String arenaName) {
 		super(Material.REDSTONE_BLOCK, combatant, "Construct");
@@ -30,7 +28,6 @@ public class ConstructIcon extends ExecutableIcon implements Listener {
 	@Override
 	public void click() {
 		if(this.arenaName != null && this.arenaBuilder != null) {
-			//Copied from Finalize Command - Doublecheck this
 			Arena arena = Codari.getArenaManager().buildArena(this.arenaName, arenaBuilder);
 			File file = new File(CodariI.INSTANCE.getDataFolder(), this.arenaName + ".dat");
 			CodariI.INSTANCE.getDataFolder().mkdirs();

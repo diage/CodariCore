@@ -11,7 +11,7 @@ import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
 
 public class UtilityMenu implements Menu {
-	private Map<UtilityMenuSlot, Icon> icons;
+	protected Map<UtilityMenuSlot, Icon> icons;
 	
 	public UtilityMenu(Combatant combatant) {
 		this.icons = new HashMap<>();
