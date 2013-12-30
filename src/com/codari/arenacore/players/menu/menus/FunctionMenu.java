@@ -58,7 +58,7 @@ public class FunctionMenu implements Menu {
 		//FIXME: DIAGE CHECK OUT THIS AMAZING METHOD I MADE - Mhenlo
 		int counter = 0;
 		for(FunctionMenuSlot functionMenuSlot : this.icons.keySet()) {
-			if(functionMenuSlot.getSlot() >= 18 && functionMenuSlot.getSlot() <= 31) {
+			if(functionMenuSlot.getSlot() >= 18) {
 				counter++;
 			}
 		}

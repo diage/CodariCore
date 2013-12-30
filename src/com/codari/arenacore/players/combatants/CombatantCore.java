@@ -21,9 +21,9 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
-import com.codari.arenacore.players.builders.kit.KitBuilder;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.menu.MenuManager;
+import com.codari.arenacore.players.menu.menus.menustore.function.KitSelection;
 import com.codari.arenacore.players.menu.menus.menustore.utility.UtilMenu;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -72,9 +72,8 @@ public final class CombatantCore implements Combatant {
 		
 		this.kitManager = new KitManager(this);
 		
-		//FIXME - for testing
-		new KitBuilder("2v2");
-		this.kitManager.setSelectedKitBuilder("2v2");
+		/*	   FIXME - Begin Testing 	 */
+		this.kitManager.createKitBuilder("2v2");
 		this.kitManager.createKit("This");
 		this.kitManager.createKit("is");
 		this.kitManager.createKit("for");
@@ -98,7 +97,11 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.createKit("This");
 		this.kitManager.createKit("22 Kits");
 		
-		menuManager.setMenu(new UtilMenu(this));
+		UtilMenu utilMenu = new UtilMenu(this);
+		KitSelection kitSelection = new KitSelection(this);
+		menuManager.setMenu(kitSelection);
+		menuManager.enterMenu(utilMenu, kitSelection);
+		/* 			END TESTING				*/
 		
 		this.inArena = false;
 	}
