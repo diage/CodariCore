@@ -52,6 +52,7 @@ public class KitManager {
 	}
 	
 	//-----TOOL BAR STUFF-----//
+	@SuppressWarnings("deprecation")
 	public void enableToolBar(String kitName) {
 		ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
 		Kit kit = this.kits.get(kitName);
@@ -63,9 +64,11 @@ public class KitManager {
 			inventoryContents[i] = tools[i];
 		}
 		this.combatant.getPlayer().getInventory().setContents(inventoryContents);
+		this.combatant.getPlayer().updateInventory();
 		this.toolbarKit = kit;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void disableToolBar() {
 		if (this.isToolBarEnabled()) {
 			ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
@@ -73,6 +76,7 @@ public class KitManager {
 				inventoryContents[i] = this.savedHotbar[i];
 			}
 			this.combatant.getPlayer().getInventory().setContents(inventoryContents);
+			this.combatant.getPlayer().updateInventory();
 			this.toolbarKit = null;
 		}
 	}
