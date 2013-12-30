@@ -3,6 +3,8 @@ package com.codari.arenacore.players.builders.kit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.codari.arena5.players.combatants.Combatant;
 
 public class KitManager {
@@ -10,11 +12,14 @@ public class KitManager {
 	private KitBuilder selectedBuilder;
 	private Map<String, KitBuilder> kitBuilders;
 	private Map<String, Kit> kits;
+	private ItemStack[] savedHotbar;
+	private Kit toolbarKit;
 	
 	public KitManager(Combatant combatant) {
 		this.combatant = combatant;
 		this.kitBuilders = new HashMap<>();
 		this.kits = new HashMap<>();
+		this.savedHotbar = new ItemStack[9];
 	}
 	
 	public void setSelectedKitBuilder(String name) {
@@ -44,5 +49,43 @@ public class KitManager {
 	
 	public Map<String, Kit> getKits() {
 		return new HashMap<>(this.kits);
+	}
+	
+	//-----TOOL BAR STUFF-----//
+	@SuppressWarnings("deprecation")
+	public void enableToolBar(String kitName) {
+		ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
+		Kit kit = this.kits.get(kitName);
+		ItemStack[] tools = kit.getTools();
+		for (int i = 0; i < this.savedHotbar.length; i++) {
+			if (!this.isToolBarEnabled()) {
+				this.savedHotbar[i] = inventoryContents[i];
+			}
+			inventoryContents[i] = tools[i];
+		}
+		this.combatant.getPlayer().getInventory().setContents(inventoryContents);
+		this.combatant.getPlayer().updateInventory();
+		this.toolbarKit = kit;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void disableToolBar() {
+		if (this.isToolBarEnabled()) {
+			ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
+			for (int i = 0; i < this.savedHotbar.length; i++) {
+				inventoryContents[i] = this.savedHotbar[i];
+			}
+			this.combatant.getPlayer().getInventory().setContents(inventoryContents);
+			this.combatant.getPlayer().updateInventory();
+			this.toolbarKit = null;
+		}
+	}
+	
+	public boolean isToolBarEnabled() {
+		return this.toolbarKit != null;
+	}
+	
+	public Kit getToolbarKit() {
+		return this.toolbarKit;
 	}
 }

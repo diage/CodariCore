@@ -1,18 +1,24 @@
 package com.codari.arenacore.players.builders.kit;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 
 public class Kit implements Listener {
 	private String name;
-	private ArenaBuilder arenaBuilder;
+	private ArenaBuilderCore arenaBuilder;
 	
 	//-----Random TimeLine Group-----//
 	private String groupName;
@@ -33,13 +39,12 @@ public class Kit implements Listener {
 	private boolean override;
 	
 	//-----Tool Bar-----//
-	private String[] tools;
-	private int selectedTool;
-	private ItemStack[] savedHotbar;
+	private final ItemStack[] tools;
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
 		this.arenaBuilder = new ArenaBuilderCore(gameRule);
+		this.tools = new ItemStack[9];
 	}
 	
 	public String getName() {
@@ -178,15 +183,23 @@ public class Kit implements Listener {
 		return this.override;
 	}
 	
-	//-----TOOL BAR STUFF-----//
-	public void setTool(int slot, String objectName) throws ArrayIndexOutOfBoundsException {
-		this.tools[slot] = objectName;
+	public ArenaBuilderCore getArenaBuilder() {
+		return this.arenaBuilder;
 	}
 	
-	public void setSelectedTool(int slot) throws IllegalArgumentException {
-		if (slot < 0 || slot >= 5) {
-			throw new IllegalArgumentException("Slot must be between 0 and 4");
-		}
-		this.selectedTool = slot;
+	//-----TOOL BAR STUFF-----//
+	public void setTool(int slot, String objectName, String... extraInformation) throws ArrayIndexOutOfBoundsException {
+		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
+		meta.setDisplayName(objectName);
+		extraInformation = ArrayUtils.nullToEmpty(extraInformation);
+		List<String> lore = Arrays.asList(extraInformation);
+		meta.setLore(lore);
+		ItemStack item = new ItemStack(Material.STICK);
+		item.setItemMeta(meta);
+		this.tools[slot] = item;
+	}
+	
+	public ItemStack[] getTools() {
+		return ArrayUtils.clone(this.tools);
 	}
 }
