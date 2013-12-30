@@ -41,4 +41,8 @@ public class KitManager {
 	public boolean containsKit(String kitName) {
 		return this.kitBuilders.containsKey(kitName);
 	}
+	
+	public Map<String, Kit> getKits() {
+		return new HashMap<>(this.kits);
+	}
 }

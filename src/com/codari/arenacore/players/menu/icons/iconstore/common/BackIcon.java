@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kits.newkitcreation.builderselection;
+package com.codari.arenacore.players.menu.icons.iconstore.common;
 
 import org.bukkit.Material;
 

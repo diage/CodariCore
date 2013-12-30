@@ -51,4 +51,40 @@ public class FunctionMenu implements Menu {
 	public int size() {
 		return this.icons.size();
 	}
+	
+	/** Gets the next available slot from the top two function menu rows.
+	 * If there is no available slot, the method returns NO_SLOT */
+	public FunctionMenuSlot getNextAvailableSlot() {
+		//FIXME: DIAGE CHECK OUT THIS AMAZING METHOD I MADE - Mhenlo
+		int counter = 0;
+		for(FunctionMenuSlot functionMenuSlot : this.icons.keySet()) {
+			if(functionMenuSlot.getSlot() >= 18 && functionMenuSlot.getSlot() <= 31) {
+				counter++;
+			}
+		}
+		switch(counter) {
+		case 0:
+			return FunctionMenuSlot.A_ONE;
+		case 1:
+			return FunctionMenuSlot.A_TWO;
+		case 2:
+			return FunctionMenuSlot.A_THREE;
+		case 3:
+			return FunctionMenuSlot.A_FOUR;
+		case 4:
+			return FunctionMenuSlot.A_FIVE;
+		case 5:
+			return FunctionMenuSlot.B_ONE;
+		case 6:
+			return FunctionMenuSlot.B_TWO;
+		case 7:
+			return FunctionMenuSlot.B_THREE;
+		case 8:
+			return FunctionMenuSlot.B_FOUR;
+		case 9:
+			return FunctionMenuSlot.B_FIVE;
+		default:
+			return FunctionMenuSlot.NO_SLOT;
+		}
+	}
 }
