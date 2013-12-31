@@ -5,18 +5,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.RequestIcon;
 
 
 public class RenameIcon extends RequestIcon implements Listener {
-	private String kitName;
-	private Combatant combatant;
+	private Kit kit;
 	
-	public RenameIcon(Combatant combatant, String kitName) {
+	public RenameIcon(Combatant combatant, Kit kit) {
 		super(Material.REDSTONE_BLOCK, combatant, "Rename");
-		this.kitName = kitName;
+		this.kit = kit;
 	}
 
 	@Override
@@ -28,7 +27,7 @@ public class RenameIcon extends RequestIcon implements Listener {
 	private void renameKit(IconRequestEvent e) {
 		if(e.getIcon() instanceof RenameIcon) {
 			if(e.getIcon().getCombatant().equals(this.getCombatant())) {
-				((CombatantCore)this.combatant).getKitManager().selectKit(this.kitName).setName(e.getPlayerInput());
+				this.kit.setName(e.getPlayerInput());
 			}
 		}
 	}

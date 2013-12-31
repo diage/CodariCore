@@ -51,6 +51,10 @@ public class KitManager {
 		return new HashMap<>(this.kits);
 	}
 	
+	public Map<String, KitBuilder> getKitBuilders() {
+		return new HashMap<>(this.kitBuilders);
+	}
+	
 	//-----TOOL BAR STUFF-----//
 	@SuppressWarnings("deprecation")
 	public void enableToolBar(String kitName) {

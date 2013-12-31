@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 public class KitBuilderIcon extends ExecutableIcon {
 	private String kitName;
 	
-	//Make sure the displayName is the same as the name of the kit!!
+	//Make sure the displayName is the same as the name of the kitBuilder!!
 	public KitBuilderIcon(Combatant combatant, String displayName) {
 		super(Material.OBSIDIAN, combatant, displayName);
 		this.kitName = displayName;

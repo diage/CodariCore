@@ -3,9 +3,6 @@ package com.codari.arenacore.players.menu.menus.menustore.function;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.iconstore.common.NextIcon;
@@ -26,7 +23,6 @@ public class KitSelection extends FunctionMenu {
 	public KitSelection(Combatant combatant) {
 		super(combatant);
 		this.addIcons(combatant);
-		Bukkit.broadcastMessage(ChatColor.BLUE + "First page!");	//TODO
 	}
 
 	/* This will construct any further needed pages for Kit Selection. */
@@ -77,7 +73,7 @@ public class KitSelection extends FunctionMenu {
 
 	private void addKitIcon(Combatant combatant, String kitName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitCreation(combatant), kitName));
+			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().selectKit(kitName)), kitName));
 		} 
 	}
 
