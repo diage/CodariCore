@@ -14,6 +14,7 @@ import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
 import com.codari.apicore.player.OfflineCodariPlayerCore;
+import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
@@ -74,6 +75,11 @@ public final class CombatantCore implements Combatant {
 		
 		/*	   FIXME - Begin Testing 	 */
 		this.kitManager.createKitBuilder("2v2");
+		this.kitManager.getSelectedKitBuilder().setNumberOfTeams((byte) 2);
+		this.kitManager.getSelectedKitBuilder().setTime(true);
+		this.kitManager.getSelectedKitBuilder().setTeamSize((byte) 2);
+		this.kitManager.getSelectedKitBuilder().selectWinCondition(new WinCondition2v2(100));
+		this.kitManager.getSelectedKitBuilder().submitWinCondition();
 		this.kitManager.createKit("This");
 		this.kitManager.createKit("is");
 		this.kitManager.createKit("for");

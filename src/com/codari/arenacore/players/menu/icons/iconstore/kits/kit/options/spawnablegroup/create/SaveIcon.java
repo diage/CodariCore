@@ -21,7 +21,7 @@ public class SaveIcon extends ExecutableIcon implements Listener {
 	@Override
 	public void click() {
 		Player player = this.combatant.getPlayer();
-		if(((CombatantCore)combatant).getKitManager().selectKit(this.kitName).createRandomTimeLineGroup()) {
+		if(((CombatantCore)combatant).getKitManager().getKit(this.kitName).createRandomTimeLineGroup()) {
 			player.sendMessage(ChatColor.GREEN + "You have successfully created a random spawnable group!");
 		} else {
 			player.sendMessage(ChatColor.RED + "Failed to create a random spawnable group! You must fill out a name and a delay time.");

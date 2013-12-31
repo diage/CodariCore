@@ -28,7 +28,7 @@ public class OverrideIcon extends RequestIcon implements Listener {
 	private void setOverride(IconRequestEvent e) {
 		if(e.getIcon() instanceof OverrideIcon) {
 			if(this.getCombatant().equals(e.getIcon().getCombatant())) {
-				((CombatantCore)this.combatant).getKitManager().selectKit(this.kitName).setOverride(Boolean.parseBoolean(e.getPlayerInput()));
+				((CombatantCore)this.combatant).getKitManager().getKit(this.kitName).setOverride(Boolean.parseBoolean(e.getPlayerInput()));
 			}
 		}
 	}

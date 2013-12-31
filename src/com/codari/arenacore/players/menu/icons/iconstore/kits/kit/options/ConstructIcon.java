@@ -12,7 +12,7 @@ import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.arena.ArenaCore;
-import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class ConstructIcon extends ExecutableIcon {
@@ -22,7 +22,7 @@ public class ConstructIcon extends ExecutableIcon {
 	public ConstructIcon(Combatant combatant, String arenaName) {
 		super(Material.REDSTONE_BLOCK, combatant, "Construct");
 		this.arenaName = arenaName;
-		this.arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(this.arenaName);
+		this.arenaBuilder = ((CombatantCore)combatant).getKitManager().getKit(arenaName).getArenaBuilder();
 	}
 
 	@Override

@@ -18,6 +18,6 @@ public class SaveIcon extends ExecutableIcon {
 
 	@Override
 	public void click() {
-		((CombatantCore)this.combatant).getKitManager().selectKit(this.kitName).createFixedRepeatTime();
+		((CombatantCore)this.combatant).getKitManager().getKit(this.kitName).createFixedRepeatTime();
 	}
 }

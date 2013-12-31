@@ -1,6 +1,6 @@
 package com.codari.arenacore.players.builders.kit;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -19,8 +19,8 @@ public class KitManager {
 	
 	public KitManager(Combatant combatant) {
 		this.combatant = combatant;
-		this.kitBuilders = new HashMap<>();
-		this.kits = new HashMap<>();
+		this.kitBuilders = new LinkedHashMap<>();
+		this.kits = new LinkedHashMap<>();
 		this.savedHotbar = new ItemStack[9];
 	}
 	
@@ -29,15 +29,19 @@ public class KitManager {
 		KitBuilderListener.changeKitBuilder(combatant, this.selectedBuilder);
 	}
 	
+	public KitBuilder getSelectedKitBuilder() {
+		return this.selectedBuilder;
+	}
+	
 	public void createKitBuilder(String name) {
 		this.selectedBuilder = new KitBuilder(name);
 		this.kitBuilders.put(name, this.selectedBuilder);
 		KitBuilderListener.changeKitBuilder(combatant, this.selectedBuilder);
 	}
 	
-	public Kit selectKit(String name) {
+	public Kit getKit(String name) {
 		if(!this.kits.containsKey(name)) {
-			Bukkit.broadcastMessage(ChatColor.RED + "You got an invalid string!!"); //TODO
+			Bukkit.broadcastMessage(ChatColor.RED + "You got an invalid kit name!!"); //TODO
 		}
 		return this.kits.get(name);
 	}
@@ -53,11 +57,11 @@ public class KitManager {
 	}
 	
 	public Map<String, Kit> getKits() {
-		return new HashMap<>(this.kits);
+		return new LinkedHashMap<>(this.kits);
 	}
 	
 	public Map<String, KitBuilder> getKitBuilders() {
-		return new HashMap<>(this.kitBuilders);
+		return new LinkedHashMap<>(this.kitBuilders);
 	}
 	
 	//-----TOOL BAR STUFF-----//

@@ -28,7 +28,7 @@ public class SelectNameIcon extends RequestIcon implements Listener {
 	private void createGroupName(IconRequestEvent e) {
 		if(e.getIcon() instanceof SelectNameIcon) {
 			if(e.getIcon().getCombatant().equals(this.getCombatant())) {
-				((CombatantCore)this.combatant).getKitManager().selectKit(this.kitName).createGroupName(e.getPlayerInput());
+				((CombatantCore)this.combatant).getKitManager().getKit(this.kitName).createGroupName(e.getPlayerInput());
 			}
 		}
 	}

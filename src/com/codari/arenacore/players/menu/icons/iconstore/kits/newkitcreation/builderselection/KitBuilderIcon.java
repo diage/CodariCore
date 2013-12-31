@@ -17,6 +17,6 @@ public class KitBuilderIcon extends ExecutableIcon {
 
 	@Override
 	public void click() {
-		((CombatantCore)this.getCombatant()).getKitManager().selectKit(this.kitName);
+		((CombatantCore)this.getCombatant()).getKitManager().getKit(this.kitName);
 	}
 }
