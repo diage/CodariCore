@@ -8,12 +8,12 @@ import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class SpawnableGroup extends FunctionMenu {
 
-	public SpawnableGroup(Combatant combatant, Kit kit) {
+	public SpawnableGroup(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
-		this.addIcons(combatant, kit);
+		this.addIcons(combatant, kit, backIcon);
 	}
 
-	private void addIcons(Combatant combatant, Kit kit) {
-		super.setSlot(FunctionMenuSlot.C_ONE, new BackIcon(combatant, new KitOptions(combatant, kit)));
+	private void addIcons(Combatant combatant, Kit kit, BackIcon backIcon) {
+		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 	}
 }

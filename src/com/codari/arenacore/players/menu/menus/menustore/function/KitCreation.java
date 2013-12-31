@@ -12,15 +12,15 @@ import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class KitCreation extends FunctionMenu {
 
-	public KitCreation(Combatant combatant) {
+	public KitCreation(Combatant combatant, BackIcon backIcon) {
 		super(combatant);
-		this.addIcons(combatant);
+		this.addIcons(combatant, backIcon);
 	}
 	
-	private void addIcons(Combatant combatant) {
+	private void addIcons(Combatant combatant, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new SelectKitNameIcon(Material.DIAMOND_BLOCK, combatant, "Select Name"));
-		super.setSlot(FunctionMenuSlot.A_TWO, new SelectKitBuilderIcon(combatant, new KitBuilderSelection(combatant)));
-		super.setSlot(FunctionMenuSlot.C_ONE, new BackIcon(combatant, new KitSelection(combatant)));
+		super.setSlot(FunctionMenuSlot.A_TWO, new SelectKitBuilderIcon(combatant, new KitBuilderSelection(combatant, new BackIcon(combatant, this))));
+		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new SaveKitIcon(combatant));
 	} 
 }

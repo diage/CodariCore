@@ -15,9 +15,9 @@ import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class KitBuilderSelection extends FunctionMenu {
 
-	public KitBuilderSelection(Combatant combatant) {
+	public KitBuilderSelection(Combatant combatant, BackIcon backIcon) {
 		super(combatant);
-		this.addIcons(combatant);
+		this.addIcons(combatant, backIcon);
 	}
 	
 	private KitBuilderSelection(Combatant combatant, Icon previous, Set<String> kitBuilderNames) {
@@ -25,8 +25,8 @@ public class KitBuilderSelection extends FunctionMenu {
 		this.addIcons(combatant, previous, kitBuilderNames);
 	}
 
-	private void addIcons(Combatant combatant) {
-		super.setSlot(FunctionMenuSlot.C_ONE, new BackIcon(combatant, new KitCreation(combatant)));
+	private void addIcons(Combatant combatant, BackIcon backIcon) {
+		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		Set<String> kitBuilderNames = ((CombatantCore)combatant).getKitManager().getKitBuilders().keySet();
 		
 		int i = 0;
@@ -46,7 +46,7 @@ public class KitBuilderSelection extends FunctionMenu {
 	}
 	
 	private void addIcons(Combatant combatant, Icon previous, Set<String> kitBuilderNames) {
-		super.setSlot(FunctionMenuSlot.C_ONE, new BackIcon(combatant, new KitCreation(combatant)));
+		super.setSlot(FunctionMenuSlot.C_ONE, new BackIcon(combatant, new KitCreation(combatant, new BackIcon(combatant, this))));
 		this.addPreviousIcon(previous);
 		
 		int i = 0;

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.NextIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.PreviousIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.selectionmenu.KitIcon;
@@ -32,7 +33,7 @@ public class KitSelection extends FunctionMenu {
 	}
 
 	private void addIcons(Combatant combatant) {
-		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant)));
+		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant, new BackIcon(combatant, this))));
 		Set<String> kitNames = ((CombatantCore)combatant).getKitManager().getKits().keySet();
 		
 		int i = 0;
@@ -52,7 +53,7 @@ public class KitSelection extends FunctionMenu {
 	}
 
 	private void addIcons(Combatant combatant, Icon previous, Set<String> kitNames) {
-		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant)));
+		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant, new BackIcon(combatant, this))));
 		this.addPreviousIcon(previous);
 		
 		int i = 0;
@@ -73,7 +74,7 @@ public class KitSelection extends FunctionMenu {
 
 	private void addKitIcon(Combatant combatant, String kitName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().selectKit(kitName)), kitName));
+			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().selectKit(kitName), new BackIcon(combatant, this)), kitName));
 		} 
 	}
 
