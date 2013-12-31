@@ -46,6 +46,9 @@ public enum UtilityMenuSlot implements MenuSlot{
 		case 33 :
 		case 34 :
 		case 35 :
+		case 14 :
+		case 23 :
+		case 32 :
 			return true;
 		default :
 			return false;
@@ -59,24 +62,30 @@ public enum UtilityMenuSlot implements MenuSlot{
 	 */
 	public static UtilityMenuSlot getUtilitySlot(int inventorySlot) {
 		switch(inventorySlot) {
-		case 12 :
+		case 15 :
 			return UtilityMenuSlot.ONE;
-		case 13 : 
+		case 16 : 
 			return UtilityMenuSlot.TWO;
-		case 14 : 
+		case 17 : 
 			return UtilityMenuSlot.THREE;
-		case 21 :
+		case 24 :
 			return UtilityMenuSlot.FOUR;
-		case 22 :
+		case 25 :
 			return UtilityMenuSlot.FIVE;
-		case 23 :
+		case 26 :
 			return UtilityMenuSlot.SIX;
-		case 30 :
+		case 33 :
 			return UtilityMenuSlot.SEVEN;
-		case 31 :
+		case 34 :
 			return UtilityMenuSlot.EIGHT;
-		case 32 : 
+		case 35 : 
 			return UtilityMenuSlot.NINE;
+		case 14 :
+			return UtilityMenuSlot.SEP_ONE;
+		case 23 :
+			return UtilityMenuSlot.SEP_TWO;
+		case 32 :
+			return UtilityMenuSlot.SEP_THREE;
 		default : 
 			return UtilityMenuSlot.NO_SLOT;
 		}

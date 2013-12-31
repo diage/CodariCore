@@ -66,7 +66,7 @@ public class IconListener implements Listener {
 		} else if (e.getClick().equals(ClickType.LEFT) && !selectionIcon.isSelected()) {
 			selectionIcon.select();
 		}
-		e.setCancelled(true);
+		this.cancelAction(e);
 
 	}
 
@@ -75,14 +75,14 @@ public class IconListener implements Listener {
 				|| e.getClick().equals(ClickType.LEFT)) {
 			requestIcon.startConversation();
 		}
-		e.setCancelled(true);
+		this.cancelAction(e);
 	}
 
 	public void onMenuClick(InventoryClickEvent e, MenuIcon menuIcon) {
 		if (e.getClick().isRightClick() || e.getClick().isLeftClick()) {
 			menuIcon.click();
 		}
-		e.setCancelled(true);
+		this.cancelAction(e);
 
 	}
 
@@ -98,7 +98,7 @@ public class IconListener implements Listener {
 		} else if (e.getClick().isRightClick()) {
 			hoverIcon.backSpace();
 		}
-		e.setCancelled(true);
+		this.cancelAction(e);
 
 	}
 
@@ -106,6 +106,11 @@ public class IconListener implements Listener {
 		if (e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.LEFT)) {
 			executableIcon.click();
 		}
+		this.cancelAction(e);
+	}
+	
+	private void cancelAction(InventoryClickEvent e) {
+		e.setCurrentItem(e.getCurrentItem());
 		e.setCancelled(true);
 	}
 }
