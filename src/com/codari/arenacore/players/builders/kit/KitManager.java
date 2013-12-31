@@ -3,6 +3,8 @@ package com.codari.arenacore.players.builders.kit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
@@ -34,6 +36,9 @@ public class KitManager {
 	}
 	
 	public Kit selectKit(String name) {
+		if(!this.kits.containsKey(name)) {
+			Bukkit.broadcastMessage(ChatColor.RED + "You got an invalid string!!"); //TODO
+		}
 		return this.kits.get(name);
 	}
 	
