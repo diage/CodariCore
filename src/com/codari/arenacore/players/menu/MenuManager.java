@@ -1,5 +1,7 @@
 package com.codari.arenacore.players.menu;
 
+import java.util.Map;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.PlayerInventory;
@@ -22,12 +24,16 @@ public class MenuManager {
 	private FunctionMenu functionMenu;
 	private UtilityMenu utilityMenu;
 	private MenuIcon mainMenuIcon;
+	private Map<FunctionMenuSlot, Icon> currentFunctionInventory;
+	private Map<UtilityMenuSlot, Icon> currentUtilityInventory;
 	
 	public MenuManager(Combatant combatant) {
 		this.combatant = combatant;
 		this.functionMenu = new FunctionMenu(combatant);
 		this.utilityMenu = new UtilityMenu(combatant);
 		this.inMenu = false;
+		this.currentFunctionInventory = this.functionMenu.getIcons();
+		this.currentUtilityInventory = this.utilityMenu.getIcons();
 		
 		this.setMenuIconExit();
 	}
@@ -35,9 +41,11 @@ public class MenuManager {
 	public void setMenu(Menu menu) {
 		if(menu instanceof FunctionMenu) {
 			this.functionMenu = (FunctionMenu) menu;
+			this.currentFunctionInventory = ((FunctionMenu)menu).getIcons();
 			if(this.inMenu) {this.resetFunctionMenu();}
 		} else {
 			this.utilityMenu = (UtilityMenu) menu;
+			this.currentUtilityInventory = ((UtilityMenu)menu).getIcons();
 			if(this.inMenu) {this.resetUtilityMenu();}
 		}
 	}
@@ -47,9 +55,11 @@ public class MenuManager {
 			PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 			if(menuSlot instanceof FunctionMenuSlot) {
 				this.functionMenu.setSlot(menuSlot, icon);
+				this.currentFunctionInventory.put((FunctionMenuSlot)menuSlot, icon);
 				playerInventory.setItem(((FunctionMenuSlot) menuSlot).getSlot(), icon);
 			} else {
 				this.utilityMenu.setSlot(menuSlot, icon);
+				this.currentUtilityInventory.put((UtilityMenuSlot) menuSlot, icon);
 				playerInventory.setItem(((UtilityMenuSlot) menuSlot).getSlot(), icon);
 			}
 			this.combatant.getPlayer().updateInventory();
@@ -77,6 +87,7 @@ public class MenuManager {
 			this.inMenu = true;
 			
 			this.utilityMenu = utilityMenu;
+			this.currentUtilityInventory = utilityMenu.getIcons();
 			this.resetUtilityMenu();
 			
 			if(this.functionMenu != null) {
@@ -92,9 +103,11 @@ public class MenuManager {
 			this.inMenu = true;
 			
 			this.utilityMenu = utilityMenu;
+			this.currentUtilityInventory = utilityMenu.getIcons();
 			this.resetUtilityMenu();
 			
 			this.functionMenu = functionMenu;
+			this.currentFunctionInventory = functionMenu.getIcons();
 			this.resetFunctionMenu();
 			this.setMenuIconEnter();
 		}
@@ -112,7 +125,9 @@ public class MenuManager {
 		if(this.inMenu) {
 			this.combatant.getPlayer().getInventory().setContents(this.savedInventory.getContents());
 			this.functionMenu = new FunctionMenu(this.combatant);
+			this.currentFunctionInventory = this.functionMenu.getIcons();
 			this.utilityMenu = new UtilityMenu(this.combatant);
+			this.currentUtilityInventory = this.utilityMenu.getIcons();
 			this.inMenu = false;
 			this.setMenuIconExit();
 		}
@@ -148,5 +163,14 @@ public class MenuManager {
 		this.mainMenuIcon = new MenuIcon(Material.BED, combatant, this.functionMenu, this.utilityMenu, "Main Menu");
 		this.combatant.getPlayer().getInventory().setItem(8, this.mainMenuIcon);
 		this.combatant.getPlayer().updateInventory();
+	}
+	
+	public Icon click(MenuSlot menuSlot) {
+		if(menuSlot instanceof FunctionMenuSlot) {
+			return this.currentFunctionInventory.get(menuSlot);
+		} else if(menuSlot instanceof UtilityMenuSlot) {
+			return this.currentUtilityInventory.get(menuSlot);
+		}
+		return null;
 	}
 }

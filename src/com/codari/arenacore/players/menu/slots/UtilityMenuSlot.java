@@ -35,6 +35,23 @@ public enum UtilityMenuSlot implements MenuSlot{
 		return this.slot;
 	}
 	
+	public static boolean isUtilityMenuSlot(int inventorySlot) {
+		switch(inventorySlot) {
+		case 15 :
+		case 16 :
+		case 17 :
+		case 24 :
+		case 25 :
+		case 26 :
+		case 33 :
+		case 34 :
+		case 35 :
+			return true;
+		default :
+			return false;
+		}
+	}	
+	
 	/**
 	 * Method to get the menu slot associated with the actual bukkit slot.
 	 * @param inventorySlot The actual slot from the bukkit inventory.

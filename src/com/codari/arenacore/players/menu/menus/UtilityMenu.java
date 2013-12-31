@@ -56,4 +56,8 @@ public class UtilityMenu implements Menu {
 	public int size() {
 		return this.icons.size();
 	}
+	
+	public Map<UtilityMenuSlot, Icon> getIcons() {
+		return this.icons;
+	}	
 }

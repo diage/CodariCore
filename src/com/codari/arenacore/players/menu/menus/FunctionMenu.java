@@ -55,6 +55,10 @@ public class FunctionMenu implements Menu {
 		return this.icons.size();
 	}
 	
+	public Map<FunctionMenuSlot, Icon> getIcons() {
+		return this.icons;
+	}
+	
 	/** Gets the next available slot from the top two function menu rows.
 	 * If there is no available slot, the method returns NO_SLOT */
 	public FunctionMenuSlot getNextAvailableSlot() {

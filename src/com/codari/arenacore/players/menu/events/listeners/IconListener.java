@@ -1,7 +1,5 @@
 package com.codari.arenacore.players.menu.events.listeners;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +7,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import com.codari.api5.Codari;
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
@@ -17,94 +16,96 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 import com.codari.arenacore.players.menu.icons.MenuIcon;
 import com.codari.arenacore.players.menu.icons.RequestIcon;
 import com.codari.arenacore.players.menu.icons.SelectionIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kits.newkitcreation.SaveKitIcon;
+import com.codari.arenacore.players.menu.icons.structure.Icon;
+import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
 public class IconListener implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
-		if(e.getView().getItem(e.getRawSlot()) instanceof SelectionIcon) {
-			this.onSelectionClick(e);
-		} else if(e.getView().getItem(e.getRawSlot()) instanceof RequestIcon) {
-			this.onRequestClick(e);
-		} else if(e.getView().getItem(e.getRawSlot()) instanceof MenuIcon) {
-			this.onMenuClick(e);
-		} else if(e.getView().getItem(e.getRawSlot()) instanceof HoverIcon) {
-			this.onHoverClick(e);
-		} else if(e.getView().getItem(e.getRawSlot()) instanceof ExecutableIcon) {
-			this.onExecutableClick(e);
+		Icon icon = null;
+		Combatant combatant = Codari.getArenaManager().getCombatant(
+				(Player) e.getWhoClicked());
+		if (UtilityMenuSlot.isUtilityMenuSlot(e.getRawSlot())) {
+			icon = ((CombatantCore) combatant).getMenuManager().click(UtilityMenuSlot.getUtilitySlot(e.getRawSlot()));
+		} else if (FunctionMenuSlot.isFunctionMenuSlot(e.getRawSlot())) {
+			icon = ((CombatantCore) combatant).getMenuManager().click(FunctionMenuSlot.getFunctionSlot(e.getRawSlot()));
+		} else {
+			return;
 		}
-		//TODO
-		Bukkit.broadcastMessage(ChatColor.AQUA + e.getView().getItem(e.getRawSlot()).getClass().getSimpleName());
-		((CombatantCore)Codari.getArenaManager().getCombatant(((Player)e.getWhoClicked()))).getMenuManager().setMenuSlot(UtilityMenuSlot.THREE, new SaveKitIcon(((CombatantCore)Codari.getArenaManager().getCombatant(((Player)e.getWhoClicked())))));
-		((Player)e.getWhoClicked()).updateInventory();
+		if(icon != null) {
+			if (icon instanceof SelectionIcon) {
+				this.onSelectionClick(e, (SelectionIcon) icon);
+			} else if (icon instanceof RequestIcon) {
+				this.onRequestClick(e, (RequestIcon) icon);
+			} else if (icon instanceof MenuIcon) {
+				this.onMenuClick(e, (MenuIcon) icon);
+			} else if (icon instanceof HoverIcon) {
+				this.onHoverClick(e, (HoverIcon) icon);
+			} else if (icon instanceof ExecutableIcon) {
+				this.onExecutableClick(e, (ExecutableIcon) icon);
+			}
+		}
 	}
 
 	@EventHandler
 	public void menuDispatch(IconMenuClickEvent e) {
-		MenuManager menuManager = ((CombatantCore)Codari.getArenaManager().getCombatant(e.getIcon().getPlayerName())).getMenuManager();
-		if(!(e.getFunctionMenu() == null)) {
+		MenuManager menuManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getIcon().getPlayerName())).getMenuManager();
+		if (!(e.getFunctionMenu() == null)) {
 			menuManager.setMenu(e.getFunctionMenu());
 		}
-		if(!(e.getUtilityMenu() == null)) {
+		if (!(e.getUtilityMenu() == null)) {
 			menuManager.setMenu(e.getUtilityMenu());
 		}
 	}
 
-	public void onSelectionClick(InventoryClickEvent e) {
-		SelectionIcon selectionIcon = (SelectionIcon) e.getView().getItem(e.getRawSlot());
-		if(e.getClick().equals(ClickType.RIGHT) && selectionIcon.isSelected()) {
+	public void onSelectionClick(InventoryClickEvent e, SelectionIcon selectionIcon) {
+		if (e.getClick().equals(ClickType.RIGHT) && selectionIcon.isSelected()) {
 			selectionIcon.unSelect();
-		} else if(e.getClick().equals(ClickType.LEFT) && !selectionIcon.isSelected()) {
+		} else if (e.getClick().equals(ClickType.LEFT) && !selectionIcon.isSelected()) {
 			selectionIcon.select();
 		}
 		e.setCancelled(true);
 
 	}
 
-	public void onRequestClick(InventoryClickEvent e) {
-		RequestIcon requestIcon = (RequestIcon) e.getView().getItem(e.getRawSlot());
-		if(e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.LEFT)) {
+	public void onRequestClick(InventoryClickEvent e, RequestIcon requestIcon) {
+		if (e.getClick().equals(ClickType.RIGHT)
+				|| e.getClick().equals(ClickType.LEFT)) {
 			requestIcon.startConversation();
-		} 
+		}
 		e.setCancelled(true);
 	}
 
-
-	public void onMenuClick(InventoryClickEvent e) {
-		MenuIcon menuIcon = (MenuIcon) e.getView().getItem(e.getRawSlot());
-		if(e.getClick().isRightClick() || e.getClick().isLeftClick()) {
+	public void onMenuClick(InventoryClickEvent e, MenuIcon menuIcon) {
+		if (e.getClick().isRightClick() || e.getClick().isLeftClick()) {
 			menuIcon.click();
-		} 
+		}
 		e.setCancelled(true);
 
 	}
 
-	public void onHoverClick(InventoryClickEvent e) {
-		HoverIcon hoverIcon = (HoverIcon) e.getView().getItem(e.getRawSlot());
-		if(e.getClick().isKeyboardClick()) {
-			if(e.getClick().equals(ClickType.DROP)) {
+	public void onHoverClick(InventoryClickEvent e, HoverIcon hoverIcon) {
+		if (e.getClick().isKeyboardClick()) {
+			if (e.getClick().equals(ClickType.DROP)) {
 				hoverIcon.enterInputDigit(0);
-			} else if(e.getClick().equals(ClickType.CONTROL_DROP)){
+			} else if (e.getClick().equals(ClickType.CONTROL_DROP)) {
 				hoverIcon.clear();
 			} else {
 				hoverIcon.enterInputDigit(e.getHotbarButton() + 1);
 			}
-		} else if(e.getClick().isRightClick()) {
+		} else if (e.getClick().isRightClick()) {
 			hoverIcon.backSpace();
 		}
 		e.setCancelled(true);
 
 	}
 
-	public void onExecutableClick(InventoryClickEvent e) {
-		ExecutableIcon executableIcon = (ExecutableIcon) e.getView().getItem(e.getRawSlot());
-		if(e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.LEFT)) {
+	public void onExecutableClick(InventoryClickEvent e, ExecutableIcon executableIcon) {
+		if (e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.LEFT)) {
 			executableIcon.click();
-		} 
+		}
 		e.setCancelled(true);
-
 	}
 }
