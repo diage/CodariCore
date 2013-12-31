@@ -57,6 +57,7 @@ public class KitSelection extends FunctionMenu {
 
 	private void addIcons(Combatant combatant, Icon previous, Set<String> kitNames) {
 		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant)));
+		this.addPreviousIcon(previous);
 		
 		int i = 0;
 		Iterator<String> iterator = kitNames.iterator();
@@ -71,7 +72,6 @@ public class KitSelection extends FunctionMenu {
 			Icon prevIcon = new PreviousIcon(combatant, this);
 			Icon nextIcon = new NextIcon(combatant, new KitSelection(combatant, prevIcon, kitNames));
 			this.addNextIcon(nextIcon);
-			this.addPreviousIcon(previous);
 		}
 	}
 
