@@ -31,18 +31,12 @@ public class MenuIcon extends Icon {
 			this.functionMenu = (FunctionMenu) menu;
 			this.utilityMenu = null;
 		}
-		
-		this.utilityMenu = null;
-		this.functionMenu = null;
 	}
 	
 	public MenuIcon(Material material, Combatant combatant, FunctionMenu functionMenu, UtilityMenu utilityMenu, String displayName) {
 		super(material, combatant, IconType.MENU, displayName);
 		this.functionMenu = functionMenu;
 		this.utilityMenu = utilityMenu;
-
-		this.utilityMenu = null;
-		this.functionMenu = null;
 	}
 	
 	public void setFunctionMenu(FunctionMenu functionMenu) {
