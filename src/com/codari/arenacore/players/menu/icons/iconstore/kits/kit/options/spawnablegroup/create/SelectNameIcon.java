@@ -5,18 +5,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.RequestIcon;
 
 public class SelectNameIcon extends RequestIcon implements Listener {
-	private String kitName;
-	private Combatant combatant;
+	private Kit kit;
 	
-	public SelectNameIcon(Combatant combatant, String kitName) {
+	public SelectNameIcon(Combatant combatant, Kit kit) {
 		super(Material.OBSIDIAN, combatant, "Select Name");
-		this.kitName = kitName;
-		this.combatant = combatant;
+		this.kit = kit;
 	}
 
 	@Override
@@ -28,7 +26,7 @@ public class SelectNameIcon extends RequestIcon implements Listener {
 	private void createGroupName(IconRequestEvent e) {
 		if(e.getIcon() instanceof SelectNameIcon) {
 			if(e.getIcon().getCombatant().equals(this.getCombatant())) {
-				((CombatantCore)this.combatant).getKitManager().getKit(this.kitName).createGroupName(e.getPlayerInput());
+				this.kit.createGroupName(e.getPlayerInput());
 			}
 		}
 	}

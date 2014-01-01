@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
+import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelaySecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelayTicksIcon;
@@ -20,6 +21,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawna
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.fixed.repeatset.UpdateFixedRepeatMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.fixed.repeatset.UpdateFixedRepeatSecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.fixed.repeatset.UpdateFixedRepeatTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.OverrideIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelaySecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayTicksIcon;
@@ -102,7 +104,10 @@ public class KitListener implements Listener {
 	}
 	
 	@EventHandler()
-	private void changePersistentBoolean() {
-		
+	private void changePersistentBoolean(IconRequestEvent e) {
+		Kit kit = KitListener.currentKits.get(e.getIcon().getCombatant().getPlayerReference().getName());
+		if(e.getIcon() instanceof OverrideIcon) {
+			kit.setOverride(Boolean.parseBoolean(e.getPlayerInput()));
+		}
 	}	
 }
