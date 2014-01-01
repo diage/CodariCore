@@ -189,12 +189,12 @@ public class Kit implements Listener {
 	
 	//-----TOOL BAR STUFF-----//
 	public void setTool(int slot, String objectName, String... extraInformation) throws ArrayIndexOutOfBoundsException {
-		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
+		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.BAKED_POTATO);
 		meta.setDisplayName(objectName);
 		extraInformation = ArrayUtils.nullToEmpty(extraInformation);
 		List<String> lore = Arrays.asList(extraInformation);
 		meta.setLore(lore);
-		ItemStack item = new ItemStack(Material.STICK);
+		ItemStack item = new ItemStack(Material.BAKED_POTATO);
 		item.setItemMeta(meta);
 		this.tools[slot] = item;
 	}
