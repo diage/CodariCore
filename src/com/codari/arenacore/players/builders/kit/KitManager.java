@@ -56,6 +56,17 @@ public class KitManager {
 		return this.kitBuilders.containsKey(kitName);
 	}
 	
+	public void renameKit(String oldKitName, String newKitName) {
+		if(this.containsKit(oldKitName)) {
+			Kit kit = this.kits.get(oldKitName);
+			this.kits.remove(oldKitName);
+			this.kits.put(newKitName, kit);
+			kit.setName(newKitName);
+		} else {
+			Bukkit.broadcastMessage(ChatColor.RED + "You can't rename a kit that doesn't exist in the kit manager!"); //TODO
+		}
+	}
+	
 	public Map<String, Kit> getKits() {
 		return new LinkedHashMap<>(this.kits);
 	}
