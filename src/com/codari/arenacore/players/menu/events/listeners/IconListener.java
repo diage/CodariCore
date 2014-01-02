@@ -1,5 +1,7 @@
 package com.codari.arenacore.players.menu.events.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -74,6 +76,7 @@ public class IconListener implements Listener {
 	public void onRequestClick(InventoryClickEvent e, RequestIcon requestIcon) {
 		if (e.getClick().equals(ClickType.RIGHT)
 				|| e.getClick().equals(ClickType.LEFT)) {
+			Bukkit.broadcastMessage(ChatColor.AQUA + "You have made a successful click!"); //TODO
 			requestIcon.startConversation();
 		}
 		this.cancelAction(e);
