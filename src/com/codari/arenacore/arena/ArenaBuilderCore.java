@@ -3,6 +3,7 @@ package com.codari.arenacore.arena;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
+import com.codari.api5.io.ConfigurationInput;
+import com.codari.api5.io.ConfigurationInput.InputFunction;
 import com.codari.api5.io.ConfigurationOutput;
 import com.codari.api5.io.ConfigurationOutput.OutputFunction;
 import com.codari.api5.util.SerializableLocation;
@@ -144,7 +148,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	public Map<String, RandomTimelineGroup> getRandomSpawnablesCopyMap() {
 		return new HashMap<String, RandomTimelineGroup>(this.randomSpawnables);
-	}	
+	}
 	
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
@@ -205,45 +209,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			this.spawnable.spawn();
 		}
 	}
-	
-	@SuppressWarnings("unused")
-	private final static class DelayedPersistentAction implements DelayedPersistentObject {
-		private static final long serialVersionUID = 2824909986948144853L;
-		private DelayedPersistentObject delayedPersistentObject;
-		private final Time time;
-		private final boolean override;
-		private BukkitTask task;
-		
-		public DelayedPersistentAction(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
-			this.delayedPersistentObject = delayedPersistentObject;
-			this.time = time;
-			this.override = override;
-		}
-		
-		@Override
-		public void interact() {
-			if (this.override && this.task != null) {
-				this.task.cancel();
-			}
-			this.task = Bukkit.getScheduler().runTaskLater(CodariI.INSTANCE, new Runnable() {
-				@Override
-				public void run() {
-					delayedPersistentObject.interact();
-					task = null;
-				}
-			}, time.ticks());
-		}
-
-		@Override
-		public void reveal() {
-			this.delayedPersistentObject.reveal();
-		}
-
-		@Override
-		public void hide() {
-			this.delayedPersistentObject.hide();
-		}
-	}
 
 	@Override
 	public void addSpawnLocation(Location location) {
@@ -253,18 +218,45 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public Map<String, Object> serialize() {
 		return new ConfigurationOutput()
+				.addString("d", "d")
+				.add(new ObjectListOutputFunction(), this.objects)
 				.result();
 	}
 	
-	//-----Object List Output Function-----//
+	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
+		ConfigurationInput input = new ConfigurationInput(args);
+		ArenaBuilderCore builder = (ArenaBuilderCore) Codari.getArenaManager().getArenaBuider(null);//FIXME
+		List<ArenaObject> objectList = input.get(new ObjectListInputFunction());
+		for (ArenaObject object : objectList) {
+			
+		}
+		return builder;
+	}
+	
+	//-----Object List Configuration Functions-----//
 	private final static class ObjectListOutputFunction implements OutputFunction<List<ArenaObject>> {
 		@Override
 		public Map<String, Object> apply(@Nullable List<ArenaObject> objectList) {
 			Map<String, Object> result = new LinkedHashMap<>();
-			for (ArenaObject object : objectList) {
-				
+			Iterator<ArenaObject> iterator = objectList.iterator();
+			for (int i = 0; iterator.hasNext(); i++) {
+				ArenaObject object = iterator.next();
+				SerializableLocation location = new SerializableLocation(object.getLocation());
+				result.put("Object_Location_" + i, location);
+				result.put("Object_" + i, object.getName());
 			}
 			return result;
+		}
+	}
+	
+	private final static class ObjectListInputFunction implements InputFunction<List<ArenaObject>> {
+		@Override
+		public List<ArenaObject> apply(@Nullable Map<String, Object> args) {
+			List<ArenaObject> objectList = new ArrayList<>();
+			for (int i = 0; args.containsKey("Object_Location_" + i); i++) {
+				
+			}
+			return objectList;
 		}
 	}
 }
