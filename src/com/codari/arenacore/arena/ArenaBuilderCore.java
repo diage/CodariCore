@@ -3,15 +3,20 @@ package com.codari.arenacore.arena;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
+import com.codari.api5.io.ConfigurationOutput;
+import com.codari.api5.io.ConfigurationOutput.OutputFunction;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.ArenaBuilder;
@@ -133,6 +138,14 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		return true;
 	}
 	
+	public ArrayList<ArenaObject> getArenaObjectsCopyList() {
+		return new ArrayList<ArenaObject>(this.objects);
+	}
+	
+	public Map<String, RandomTimelineGroup> getRandomSpawnablesCopyMap() {
+		return new HashMap<String, RandomTimelineGroup>(this.randomSpawnables);
+	}	
+	
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
 		private static final long serialVersionUID = -1455939781657809306L;
@@ -235,5 +248,23 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public void addSpawnLocation(Location location) {
 		this.spawners.add(new SerializableLocation(location));
+	}
+
+	@Override
+	public Map<String, Object> serialize() {
+		return new ConfigurationOutput()
+				.ad
+				.result();
+	}
+	
+	//-----Object List Output Function-----//
+	private final static class ObjectListOutputFunction implements OutputFunction<List<ArenaObject>> {
+		@Override
+		public Map<String, Object> apply(@Nullable List<ArenaObject> objectList) {
+			Map<String, Object> result = new LinkedHashMap<>();
+			for (ArenaObject object : objectList) {
+				
+			}
+		}
 	}
 }
