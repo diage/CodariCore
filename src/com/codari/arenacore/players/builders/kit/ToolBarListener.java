@@ -61,17 +61,17 @@ public class ToolBarListener implements Listener {
 				if(arenaObject instanceof RandomSpawnableObject) {
 					builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
 				} else if(arenaObject instanceof FixedSpawnableObject) {
-					if(extraInformation.size() == 1) {
-						builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
-					} else if(extraInformation.size() >= 2) {
-						builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
+					if (extraInformation != null) {
+						if(extraInformation.size() == 1) {
+							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
+						} else if(extraInformation.size() >= 2) {
+							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
+						}
 					}
 				} else if(arenaObject instanceof ImmediatePersistentObject) {
-					if(extraInformation.size() >= 0) {
-						builder.registerPersistent((ImmediatePersistentObject) arenaObject);
-					}
+					builder.registerPersistent((ImmediatePersistentObject) arenaObject);
 				} else if(arenaObject instanceof DelayedPersistentObject) {
-					if(extraInformation.size() >= 2) {
+					if(extraInformation != null && extraInformation.size() >= 2) {
 						builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
 					}
 				} else {
