@@ -1,7 +1,6 @@
 package com.codari.arenacore.players.menu.icons;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.conversations.ConversationAbandonedListener;
@@ -31,7 +30,6 @@ public abstract class RequestIcon extends Icon {
 	}
 
 	public void startConversation() {
-		Bukkit.broadcastMessage(ChatColor.GREEN + "The conversation should be starting!"); //TODO
 		Player player = Bukkit.getPlayer(super.getPlayerName());
 		player.closeInventory();
 		player.getOpenInventory().close();
