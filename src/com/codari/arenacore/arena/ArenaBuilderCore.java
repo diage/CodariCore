@@ -253,7 +253,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public Map<String, Object> serialize() {
 		return new ConfigurationOutput()
-				.ad
 				.result();
 	}
 	
@@ -265,6 +264,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			for (ArenaObject object : objectList) {
 				
 			}
+			return result;
 		}
 	}
 }
