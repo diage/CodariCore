@@ -32,7 +32,8 @@ public abstract class RequestIcon extends Icon {
 	public void startConversation() {
 		Player player = Bukkit.getPlayer(super.getPlayerName());
 		player.closeInventory();
-		this.conversationFactory.buildConversation(Bukkit.getPlayer(this.playerName)).begin();
+		player.getOpenInventory().close();
+		this.conversationFactory.buildConversation(player).begin();
 	}
 	
 	public abstract String getConversationString();
