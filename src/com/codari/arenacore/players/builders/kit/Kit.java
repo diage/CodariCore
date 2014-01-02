@@ -71,6 +71,8 @@ public class Kit implements Listener {
 		} else {
 			this.arenaBuilder.createRandomTimelineGroup(this.groupName, this.randomTimeLineDelayTime, randomTimeLineRepeatTime);
 			this.groupName = null;
+			this.randomTimeLineDelayTime = null;
+			this.randomTimeLineRepeatTime = null;
 		}
 		return true;
 	}
