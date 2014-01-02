@@ -133,6 +133,14 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		return true;
 	}
 	
+	public ArrayList<ArenaObject> getArenaObjectsCopyList() {
+		return new ArrayList<ArenaObject>(this.objects);
+	}
+	
+	public Map<String, RandomTimelineGroup> getRandomSpawnablesCopyMap() {
+		return new HashMap<String, RandomTimelineGroup>(this.randomSpawnables);
+	}	
+	
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
 		private static final long serialVersionUID = -1455939781657809306L;
