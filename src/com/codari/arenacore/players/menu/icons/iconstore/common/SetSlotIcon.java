@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent;
+package com.codari.arenacore.players.menu.icons.iconstore.common;
 
 import org.bukkit.Material;
 
@@ -10,5 +10,5 @@ public class SetSlotIcon extends MenuIcon {
 
 	public SetSlotIcon(Combatant combatant, Menu menu) {
 		super(Material.GOLD_BLOCK, combatant, menu, "Set Slot");
-	}
+	} 
 }

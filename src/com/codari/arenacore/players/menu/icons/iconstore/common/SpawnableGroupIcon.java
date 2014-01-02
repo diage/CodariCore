@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.selection;
+package com.codari.arenacore.players.menu.icons.iconstore.common;
 
 import org.bukkit.Material;
 
@@ -7,8 +7,8 @@ import com.codari.arenacore.players.menu.icons.MenuIcon;
 import com.codari.arenacore.players.menu.menus.Menu;
 
 public class SpawnableGroupIcon extends MenuIcon {
-
-	public SpawnableGroupIcon(Material material, Combatant combatant, Menu menu, String displayName) {
-		super(material, combatant, menu, displayName);
+	
+	public SpawnableGroupIcon(Combatant combatant, Menu menu, String displayName) {
+		super(Material.ARROW, combatant, menu, displayName);
 	}
 }

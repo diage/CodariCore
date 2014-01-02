@@ -9,6 +9,6 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class SetDelayTimeIcon extends MenuIcon {
 
 	public SetDelayTimeIcon(Combatant combatant, Menu menu) {
-		super(Material.REDSTONE_BLOCK, combatant, menu, "Set Delay Time");
+		super(Material.REDSTONE_BLOCK, combatant, menu, "Set Delay Time (Optional)");
 	}
 }

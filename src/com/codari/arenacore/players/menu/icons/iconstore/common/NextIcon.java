@@ -10,7 +10,5 @@ public class NextIcon extends MenuIcon {
 
 	public NextIcon(Combatant combatant, Menu menu) {
 		super(Material.COAL_BLOCK, combatant, menu, "Next");
-		// TODO Auto-generated constructor stub
 	}
-
 }

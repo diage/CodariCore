@@ -3,21 +3,19 @@ package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawn
 import org.bukkit.Material;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class SaveIcon extends ExecutableIcon {
-	private String kitName;
-	private Combatant combatant;
+	private Kit kit;
 	
-	public SaveIcon(Combatant combatant, String kitName) {
+	public SaveIcon(Combatant combatant, Kit kit) {
 		super(Material.OBSIDIAN, combatant, "Save");
-		this.combatant = combatant;
-		this.kitName = kitName;
+		this.kit = kit;
 	}
 
 	@Override
 	public void click() {
-		((CombatantCore)this.combatant).getKitManager().getKit(this.kitName).createFixedRepeatTime();
+		this.kit.createFixedRepeatTime();
 	}
 }

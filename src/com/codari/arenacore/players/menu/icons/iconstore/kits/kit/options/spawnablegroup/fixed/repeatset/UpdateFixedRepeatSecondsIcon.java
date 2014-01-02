@@ -7,10 +7,7 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 
 public class UpdateFixedRepeatSecondsIcon extends HoverIcon {
 
-	public UpdateFixedRepeatSecondsIcon(Material material, Combatant combatant,
-			String displayName) {
-		super(material, combatant, displayName);
-		// TODO Auto-generated constructor stub
+	public UpdateFixedRepeatSecondsIcon(Combatant combatant) {
+		super(Material.REDSTONE_BLOCK, combatant, "Second");
 	}
-
 }

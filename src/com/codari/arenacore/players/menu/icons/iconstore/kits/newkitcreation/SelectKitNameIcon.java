@@ -7,10 +7,8 @@ import com.codari.arenacore.players.menu.icons.RequestIcon;
 /* Note: This Icon is handled within the SaveKitIcon class. */
 public class SelectKitNameIcon extends RequestIcon {
 
-	public SelectKitNameIcon(Material material, Combatant combatant,
-			String displayName) {
+	public SelectKitNameIcon(Material material, Combatant combatant, String displayName) {
 		super(material, combatant, displayName);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -7,10 +7,7 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 
 public class UpdateFixedRepeatMinutesIcon extends HoverIcon {
 
-	public UpdateFixedRepeatMinutesIcon(Material material, Combatant combatant,
-			String displayName) {
-		super(material, combatant, displayName);
-		// TODO Auto-generated constructor stub
+	public UpdateFixedRepeatMinutesIcon(Combatant combatant) {
+		super(Material.COAL_BLOCK, combatant, "Minute");
 	}
-
 }

@@ -6,8 +6,8 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.RequestIcon;
 
 public class OverrideIcon extends RequestIcon {	
-	public OverrideIcon(Material material, Combatant combatant, String kitName) {
-		super(material, combatant, "Set Override");
+	public OverrideIcon(Combatant combatant) {
+		super(Material.ANVIL, combatant, "Set Override (Optional)");
 	}
 
 	@Override

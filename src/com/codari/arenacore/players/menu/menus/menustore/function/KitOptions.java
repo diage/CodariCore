@@ -23,7 +23,7 @@ public class KitOptions extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.A_TWO, new ConstructIcon(combatant, kit.getName()));
 		super.setSlot(FunctionMenuSlot.A_FOUR, new RenameIcon(combatant, kit));	
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
-		super.setSlot(FunctionMenuSlot.C_THREE, new TurnOnToolbeltIcon(combatant));
+		super.setSlot(FunctionMenuSlot.C_THREE, new TurnOnToolbeltIcon(combatant, kit.getName()));
 		super.setSlot(FunctionMenuSlot.C_FOUR, new TurnOffToolbeltIcon(combatant));
 	}
 }

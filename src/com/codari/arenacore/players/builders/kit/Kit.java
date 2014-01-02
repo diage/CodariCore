@@ -51,6 +51,10 @@ public class Kit implements Listener {
 		return this.name;
 	}
 	
+	public ArenaBuilderCore getArenaBuilder() {
+		return this.arenaBuilder;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -186,10 +190,6 @@ public class Kit implements Listener {
 	
 	public boolean getOverride() {
 		return this.override;
-	}
-	
-	public ArenaBuilderCore getArenaBuilder() {
-		return this.arenaBuilder;
 	}
 	
 	//-----TOOL BAR STUFF-----//

@@ -7,10 +7,7 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 
 public class UpdateFixedDelayTicksIcon extends HoverIcon {
 
-	public UpdateFixedDelayTicksIcon(Material material, Combatant combatant,
-			String displayName) {
-		super(material, combatant, displayName);
-		// TODO Auto-generated constructor stub
+	public UpdateFixedDelayTicksIcon(Combatant combatant) {
+		super(Material.GOLD_BLOCK, combatant, "Tick");
 	}
-
 }

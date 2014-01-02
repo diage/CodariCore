@@ -6,25 +6,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class SaveIcon extends ExecutableIcon implements Listener {
-	private String kitName;
-	private Combatant combatant;
+	private Kit kit;
 	
-	public SaveIcon(Combatant combatant, String kitName) {
+	public SaveIcon(Combatant combatant, Kit kit) {
 		super(Material.REDSTONE_BLOCK, combatant, "Save");
-		this.kitName = kitName;
+		this.kit = kit;
 	}
 
 	@Override
 	public void click() {
-		Player player = this.combatant.getPlayer();
-		if(((CombatantCore)combatant).getKitManager().getKit(this.kitName).createRandomTimeLineGroup()) {
+		Player player = this.getCombatant().getPlayer();
+		if(this.kit.createRandomTimeLineGroup()) {
 			player.sendMessage(ChatColor.GREEN + "You have successfully created a random spawnable group!");
 		} else {
-			player.sendMessage(ChatColor.RED + "Failed to create a random spawnable group! You must fill out a name and a delay time.");
+			player.sendMessage(ChatColor.RED + "Failed to create a random spawnable group! You must fill out at least a name and a delay time.");
 		}
 	}
 }
