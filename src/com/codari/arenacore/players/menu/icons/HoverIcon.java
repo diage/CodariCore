@@ -85,10 +85,10 @@ public class HoverIcon extends Icon {
 		} else {
 			int newInt = this.inputRow - newLore.size();
 			while(newInt > 0) {
-				newLore.set(newLore.size(), "");
+				newLore.add("");
 				newInt--;
 			}
-			newLore.set(newLore.size(), "" + this.input);
+			newLore.add("" + this.input);
 		}
 		this.itemMeta.setLore(newLore);
 		super.setItemMeta(this.itemMeta);
