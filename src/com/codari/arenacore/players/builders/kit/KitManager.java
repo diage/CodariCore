@@ -9,7 +9,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.menus.menustore.function.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.function.SpawnableGroupSelection;
 
 public class KitManager {
 	private Combatant combatant;
@@ -17,6 +19,7 @@ public class KitManager {
 	private Map<String, KitBuilder> kitBuilders;
 	private Map<String, Kit> kits;
 	private Map<String, KitSelection> kitSelectionMenus;
+	private Map<String, SpawnableGroupSelection> spawnableGroupSelectionMenus;
 	private ItemStack[] savedHotbar;
 	private Kit toolbarKit;
 	
@@ -25,6 +28,7 @@ public class KitManager {
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
 		this.kitSelectionMenus = new HashMap<>();
+		this.spawnableGroupSelectionMenus = new HashMap<>();
 		this.savedHotbar = new ItemStack[9];
 	}
 	
@@ -77,6 +81,18 @@ public class KitManager {
 	
 	public void addKitIcon(Combatant combatant, String kitName) {
 		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addKitIcon(combatant, kitName);
+	}
+	
+	public void setSpawnableGroupSelectionMenu(Combatant combatant, SpawnableGroupSelection spawnableGroupSelection) {
+		this.spawnableGroupSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupSelection);
+	}
+	
+	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
+		SpawnableGroupSelection spawnableGroupSelection = this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName());
+		Kit kit = spawnableGroupSelection.getKit();
+		String arenaObjectName = spawnableGroupSelection.getArenaObjectName();
+		BackIcon backIcon = spawnableGroupSelection.getBackIcon();
+		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, kit, arenaObjectName, groupName, backIcon);
 	}
 	
 	public Map<String, Kit> getKits() {

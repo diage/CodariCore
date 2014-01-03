@@ -43,13 +43,13 @@ public class KitSelection extends FunctionMenu {
 			if(this.nextPage != null) {
 				this.nextPage.addKitIcon(combatant, kitName);
 			} else {
-				this.addNextPage(combatant, kitName);
+				this.addNextPage(combatant);
 				this.nextPage.addKitIcon(combatant, kitName);
 			}
 		}
 	}	
 	
-	private void addNextPage(Combatant combatant, String kitName) {
+	private void addNextPage(Combatant combatant) {
 		Icon prevIcon = new PreviousIcon(combatant, this);
 		this.nextPage = new KitSelection(combatant, prevIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new NextIcon(combatant, this.nextPage));

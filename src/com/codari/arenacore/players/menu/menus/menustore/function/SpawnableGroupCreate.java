@@ -18,7 +18,7 @@ public class SpawnableGroupCreate extends FunctionMenu {
 	}
 	
 	private void addIcons(Combatant combatant, Kit kit, BackIcon backIcon) {
-		super.setSlot(FunctionMenuSlot.A_ONE, new SelectNameIcon(combatant, kit));
+		super.setSlot(FunctionMenuSlot.A_ONE, new SelectNameIcon(combatant));
 		super.setSlot(FunctionMenuSlot.A_TWO, new SetDelayTimeIcon(combatant, new SpawnableGroupDelaySet(combatant, kit, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.A_THREE, new SetRepeatTimeIcon(combatant, new SpawnableGroupRepeatSet(combatant, kit, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);

@@ -10,7 +10,5 @@ public class CreateSpawnableGroupIcon extends MenuIcon {
 
 	public CreateSpawnableGroupIcon(Combatant combatant, Menu menu) {
 		super(Material.GOLD_BLOCK, combatant, menu, "Create Spawnable Group");
-		// TODO Auto-generated constructor stub
 	}
-
 }

@@ -1,8 +1,11 @@
 package com.codari.arenacore;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
@@ -79,6 +82,10 @@ public class LibraryCore implements Library {
 	
 	public Collection<String> getObjectNames() {
 		return this.objects.keySet();
+	}
+	
+	public Set<Entry<String, Class<? extends ArenaObject>>> getObjectEntrys() {
+		return Collections.unmodifiableSet(this.objects.entrySet());
 	}
 	
 	//-----Role Declaration Related-----//
