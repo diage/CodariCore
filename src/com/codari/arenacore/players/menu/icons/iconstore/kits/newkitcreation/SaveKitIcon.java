@@ -24,7 +24,7 @@ public class SaveKitIcon extends ExecutableIcon {
 				((CombatantCore)this.getCombatant()).getKitManager().createKit(kitName);
 				player.sendMessage(ChatColor.GREEN + "You have succesfully created a kit!");
 				SaveKitIconListener.requestedKitNames.remove(player.getName());
-				((CombatantCore)this.getCombatant()).getKitManager().reloadKitSelectionMenu(this.getCombatant(), kitName);
+				((CombatantCore)this.getCombatant()).getKitManager().addKitIcon(this.getCombatant(), kitName);
 			} else {
 				player.sendMessage(ChatColor.RED + "A kit with the name \"" + kitName + "\" already exists!");
 			}

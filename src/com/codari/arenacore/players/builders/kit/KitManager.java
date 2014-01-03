@@ -75,9 +75,8 @@ public class KitManager {
 		this.kitSelectionMenus.put(combatant.getPlayerReference().getName(), kitSelection);
 	}
 	
-	public void reloadKitSelectionMenu(Combatant combatant, String kitName) {
+	public void addKitIcon(Combatant combatant, String kitName) {
 		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addKitIcon(combatant, kitName);
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Added Kit Icon");	//TODO
 	}
 	
 	public Map<String, Kit> getKits() {

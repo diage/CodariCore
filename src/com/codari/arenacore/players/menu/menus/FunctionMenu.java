@@ -3,9 +3,6 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
@@ -72,6 +69,7 @@ public class FunctionMenu implements Menu {
 				counter++;
 			}
 		}
+
 		switch(counter) {
 		case 0:
 			return FunctionMenuSlot.A_ONE;
@@ -94,7 +92,6 @@ public class FunctionMenu implements Menu {
 		case 9:
 			return FunctionMenuSlot.B_FIVE;
 		default:
-			Bukkit.broadcastMessage(ChatColor.RED + "NO SLOT!");	//TODO
 			return FunctionMenuSlot.NO_SLOT;
 		}
 	}
