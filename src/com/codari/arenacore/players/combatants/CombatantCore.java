@@ -80,8 +80,8 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.getSelectedKitBuilder().setTeamSize((byte) 2);
 		this.kitManager.getSelectedKitBuilder().selectWinCondition(new WinCondition2v2(100));
 		this.kitManager.getSelectedKitBuilder().submitWinCondition();
-		this.kitManager.createKit("This");
-		this.kitManager.createKit("is");
+		this.kitManager.createKit("TestKit");
+		/*this.kitManager.createKit("is");
 		this.kitManager.createKit("for");
 		this.kitManager.createKit("testing");
 		this.kitManager.createKit("Please");
@@ -101,7 +101,7 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.createKit("This10");
 		this.kitManager.createKit("This11");
 		this.kitManager.createKit("This12");
-		this.kitManager.createKit("22 Kits");
+		this.kitManager.createKit("22 Kits");*/
 		
 		UtilMenu utilMenu = new UtilMenu(this);
 		KitSelection kitSelection = new KitSelection(this);

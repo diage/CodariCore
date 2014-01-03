@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.builders.kit;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,12 +9,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.menu.menus.menustore.function.KitSelection;
 
 public class KitManager {
 	private Combatant combatant;
 	private KitBuilder selectedBuilder;
 	private Map<String, KitBuilder> kitBuilders;
 	private Map<String, Kit> kits;
+	private Map<String, KitSelection> kitSelectionMenus;
 	private ItemStack[] savedHotbar;
 	private Kit toolbarKit;
 	
@@ -21,6 +24,7 @@ public class KitManager {
 		this.combatant = combatant;
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
+		this.kitSelectionMenus = new HashMap<>();
 		this.savedHotbar = new ItemStack[9];
 	}
 	
@@ -65,6 +69,15 @@ public class KitManager {
 		} else {
 			Bukkit.broadcastMessage(ChatColor.RED + "You can't rename a kit that doesn't exist in the kit manager!"); //TODO
 		}
+	}
+	
+	public void setKitSelectionMenu(Combatant combatant, KitSelection kitSelection) {
+		this.kitSelectionMenus.put(combatant.getPlayerReference().getName(), kitSelection);
+	}
+	
+	public void reloadKitSelectionMenu(Combatant combatant, String kitName) {
+		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addKitIcon(combatant, kitName);
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Added Kit Icon");	//TODO
 	}
 	
 	public Map<String, Kit> getKits() {
