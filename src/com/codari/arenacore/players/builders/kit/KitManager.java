@@ -76,6 +76,7 @@ public class KitManager {
 	}
 	
 	public void reloadKitSelectionMenu(Combatant combatant) {
+		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).clearMenu();
 		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addIcons(combatant);
 		Bukkit.broadcastMessage(ChatColor.GREEN + "Reloaded Kit Selection Menu Icons");	//TODO
 	}

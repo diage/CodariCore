@@ -55,6 +55,10 @@ public class FunctionMenu implements Menu {
 		return this.icons.size();
 	}
 	
+	public void clearMenu() {
+		this.icons.clear();
+	}
+	
 	public Map<FunctionMenuSlot, Icon> getIcons() {
 		return this.icons;
 	}
