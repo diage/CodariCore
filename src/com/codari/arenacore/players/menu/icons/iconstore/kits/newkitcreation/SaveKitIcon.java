@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.menu.icons.iconstore.kits.newkitcreation;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,8 +36,11 @@ public class SaveKitIcon extends ExecutableIcon implements Listener {
 
 	@EventHandler()
 	public void setKitName(IconRequestEvent e) {
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Test 1 passed!");
 		if(e.getIcon() instanceof SelectKitNameIcon) {
+			Bukkit.broadcastMessage(ChatColor.GREEN + "Test 2 passed!");
 			if(e.getIcon().getCombatant().equals(this.getCombatant())) {
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Test 3 passed!");
 				this.kitName = e.getPlayerInput();
 			}
 		}
