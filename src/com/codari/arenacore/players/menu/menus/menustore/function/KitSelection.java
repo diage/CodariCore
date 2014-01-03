@@ -15,6 +15,8 @@ import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class KitSelection extends FunctionMenu {
+	private KitSelection nextKitSelectionMenu;
+	
 	/**
 	 *  Construct the first page for a Kit Selection Menu.
 	 *  
@@ -26,14 +28,33 @@ public class KitSelection extends FunctionMenu {
 		this.addIcons(combatant);
 		((CombatantCore)combatant).getKitManager().setKitSelectionMenu(combatant, this);
 	}
+	
+	/* This will construct any further needed pages for Kit Selection. */
+	private KitSelection(Combatant combatant, Icon previous, String kitName) {
+		super(combatant);
+		this.addPreviousIcon(previous);
+		this.addKitIcon(combatant, kitName);
+	}	
 
 	/* This will construct any further needed pages for Kit Selection. */
 	private KitSelection(Combatant combatant, Icon previous, Set<String> kitNames) {
 		super(combatant);
 		this.addIcons(combatant, previous, kitNames);
 	}
+	
+	public void addKitIcon(Combatant combatant, String kitName) {
+		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
+			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().getKit(kitName), new BackIcon(combatant, this)), kitName));
+		} else {
+			if(this.nextKitSelectionMenu != null) {
+				super.setSlot(this.nextKitSelectionMenu.getNextAvailableSlot(),  new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().getKit(kitName), new BackIcon(combatant, this)), kitName));
+			} else {
+				this.addNavigationIcons(combatant, kitName);
+			}
+		}
+	}	
 
-	public void addIcons(Combatant combatant) {
+	private void addIcons(Combatant combatant) {
 		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant, new BackIcon(combatant, this))));
 		Set<String> kitNames = ((CombatantCore)combatant).getKitManager().getKits().keySet();
 		
@@ -47,9 +68,7 @@ public class KitSelection extends FunctionMenu {
 		}
 		
 		if(kitNames.size() > 0) {
-			Icon prevIcon = new PreviousIcon(combatant, this);
-			Icon nextIcon = new NextIcon(combatant, new KitSelection(combatant, prevIcon, kitNames));
-			this.addNextIcon(nextIcon);
+			this.addNavigationIcons(combatant, kitNames);
 		}
 	}
 
@@ -67,18 +86,23 @@ public class KitSelection extends FunctionMenu {
 		}
 		
 		if(kitNames.size() > 0) {
-			Icon prevIcon = new PreviousIcon(combatant, this);
-			Icon nextIcon = new NextIcon(combatant, new KitSelection(combatant, prevIcon, kitNames));
-			this.addNextIcon(nextIcon);
+			this.addNavigationIcons(combatant, kitNames);
 		}
 	}
-
-	private void addKitIcon(Combatant combatant, String kitName) {
-		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().getKit(kitName), new BackIcon(combatant, this)), kitName));
-		} 
+	
+	private void addNavigationIcons(Combatant combatant, String kitName) {
+		Icon prevIcon = new PreviousIcon(combatant, this);
+		this.nextKitSelectionMenu = new KitSelection(combatant, prevIcon, kitName);
+		Icon nextIcon = new NextIcon(combatant, this.nextKitSelectionMenu);
+		this.addNextIcon(nextIcon);		
 	}
-
+	
+	private void addNavigationIcons(Combatant combatant, Set<String> kitNames) {
+		Icon prevIcon = new PreviousIcon(combatant, this);
+		this.nextKitSelectionMenu = new KitSelection(combatant, prevIcon, kitNames);
+		Icon nextIcon = new NextIcon(combatant, this.nextKitSelectionMenu);
+		this.addNextIcon(nextIcon);
+	}
 
 	private void addNextIcon(Icon icon) {
 		super.setSlot(FunctionMenuSlot.C_FIVE, icon);
