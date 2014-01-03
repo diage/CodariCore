@@ -3,6 +3,8 @@ package com.codari.arenacore.players.builders.kit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -36,13 +38,17 @@ public class KitListener implements Listener {
 	@EventHandler()
 	private void changeRandomDelayTime(IconHoverUpdateEvent e) {
 		Kit kit = KitListener.currentKits.get(e.getIcon().getCombatant().getPlayerReference().getName());
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Successfully got the kit!");
 		if(!(kit == null)) {
 			if(e.getIcon() instanceof UpdateRandomDelayMinutesIcon) {
 				kit.updateRandomDelayMinutes(e.getNewInput());
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Minutes!");
 			} else if(e.getIcon() instanceof UpdateRandomDelaySecondsIcon) {
 				kit.updateRandomDelaySeconds(e.getNewInput());
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Seconds!");
 			} else if(e.getIcon() instanceof UpdateRandomDelayTicksIcon) {
 				kit.updateRandomDelayTicks(e.getNewInput());
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated ticks!");
 			}
 		}
 	}

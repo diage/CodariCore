@@ -24,6 +24,7 @@ public class KitSelection extends FunctionMenu {
 	public KitSelection(Combatant combatant) {
 		super(combatant);
 		this.addIcons(combatant);
+		((CombatantCore)combatant).getKitManager().setKitSelectionMenu(combatant, this);
 	}
 
 	/* This will construct any further needed pages for Kit Selection. */
@@ -32,7 +33,7 @@ public class KitSelection extends FunctionMenu {
 		this.addIcons(combatant, previous, kitNames);
 	}
 
-	private void addIcons(Combatant combatant) {
+	public void addIcons(Combatant combatant) {
 		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant, new BackIcon(combatant, this))));
 		Set<String> kitNames = ((CombatantCore)combatant).getKitManager().getKits().keySet();
 		

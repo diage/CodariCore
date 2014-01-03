@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.menu.icons;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -76,6 +77,9 @@ public class HoverIcon extends Icon {
 	
 	private void updateLore() {
 		List<String> newLore = itemMeta.getLore();
+		if(newLore == null) {
+			newLore = new ArrayList<>();
+		}
 		if(this.inputRow < newLore.size()) {
 			newLore.set(this.inputRow, "" + this.input);
 		} else {
