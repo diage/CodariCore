@@ -218,13 +218,16 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public Map<String, Object> serialize() {
 		return new ConfigurationOutput()
+				.addString("GameRule", this.getGameRule().getName())
 				.add(new ObjectListOutputFunction(), this.objects)
 				.result();
 	}
 	
 	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
 		ConfigurationInput input = new ConfigurationInput(args);
-		ArenaBuilderCore builder = (ArenaBuilderCore) Codari.getArenaManager().getArenaBuider(null);//FIXME
+		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
+		GameRule gameRule = arenaManager.getGameRule(input.getString("GameRule"));
+		ArenaBuilderCore builder = (ArenaBuilderCore) arenaManager.getArenaBuider(gameRule);
 		List<ArenaObject> objectList = input.get(new ObjectListInputFunction());
 		for (ArenaObject object : objectList) {
 			
