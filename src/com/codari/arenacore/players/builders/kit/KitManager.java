@@ -57,7 +57,7 @@ public class KitManager {
 	}
 	
 	public boolean containsKit(String kitName) {
-		return this.kitBuilders.containsKey(kitName);
+		return this.kits.containsKey(kitName);
 	}
 	
 	public void renameKit(String oldKitName, String newKitName) {
