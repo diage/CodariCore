@@ -218,7 +218,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public Map<String, Object> serialize() {
 		return new ConfigurationOutput()
-				.addString("d", "d")
 				.add(new ObjectListOutputFunction(), this.objects)
 				.result();
 	}

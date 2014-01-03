@@ -26,6 +26,7 @@ import com.codari.arena5.players.combatants.Combatant;
 public class GameRuleCore implements GameRule {
 	private static final long serialVersionUID = 3141996300251217554L;
 	//-----Fields-----//
+	private final String name;
 	private final List<WinCondition> winConditions;
 	private Time matchDuration;
 	private final Set<TimedAction> timedActions;
@@ -34,13 +35,27 @@ public class GameRuleCore implements GameRule {
 	private List<RoleDeclaration> roleDeclarations;
 	
 	//-----Constructor-----//
+	@Deprecated
 	public GameRuleCore() {
+		this.name = null;
+		this.winConditions = new ArrayList<>();
+		this.timedActions = new HashSet<>();
+		this.roleDeclarations = new ArrayList<>();
+	}
+	
+	public GameRuleCore(String name) {
+		this.name = name;
 		this.winConditions = new ArrayList<>();
 		this.timedActions = new HashSet<>();
 		this.roleDeclarations = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
+	@Override
+	public String getName() {
+		return this.name;
+	}
+	
 	@Override
 	public void setTeamSize(byte teamSize) {
 		this.teamSize = teamSize;

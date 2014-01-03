@@ -2,6 +2,7 @@ package com.codari.arenacore.arena;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
 import com.codari.arenacore.players.role.RoleCore;
@@ -28,6 +30,7 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, ArenaBuilderCore> arenaBuilders;
 	private final Map<String, ArenaRoleGroup> roleGroups;
 	private final Map<String, QueueCore> queues;
+	private final Map<String, GameRuleCore> gameRules;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
@@ -36,6 +39,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenaBuilders = new HashMap<>();
 		this.roleGroups = new HashMap<>();
 		this.queues = new HashMap<>();
+		this.gameRules = new LinkedHashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
 	}
 	
@@ -151,6 +155,17 @@ public class ArenaManagerCore implements ArenaManager {
 	
 	public boolean containsArenaBuild(String arenaName) {
 		return this.arenaBuilders.containsKey(arenaName);
+	}
+	
+	public void registerGameRule(String key, GameRuleCore gameRule) {
+		if (this.gameRules.containsKey(key)) {
+			throw new IllegalArgumentException("Game rule with that name already exists");
+		}
+		this.gameRules.put(key, gameRule);
+	}
+	
+	public GameRuleCore getGameRule(String key) {
+		return this.gameRules.get(key);
 	}
 
 	public class ArenaRoleGroup {
