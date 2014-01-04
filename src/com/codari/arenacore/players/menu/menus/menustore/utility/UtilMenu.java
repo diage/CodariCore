@@ -19,6 +19,6 @@ public class UtilMenu extends UtilityMenu {
 	private void addIcons(Combatant combatant) {
 		super.setSlot(UtilityMenuSlot.NINE, new ExitIcon(Material.OBSIDIAN, combatant));
 		super.setSlot(UtilityMenuSlot.ONE, new KitsIcon(combatant, new KitSelection(combatant)));
-		//super.setSlot(UtilityMenuSlot.TWO, new KitBuildersIcon(combatant, new KitSelection(combatant)));	//FIXME
+		//super.setSlot(UtilityMenuSlot.TWO, new KitBuildersIcon(combatant, new KitSelection(combatant)));	//FIXME - going to be added when we implement the kitbuilder menu
 	}
 }

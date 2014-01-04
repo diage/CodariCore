@@ -24,7 +24,6 @@ import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.menu.MenuManager;
-import com.codari.arenacore.players.menu.menus.menustore.function.KitSelection;
 import com.codari.arenacore.players.menu.menus.menustore.utility.UtilMenu;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -106,8 +105,7 @@ public final class CombatantCore implements Combatant {
 		*/
 		
 		UtilMenu utilMenu = new UtilMenu(this);
-		KitSelection kitSelection = new KitSelection(this);
-		this.menuManager.enterMenu(utilMenu, kitSelection);
+		this.menuManager.enterMenu(utilMenu);
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
