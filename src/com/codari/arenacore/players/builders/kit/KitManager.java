@@ -76,23 +76,26 @@ public class KitManager {
 	}
 	
 	public void setKitSelectionMenu(Combatant combatant, KitSelection kitSelection) {
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Set Kit Selection Method Called!");	//TODO
 		this.kitSelectionMenus.put(combatant.getPlayerReference().getName(), kitSelection);
 	}
 	
 	public void addKitIcon(Combatant combatant, String kitName) {
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Add Kit Icon Method Called!");	//TODO
 		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addKitIcon(combatant, kitName);
 	}
 	
 	public void setSpawnableGroupSelectionMenu(Combatant combatant, SpawnableGroupSelection spawnableGroupSelection) {
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Set Spawnable Group Selection Method Called!");	//TODO
 		this.spawnableGroupSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupSelection);
 	}
 	
 	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Add Spawnable Group Icon Method Called!");	//TODO
 		SpawnableGroupSelection spawnableGroupSelection = this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName());
 		Kit kit = spawnableGroupSelection.getKit();
-		String arenaObjectName = spawnableGroupSelection.getArenaObjectName();
 		BackIcon backIcon = spawnableGroupSelection.getBackIcon();
-		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, kit, arenaObjectName, groupName, backIcon);
+		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
 	}
 	
 	public Map<String, Kit> getKits() {

@@ -5,6 +5,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.builders.kit.ToolBarListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.CurrentArenaObjectNameListener;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveKitIconListener;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveSpawnableGroupIconListener;
 
@@ -16,5 +17,6 @@ public class IconListenerRegister {
 		Bukkit.getPluginManager().registerEvents(new KitListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new SaveKitIconListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new SaveSpawnableGroupIconListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new CurrentArenaObjectNameListener(), plugin);
 	}
 }

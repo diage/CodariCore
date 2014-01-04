@@ -14,17 +14,15 @@ import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 public class SpawnableGroupSelection extends FunctionMenu {
 	private SpawnableGroupSelection nextPage;
 	private Kit kit;
-	private String arenaObjectName;
 	private BackIcon backIcon;
 	
-	public SpawnableGroupSelection(Combatant combatant, Kit kit, String arenaObjectName, BackIcon backIcon) {
+	public SpawnableGroupSelection(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		for(String groupName : kit.getArenaBuilder().getRandomSpawnablesCopyMap().keySet()) {
-			this.addSpawnableGroupIcon(combatant, kit, arenaObjectName, groupName, backIcon);
+			this.addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
 		}
 		this.kit = kit;
-		this.arenaObjectName = arenaObjectName;
 		this.backIcon = backIcon;
 		((CombatantCore)combatant).getKitManager().setSpawnableGroupSelectionMenu(combatant, this);
 	}
@@ -35,15 +33,15 @@ public class SpawnableGroupSelection extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_TWO, previous);
 	}
 	
-	public void addSpawnableGroupIcon(Combatant combatant, Kit kit, String arenaObjectName, String groupName, BackIcon backIcon) {
+	public void addSpawnableGroupIcon(Combatant combatant, Kit kit, String groupName, BackIcon backIcon) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SlotSelection(combatant, kit, groupName, arenaObjectName, new BackIcon(combatant, this)), groupName));
+			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SlotSelection(combatant, kit, groupName, new BackIcon(combatant, this)), groupName));
 		} else {
 			if(this.nextPage != null) {
-				this.nextPage.addSpawnableGroupIcon(combatant, kit, arenaObjectName, groupName, backIcon);
+				this.nextPage.addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
 			} else {
 				this.addNextPage(combatant);
-				this.nextPage.addSpawnableGroupIcon(combatant, kit, arenaObjectName, groupName, backIcon);
+				this.nextPage.addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
 			}
 		}
 	}
@@ -56,10 +54,6 @@ public class SpawnableGroupSelection extends FunctionMenu {
 	
 	public Kit getKit() {
 		return this.kit;
-	}
-	
-	public String getArenaObjectName() {
-		return this.arenaObjectName;
 	}
 	
 	public BackIcon getBackIcon() {

@@ -27,6 +27,7 @@ import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class SpawnableGroup extends FunctionMenu {
 	private SpawnableGroup nextPage;
+	private SpawnableGroupSelection spawnableGroupSelection;
 	
 	public SpawnableGroup(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
@@ -35,23 +36,25 @@ public class SpawnableGroup extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_FOUR, new CreateSpawnableGroupIcon(combatant, new SpawnableGroupCreate(combatant, kit, new BackIcon(combatant, this))));			
 		for(Entry<String, Class<? extends ArenaObject>> objectEntry : ((LibraryCore)Codari.getLibrary()).getObjectEntrys()) {
 			this.addArenaObject(combatant, kit, objectEntry, backIcon);
-		}	
+		}
+		this.spawnableGroupSelection = new SpawnableGroupSelection(combatant, kit, new BackIcon(combatant, this));
 	}
 	
 	/* This will construct any further needed pages for Spawnable Group. */
-	private SpawnableGroup(Combatant combatant, Kit kit, Icon previous, BackIcon backIcon) {
+	private SpawnableGroup(Combatant combatant, Kit kit, Icon previous, BackIcon backIcon, SpawnableGroupSelection spawnableGroupSelection) {
 		super(combatant);
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		super.setSlot(FunctionMenuSlot.C_TWO, previous);
 		super.setSlot(FunctionMenuSlot.C_THREE, new EditSpawnableGroupIcon(combatant, new SpawnableGroupEdit(combatant, kit, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.C_FOUR, new CreateSpawnableGroupIcon(combatant, new SpawnableGroupCreate(combatant, kit, new BackIcon(combatant, this))));
+		this.spawnableGroupSelection = spawnableGroupSelection;
 	}
 	
 	private void addArenaObject(Combatant combatant, Kit kit, Entry<String, Class<? extends ArenaObject>> objectEntry, BackIcon backIcon) {
 		String arenaObjectName = objectEntry.getKey();
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
 			if(RandomSpawnableObject.class.isAssignableFrom(objectEntry.getValue())) {
-				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectRandomIcon(combatant, new SpawnableGroupSelection(combatant, kit, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
+				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectRandomIcon(combatant, this.spawnableGroupSelection, arenaObjectName));
 			} else if(FixedSpawnableObject.class.isAssignableFrom(objectEntry.getValue())) {
 				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectFixedIcon(combatant, new FixedSpawnableTimeSelection(combatant, kit, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
 			} else if(PersistentObject.class.isAssignableFrom(objectEntry.getValue())) {
@@ -71,7 +74,7 @@ public class SpawnableGroup extends FunctionMenu {
 	
 	private void addNextPage(Combatant combatant, Kit kit, BackIcon backIcon) {
 		Icon prevIcon = new PreviousIcon(combatant, this);
-		this.nextPage = new SpawnableGroup(combatant, kit, prevIcon, backIcon);
+		this.nextPage = new SpawnableGroup(combatant, kit, prevIcon, backIcon, this.spawnableGroupSelection);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new NextIcon(combatant, this.nextPage));
 	}
 }

@@ -12,9 +12,9 @@ import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class SlotSelection extends FunctionMenu {
 
-	public SlotSelection(Combatant combatant, Kit kit, String groupName, String arenaObjectName, BackIcon backIcon) {
+	public SlotSelection(Combatant combatant, Kit kit, String groupName, BackIcon backIcon) {
 		super(combatant);
-		this.addRandomSpawnableIcons(combatant, kit, groupName, arenaObjectName, backIcon);
+		this.addRandomSpawnableIcons(combatant, kit, groupName, backIcon);
 	}
 	
 	public SlotSelection(Combatant combatant, Kit kit, String arenaObjectName, Time delayTime, Time repeatTime, BackIcon backIcon) {
@@ -28,15 +28,15 @@ public class SlotSelection extends FunctionMenu {
 	}
 	
 	//---Random Spawnable Slot Selection Icons---//
-	private void addRandomSpawnableIcons(Combatant combatant, Kit kit, String groupName, String arenaObjectName, BackIcon backIcon) {
+	private void addRandomSpawnableIcons(Combatant combatant, Kit kit, String groupName, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		
-		super.setSlot(FunctionMenuSlot.A_ONE, new RandomSpawnableSlotIcon(combatant, kit, groupName, arenaObjectName, 1));
-		super.setSlot(FunctionMenuSlot.A_TWO, new RandomSpawnableSlotIcon(combatant, kit, groupName, arenaObjectName, 2));
-		super.setSlot(FunctionMenuSlot.A_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, arenaObjectName, 3));
-		super.setSlot(FunctionMenuSlot.A_FOUR, new RandomSpawnableSlotIcon(combatant, kit, groupName, arenaObjectName, 4));
-		super.setSlot(FunctionMenuSlot.A_FIVE, new RandomSpawnableSlotIcon(combatant, kit, groupName, arenaObjectName, 5));
-		super.setSlot(FunctionMenuSlot.B_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, arenaObjectName, 6));
+		super.setSlot(FunctionMenuSlot.A_ONE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 1));
+		super.setSlot(FunctionMenuSlot.A_TWO, new RandomSpawnableSlotIcon(combatant, kit, groupName, 2));
+		super.setSlot(FunctionMenuSlot.A_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 3));
+		super.setSlot(FunctionMenuSlot.A_FOUR, new RandomSpawnableSlotIcon(combatant, kit, groupName, 4));
+		super.setSlot(FunctionMenuSlot.A_FIVE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 5));
+		super.setSlot(FunctionMenuSlot.B_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 6));
 	}
 	
 	//---Fixed Spawnable Slot Selection Icons---//
