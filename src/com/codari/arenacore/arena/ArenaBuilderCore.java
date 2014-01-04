@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.Codari;
@@ -259,6 +260,17 @@ public class ArenaBuilderCore implements ArenaBuilder {
 				
 			}
 			return objectList;
+		}
+	}
+	
+	//-----Object Data Packet-----//
+	private final class ObjectDataPacket implements ConfigurationSerializable {
+		private final String objectName = null;
+
+		@Override
+		public Map<String, Object> serialize() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 }
