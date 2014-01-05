@@ -15,7 +15,7 @@ public class KitBuilderSelection extends FunctionMenu {
 	private KitBuilderSelection nextPage;
 	
 	/**
-	 *  Construct the first page for a Kit Selection Menu.
+	 *  Construct the first page for a Kit Builder Selection Menu.
 	 *  
 	 *  @param Combatant reference
 	 *  
