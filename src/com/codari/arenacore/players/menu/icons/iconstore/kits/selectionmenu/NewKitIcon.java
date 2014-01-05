@@ -10,7 +10,6 @@ public class NewKitIcon extends MenuIcon {
 
 	public NewKitIcon(Combatant combatant, Menu menu) {
 		super(Material.REDSTONE_BLOCK, combatant, menu, "New Kit");
-		// TODO Auto-generated constructor stub
 	}
 
 }
