@@ -34,10 +34,10 @@ public class SpawnableGroup extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		super.setSlot(FunctionMenuSlot.C_THREE, new EditSpawnableGroupIcon(combatant, new SpawnableGroupEdit(combatant, kit, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.C_FOUR, new CreateSpawnableGroupIcon(combatant, new SpawnableGroupCreate(combatant, kit, new BackIcon(combatant, this))));			
+		this.spawnableGroupSelection = new SpawnableGroupSelection(combatant, kit, new BackIcon(combatant, this));
 		for(Entry<String, Class<? extends ArenaObject>> objectEntry : ((LibraryCore)Codari.getLibrary()).getObjectEntrys()) {
 			this.addArenaObject(combatant, kit, objectEntry, backIcon);
 		}
-		this.spawnableGroupSelection = new SpawnableGroupSelection(combatant, kit, new BackIcon(combatant, this));
 	}
 	
 	/* This will construct any further needed pages for Spawnable Group. */
