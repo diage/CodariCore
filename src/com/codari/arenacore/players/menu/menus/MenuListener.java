@@ -27,6 +27,7 @@ public class MenuListener implements Listener {
 						combatant.exitAllMenus();
 						Bukkit.broadcastMessage(ChatColor.BLUE + "Closing menu!");	//TODO
 					}
+					e.setCancelled(true);
 				}
 			}
 		}
