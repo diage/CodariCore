@@ -124,6 +124,7 @@ public class KitManager {
 		}
 		this.combatant.getPlayer().getInventory().setContents(inventoryContents);
 		this.combatant.getPlayer().updateInventory();
+		this.combatant.setHotbarActibe(true);
 		this.toolbarKit = kit;
 	}
 	
@@ -136,6 +137,7 @@ public class KitManager {
 			}
 			this.combatant.getPlayer().getInventory().setContents(inventoryContents);
 			this.combatant.getPlayer().updateInventory();
+			this.combatant.setHotbarActibe(false);
 			this.toolbarKit = null;
 		}
 	}
