@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.menus.menustore.function;
+package com.codari.arenacore.players.menu.menus.menustore.function.kits;
 
 import java.util.Iterator;
 import java.util.Set;

@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
-import com.codari.arenacore.players.menu.menus.menustore.function.KitSelection;
-import com.codari.arenacore.players.menu.menus.menustore.function.SpawnableGroupSelection;
+import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.function.kits.SpawnableGroupSelection;
 
 public class KitManager {
 	private Combatant combatant;
@@ -52,6 +52,13 @@ public class KitManager {
 			Bukkit.broadcastMessage(ChatColor.RED + "You got an invalid kit name!!"); //TODO
 		}
 		return this.kits.get(name);
+	}
+	
+	public KitBuilder getKitBuilder(String name) {
+		if(!this.kitBuilders.containsKey(name)) {
+			Bukkit.broadcastMessage(ChatColor.RED + "You got an invalid kit builder name!!"); //TODO
+		}
+		return this.kitBuilders.get(name);
 	}
 	
 	public Kit createKit(String name) {
