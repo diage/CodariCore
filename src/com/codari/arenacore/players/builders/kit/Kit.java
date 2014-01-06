@@ -242,6 +242,9 @@ public class Kit implements Listener {
 	}
 	
 	private String spawnString(Location location) {
-		return "Spawn: x=" + location.getBlockX() + " y=" + location.getBlockY() + " z=" + location.getBlockZ();
+		return ChatColor.GREEN + "Spawn:" +
+				" x=" + location.getBlockX() +
+				" y=" + location.getBlockY() +
+				" z=" + location.getBlockZ();
 	}
 }
