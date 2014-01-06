@@ -1,10 +1,13 @@
 package com.codari.arenacore.players.builders.kit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -40,11 +43,26 @@ public class Kit implements Listener {
 	
 	//-----Tool Bar-----//
 	private final ItemStack[] tools;
+	private final static ItemStack SPAWN_SETTER = new ItemStack(Material.STICK);
+	private final static ItemStack TOOLBAR_EXIT = new ItemStack(Material.STICK);
+	static {
+		ItemMeta spawnMeta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
+		spawnMeta.setDisplayName("Spawn Setter");
+		List<String> spawnLore = new ArrayList<>();
+		spawnLore.add(ChatColor.GREEN + "Spawn Locations");
+		spawnMeta.setLore(spawnLore);
+		SPAWN_SETTER.setItemMeta(spawnMeta);
+		ItemMeta exitMeta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
+		exitMeta.setDisplayName(ChatColor.RED + "Exit ToolBar");
+		TOOLBAR_EXIT.setItemMeta(exitMeta);
+	}
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
 		this.arenaBuilder = new ArenaBuilderCore(gameRule);
 		this.tools = new ItemStack[9];
+		this.tools[4] = SPAWN_SETTER;
+		this.tools[5] = TOOLBAR_EXIT;
 	}
 	
 	public String getName() {
@@ -193,18 +211,37 @@ public class Kit implements Listener {
 	}
 	
 	//-----TOOL BAR STUFF-----//
-	public void setTool(int slot, String objectName, String... extraInformation) throws ArrayIndexOutOfBoundsException {
-		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.GOLD_HOE);
+	public void setTool(int slot, String objectName, String... extraInformation) throws IllegalArgumentException {
+		if (slot < 0 || slot > 3) {
+			throw new IllegalArgumentException("Tool slots are between 0 and 3 only");
+		}
+		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
 		meta.setDisplayName(objectName);
 		extraInformation = ArrayUtils.nullToEmpty(extraInformation);
 		List<String> lore = Arrays.asList(extraInformation);
 		meta.setLore(lore);
-		ItemStack item = new ItemStack(Material.GOLD_HOE);
+		ItemStack item = new ItemStack(Material.STICK);
 		item.setItemMeta(meta);
 		this.tools[slot] = item;
 	}
 	
 	public ItemStack[] getTools() {
 		return ArrayUtils.clone(this.tools);
+	}
+	
+	void addSpawn(Location location) {
+		addSpawn(location, this.tools[4]);
+	}
+	
+	void addSpawn(Location location, ItemStack itemStack) {
+		ItemMeta meta = itemStack.getItemMeta();
+		List<String> lore = meta.getLore();
+		lore.add(spawnString(location));
+		meta.setLore(lore);
+		itemStack.setItemMeta(meta);
+	}
+	
+	private String spawnString(Location location) {
+		return "Spawn: x=" + location.getBlockX() + " y=" + location.getBlockY() + " z=" + location.getBlockZ();
 	}
 }

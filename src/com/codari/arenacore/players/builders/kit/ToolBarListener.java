@@ -51,10 +51,17 @@ public class ToolBarListener implements Listener {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null) {
 			KitManager kitManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getKitManager();
 			if (kitManager.isToolBarEnabled()) {
+				Kit kit = kitManager.getToolbarKit();
+				ArenaBuilderCore builder = kit.getArenaBuilder();
+				if (e.getItem().equals(kit.getTools()[4])) {
+					builder.addSpawnLocation(e.getClickedBlock().getLocation());
+					kit.addSpawn(e.getClickedBlock().getLocation());
+					kit.addSpawn(e.getClickedBlock().getLocation(), e.getItem());
+					return;
+				}
 				String objectName = e.getItem().getItemMeta().getDisplayName();
 				Location location = e.getClickedBlock().getLocation();
 				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
-				ArenaBuilderCore builder = kitManager.getToolbarKit().getArenaBuilder();
 				List<String> extraInformation = e.getItem().getItemMeta().getLore();
 				
 				//---Registering Arena Objects---//
