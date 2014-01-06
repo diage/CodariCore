@@ -5,7 +5,6 @@ import java.io.File;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
@@ -44,6 +43,7 @@ public final class CombatantCore implements Combatant {
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
+	private UtilMenu utilMenu;
 	
 	//---Hotbar---//
 	//Skill Bar
@@ -104,8 +104,7 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.createKit("22 Kits");
 		*/
 		
-		UtilMenu utilMenu = new UtilMenu(this);
-		this.menuManager.enterMenu(utilMenu);
+		this.utilMenu = new UtilMenu(this);
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
@@ -302,7 +301,11 @@ public final class CombatantCore implements Combatant {
 		return this.inArena;
 	}
 	
-	public void setToolBar(ItemStack[] tools) {
-		
+	public void enterUtilityMenu() {
+		this.menuManager.enterMenu(this.utilMenu);
+	}
+	
+	public void exitAllMenus() {
+		this.menuManager.exitMenu();
 	}
 }

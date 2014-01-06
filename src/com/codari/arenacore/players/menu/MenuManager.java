@@ -173,4 +173,12 @@ public class MenuManager {
 		}
 		return null;
 	}
+	
+	public void setInMenu(boolean inMenu) {
+		this.inMenu = inMenu;
+	}
+	
+	public boolean isMenuOpen() {
+		return this.inMenu;
+	}	
 }
