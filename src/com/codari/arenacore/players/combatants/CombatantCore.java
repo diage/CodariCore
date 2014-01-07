@@ -66,9 +66,10 @@ public final class CombatantCore implements Combatant {
 		
 		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
-		this.menuManager = new MenuManager(this);
 		
 		this.kitManager = new KitManager(this);
+		this.menuManager = new MenuManager(this);
+		
 		
 		/*	   FIXME - Begin Testing 	 */
 		this.kitManager.createKitBuilder("2v2");
