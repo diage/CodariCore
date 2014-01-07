@@ -3,9 +3,16 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Material;
+
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.iconstore.BorderIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.ExitIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.KitBuildersIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.KitsIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
+import com.codari.arenacore.players.menu.menus.menustore.function.kitbuilders.KitBuilderSelection;
+import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitSelection;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
@@ -18,6 +25,13 @@ public class UtilityMenu implements Menu {
 		this.icons.put(UtilityMenuSlot.SEP_ONE, new BorderIcon(combatant));
 		this.icons.put(UtilityMenuSlot.SEP_TWO, new BorderIcon(combatant));
 		this.icons.put(UtilityMenuSlot.SEP_THREE, new BorderIcon(combatant));
+		this.addIcons(combatant);
+	}
+	
+	private void addIcons(Combatant combatant) {
+		this.setSlot(UtilityMenuSlot.ONE, new KitsIcon(combatant, new KitSelection(combatant)));
+		this.setSlot(UtilityMenuSlot.TWO, new KitBuildersIcon(combatant, new KitBuilderSelection(combatant)));		
+		this.setSlot(UtilityMenuSlot.NINE, new ExitIcon(Material.OBSIDIAN, combatant));		
 	}
 	
 	@Override

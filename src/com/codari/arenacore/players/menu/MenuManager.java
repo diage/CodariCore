@@ -66,7 +66,7 @@ public class MenuManager {
 		}
 	}
 	
-	public void enterSavedMenu() {
+	public void enterMenu() {
 		if(!this.inMenu) {
 			this.savedInventory = this.combatant.getPlayer().getInventory();
 			
@@ -172,10 +172,6 @@ public class MenuManager {
 			return this.currentUtilityInventory.get(menuSlot);
 		}
 		return null;
-	}
-	
-	public void setInMenu(boolean inMenu) {
-		this.inMenu = inMenu;
 	}
 	
 	public boolean isMenuOpen() {

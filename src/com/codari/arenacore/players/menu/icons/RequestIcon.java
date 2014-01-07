@@ -10,8 +10,10 @@ import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
+import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.icons.structure.IconType;
@@ -31,7 +33,7 @@ public abstract class RequestIcon extends Icon {
 
 	public void startConversation() {
 		Player player = Bukkit.getPlayer(super.getPlayerName());
-		player.closeInventory();
+		((CombatantCore)Codari.getArenaManager().getCombatant(player)).getMenuManager().saveExitMenu();
 		player.getOpenInventory().close();
 		this.conversationFactory.buildConversation(player).begin();
 	}
@@ -60,6 +62,7 @@ public abstract class RequestIcon extends Icon {
 		public Prompt acceptInput(ConversationContext context, String playerInput) {
 			context.setSessionData("input", playerInput);
 			Bukkit.getPluginManager().callEvent(new IconRequestEvent(icon, playerInput));
+			((CombatantCore)this.icon.getCombatant()).getMenuManager().enterMenu();
 			return Prompt.END_OF_CONVERSATION;
 		}
 

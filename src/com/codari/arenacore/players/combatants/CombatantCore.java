@@ -23,7 +23,6 @@ import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.menu.MenuManager;
-import com.codari.arenacore.players.menu.menus.menustore.utility.UtilMenu;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
 
@@ -43,7 +42,6 @@ public final class CombatantCore implements Combatant {
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
-	private UtilMenu utilMenu;
 	
 	//---Hotbar---//
 	//Skill Bar
@@ -104,7 +102,6 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.createKit("22 Kits");
 		*/
 		
-		this.utilMenu = new UtilMenu(this);
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
@@ -299,13 +296,5 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public boolean inArena() {
 		return this.inArena;
-	}
-	
-	public void enterUtilityMenu() {
-		this.menuManager.enterMenu(this.utilMenu);
-	}
-	
-	public void exitAllMenus() {
-		this.menuManager.exitMenu();
 	}
 }

@@ -21,10 +21,10 @@ public class MenuListener implements Listener {
 			if(!combatant.inArena()) {
 				if(e.getSlot() == 8) {
 					if(!combatant.getMenuManager().isMenuOpen()) {
-						combatant.enterUtilityMenu();
+						combatant.getMenuManager().enterMenu();
 						Bukkit.broadcastMessage(ChatColor.BLUE + "Opening menu!");	//TODO
 					} else {
-						combatant.exitAllMenus();
+						combatant.getMenuManager().exitMenu();
 						Bukkit.broadcastMessage(ChatColor.BLUE + "Closing menu!");	//TODO
 					}
 					e.setCancelled(true);
@@ -39,7 +39,9 @@ public class MenuListener implements Listener {
 			Player player = (Player)e.getPlayer();
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {
-				combatant.getMenuManager().setInMenu(false);
+				if(combatant.getMenuManager().isMenuOpen()) {
+					combatant.getMenuManager().exitMenu();
+				}
 			}
 		}
 	}
