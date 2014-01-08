@@ -12,6 +12,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.menus.menustore.function.kitbuilders.KitBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitCreationBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.function.kits.SpawnableGroupEditSelection;
 import com.codari.arenacore.players.menu.menus.menustore.function.kits.SpawnableGroupSelection;
 
 public class KitManager {
@@ -23,6 +24,7 @@ public class KitManager {
 	private Map<String, KitBuilderSelection> kitBuilderSelectionMenus;
 	private Map<String, KitCreationBuilderSelection> kitCreationBuilderSelectionMenus;
 	private Map<String, SpawnableGroupSelection> spawnableGroupSelectionMenus;
+	private Map<String, SpawnableGroupEditSelection> spawnableGroupEditSelectionMenus;
 	private ItemStack[] savedHotbar;
 	private Kit toolbarKit;
 	
@@ -34,6 +36,7 @@ public class KitManager {
 		this.kitBuilderSelectionMenus = new HashMap<>();
 		this.kitCreationBuilderSelectionMenus = new HashMap<>();
 		this.spawnableGroupSelectionMenus = new HashMap<>();
+		this.spawnableGroupEditSelectionMenus = new HashMap<>();
 		this.savedHotbar = new ItemStack[9];
 	}
 	
@@ -121,8 +124,13 @@ public class KitManager {
 		this.spawnableGroupSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupSelection);
 	}
 	
+	public void setSpawnableGroupEditSelectionMenu(Combatant combatant, SpawnableGroupEditSelection spawnableGroupEditSelection) {
+		this.spawnableGroupEditSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupEditSelection);
+	}
+	
 	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
 		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, groupName);
+		this.spawnableGroupEditSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, groupName);
 	}
 	
 	public Map<String, Kit> getKits() {
