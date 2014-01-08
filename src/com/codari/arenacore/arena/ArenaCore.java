@@ -80,6 +80,7 @@ public final class ArenaCore implements Arena {
 		return this.rules;
 	}
 	
+	@Deprecated
 	public void serializeTest(File file) {
 		//CodariSerialization.serialize(file, this);	//FIXME
 	}
