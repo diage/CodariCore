@@ -16,7 +16,7 @@ public class RandomSpawnableSlotIcon extends ExecutableIcon {
 	private int slotNumber;
 	
 	public RandomSpawnableSlotIcon(Combatant combatant, Kit kit, String randomSpawnableGroupName, int slotNumber) {
-		super(Material.BED, combatant, "Slot " + slotNumber);
+		super(Material.BED, combatant, "Slot " + slotNumber + 1);
 		this.combatant = combatant;
 		this.kit = kit;
 		this.randomSpawnableGroupName = randomSpawnableGroupName;
