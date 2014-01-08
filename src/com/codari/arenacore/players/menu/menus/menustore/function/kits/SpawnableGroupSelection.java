@@ -20,43 +20,37 @@ public class SpawnableGroupSelection extends FunctionMenu {
 		super(combatant);
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		for(String groupName : kit.getArenaBuilder().getRandomSpawnablesCopyMap().keySet()) {
-			this.addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
+			this.addSpawnableGroupIcon(combatant, groupName);
 		}
 		this.kit = kit;
 		this.backIcon = backIcon;
 		((CombatantCore)combatant).getKitManager().setSpawnableGroupSelectionMenu(combatant, this);
 	}
 	
-	private SpawnableGroupSelection(Combatant combatant, Icon previous) {
+	private SpawnableGroupSelection(Combatant combatant, Kit kit, Icon previous, BackIcon backIcon) {
 		super(combatant);
+		this.kit = kit;
+		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		super.setSlot(FunctionMenuSlot.C_TWO, previous);
 	}
 	
-	public void addSpawnableGroupIcon(Combatant combatant, Kit kit, String groupName, BackIcon backIcon) {
+	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SlotSelection(combatant, kit, groupName, new BackIcon(combatant, this)), groupName));
+			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SlotSelection(combatant, this.kit, groupName, new BackIcon(combatant, this)), groupName));
 		} else {
 			if(this.nextPage != null) {
-				this.nextPage.addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
+				this.nextPage.addSpawnableGroupIcon(combatant, groupName);
 			} else {
-				this.addNextPage(combatant);
-				this.nextPage.addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
+				this.addNextPage(combatant, this.kit, this.backIcon);
+				this.nextPage.addSpawnableGroupIcon(combatant, groupName);
 			}
 		}
 	}
 	
-	private void addNextPage(Combatant combatant) {
+	private void addNextPage(Combatant combatant, Kit kit, BackIcon backIcon) {
 		Icon prevIcon = new PreviousIcon(combatant, this);
-		this.nextPage = new SpawnableGroupSelection(combatant, prevIcon);
+		this.nextPage = new SpawnableGroupSelection(combatant, kit, prevIcon, backIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new NextIcon(combatant, this.nextPage));
 	}	
-	
-	public Kit getKit() {
-		return this.kit;
-	}
-	
-	public BackIcon getBackIcon() {
-		return this.backIcon;
-	}
 }

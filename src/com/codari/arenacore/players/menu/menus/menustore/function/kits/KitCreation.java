@@ -19,7 +19,7 @@ public class KitCreation extends FunctionMenu {
 	
 	private void addIcons(Combatant combatant, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new SelectKitNameIcon(Material.DIAMOND_BLOCK, combatant, "Select Name"));
-		super.setSlot(FunctionMenuSlot.A_TWO, new SelectKitBuilderIcon(combatant, new KitBuilderSelection(combatant, new BackIcon(combatant, this))));
+		super.setSlot(FunctionMenuSlot.A_TWO, new SelectKitBuilderIcon(combatant, new KitCreationBuilderSelection(combatant, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new SaveKitIcon(combatant));
 	} 

@@ -9,7 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
+import com.codari.arenacore.players.menu.menus.menustore.function.kitbuilders.KitBuilderSelection;
+import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitCreationBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitSelection;
 import com.codari.arenacore.players.menu.menus.menustore.function.kits.SpawnableGroupSelection;
 
@@ -19,6 +20,8 @@ public class KitManager {
 	private Map<String, KitBuilder> kitBuilders;
 	private Map<String, Kit> kits;
 	private Map<String, KitSelection> kitSelectionMenus;
+	private Map<String, KitBuilderSelection> kitBuilderSelectionMenus;
+	private Map<String, KitCreationBuilderSelection> kitCreationBuilderSelectionMenus;
 	private Map<String, SpawnableGroupSelection> spawnableGroupSelectionMenus;
 	private ItemStack[] savedHotbar;
 	private Kit toolbarKit;
@@ -90,15 +93,25 @@ public class KitManager {
 		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addKitIcon(combatant, kitName);
 	}
 	
+	public void setKitBuilderSelectionMenu(Combatant combatant, KitBuilderSelection kitBuilderSelection) {
+		this.kitBuilderSelectionMenus.put(combatant.getPlayerReference().getName(), kitBuilderSelection);
+	}
+	
+	public void setKitCreationBuilderSelectionMenu(Combatant combatant, KitCreationBuilderSelection kitCreationBuilderSelection) {
+		this.kitCreationBuilderSelectionMenus.put(combatant.getPlayerReference().getName(), kitCreationBuilderSelection);
+	}
+	
+	public void addKitBuilderIcon(Combatant combatant, String kitBuilderName) {
+		this.kitBuilderSelectionMenus.get(combatant.getPlayerReference().getName()).addKitBuilderIcon(combatant, kitBuilderName);
+		this.kitCreationBuilderSelectionMenus.get(combatant.getPlayerReference().getName()).addKitCreationBuilderIcon(combatant, kitBuilderName);
+	}
+	
 	public void setSpawnableGroupSelectionMenu(Combatant combatant, SpawnableGroupSelection spawnableGroupSelection) {
 		this.spawnableGroupSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupSelection);
 	}
 	
 	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
-		SpawnableGroupSelection spawnableGroupSelection = this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName());
-		Kit kit = spawnableGroupSelection.getKit();
-		BackIcon backIcon = spawnableGroupSelection.getBackIcon();
-		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, kit, groupName, backIcon);
+		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, groupName);
 	}
 	
 	public Map<String, Kit> getKits() {

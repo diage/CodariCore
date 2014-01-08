@@ -4,6 +4,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.builders.kit.KitBuilder;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
+import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class KitBuilderOptions extends FunctionMenu {
 
@@ -13,6 +14,6 @@ public class KitBuilderOptions extends FunctionMenu {
 	}
 
 	private void addIcons(Combatant combatant, KitBuilder kitBuilder, BackIcon backIcon) {
-		
+		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 	}
 }
