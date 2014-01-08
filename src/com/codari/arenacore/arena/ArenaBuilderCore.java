@@ -3,6 +3,7 @@ package com.codari.arenacore.arena;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -96,7 +97,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		if (this.randomSpawnables.containsKey(groupName)) {
 			return false;
 		}
-		this.randomSpawnables.put(groupName, new RandomTimelineGroup(time, repeatTime));
+		this.randomSpawnables.put(groupName, new RandomTimelineGroup(groupName, time, repeatTime));
 		return true;
 	}
 	
@@ -165,10 +166,12 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		//-----Fields-----//
 		private final List<Marble> bagOfMarbles;
 		private final Random random;
+		private final String name;
 		
 		//-----Constructor-----//
-		public RandomTimelineGroup(Time delay, Time period) {
+		public RandomTimelineGroup(String name, Time delay, Time period) {
 			super(null, delay, period);
+			this.name = name;
 			this.bagOfMarbles = new ArrayList<>();
 			this.random = new Random(System.currentTimeMillis() + globalRandom.nextInt(globalRandom.nextInt()));
 		}
@@ -225,8 +228,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	public Map<String, Object> serialize() {
 		return new ConfigurationOutput()
 				.addString("GameRule", this.getGameRule().getName())
-				.add(new DataOutputFunction(), this.data)
-				.result();
+				.add(new TimelineGroupOutputFunction(), new ArrayList<RandomTimelineGroup>(this.randomSpawnables.values()))
+				.add(new DataOutputFunction(), this.data).result();
 	}
 	
 	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
@@ -234,11 +237,47 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
 		GameRule gameRule = arenaManager.getGameRule(input.getString("GameRule"));
 		ArenaBuilderCore builder = (ArenaBuilderCore) arenaManager.getArenaBuider(gameRule);
+		List<RandomTimelineGroup> randomTimelineGroups = input.get(new TimelineGroupInputFunction());
+		for (RandomTimelineGroup g : randomTimelineGroups) {
+			builder.randomSpawnables.put(g.name, g);
+		}
 		List<ObjectDataPacket> dataList = input.get(new DataInputFunction());
 		for (ObjectDataPacket data : dataList) {
 			data.apply(builder);
 		}
 		return builder;
+	}
+	
+	private final static class TimelineGroupOutputFunction implements OutputFunction<List<RandomTimelineGroup>> {
+		@Override
+		public Map<String, Object> apply(@Nullable List<RandomTimelineGroup> timelineGroups) {
+			Map<String, Object> result = new LinkedHashMap<>();
+			for (int i = 0; i < timelineGroups.size(); i++) {
+				result.put("Group_Name_" + i, timelineGroups.get(i).name);
+				result.put("Group_Delay_" + i, timelineGroups.get(i).getDelay().toString());
+				result.put("Group_Period_" + i, timelineGroups.get(i).getPeriod().toString());
+			}
+			return result;
+		}
+	}
+	
+	private final static class TimelineGroupInputFunction implements InputFunction<List<RandomTimelineGroup>> {
+		@Override
+		public List<RandomTimelineGroup> apply(@Nullable Map<String, Object> args) {
+			List<RandomTimelineGroup> result = new ArrayList<>();
+			for (int i = 0;; i++) {
+				Object obj = args.get("Group_Name_" + i);
+				if (obj != null) {
+					String name = (String) obj;
+					long delay = Long.valueOf((String) args.get("Group_Delay_" + i));
+					long period = Long.valueOf((String) args.get("Group_Period_" + i));
+					result.add(new RandomTimelineGroup(name, new Time(0, 0, delay), new Time(0, 0, period)));
+				} else {
+					break;
+				}
+			}
+			return result;
+		}
 	}
 	
 	//-----Object Data Packet-----//
@@ -336,7 +375,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		public List<ObjectDataPacket> apply(@Nullable Map<String, Object> args) {
 			List<ObjectDataPacket> result = new ArrayList<>();
 			for (int i = 0;; i++) {
-				Object obj = args.get("Info_" + i);
+				Object obj = args.get("Data_" + i);
 				if (obj != null) {
 					result.add((ObjectDataPacket) obj);
 				} else {
