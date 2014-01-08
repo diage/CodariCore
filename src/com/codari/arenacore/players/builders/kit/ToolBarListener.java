@@ -57,7 +57,7 @@ public class ToolBarListener implements Listener {
 					Location location = e.getClickedBlock().getLocation();
 					builder.addSpawnLocation(location);
 					kit.addSpawn(location);
-					kit.addSpawn(location);
+					kit.addSpawn(location, e.getItem());
 					e.getPlayer().sendMessage(kit.spawnString(location));
 					return;
 				}
