@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import com.codari.api5.io.CodariSerialization;
+import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.arena.ArenaManager;
@@ -204,20 +206,24 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public void saveArenaBuilder(String name, File file) {
+	public boolean saveArenaBuilder(String name, File file) {
 		if (!this.arenaBuilders.containsKey(name)) {
-			throw new IllegalArgumentException("No arena builder saved under the name " + name);
+			CodariCore.instance().getLogger().log(Level.WARNING, "No arena builder saved under the name " + name);
+			return false;
 		}
 		CodariSerialization.serialize(file, this.getArenaBuilder(name));
+		return true;
 	}
 
 	@Override
-	public void loadArenaBuilder(String name, File file) {
+	public boolean loadArenaBuilder(String name, File file) {
 		if (this.arenaBuilders.containsKey(name)) {
-			throw new IllegalArgumentException("Can not load arena builder to the name " + name + " as" +
-					" a arena builder already exists with that name");
+			CodariCore.instance().getLogger().log(Level.WARNING, "Can not load arena builder to the name "
+					+ name + " as a arena builder already exists with that name");
+			return false;
 		}
 		ArenaBuilderCore arenaBuilder = (ArenaBuilderCore) CodariSerialization.deserialize(file);
 		this.arenaBuilders.put(name, arenaBuilder);
+		return true;
 	}
 }
