@@ -81,7 +81,7 @@ public final class ArenaCore implements Arena {
 	}
 	
 	public void serializeTest(File file) {
-		CodariSerialization.serialize(file, this);
+		//CodariSerialization.serialize(file, this);	//FIXME
 	}
 	
 	public Location getSpawn(Combatant combatant) {
