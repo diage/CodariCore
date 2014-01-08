@@ -202,4 +202,22 @@ public class ArenaManagerCore implements ArenaManager {
 			this.roleGroup.remove(roleName);
 		}
 	}
+
+	@Override
+	public void saveArenaBuilder(String name, File file) {
+		if (!this.arenaBuilders.containsKey(name)) {
+			throw new IllegalArgumentException("No arena builder saved under the name " + name);
+		}
+		CodariSerialization.serialize(file, this.getArenaBuilder(name));
+	}
+
+	@Override
+	public void loadArenaBuilder(String name, File file) {
+		if (this.arenaBuilders.containsKey(name)) {
+			throw new IllegalArgumentException("Can not load arena builder to the name " + name + " as" +
+					" a arena builder already exists with that name");
+		}
+		ArenaBuilderCore arenaBuilder = (ArenaBuilderCore) CodariSerialization.deserialize(file);
+		this.arenaBuilders.put(name, arenaBuilder);
+	}
 }
