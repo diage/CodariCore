@@ -41,6 +41,8 @@ public class ArenaManagerCore implements ArenaManager {
 		this.queues = new HashMap<>();
 		this.gameRules = new LinkedHashMap<>();
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
+		ConfigurationSerialization.registerClass(ArenaBuilderCore.class);
+		ConfigurationSerialization.registerClass(ArenaBuilderCore.ObjectDataPacket.class);
 	}
 	
 	//-----Public Methods-----//

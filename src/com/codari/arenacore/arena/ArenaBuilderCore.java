@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.codari.api5.Codari;
 import com.codari.api5.io.ConfigurationInput;
@@ -31,6 +32,7 @@ import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arenacore.LibraryCore;
 
+@SerializableAs("Arena_Builder")
 public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//
 	private GameRule rules;
@@ -277,6 +279,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	//-----Object Data Packet-----//
+	@SerializableAs("Oject_Data_Packet")
 	public final static class ObjectDataPacket implements ConfigurationSerializable {
 		private final String objectName;
 		private final SerializableLocation location;
