@@ -80,8 +80,8 @@ public class KitManager {
 		if(this.containsKit(oldKitName)) {
 			Kit kit = this.kits.get(oldKitName);
 			this.kits.remove(oldKitName);
-			this.kits.put(newKitName, kit);
 			kit.setName(newKitName);
+			this.kits.put(newKitName, kit);
 		} else {
 			Bukkit.broadcastMessage(ChatColor.RED + "You can't rename a kit that doesn't exist in the kit manager!"); //TODO
 		}

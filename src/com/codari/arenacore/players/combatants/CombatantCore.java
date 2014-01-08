@@ -68,7 +68,7 @@ public final class CombatantCore implements Combatant {
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		
 		this.kitManager = new KitManager(this);
-		this.menuManager = new MenuManager(this);
+		//this.menuManager = new MenuManager(this);
 		
 		
 		/*	   FIXME - Begin Testing 	 */
@@ -79,30 +79,8 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.getSelectedKitBuilder().selectWinCondition(new WinCondition2v2(100));
 		this.kitManager.getSelectedKitBuilder().submitWinCondition();
 		this.kitManager.createKit("TestKit");
-		/*
-		this.kitManager.createKit("is");
-		this.kitManager.createKit("for");
-		this.kitManager.createKit("testing");
-		this.kitManager.createKit("Please");
-		this.kitManager.createKit("ignore");
-		this.kitManager.createKit("Hopefully");
-		this.kitManager.createKit("it");
-		this.kitManager.createKit("works");
-		this.kitManager.createKit("This1");
-		this.kitManager.createKit("This2");
-		this.kitManager.createKit("This3");
-		this.kitManager.createKit("This4");
-		this.kitManager.createKit("This5");
-		this.kitManager.createKit("This6");
-		this.kitManager.createKit("This7");
-		this.kitManager.createKit("This8");
-		this.kitManager.createKit("This9");
-		this.kitManager.createKit("This10");
-		this.kitManager.createKit("This11");
-		this.kitManager.createKit("This12");
-		this.kitManager.createKit("22 Kits");
-		*/
 		
+		this.menuManager = new MenuManager(this);	//put this after kit manager after testing is done		
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
