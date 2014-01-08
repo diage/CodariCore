@@ -31,35 +31,29 @@ public class SlotSelection extends FunctionMenu {
 	private void addRandomSpawnableIcons(Combatant combatant, Kit kit, String groupName, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		
-		super.setSlot(FunctionMenuSlot.A_ONE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 1));
-		super.setSlot(FunctionMenuSlot.A_TWO, new RandomSpawnableSlotIcon(combatant, kit, groupName, 2));
-		super.setSlot(FunctionMenuSlot.A_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 3));
-		super.setSlot(FunctionMenuSlot.A_FOUR, new RandomSpawnableSlotIcon(combatant, kit, groupName, 4));
-		super.setSlot(FunctionMenuSlot.A_FIVE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 5));
-		super.setSlot(FunctionMenuSlot.B_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 6));
+		super.setSlot(FunctionMenuSlot.A_ONE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 0));
+		super.setSlot(FunctionMenuSlot.A_TWO, new RandomSpawnableSlotIcon(combatant, kit, groupName, 1));
+		super.setSlot(FunctionMenuSlot.A_THREE, new RandomSpawnableSlotIcon(combatant, kit, groupName, 2));
+		super.setSlot(FunctionMenuSlot.A_FOUR, new RandomSpawnableSlotIcon(combatant, kit, groupName, 3));
 	}
 	
 	//---Fixed Spawnable Slot Selection Icons---//
 	private void addFixedSpawnableIcons(Combatant combatant, Kit kit, String arenaObjectName, Time delayTime, Time repeatTime, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		
-		super.setSlot(FunctionMenuSlot.A_ONE, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 1));
-		super.setSlot(FunctionMenuSlot.A_TWO, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 2));
-		super.setSlot(FunctionMenuSlot.A_THREE, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 3));
-		super.setSlot(FunctionMenuSlot.A_FOUR, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 4));
-		super.setSlot(FunctionMenuSlot.A_FIVE, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 5));
-		super.setSlot(FunctionMenuSlot.B_THREE, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 6));
+		super.setSlot(FunctionMenuSlot.A_ONE, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 0));
+		super.setSlot(FunctionMenuSlot.A_TWO, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 1));
+		super.setSlot(FunctionMenuSlot.A_THREE, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 2));
+		super.setSlot(FunctionMenuSlot.A_FOUR, new FixedSpawnableSlotIcon(combatant, kit, arenaObjectName, delayTime, repeatTime, 3));
 	}
 	
 	//---Peristent Object Slot Selection Icons---//
 	private void addPersistentIcons(Combatant combatant, Kit kit, String arenaObjectName, Time delayTime, boolean override, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		
-		super.setSlot(FunctionMenuSlot.A_ONE, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 1));
-		super.setSlot(FunctionMenuSlot.A_TWO, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 2));
-		super.setSlot(FunctionMenuSlot.A_THREE, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 3));
-		super.setSlot(FunctionMenuSlot.A_FOUR, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 4));
-		super.setSlot(FunctionMenuSlot.A_FIVE, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 5));
-		super.setSlot(FunctionMenuSlot.B_THREE, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 6));
+		super.setSlot(FunctionMenuSlot.A_ONE, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 0));
+		super.setSlot(FunctionMenuSlot.A_TWO, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 1));
+		super.setSlot(FunctionMenuSlot.A_THREE, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 2));
+		super.setSlot(FunctionMenuSlot.A_FOUR, new PersistentObjectSlotIcon(combatant, kit, arenaObjectName, delayTime, override, 3));
 	}	
 }

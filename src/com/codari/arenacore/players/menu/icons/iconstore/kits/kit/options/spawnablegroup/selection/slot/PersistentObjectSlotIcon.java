@@ -16,7 +16,7 @@ public class PersistentObjectSlotIcon extends ExecutableIcon {
 	private int slotNumber;
 	
 	public PersistentObjectSlotIcon(Combatant combatant, Kit kit, String arenaObjectName, Time delayTime, boolean override, int slotNumber) {
-		super(Material.BED, combatant, "Slot " + slotNumber);
+		super(Material.BED, combatant, "Slot " + slotNumber + 1);
 		this.kit = kit;
 		this.arenaObjectName = arenaObjectName;
 		this.delayTime = delayTime;
