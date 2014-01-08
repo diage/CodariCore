@@ -80,7 +80,7 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.getSelectedKitBuilder().submitWinCondition();
 		this.kitManager.createKit("TestKit");
 		
-		this.menuManager = new MenuManager(this);	//put this after kit manager after testing is done		
+		this.menuManager = new MenuManager(this);	//move this to the line after kit manager instantiation after testing is done		
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
