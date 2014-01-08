@@ -3,9 +3,7 @@ package com.codari.arenacore.arena;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +11,10 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.Codari;
-import com.codari.api5.CodariI;
 import com.codari.api5.io.ConfigurationInput;
 import com.codari.api5.io.ConfigurationInput.InputFunction;
 import com.codari.api5.io.ConfigurationOutput;
@@ -38,7 +32,6 @@ import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arenacore.LibraryCore;
 
 public class ArenaBuilderCore implements ArenaBuilder {
-	private static final long serialVersionUID = 4720468390178286776L;
 	//-----Fields-----//
 	private GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
@@ -132,6 +125,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		//FIXME - check time
 		this.fixedSpawnables.add(new FixedSpawnableAction(object, time, repeatTime));
 		this.objects.add(object);
+		this.data.add(new ObjectDataPacket(object, time.toString(), repeatTime.toString()));
 		return true;
 	}
 	
@@ -139,6 +133,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	public boolean registerPersistent(ImmediatePersistentObject immediatePersistentObject) {
 		this.immediatePersistentObjects.add(immediatePersistentObject);
 		this.objects.add(immediatePersistentObject);
+		this.data.add(new ObjectDataPacket(immediatePersistentObject));
 		return true;
 	}
 	
@@ -146,6 +141,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
 		this.delayedPersistentObjects.add(delayedPersistentObject);
 		this.objects.add(delayedPersistentObject);
+		this.data.add(new ObjectDataPacket(delayedPersistentObject, time.toString(), Boolean.toString(override)));
 		return true;
 	}
 	
