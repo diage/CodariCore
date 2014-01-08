@@ -241,7 +241,7 @@ public class Kit implements Listener {
 		itemStack.setItemMeta(meta);
 	}
 	
-	private String spawnString(Location location) {
+	String spawnString(Location location) {
 		return ChatColor.GREEN + "Spawn:" +
 				" x=" + location.getBlockX() +
 				" y=" + location.getBlockY() +

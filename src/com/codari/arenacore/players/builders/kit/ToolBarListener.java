@@ -54,9 +54,11 @@ public class ToolBarListener implements Listener {
 				Kit kit = kitManager.getToolbarKit();
 				ArenaBuilderCore builder = kit.getArenaBuilder();
 				if (e.getItem().equals(kit.getTools()[4])) {
-					builder.addSpawnLocation(e.getClickedBlock().getLocation());
-					kit.addSpawn(e.getClickedBlock().getLocation());
-					kit.addSpawn(e.getClickedBlock().getLocation(), e.getItem());
+					Location location = e.getClickedBlock().getLocation();
+					builder.addSpawnLocation(location);
+					kit.addSpawn(location);
+					kit.addSpawn(location);
+					e.getPlayer().sendMessage(kit.spawnString(location));
 					return;
 				}
 				String objectName = e.getItem().getItemMeta().getDisplayName();
@@ -67,19 +69,24 @@ public class ToolBarListener implements Listener {
 				//---Registering Arena Objects---//
 				if(arenaObject instanceof RandomSpawnableObject) {
 					builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
+					e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 				} else if(arenaObject instanceof FixedSpawnableObject) {
 					if (extraInformation != null) {
 						if(extraInformation.size() == 1) {
 							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
+							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						} else if(extraInformation.size() >= 2) {
 							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
+							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						}
 					}
 				} else if(arenaObject instanceof ImmediatePersistentObject) {
 					builder.registerPersistent((ImmediatePersistentObject) arenaObject);
+					e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 				} else if(arenaObject instanceof DelayedPersistentObject) {
 					if(extraInformation != null && extraInformation.size() >= 2) {
 						builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
+						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 					}
 				} else {
 					Bukkit.broadcastMessage(ChatColor.RED + "We are trying to place an object that isn't a random spawnable object "
