@@ -171,7 +171,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			super(null, delay, period);
 			this.name = name;
 			this.bagOfMarbles = new ArrayList<>();
-			this.random = new Random(System.currentTimeMillis() + globalRandom.nextInt(globalRandom.nextInt()));
+			this.random = new Random(System.currentTimeMillis() + globalRandom.nextInt());
 		}
 
 		@Override
