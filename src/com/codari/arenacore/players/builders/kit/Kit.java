@@ -118,6 +118,7 @@ public class Kit implements Listener {
 	
 	public void createRandomDelayTime() {
 		this.randomTimeLineDelayTime = new Time(this.randomDelayMinutes, this.randomDelaySeconds, this.randomDelayTicks);
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Current random delay time - Minutes: " + this.randomDelayMinutes + " Seconds: " + this.randomDelaySeconds  + " Ticks: " + this.randomDelayTicks);	//TODO
 	}
 	
 	//---Random Repeat Time---//
@@ -241,7 +242,7 @@ public class Kit implements Listener {
 		itemStack.setItemMeta(meta);
 	}
 	
-	private String spawnString(Location location) {
+	String spawnString(Location location) {
 		return ChatColor.GREEN + "Spawn:" +
 				" x=" + location.getBlockX() +
 				" y=" + location.getBlockY() +

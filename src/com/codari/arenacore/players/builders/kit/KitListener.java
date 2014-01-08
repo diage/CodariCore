@@ -9,7 +9,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
+import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelaySecondsIcon;
@@ -27,6 +29,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawna
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelaySecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.selectionmenu.KitIcon;
 
 public class KitListener implements Listener {
 	private static Map<String, Kit> currentKits = new HashMap<>();
@@ -36,19 +39,32 @@ public class KitListener implements Listener {
 	}
 	
 	@EventHandler()
+	private void kitSelection(IconMenuClickEvent e) {
+		if(e.getIcon() instanceof KitIcon) {
+			CombatantCore combatant = (CombatantCore)e.getIcon().getCombatant();
+			String displayName = ((KitIcon)e.getIcon()).getDisplayName();
+			if(combatant != null && displayName != null) {
+				changeKit(combatant, combatant.getKitManager().getKit(displayName)); 
+			} else {
+				Bukkit.broadcastMessage(ChatColor.RED + "Something is wrong in KitListener!");	//TODO
+			}
+		}
+	}
+	
+	@EventHandler()
 	private void changeRandomDelayTime(IconHoverUpdateEvent e) {
 		Kit kit = KitListener.currentKits.get(e.getIcon().getCombatant().getPlayerReference().getName());
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Successfully got the kit!");
 		if(!(kit == null)) {
+			Bukkit.broadcastMessage(ChatColor.GREEN + "Successfully got the kit!");
 			if(e.getIcon() instanceof UpdateRandomDelayMinutesIcon) {
 				kit.updateRandomDelayMinutes(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Minutes!");
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Minutes!");	//TODO
 			} else if(e.getIcon() instanceof UpdateRandomDelaySecondsIcon) {
 				kit.updateRandomDelaySeconds(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Seconds!");
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Seconds!");
 			} else if(e.getIcon() instanceof UpdateRandomDelayTicksIcon) {
 				kit.updateRandomDelayTicks(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated ticks!");
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Ticks!");
 			}
 		}
 	}
