@@ -31,6 +31,8 @@ public class KitManager {
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
 		this.kitSelectionMenus = new HashMap<>();
+		this.kitBuilderSelectionMenus = new HashMap<>();
+		this.kitCreationBuilderSelectionMenus = new HashMap<>();
 		this.spawnableGroupSelectionMenus = new HashMap<>();
 		this.savedHotbar = new ItemStack[9];
 	}
