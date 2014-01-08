@@ -11,8 +11,8 @@ import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.ExitIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.KitBuildersIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.KitsIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
-import com.codari.arenacore.players.menu.menus.menustore.function.kitbuilders.KitBuilderSelection;
-import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 

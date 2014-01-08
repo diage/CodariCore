@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.menus.menustore.function.kits;
+package com.codari.arenacore.players.menu.menus.menustore.kits;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.builders.kit.Kit;

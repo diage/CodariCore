@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.menus.menustore.function.kits;
+package com.codari.arenacore.players.menu.menus.menustore.kits;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.builders.kit.Kit;
@@ -11,12 +11,12 @@ import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
-public class SpawnableGroupSelection extends FunctionMenu {
-	private SpawnableGroupSelection nextPage;
+public class SpawnableGroupEditSelection extends FunctionMenu {
+	private SpawnableGroupEditSelection nextPage;
 	private Kit kit;
 	private BackIcon backIcon;
 	
-	public SpawnableGroupSelection(Combatant combatant, Kit kit, BackIcon backIcon) {
+	public SpawnableGroupEditSelection(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		for(String groupName : kit.getArenaBuilder().getRandomSpawnablesCopyMap().keySet()) {
@@ -24,10 +24,10 @@ public class SpawnableGroupSelection extends FunctionMenu {
 		}
 		this.kit = kit;
 		this.backIcon = backIcon;
-		((CombatantCore)combatant).getKitManager().setSpawnableGroupSelectionMenu(combatant, this);
+		((CombatantCore)combatant).getKitManager().setSpawnableGroupEditSelectionMenu(combatant, this);
 	}
 	
-	private SpawnableGroupSelection(Combatant combatant, Kit kit, Icon previous, BackIcon backIcon) {
+	private SpawnableGroupEditSelection(Combatant combatant, Kit kit, Icon previous, BackIcon backIcon) {
 		super(combatant);
 		this.kit = kit;
 		this.backIcon = backIcon;
@@ -37,7 +37,7 @@ public class SpawnableGroupSelection extends FunctionMenu {
 	
 	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SlotSelection(combatant, this.kit, groupName, new BackIcon(combatant, this)), groupName));
+			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SpawnableGroupEdit(combatant, this.kit, new BackIcon(combatant, this)), groupName));
 		} else {
 			if(this.nextPage != null) {
 				this.nextPage.addSpawnableGroupIcon(combatant, groupName);
@@ -50,7 +50,7 @@ public class SpawnableGroupSelection extends FunctionMenu {
 	
 	private void addNextPage(Combatant combatant, Kit kit, BackIcon backIcon) {
 		Icon prevIcon = new PreviousIcon(combatant, this);
-		this.nextPage = new SpawnableGroupSelection(combatant, kit, prevIcon, backIcon);
+		this.nextPage = new SpawnableGroupEditSelection(combatant, kit, prevIcon, backIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new NextIcon(combatant, this.nextPage));
 	}	
 }

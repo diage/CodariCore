@@ -9,11 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.menu.menus.menustore.function.kitbuilders.KitBuilderSelection;
-import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitCreationBuilderSelection;
-import com.codari.arenacore.players.menu.menus.menustore.function.kits.KitSelection;
-import com.codari.arenacore.players.menu.menus.menustore.function.kits.SpawnableGroupEditSelection;
-import com.codari.arenacore.players.menu.menus.menustore.function.kits.SpawnableGroupSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kits.KitCreationBuilderSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupEditSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupSelection;
 
 public class KitManager {
 	private Combatant combatant;

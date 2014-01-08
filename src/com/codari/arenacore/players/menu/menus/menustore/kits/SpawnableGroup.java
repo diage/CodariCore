@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.menus.menustore.function.kits;
+package com.codari.arenacore.players.menu.menus.menustore.kits;
 
 import java.util.Map.Entry;
 

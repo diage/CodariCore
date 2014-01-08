@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.menus.menustore.function.kits;
+package com.codari.arenacore.players.menu.menus.menustore.kits;
 
 import com.codari.api5.util.Time;
 import com.codari.arena5.players.combatants.Combatant;
