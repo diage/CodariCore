@@ -7,12 +7,12 @@ import com.codari.arenacore.players.menu.icons.RequestIcon;
 /* Note: This Icon is handled within the SaveKitIcon class. */
 public class SelectKitNameIcon extends RequestIcon {
 
-	public SelectKitNameIcon(Material material, Combatant combatant, String displayName) {
-		super(material, combatant, displayName);
+	public SelectKitNameIcon(Combatant combatant) {
+		super(Material.DIAMOND_BLOCK, combatant, "Select Kit Name");
 	}
 
 	@Override
 	public String getConversationString() {
-		return "Select a name for the kit.";
+		return "Type a name for the Kit.";
 	}
 }

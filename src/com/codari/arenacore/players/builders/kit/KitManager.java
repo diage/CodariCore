@@ -46,10 +46,15 @@ public class KitManager {
 		return this.selectedBuilder;
 	}
 	
-	public void createKitBuilder(String name) {
+	public boolean createKitBuilder(String name) {
 		this.selectedBuilder = new KitBuilder(name);
 		this.kitBuilders.put(name, this.selectedBuilder);
 		KitBuilderListener.changeKitBuilder(combatant, this.selectedBuilder);
+		return true;	//FIXME - Will be updated later on
+	}
+	
+	public boolean containsKitBuilder(String kitBuilderName) {
+		return this.kitBuilders.containsKey(kitBuilderName);
 	}
 	
 	public Kit getKit(String name) {
@@ -66,10 +71,14 @@ public class KitManager {
 		return this.kitBuilders.get(name);
 	}
 	
-	public Kit createKit(String name) {
-		Kit newKit = this.selectedBuilder.buildKit(name);
-		this.kits.put(name, newKit);
-		return newKit;
+	public boolean createKit(String name) {
+		if(this.selectedBuilder != null) {
+			Kit newKit = this.selectedBuilder.buildKit(name);
+			this.kits.put(name, newKit);
+			return true;
+		} 
+		Bukkit.broadcastMessage(ChatColor.RED + "Kit wasn't constructed because selected Kit Builder is null!");	//TODO
+		return false;
 	}
 	
 	public boolean containsKit(String kitName) {

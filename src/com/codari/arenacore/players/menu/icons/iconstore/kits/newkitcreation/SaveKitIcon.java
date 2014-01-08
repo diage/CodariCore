@@ -19,17 +19,22 @@ public class SaveKitIcon extends ExecutableIcon {
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
 		if(SaveKitIconListener.requestedKitNames.containsKey(player.getName())) {
-			String kitName = SaveKitIconListener.requestedKitNames.get(player.getName());
-			if(!((CombatantCore)this.getCombatant()).getKitManager().containsKit(kitName)) {
-				((CombatantCore)this.getCombatant()).getKitManager().createKit(kitName);
-				player.sendMessage(ChatColor.GREEN + "You have succesfully created a kit!");
-				SaveKitIconListener.requestedKitNames.remove(player.getName());
-				((CombatantCore)this.getCombatant()).getKitManager().addKitIcon(this.getCombatant(), kitName);
+			if(((CombatantCore)this.getCombatant()).getKitManager().getSelectedKitBuilder() != null) {
+				String kitName = SaveKitIconListener.requestedKitNames.get(player.getName());
+				if(!((CombatantCore)this.getCombatant()).getKitManager().containsKit(kitName)) {
+					if(((CombatantCore)this.getCombatant()).getKitManager().createKit(kitName)) {
+						player.sendMessage(ChatColor.GREEN + "You have succesfully created a Kit!");
+						SaveKitIconListener.requestedKitNames.remove(player.getName());
+						((CombatantCore)this.getCombatant()).getKitManager().addKitIcon(this.getCombatant(), kitName);
+					}
+				} else {
+					player.sendMessage(ChatColor.RED + "A Kit with the name \"" + kitName + "\" already exists!");
+				}
 			} else {
-				player.sendMessage(ChatColor.RED + "A kit with the name \"" + kitName + "\" already exists!");
-			}
+				player.sendMessage(ChatColor.RED + "You must select a Kit Builder first!");
+			}	
 		} else {
-			player.sendMessage(ChatColor.RED + "You must enter a name for the kit first!");
+			player.sendMessage(ChatColor.RED + "You must enter a name for the Kit first!");
 		}	
 	}
 }
