@@ -71,7 +71,7 @@ public final class CombatantCore implements Combatant {
 		
 		this.kitManager = new KitManager(this);
 		this.dynamicMenuManager = new DynamicMenuManager(this);
-		this.menuManager = new MenuManager(this);
+		//this.menuManager = new MenuManager(this);
 		
 		
 		/*	   FIXME - Begin Testing 	 */
@@ -84,6 +84,7 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.createKit("TestKit");		
 		/* 			END TESTING				*/
 		
+		this.menuManager = new MenuManager(this); 
 		this.inArena = false;
 	}
 	

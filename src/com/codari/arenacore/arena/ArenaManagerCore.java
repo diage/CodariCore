@@ -159,6 +159,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.queues.put(requestedName, new QueueCore(arena));
 		for(Combatant combatant : this.combatants.values()) {
 			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(requestedName);
+			combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
 		}
 		return arena;
 	}
@@ -169,6 +170,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.queues.put(arena.getName(), new QueueCore(arena));
 		for(Combatant combatant : this.combatants.values()) {
 			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
+			combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
 		}
 		return arena;
 	}
