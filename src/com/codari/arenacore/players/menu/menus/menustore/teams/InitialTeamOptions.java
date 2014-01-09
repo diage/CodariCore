@@ -1,6 +1,7 @@
 package com.codari.arenacore.players.menu.menus.menustore.teams;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.options.CreateTeamMenuIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.options.LeaveTeamIcon;
@@ -22,7 +23,7 @@ public class InitialTeamOptions extends FunctionMenu {
 	
 	public void setNoTeamIcon(Combatant combatant) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new CreateTeamMenuIcon(combatant, new TeamCreate(combatant, new BackIcon(combatant, this))));
-		//super.removeIcon(functionMenuSlot, icon);
+		((CombatantCore) combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.A_TWO);
 	}
 	
 	private void addIcons(Combatant combatant) {
