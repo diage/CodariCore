@@ -38,7 +38,7 @@ public final class CombatantCore implements Combatant {
 	private StatManager statManager;
 	private MenuManager menuManager;
 	
-	private boolean isLeader, inArena;
+	private boolean isLeader, inArena, isBeingInvitedToATeam;
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
@@ -195,6 +195,14 @@ public final class CombatantCore implements Combatant {
 	@Override
 	public boolean checkIfLeader() {
 		return this.isLeader;
+	}
+	
+	public void setBeingInvitedToTeam(boolean isBeingInvitedToATeam) {
+		this.isBeingInvitedToATeam = isBeingInvitedToATeam;
+	}
+	
+	public boolean checkIfBeingInvitedToTeam() {
+		return this.isBeingInvitedToATeam;
 	}
 
 	@Override

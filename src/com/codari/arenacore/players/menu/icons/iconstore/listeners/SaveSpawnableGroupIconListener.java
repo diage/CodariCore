@@ -13,7 +13,7 @@ public class SaveSpawnableGroupIconListener implements Listener {
 	public static Map<String, String> requestedSpawnableGroupNames = new HashMap<>();
 	
 	@EventHandler()
-	public void setKitName(IconRequestEvent e) {
+	public void setSpawnableGroupName(IconRequestEvent e) {
 		if(e.getIcon() instanceof SelectNameIcon) {
 			requestedSpawnableGroupNames.put(e.getIcon().getPlayerName(), e.getPlayerInput());			
 		}

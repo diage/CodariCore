@@ -10,6 +10,8 @@ import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveKitBuilde
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveKitIconListener;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveSpawnableGroupIconListener;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveTeamIconListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.SelectPlayerInviteIconListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.SelectQueueIconListener;
 
 public class IconListenerRegister {
 	
@@ -22,5 +24,7 @@ public class IconListenerRegister {
 		Bukkit.getPluginManager().registerEvents(new SaveSpawnableGroupIconListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new CurrentArenaObjectNameListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new SaveTeamIconListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new SelectPlayerInviteIconListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new SelectQueueIconListener(), plugin);
 	}
 }

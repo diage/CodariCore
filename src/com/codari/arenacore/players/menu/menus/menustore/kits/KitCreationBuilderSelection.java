@@ -21,7 +21,7 @@ public class KitCreationBuilderSelection extends FunctionMenu {
 			this.addKitCreationBuilderIcon(combatant, kitBuilderName);
 		}
 		this.backIcon = backIcon;
-		((CombatantCore)combatant).getKitManager().setKitCreationBuilderSelectionMenu(combatant, this);
+		((CombatantCore)combatant).getMenuManager().setKitCreationBuilderSelectionMenu(combatant, this);
 	}
 	
 	private KitCreationBuilderSelection(Combatant combatant, Icon previous, BackIcon backIcon) {

@@ -1,6 +1,5 @@
 package com.codari.arenacore.players.builders.kit;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,22 +8,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
-import com.codari.arenacore.players.menu.menus.menustore.kits.KitCreationBuilderSelection;
-import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
-import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupEditSelection;
-import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupSelection;
+
 
 public class KitManager {
 	private Combatant combatant;
 	private KitBuilder selectedBuilder;
 	private Map<String, KitBuilder> kitBuilders;
 	private Map<String, Kit> kits;
-	private Map<String, KitSelection> kitSelectionMenus;
-	private Map<String, KitBuilderSelection> kitBuilderSelectionMenus;
-	private Map<String, KitCreationBuilderSelection> kitCreationBuilderSelectionMenus;
-	private Map<String, SpawnableGroupSelection> spawnableGroupSelectionMenus;
-	private Map<String, SpawnableGroupEditSelection> spawnableGroupEditSelectionMenus;
 	private ItemStack[] savedHotbar;
 	private Kit toolbarKit;
 	
@@ -32,11 +22,6 @@ public class KitManager {
 		this.combatant = combatant;
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
-		this.kitSelectionMenus = new HashMap<>();
-		this.kitBuilderSelectionMenus = new HashMap<>();
-		this.kitCreationBuilderSelectionMenus = new HashMap<>();
-		this.spawnableGroupSelectionMenus = new HashMap<>();
-		this.spawnableGroupEditSelectionMenus = new HashMap<>();
 		this.savedHotbar = new ItemStack[9];
 	}
 	
@@ -97,40 +82,6 @@ public class KitManager {
 		} else {
 			Bukkit.broadcastMessage(ChatColor.RED + "You can't rename a kit that doesn't exist in the kit manager!"); //TODO
 		}
-	}
-	
-	public void setKitSelectionMenu(Combatant combatant, KitSelection kitSelection) {
-		this.kitSelectionMenus.put(combatant.getPlayerReference().getName(), kitSelection);
-	}
-	
-	public void addKitIcon(Combatant combatant, String kitName) {
-		this.kitSelectionMenus.get(combatant.getPlayerReference().getName()).addKitIcon(combatant, kitName);
-	}
-	
-	public void setKitBuilderSelectionMenu(Combatant combatant, KitBuilderSelection kitBuilderSelection) {
-		this.kitBuilderSelectionMenus.put(combatant.getPlayerReference().getName(), kitBuilderSelection);
-	}
-	
-	public void setKitCreationBuilderSelectionMenu(Combatant combatant, KitCreationBuilderSelection kitCreationBuilderSelection) {
-		this.kitCreationBuilderSelectionMenus.put(combatant.getPlayerReference().getName(), kitCreationBuilderSelection);
-	}
-	
-	public void addKitBuilderIcon(Combatant combatant, String kitBuilderName) {
-		this.kitBuilderSelectionMenus.get(combatant.getPlayerReference().getName()).addKitBuilderIcon(combatant, kitBuilderName);
-		this.kitCreationBuilderSelectionMenus.get(combatant.getPlayerReference().getName()).addKitCreationBuilderIcon(combatant, kitBuilderName);
-	}
-	
-	public void setSpawnableGroupSelectionMenu(Combatant combatant, SpawnableGroupSelection spawnableGroupSelection) {
-		this.spawnableGroupSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupSelection);
-	}
-	
-	public void setSpawnableGroupEditSelectionMenu(Combatant combatant, SpawnableGroupEditSelection spawnableGroupEditSelection) {
-		this.spawnableGroupEditSelectionMenus.put(combatant.getPlayerReference().getName(), spawnableGroupEditSelection);
-	}
-	
-	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
-		this.spawnableGroupSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, groupName);
-		this.spawnableGroupEditSelectionMenus.get(combatant.getPlayerReference().getName()).addSpawnableGroupIcon(combatant, groupName);
 	}
 	
 	public Map<String, Kit> getKits() {

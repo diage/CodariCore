@@ -129,6 +129,11 @@ public class TeamCore implements Team {
 	}
 
 	@Override
+	public void removeLeader(Combatant combatant) {
+		combatant.setLeader(false);
+	}	
+	
+	@Override
 	public boolean isLeader(Combatant combatant) {
 		return combatant.checkIfLeader();
 	}

@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -117,12 +118,24 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenas.get(name);
 	}
 	
+	public boolean containsArena(String arenaName) {
+		return this.arenas.containsKey(arenaName);
+	}
+	
 	@Override
 	public boolean addToQueue(String arenaName, Team team) {
 		if(!this.queues.containsKey(arenaName)) {
 			team.getPlayers().get(0).sendMessage(ChatColor.BLUE + "The arena " + arenaName + " is null!");
 		}
 		return this.queues.get(arenaName).addTeamToQueue(team);
+	}
+	
+	@Override
+	public boolean removeFromQueue(String arenaName, Team team) {
+		if(!this.queues.containsKey(arenaName)) {
+			Bukkit.broadcastMessage(ChatColor.RED + "Trying to remove a team that's not in queue from a queue.");	//TODO
+		}
+		return this.queues.get(arenaName).removeTeamFromQueue(team);
 	}
 	
 	public QueueCore getQueue(String arenaName) {
@@ -157,7 +170,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenaBuilders.get(arenaName);
 	}
 	
-	public boolean containsArenaBuild(String arenaName) {
+	public boolean containsArenaBuilder(String arenaName) {
 		return this.arenaBuilders.containsKey(arenaName);
 	}
 	

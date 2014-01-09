@@ -23,7 +23,7 @@ public class NewArenaCommand implements CodariCommand {
 			Player player = (Player) sender;
 			String arenaName = args[1];
 
-			if(!((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuild(arenaName)) {
+			if(!((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuilder(arenaName)) {
 				//Gamerule construction//
 				GameRuleCore gameRule = new GameRuleCore();
 				gameRule.setMatchDurationInfinite();
