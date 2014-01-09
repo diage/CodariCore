@@ -24,7 +24,7 @@ public class SpawnableGroupEditSelection extends FunctionMenu {
 		}
 		this.kit = kit;
 		this.backIcon = backIcon;
-		((CombatantCore)combatant).getMenuManager().setSpawnableGroupEditSelectionMenu(combatant, this);
+		((CombatantCore)combatant).getDynamicMenuManager().setSpawnableGroupEditSelectionMenu(this);
 	}
 	
 	private SpawnableGroupEditSelection(Combatant combatant, Kit kit, Icon previous, BackIcon backIcon) {

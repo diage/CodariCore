@@ -22,7 +22,7 @@ public class PlayerSelection extends FunctionMenu {
 		for(Combatant teamMate: combatant.getTeam().getTeamMates(combatant)) {
 			this.addPlayerIcon(combatant, teamMate.getPlayer().getName());
 		}
-		((CombatantCore)combatant).getMenuManager().setPlayerSelectionMenu(combatant, this);
+		((CombatantCore)combatant).getDynamicMenuManager().setPlayerSelectionMenu(this);
 		}
 	
 	private PlayerSelection(Combatant combatant, BackIcon backIcon, Icon previous) {

@@ -22,6 +22,7 @@ import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.builders.kit.KitManager;
+import com.codari.arenacore.players.menu.DynamicMenuManager;
 import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -36,6 +37,7 @@ public final class CombatantCore implements Combatant {
 	private final File dataFile;
 	private CombatantDataCore data;
 	private StatManager statManager;
+	private DynamicMenuManager dynamicMenuManager;
 	private MenuManager menuManager;
 	
 	private boolean isLeader, inArena, isBeingInvitedToATeam;
@@ -68,6 +70,7 @@ public final class CombatantCore implements Combatant {
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		
 		this.kitManager = new KitManager(this);
+		this.dynamicMenuManager = new DynamicMenuManager(this);
 		this.menuManager = new MenuManager(this);
 		
 		
@@ -238,6 +241,10 @@ public final class CombatantCore implements Combatant {
 	
 	public KitManager getKitManager() {
 		return this.kitManager;
+	}
+	
+	public DynamicMenuManager getDynamicMenuManager() {
+		return this.dynamicMenuManager;
 	}
 	
 	public MenuManager getMenuManager() {

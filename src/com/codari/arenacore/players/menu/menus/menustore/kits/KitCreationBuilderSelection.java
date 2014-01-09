@@ -1,5 +1,7 @@
 package com.codari.arenacore.players.menu.menus.menustore.kits;
 
+import org.bukkit.Bukkit;
+
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
@@ -16,12 +18,16 @@ public class KitCreationBuilderSelection extends FunctionMenu {
 	
 	public KitCreationBuilderSelection(Combatant combatant, BackIcon backIcon) {
 		super(combatant);
+		Bukkit.broadcastMessage("Constructed KitCreationBuilderSelection!");
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		for(String kitBuilderName : ((CombatantCore)combatant).getKitManager().getKitBuilders().keySet()) {
 			this.addKitCreationBuilderIcon(combatant, kitBuilderName);
 		}
 		this.backIcon = backIcon;
-		((CombatantCore)combatant).getMenuManager().setKitCreationBuilderSelectionMenu(combatant, this);
+		if(((CombatantCore)combatant).getDynamicMenuManager() == null) {
+			Bukkit.broadcastMessage("Null Dynamic Menu Manager!");	//TODO
+		}
+		((CombatantCore)combatant).getDynamicMenuManager().setKitCreationBuilderSelectionMenu(this);
 	}
 	
 	private KitCreationBuilderSelection(Combatant combatant, Icon previous, BackIcon backIcon) {

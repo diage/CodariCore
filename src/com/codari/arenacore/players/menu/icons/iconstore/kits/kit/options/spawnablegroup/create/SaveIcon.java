@@ -27,7 +27,7 @@ public class SaveIcon extends ExecutableIcon {
 			if(this.kit.createRandomTimeLineGroup()) {
 				player.sendMessage(ChatColor.GREEN + "You have successfully created a random spawnable group!");
 				SaveSpawnableGroupIconListener.requestedSpawnableGroupNames.remove(player.getName());
-				((CombatantCore)this.getCombatant()).getMenuManager().addSpawnableGroupIcon(this.getCombatant(), groupName);
+				((CombatantCore)this.getCombatant()).getDynamicMenuManager().addSpawnableGroupIcon(groupName);
 			} else {
 				player.sendMessage(ChatColor.RED + "Failed to create a random spawnable group! You must fill out at least a delay time.");
 			}

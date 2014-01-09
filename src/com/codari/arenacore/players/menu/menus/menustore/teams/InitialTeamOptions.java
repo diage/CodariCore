@@ -21,7 +21,7 @@ public class InitialTeamOptions extends FunctionMenu {
 		this.leaveTeamIcon = new LeaveTeamIcon(combatant, this);
 		this.createTeamMenuIcon = new CreateTeamMenuIcon(combatant, new TeamCreate(combatant, this, new BackIcon(combatant, this)));
 		this.addIcons(combatant);
-		((CombatantCore) combatant).getMenuManager().setInitialTeamOptionsMenu(combatant, this);
+		((CombatantCore) combatant).getDynamicMenuManager().setInitialTeamOptionsMenu(this);
 	}
 	
 	public void setHasTeamIcons(Combatant combatant) {
