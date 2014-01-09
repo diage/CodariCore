@@ -30,6 +30,10 @@ public class FunctionMenu implements Menu {
 		}
 	}
 	
+	public boolean hasSlot(FunctionMenuSlot functionMenuSlot) {
+		return this.icons.containsKey(functionMenuSlot);
+	}
+	
 	public void removeIcon(FunctionMenuSlot functionMenuSlot) {
 		if(this.icons.containsKey(functionMenuSlot)) {
 			this.icons.remove((FunctionMenuSlot) functionMenuSlot);

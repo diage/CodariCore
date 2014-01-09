@@ -70,10 +70,11 @@ public class MenuManager {
 		if(this.inMenu) {
 			PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 			if(menuSlot instanceof FunctionMenuSlot) {
-				this.functionMenu.removeIcon((FunctionMenuSlot)menuSlot);
-				this.currentFunctionInventory.remove((FunctionMenuSlot)menuSlot);
-				playerInventory.setItem(((FunctionMenuSlot) menuSlot).getSlot(), null);
-			
+				if(this.functionMenu.hasSlot((FunctionMenuSlot) menuSlot)) {
+					this.functionMenu.removeIcon((FunctionMenuSlot)menuSlot);
+					this.currentFunctionInventory.remove((FunctionMenuSlot)menuSlot);
+					playerInventory.setItem(((FunctionMenuSlot) menuSlot).getSlot(), null);
+				}
 			}
 			this.combatant.getPlayer().updateInventory();
 		}
