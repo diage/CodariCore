@@ -8,7 +8,6 @@ import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SelectQueueIconListener;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public class LeaveQueueIcon extends ExecutableIcon {
@@ -23,8 +22,7 @@ public class LeaveQueueIcon extends ExecutableIcon {
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
 		if(((TeamCore)this.team).checkIfInQueue()) {
-			String arenaName = SelectQueueIconListener.requeustedQueueNames.get(player.getName());
-			if(Codari.getArenaManager().removeFromQueue(arenaName, this.team)) {
+			if(Codari.getArenaManager().removeFromQueue(this.team)) {
 				for(Player teamPlayer : this.team.getPlayers()) {
 					teamPlayer.sendMessage(ChatColor.GREEN + "Your team, " +  this.team.getTeamName() + ", was successfully removed from the queue!");
 				}

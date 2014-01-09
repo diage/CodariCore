@@ -5,15 +5,15 @@ import org.bukkit.Material;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.RequestIcon;
 
-public class SelectPlayersIcon extends RequestIcon {
+public class SelectPlayerIcon extends RequestIcon {
 
-	public SelectPlayersIcon(Combatant combatant) {
-		super(Material.MONSTER_EGGS, combatant, "Select Players");
+	public SelectPlayerIcon(Combatant combatant) {
+		super(Material.MONSTER_EGGS, combatant, "Select Player To Invite");
 	}
 
 	@Override
 	public String getConversationString() {
-		return "Select the name of the player you would like to invite.";
+		return "Type in the name of the player you would like to invite.";
 	}
 
 }

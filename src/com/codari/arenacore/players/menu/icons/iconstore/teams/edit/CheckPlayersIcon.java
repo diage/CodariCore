@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class CheckPlayersIcon extends MenuIcon {
 
 	public CheckPlayersIcon(Combatant combatant, Menu menu) {
-		super(Material.CHAINMAIL_CHESTPLATE, combatant, menu, "Players");
+		super(Material.CHAINMAIL_CHESTPLATE, combatant, menu, "Teammates");
 	}
 
 }

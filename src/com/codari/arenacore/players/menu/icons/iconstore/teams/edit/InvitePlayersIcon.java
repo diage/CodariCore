@@ -15,7 +15,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.listeners.SelectPlayerI
 public class InvitePlayersIcon extends ExecutableIcon {
 
 	public InvitePlayersIcon(Combatant combatant) {
-		super(Material.GOLD_NUGGET, combatant, "Invite all the players you selected.");
+		super(Material.GOLD_NUGGET, combatant, "Invite the player you selected.");
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class InvitePlayersIcon extends ExecutableIcon {
 						player.sendMessage(ChatColor.GREEN + "You have invited " + invitedPlayerName + " to your team");
 						invitedCombatant.getDynamicMenuManager().addInvitationIcons(team);
 						invitedPlayer.sendMessage(ChatColor.GREEN + "You have been invited to the team \"" + team.getTeamName() + "\". "
-								+ "Open up your team menu to accept or decline.");
+								+ "Open up your Team Menu to accept or decline.");
 					} else {
 						player.sendMessage(ChatColor.RED + invitedPlayerName + " is already being invited to a Team!");
 					}

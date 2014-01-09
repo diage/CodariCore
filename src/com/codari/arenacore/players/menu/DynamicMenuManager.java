@@ -7,6 +7,7 @@ import com.codari.arenacore.players.menu.menus.menustore.kits.KitCreationBuilder
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupEditSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupSelection;
+import com.codari.arenacore.players.menu.menus.menustore.teams.ArenaSelection;
 import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
 import com.codari.arenacore.players.menu.menus.menustore.teams.PlayerSelection;
 
@@ -21,6 +22,7 @@ public class DynamicMenuManager {
 	private SpawnableGroupEditSelection spawnableGroupEditSelectionMenu;
 	private PlayerSelection playerSelectionMenu;
 	private InitialTeamOptions initialTeamOptionsMenu;
+	private ArenaSelection arenaSelectionMenu;
 	
 	public DynamicMenuManager(Combatant combatant) {
 		this.combatant = combatant;
@@ -76,4 +78,12 @@ public class DynamicMenuManager {
 	public void addInvitationIcons(Team team) {
 		this.initialTeamOptionsMenu.addInvitationIcons(this.combatant, team);
 	}	
+	
+	public void setArenaSelectionMenu(ArenaSelection arenaSelection) {
+		this.arenaSelectionMenu = arenaSelection;
+	}
+	
+	public void addArenaIcons(String arenaName) {
+		this.arenaSelectionMenu.addArenaIcon(this.combatant, arenaName);
+	}
 }

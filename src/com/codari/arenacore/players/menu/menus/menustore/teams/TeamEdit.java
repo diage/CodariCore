@@ -6,7 +6,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.CheckPlayersIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.InvitePlayersIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.QueueIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.SelectPlayersIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.SelectPlayerIcon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
@@ -20,7 +20,7 @@ public class TeamEdit extends FunctionMenu {
 	private void addIcons(Combatant combatant, Team team, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new CheckPlayersIcon(combatant, new PlayerSelection(combatant, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.A_TWO, new QueueIcon(combatant, new QueueOptions(combatant, team, new BackIcon(combatant, this))));
-		super.setSlot(FunctionMenuSlot.B_ONE, new SelectPlayersIcon(combatant));
+		super.setSlot(FunctionMenuSlot.B_ONE, new SelectPlayerIcon(combatant));
 		super.setSlot(FunctionMenuSlot.B_TWO, new InvitePlayersIcon(combatant));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 	}

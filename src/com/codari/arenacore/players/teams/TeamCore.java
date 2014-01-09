@@ -20,6 +20,7 @@ public class TeamCore implements Team {
 	private Arena arena;
 	private String teamName;
 	private boolean inQueue;
+	private String arenaQueueName;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
@@ -151,5 +152,13 @@ public class TeamCore implements Team {
 	
 	public boolean checkIfInQueue() {
 		return this.inQueue;
+	}
+	
+	public void setArenaQueueName(String arenaQueueName) {
+		this.arenaQueueName = arenaQueueName;
+	}
+	
+	public String getArenaQueueName() {
+		return this.arenaQueueName;
 	}
 }

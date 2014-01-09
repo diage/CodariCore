@@ -5,7 +5,6 @@ import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.queue.JoinQueueIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.queue.LeaveQueueIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.teams.edit.queue.SelectQueueIcon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
@@ -17,9 +16,8 @@ public class QueueOptions extends FunctionMenu {
 	}
 
 	private void addIcons(Combatant combatant, Team team, BackIcon backIcon) {
-		super.setSlot(FunctionMenuSlot.A_ONE, new SelectQueueIcon(combatant));
-		super.setSlot(FunctionMenuSlot.A_TWO, new JoinQueueIcon(combatant, team));
-		super.setSlot(FunctionMenuSlot.A_THREE, new LeaveQueueIcon(combatant, team));
+		super.setSlot(FunctionMenuSlot.A_ONE, new JoinQueueIcon(combatant, new ArenaSelection(combatant, team, new BackIcon(combatant, this))));
+		super.setSlot(FunctionMenuSlot.A_TWO, new LeaveQueueIcon(combatant, team));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 	}
 }
