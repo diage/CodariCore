@@ -133,18 +133,19 @@ public class ArenaManagerCore implements ArenaManager {
 		if(!this.queues.containsKey(arenaName)) {
 			team.getPlayers().get(0).sendMessage(ChatColor.BLUE + "The arena " + arenaName + " is null!");
 		}
-		((TeamCore) team).setArenaQueueName(arenaName);
-		return this.queues.get(arenaName).addTeamToQueue(team);
+		((TeamCore) team).setQueue(this.queues.get(arenaName));
+		return ((TeamCore) team).getQueue().addTeamToQueue(team);
 	}
 	
 	@Override
 	public boolean removeFromQueue(Team team) {
-		String arenaName = ((TeamCore) team).getArenaQueueName();
-		((TeamCore) team).setArenaQueueName(null);
-		if(!this.queues.containsKey(arenaName)) {
-			Bukkit.broadcastMessage(ChatColor.RED + "Trying to remove a team that's not in queue from a queue.");	//TODO
+		QueueCore queue = ((TeamCore) team).getQueue();
+		if(queue != null) {
+			((TeamCore) team).setQueue(null);
+			return queue.removeTeamFromQueue(team);		
 		}
-		return this.queues.get(arenaName).removeTeamFromQueue(team);
+		Bukkit.broadcastMessage(ChatColor.RED + "Trying to remove a team that's not in queue from a queue.");	//TODO
+		return false;
 	}
 	
 	public QueueCore getQueue(String arenaName) {
@@ -157,7 +158,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenas.put(requestedName, arena);
 		this.queues.put(requestedName, new QueueCore(arena));
 		for(Combatant combatant : this.combatants.values()) {
-			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcons(requestedName);
+			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(requestedName);
 		}
 		return arena;
 	}
@@ -167,7 +168,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenas.put(arena.getName(), arena);
 		this.queues.put(arena.getName(), new QueueCore(arena));
 		for(Combatant combatant : this.combatants.values()) {
-			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcons(arena.getName());
+			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
 		}
 		return arena;
 	}

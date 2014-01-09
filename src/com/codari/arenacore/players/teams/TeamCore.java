@@ -13,6 +13,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.players.teams.TeamColor;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.teams.queue.QueueCore;
 
 public class TeamCore implements Team {
 	//-----Fields-----//
@@ -20,7 +21,7 @@ public class TeamCore implements Team {
 	private Arena arena;
 	private String teamName;
 	private boolean inQueue;
-	private String arenaQueueName;
+	private QueueCore queue;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
@@ -154,11 +155,11 @@ public class TeamCore implements Team {
 		return this.inQueue;
 	}
 	
-	public void setArenaQueueName(String arenaQueueName) {
-		this.arenaQueueName = arenaQueueName;
+	public void setQueue(QueueCore queue) {
+		this.queue = queue;
 	}
 	
-	public String getArenaQueueName() {
-		return this.arenaQueueName;
+	public QueueCore getQueue() {
+		return this.queue;
 	}
 }

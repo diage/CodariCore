@@ -83,7 +83,7 @@ public class DynamicMenuManager {
 		this.arenaSelectionMenu = arenaSelection;
 	}
 	
-	public void addArenaIcons(String arenaName) {
+	public void addArenaIcon(String arenaName) {
 		this.arenaSelectionMenu.addArenaIcon(this.combatant, arenaName);
 	}
 }
