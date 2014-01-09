@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.menu.menus;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class FunctionMenu implements Menu {
 	protected Map<FunctionMenuSlot, Icon> icons;
 	
 	public FunctionMenu(Combatant combatant) {
-		this.icons = new HashMap<>();
+		this.icons = new EnumMap<>(FunctionMenuSlot.class);
 	}
 	
 	@Override

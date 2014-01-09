@@ -24,7 +24,7 @@ public class InitialTeamOptions extends FunctionMenu {
 	}
 	
 	public void setNoTeamIcon(Combatant combatant) {
-		super.setSlot(FunctionMenuSlot.A_ONE, new CreateTeamMenuIcon(combatant, new TeamCreate(combatant, new BackIcon(combatant, this))));
+		super.setSlot(FunctionMenuSlot.A_ONE, new CreateTeamMenuIcon(combatant, new TeamCreate(combatant, this, new BackIcon(combatant, this))));
 		if(super.hasSlot(FunctionMenuSlot.A_TWO)) {
 			Bukkit.broadcastMessage("Removing icon!"); //TODO
 			((CombatantCore) combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.A_TWO);
