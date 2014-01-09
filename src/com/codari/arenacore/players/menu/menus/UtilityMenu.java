@@ -10,9 +10,11 @@ import com.codari.arenacore.players.menu.icons.iconstore.BorderIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.ExitIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.KitBuildersIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.KitsIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.TeamsIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
 import com.codari.arenacore.players.menu.slots.MenuSlot;
 import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 
@@ -30,7 +32,8 @@ public class UtilityMenu implements Menu {
 	
 	private void addIcons(Combatant combatant) {
 		this.setSlot(UtilityMenuSlot.ONE, new KitsIcon(combatant, new KitSelection(combatant)));
-		this.setSlot(UtilityMenuSlot.TWO, new KitBuildersIcon(combatant, new KitBuilderSelection(combatant)));		
+		this.setSlot(UtilityMenuSlot.TWO, new KitBuildersIcon(combatant, new KitBuilderSelection(combatant)));	
+		this.setSlot(UtilityMenuSlot.THREE, new TeamsIcon(combatant, new InitialTeamOptions(combatant)));
 		this.setSlot(UtilityMenuSlot.NINE, new ExitIcon(Material.OBSIDIAN, combatant));		
 	}
 	

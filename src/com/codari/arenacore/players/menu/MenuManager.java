@@ -66,6 +66,15 @@ public class MenuManager {
 		}
 	}
 	
+	public void removeMenuSlot(MenuSlot menuSlot) {
+		if(this.inMenu) {
+			PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
+			if(menuSlot instanceof FunctionMenuSlot) {
+				//this.functionMenu.re
+			}
+		}
+	}
+	
 	public void enterMenu() {
 		if(!this.inMenu) {
 			this.savedInventory = this.combatant.getPlayer().getInventory();

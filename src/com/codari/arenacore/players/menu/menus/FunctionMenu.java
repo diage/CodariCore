@@ -29,6 +29,12 @@ public class FunctionMenu implements Menu {
 			this.icons.put((FunctionMenuSlot) menuSlot, icon);
 		}
 	}
+	
+	public void removeIcon(FunctionMenuSlot functionMenuSlot, Icon icon) {
+		if(this.icons.containsKey(functionMenuSlot)) {
+			
+		}
+	}
 
 	@Override
 	public void setMenu(Map<MenuSlot, Icon> icons) {

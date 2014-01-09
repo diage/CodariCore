@@ -28,6 +28,7 @@ import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.roleswitch.RoleSwitchListener;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
+import com.codari.arena5.players.teams.TeamManager;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.develop.ArenaDevelopmentCommand;
@@ -38,6 +39,7 @@ import com.codari.arenacore.players.menu.events.listeners.IconListenerRegister;
 import com.codari.arenacore.players.menu.hotbar.HotbarListener;
 import com.codari.arenacore.players.menu.menus.MenuListener;
 import com.codari.arenacore.players.skills.SkillListener;
+import com.codari.arenacore.players.teams.TeamManagerCore;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
 import com.codari.arenacore.players.teams.commands.CommandCheckTeam;
 import com.codari.arenacore.players.teams.commands.CommandCreateTeam;
@@ -53,6 +55,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Fields-----//
 	private CodariPlayerManagerCore codariPlayerManager;
 	private ArenaManagerCore arenaManager;
+	private TeamManagerCore teamManager;
 	private StatFactoryCore statFactory;
 	private LibraryCore library;
 	private EnchantmentManagerCore enchantmentManager;
@@ -75,6 +78,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.enchantmentManager.packetStuff();
 		this.itemDataManager = new ItemDataManagerCore();
 		this.arenaManager = new ArenaManagerCore();
+		this.teamManager = new TeamManagerCore();
 		this.statFactory = new StatFactoryCore();
 		this.library = new LibraryCore(); 
 		this.commandRegister = new CommandRegister();
@@ -152,6 +156,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	@Override
 	public ArenaManagerCore getArenaManager() {
 		return this.arenaManager;
+	}
+	
+	@Override
+	public TeamManager getTeamManager() {
+		return this.teamManager;
 	}
 	
 	@Override
