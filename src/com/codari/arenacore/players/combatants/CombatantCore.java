@@ -68,7 +68,7 @@ public final class CombatantCore implements Combatant {
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		
 		this.kitManager = new KitManager(this);
-		//this.menuManager = new MenuManager(this);
+		this.menuManager = new MenuManager(this);
 		
 		
 		/*	   FIXME - Begin Testing 	 */
@@ -78,9 +78,7 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.getSelectedKitBuilder().setTeamSize((byte) 2);
 		this.kitManager.getSelectedKitBuilder().selectWinCondition(new WinCondition2v2(100));
 		this.kitManager.getSelectedKitBuilder().submitWinCondition();
-		this.kitManager.createKit("TestKit");
-		
-		this.menuManager = new MenuManager(this);	//move this to the line after kit manager instantiation after testing is done		
+		this.kitManager.createKit("TestKit");		
 		/* 			END TESTING				*/
 		
 		this.inArena = false;
