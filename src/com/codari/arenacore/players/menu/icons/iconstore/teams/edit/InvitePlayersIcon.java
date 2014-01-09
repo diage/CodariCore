@@ -27,7 +27,7 @@ public class InvitePlayersIcon extends ExecutableIcon {
 			Player invitedPlayer = Bukkit.getPlayer(invitedPlayerName);
 			if(invitedPlayer != null) {
 				CombatantCore invitedCombatant = (CombatantCore) Codari.getArenaManager().getCombatant(invitedPlayer);
-				if(invitedCombatant.getTeam() != null) {
+				if(invitedCombatant.getTeam() == null) {
 					if(!invitedCombatant.checkIfBeingInvitedToTeam()) {
 						player.sendMessage(ChatColor.GREEN + "You have invited " + invitedPlayerName + " to your team");
 						invitedCombatant.getDynamicMenuManager().addInvitationIcons(team);
