@@ -79,6 +79,10 @@ public class DynamicMenuManager {
 		this.initialTeamOptionsMenu.addInvitationIcons(this.combatant, team);
 	}	
 	
+	public void addHasTeamIcons() {
+		this.initialTeamOptionsMenu.setHasTeamIcons(this.combatant);
+	}
+	
 	public void setArenaSelectionMenu(ArenaSelection arenaSelection) {
 		this.arenaSelectionMenu = arenaSelection;
 	}

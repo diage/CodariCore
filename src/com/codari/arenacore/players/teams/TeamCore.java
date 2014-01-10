@@ -13,6 +13,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.players.teams.TeamColor;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.teams.queue.QueueCore;
 
 public class TeamCore implements Team {
@@ -111,7 +112,13 @@ public class TeamCore implements Team {
 	@Override
 	public void addToTeam(Combatant combatant) {
 		combatant.setTeam(this);
+		((CombatantCore) combatant).getDynamicMenuManager().addHasTeamIcons();
 		this.combatants.add(combatant);
+		if(this.getTeamSize() > 1) {
+			for(Combatant teamMateCombatant : this.getTeamMates(combatant)) {
+				((CombatantCore) teamMateCombatant).getDynamicMenuManager().addPlayerIcon(combatant.getPlayer().getName());
+			}
+		}
 	}
 	
 	@Override
