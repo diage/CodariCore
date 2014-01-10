@@ -19,11 +19,13 @@ public class PlayerSelection extends FunctionMenu {
 		super(combatant);
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
-		for(Combatant teamMate: combatant.getTeam().getTeamMates(combatant)) {
-			this.addPlayerIcon(combatant, teamMate.getPlayer().getName());
+		if(combatant.getTeam() != null && combatant.getTeam().getTeamSize() > 1) {
+			for(Combatant teamMate: combatant.getTeam().getTeamMates(combatant)) {
+				this.addPlayerIcon(combatant, teamMate.getPlayer().getName());
+			}
 		}
 		((CombatantCore)combatant).getDynamicMenuManager().setPlayerSelectionMenu(this);
-		}
+	}
 	
 	private PlayerSelection(Combatant combatant, BackIcon backIcon, Icon previous) {
 		super(combatant);

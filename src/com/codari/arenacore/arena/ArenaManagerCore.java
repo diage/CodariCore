@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -120,8 +119,8 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenas.get(name);
 	}
 	
-	public Set<String> getArenaNames() {
-		return this.arenas.keySet();
+	public Map<String, ArenaCore> getArenaList() {
+		return new LinkedHashMap<>(this.arenas);
 	}
 	
 	public boolean containsArena(String arenaName) {

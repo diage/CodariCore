@@ -23,7 +23,7 @@ public class ArenaSelection extends FunctionMenu {
 		this.team = team;
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
-		for(String arenaName : ((ArenaManagerCore) Codari.getArenaManager()).getArenaNames()) {
+		for(String arenaName : ((ArenaManagerCore) Codari.getArenaManager()).getArenaList().keySet()) {
 			this.addArenaIcon(combatant, arenaName);
 		}
 		((CombatantCore)combatant).getDynamicMenuManager().setArenaSelectionMenu(this);
