@@ -10,9 +10,7 @@ import org.bukkit.entity.Player;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.apicore.command.CodariCommand;
-import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.ArenaBuilder;
-import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class FinalizeCommand implements CodariCommand {
@@ -24,11 +22,7 @@ public class FinalizeCommand implements CodariCommand {
 		if(sender instanceof Player && args[0].equalsIgnoreCase(COMMAND_NAME) && args.length == 2) {
 			ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(args[1]);
 
-			Arena arena = Codari.getArenaManager().buildArena(args[1], arenaBuilder);
-			File file = new File(CodariI.INSTANCE.getDataFolder(), args[1] + ".dat");
-			CodariI.INSTANCE.getDataFolder().mkdirs();
-			((ArenaCore) arena).serializeTest(file);
-
+			Codari.getArenaManager().buildArena(args[1], arenaBuilder);
 			Bukkit.broadcastMessage("Finalized!");	//TODO
 			return true;
 		} else if(sender instanceof Player && args[0].equalsIgnoreCase(LOAD_NAME) && args.length == 2) {

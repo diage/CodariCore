@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 
 import com.codari.api5.CodariI;
-import com.codari.api5.io.ConfigurationInput;
-import com.codari.api5.io.ConfigurationOutput;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaWinEvent;
@@ -204,16 +201,5 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public byte getNumberOfTeams() {
 		return this.numberOfTeams;
-	}
-
-	@Override
-	public Map<String, Object> serialize() {
-		return new ConfigurationOutput()
-				.result();
-	}
-	
-	public static GameRuleCore deserialize(Map<String, Object> args) {
-		ConfigurationInput input = new ConfigurationInput(args);
-		return null;
 	}
 }

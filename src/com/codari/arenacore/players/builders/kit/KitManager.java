@@ -38,7 +38,7 @@ public class KitManager {
 		this.selectedBuilder = new KitBuilder(name);
 		this.kitBuilders.put(name, this.selectedBuilder);
 		KitBuilderListener.changeKitBuilder(combatant, this.selectedBuilder);
-		return true;	//FIXME - Will be updated later on
+		return true;	
 	}
 	
 	public boolean containsKitBuilder(String kitBuilderName) {
