@@ -19,7 +19,7 @@ public class TimedActionSettings extends FunctionMenu {
 		super(combatant);
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
-		super.setSlot(FunctionMenuSlot.C_FOUR, new SelectTimedActionIcon(combatant, new TimedActionSelect(combatant, new BackIcon(combatant, this))));
+		super.setSlot(FunctionMenuSlot.C_THREE, new SelectTimedActionIcon(combatant, new TimedActionSelection(combatant, new BackIcon(combatant, this))));
 		((CombatantCore)combatant).getDynamicMenuManager().setTimedActionSettingsMenu(this);
 	}
 	
@@ -28,6 +28,7 @@ public class TimedActionSettings extends FunctionMenu {
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		super.setSlot(FunctionMenuSlot.C_TWO, previous);
+		super.setSlot(FunctionMenuSlot.C_THREE, new SelectTimedActionIcon(combatant, new TimedActionSelection(combatant, new BackIcon(combatant, this))));
 	}
 
 	

@@ -1,5 +1,8 @@
 package com.codari.arenacore.players.menu.menus.menustore.kitbuilders;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+
 import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.LibraryCore;
@@ -11,20 +14,21 @@ import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
-public class TimedActionSelect extends FunctionMenu {
-	private TimedActionSelect nextPage;
+public class TimedActionSelection extends FunctionMenu {
+	private TimedActionSelection nextPage;
 	private BackIcon backIcon;
 	
-	public TimedActionSelect(Combatant combatant, BackIcon backIcon) {
+	public TimedActionSelection(Combatant combatant, BackIcon backIcon) {
 		super(combatant);
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		for(String timedActionName : ((LibraryCore)Codari.getLibrary()).getActionNames()) {
+			Bukkit.broadcastMessage(ChatColor.GREEN + "Adding Timed Action to Menu!"); //TODO - for testing
 			this.addTimedActionIcon(combatant, timedActionName);
 		}
 	}
 	
-	private TimedActionSelect(Combatant combatant, Icon previous, BackIcon backIcon) {
+	private TimedActionSelection(Combatant combatant, Icon previous, BackIcon backIcon) {
 		super(combatant);
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
@@ -47,7 +51,7 @@ public class TimedActionSelect extends FunctionMenu {
 
 	private void addNextPage(Combatant combatant) {
 		Icon prevIcon = new PreviousIcon(combatant, this);
-		this.nextPage = new TimedActionSelect(combatant, prevIcon, this.backIcon);
+		this.nextPage = new TimedActionSelection(combatant, prevIcon, this.backIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new NextIcon(combatant, this.nextPage));
 	}	
 }
