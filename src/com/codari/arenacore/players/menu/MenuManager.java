@@ -27,7 +27,7 @@ public class MenuManager {
 	private Map<FunctionMenuSlot, Icon> currentFunctionInventory;
 	private Map<UtilityMenuSlot, Icon> currentUtilityInventory;
 	
-	public MenuManager(Combatant combatant) {
+	public MenuManager(Combatant combatant) {	
 		this.combatant = combatant;
 		this.functionMenu = new FunctionMenu(combatant);
 		this.utilityMenu = new UtilityMenu(combatant);
@@ -70,8 +70,13 @@ public class MenuManager {
 		if(this.inMenu) {
 			PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 			if(menuSlot instanceof FunctionMenuSlot) {
-				//this.functionMenu.re
+				if(this.functionMenu.hasSlot((FunctionMenuSlot) menuSlot)) {
+					this.functionMenu.removeIcon((FunctionMenuSlot)menuSlot);
+					this.currentFunctionInventory.remove((FunctionMenuSlot)menuSlot);
+					playerInventory.setItem(((FunctionMenuSlot) menuSlot).getSlot(), null);
+				}
 			}
+			this.combatant.getPlayer().updateInventory();
 		}
 	}
 	

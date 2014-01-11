@@ -9,8 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class CreateTeamMenuIcon extends MenuIcon {
 
 	public CreateTeamMenuIcon(Combatant combatant, Menu menu) {
-		super(Material.EMERALD_BLOCK, combatant, menu, "Leave Team");
-		// TODO Auto-generated constructor stub
+		super(Material.EMERALD_BLOCK, combatant, menu, "Create Team");
 	}
 
 }

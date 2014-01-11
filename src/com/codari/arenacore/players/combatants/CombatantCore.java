@@ -22,6 +22,7 @@ import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.builders.kit.KitManager;
+import com.codari.arenacore.players.menu.DynamicMenuManager;
 import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.role.PlayerRole;
 import com.codari.arenacore.players.teams.TeamCore;
@@ -36,9 +37,10 @@ public final class CombatantCore implements Combatant {
 	private final File dataFile;
 	private CombatantDataCore data;
 	private StatManager statManager;
+	private DynamicMenuManager dynamicMenuManager;
 	private MenuManager menuManager;
 	
-	private boolean isLeader, inArena;
+	private boolean isLeader, inArena, isBeingInvitedToATeam;
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
@@ -68,6 +70,7 @@ public final class CombatantCore implements Combatant {
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		
 		this.kitManager = new KitManager(this);
+		this.dynamicMenuManager = new DynamicMenuManager(this);
 		//this.menuManager = new MenuManager(this);
 		
 		
@@ -78,11 +81,10 @@ public final class CombatantCore implements Combatant {
 		this.kitManager.getSelectedKitBuilder().setTeamSize((byte) 2);
 		this.kitManager.getSelectedKitBuilder().selectWinCondition(new WinCondition2v2(100));
 		this.kitManager.getSelectedKitBuilder().submitWinCondition();
-		this.kitManager.createKit("TestKit");
-		
-		this.menuManager = new MenuManager(this);	//move this to the line after kit manager instantiation after testing is done		
+		this.kitManager.createKit("TestKit");		
 		/* 			END TESTING				*/
 		
+		this.menuManager = new MenuManager(this); 
 		this.inArena = false;
 	}
 	
@@ -196,6 +198,14 @@ public final class CombatantCore implements Combatant {
 	public boolean checkIfLeader() {
 		return this.isLeader;
 	}
+	
+	public void setBeingInvitedToTeam(boolean isBeingInvitedToATeam) {
+		this.isBeingInvitedToATeam = isBeingInvitedToATeam;
+	}
+	
+	public boolean checkIfBeingInvitedToTeam() {
+		return this.isBeingInvitedToATeam;
+	}
 
 	@Override
 	public Player getPlayer() {
@@ -232,6 +242,10 @@ public final class CombatantCore implements Combatant {
 	
 	public KitManager getKitManager() {
 		return this.kitManager;
+	}
+	
+	public DynamicMenuManager getDynamicMenuManager() {
+		return this.dynamicMenuManager;
 	}
 	
 	public MenuManager getMenuManager() {

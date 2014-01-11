@@ -26,10 +26,10 @@ public class KitBuilderSelection extends FunctionMenu {
 		for(String kitBuilderName : ((CombatantCore)combatant).getKitManager().getKitBuilders().keySet()) {
 			this.addKitBuilderIcon(combatant, kitBuilderName);
 		}
-		((CombatantCore)combatant).getKitManager().setKitBuilderSelectionMenu(combatant, this);
+		((CombatantCore)combatant).getDynamicMenuManager().setKitBuilderSelectionMenu(this);
 	}
 	
-	/* This will construct any further needed pages for Kit Selection. */
+	/* This will construct any further needed pages for Kit Builder Selection. */
 	private KitBuilderSelection(Combatant combatant, Icon previous) {
 		super(combatant);
 		super.setSlot(FunctionMenuSlot.C_ONE, previous);

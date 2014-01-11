@@ -52,8 +52,9 @@ public class QueueCore {
 			}
 			return false;
 		}
-		this.teams.remove(team);
 		((TeamCore)team).setInQueue(false);
+		this.teams.remove(team);
+		this.displayQueuePositions();
 		return true;
 	}
 
@@ -64,10 +65,16 @@ public class QueueCore {
 	}
 
 	private void startArena() {
-		Team[] teamArray =  new Team[this.teams.size()];
-		this.arena.start(this.teams.toArray(teamArray));
+		Team[] teamArray =  new Team[this.arenaTeamSize];
+		for(int i = 0; i < this.arenaTeamSize; i++) {
+			teamArray[i] = this.teams.get(i);
+		}
+		this.arena.start(teamArray);
 		this.matchStarting = false;
-		this.removeAllTeamsFromQueue();
+		for(int i = 0; i < this.arenaTeamSize; i++) {
+			((TeamCore)this.teams.get(i)).setInQueue(false);
+			this.teams.remove(0);
+		}
 	}
 
 	private void countDown() {
@@ -77,7 +84,7 @@ public class QueueCore {
 				public void run() {
 					for(Team team : teams) {
 						for(Player player : team.getPlayers()) {
-							player.sendMessage("Match is starting in " + countDown + " seconds.");
+							player.sendMessage("Match is starting in [" + countDown + "] seconds.");
 						}
 					}
 					countDown--;
@@ -92,18 +99,22 @@ public class QueueCore {
 			}, 0, 20);
 		}
 	}
+	
+	private void displayQueuePositions() {
+		for(Team team : this.teams) {
+			for(Player player : team.getPlayers()) {
+				player.sendMessage(ChatColor.BLUE + "Waiting for the arena to open up. Your team's queue positon is " + (this.teams.indexOf(team) + 1));
+			}
+		}
+	}
 
 	public void checkIfMatchShouldStart() {
-		if(this.teams.size() == this.arenaTeamSize) {
+		if(this.teams.size() >= this.arenaTeamSize) {
 			if(checkIfMatchIsNotInProgress(this.arena)) {		//check if the match is not already in progress
-			this.matchStarting = true;
-			this.countDown();
+				this.matchStarting = true;
+				this.countDown();
 			} else {
-				for(Team team : teams) {
-					for(Player player : team.getPlayers()) {
-						player.sendMessage(ChatColor.BLUE + "Waiting for the arena to end.");
-					}
-				}	
+				this.displayQueuePositions();	
 			}
 		}		
 	}	

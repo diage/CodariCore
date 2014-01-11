@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -23,6 +24,7 @@ import com.codari.arenacore.arena.rules.GameRuleCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
 import com.codari.arenacore.players.role.RoleCore;
+import com.codari.arenacore.players.teams.TeamCore;
 import com.codari.arenacore.players.teams.queue.QueueCore;
 
 public class ArenaManagerCore implements ArenaManager {
@@ -117,12 +119,32 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenas.get(name);
 	}
 	
+	public Map<String, ArenaCore> getArenaList() {
+		return new LinkedHashMap<>(this.arenas);
+	}
+	
+	public boolean containsArena(String arenaName) {
+		return this.arenas.containsKey(arenaName);
+	}
+	
 	@Override
 	public boolean addToQueue(String arenaName, Team team) {
 		if(!this.queues.containsKey(arenaName)) {
 			team.getPlayers().get(0).sendMessage(ChatColor.BLUE + "The arena " + arenaName + " is null!");
 		}
-		return this.queues.get(arenaName).addTeamToQueue(team);
+		((TeamCore) team).setQueue(this.queues.get(arenaName));
+		return ((TeamCore) team).getQueue().addTeamToQueue(team);
+	}
+	
+	@Override
+	public boolean removeFromQueue(Team team) {
+		QueueCore queue = ((TeamCore) team).getQueue();
+		if(queue != null) {
+			((TeamCore) team).setQueue(null);
+			return queue.removeTeamFromQueue(team);		
+		}
+		Bukkit.broadcastMessage(ChatColor.RED + "Trying to remove a team that's not in queue from a queue.");	//TODO
+		return false;
 	}
 	
 	public QueueCore getQueue(String arenaName) {
@@ -134,6 +156,10 @@ public class ArenaManagerCore implements ArenaManager {
 		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
 		this.arenas.put(requestedName, arena);
 		this.queues.put(requestedName, new QueueCore(arena));
+		for(Combatant combatant : this.combatants.values()) {
+			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(requestedName);
+			combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
+		}
 		return arena;
 	}
 	
@@ -141,6 +167,10 @@ public class ArenaManagerCore implements ArenaManager {
 		ArenaCore arena = (ArenaCore) CodariSerialization.deserialize(file);
 		this.arenas.put(arena.getName(), arena);
 		this.queues.put(arena.getName(), new QueueCore(arena));
+		for(Combatant combatant : this.combatants.values()) {
+			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
+			combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
+		}
 		return arena;
 	}
 
@@ -157,7 +187,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenaBuilders.get(arenaName);
 	}
 	
-	public boolean containsArenaBuild(String arenaName) {
+	public boolean containsArenaBuilder(String arenaName) {
 		return this.arenaBuilders.containsKey(arenaName);
 	}
 	

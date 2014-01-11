@@ -29,6 +29,7 @@ public class CreateTeamIcon extends ExecutableIcon {
 					TeamBuilder.createNewTeam(this.getCombatant().getPlayer(), teamName);
 					player.sendMessage(ChatColor.GREEN + "You have created a new team named " + "\"" + teamName + "\"");
 					this.initialTeamOptions.setHasTeamIcons(this.getCombatant());
+					SaveTeamIconListener.requestedTeamNames.remove(player.getName());
 				} else {
 					player.sendMessage(ChatColor.RED + "A team with the name \"" + teamName + "\" already exists");
 				}

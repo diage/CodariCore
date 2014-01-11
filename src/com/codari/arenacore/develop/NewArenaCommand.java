@@ -23,9 +23,9 @@ public class NewArenaCommand implements CodariCommand {
 			Player player = (Player) sender;
 			String arenaName = args[1];
 
-			if(!((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuild(arenaName)) {
+			if(!((ArenaManagerCore)Codari.getArenaManager()).containsArenaBuilder(arenaName)) {
 				//Gamerule construction//
-				GameRuleCore gameRule = new GameRuleCore();
+				GameRuleCore gameRule = new GameRuleCore("2v2");
 				gameRule.setMatchDurationInfinite();
 				gameRule.setTeamSize(teamSize);		//set team size to 2
 				gameRule.setNumberOfTeams(numberOfTeams);

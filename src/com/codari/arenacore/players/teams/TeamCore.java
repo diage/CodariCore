@@ -13,6 +13,8 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arena5.players.teams.TeamColor;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.combatants.CombatantCore;
+import com.codari.arenacore.players.teams.queue.QueueCore;
 
 public class TeamCore implements Team {
 	//-----Fields-----//
@@ -20,6 +22,7 @@ public class TeamCore implements Team {
 	private Arena arena;
 	private String teamName;
 	private boolean inQueue;
+	private QueueCore queue;
 	
 	//-----Constructor-----//
 	public TeamCore(String teamName, Combatant...combatants) {
@@ -109,7 +112,13 @@ public class TeamCore implements Team {
 	@Override
 	public void addToTeam(Combatant combatant) {
 		combatant.setTeam(this);
+		((CombatantCore) combatant).getDynamicMenuManager().addHasTeamIcons();
 		this.combatants.add(combatant);
+		if(this.getTeamSize() > 1) {
+			for(Combatant teamMateCombatant : this.getTeamMates(combatant)) {
+				((CombatantCore) teamMateCombatant).getDynamicMenuManager().addPlayerIcon(combatant.getPlayer().getName());
+			}
+		}
 	}
 	
 	@Override
@@ -129,6 +138,11 @@ public class TeamCore implements Team {
 	}
 
 	@Override
+	public void removeLeader(Combatant combatant) {
+		combatant.setLeader(false);
+	}	
+	
+	@Override
 	public boolean isLeader(Combatant combatant) {
 		return combatant.checkIfLeader();
 	}
@@ -146,5 +160,13 @@ public class TeamCore implements Team {
 	
 	public boolean checkIfInQueue() {
 		return this.inQueue;
+	}
+	
+	public void setQueue(QueueCore queue) {
+		this.queue = queue;
+	}
+	
+	public QueueCore getQueue() {
+		return this.queue;
 	}
 }

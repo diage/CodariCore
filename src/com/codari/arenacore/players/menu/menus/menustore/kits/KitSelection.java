@@ -26,7 +26,7 @@ public class KitSelection extends FunctionMenu {
 		for(String kitName : ((CombatantCore)combatant).getKitManager().getKits().keySet()) {
 			this.addKitIcon(combatant, kitName);
 		}
-		((CombatantCore)combatant).getKitManager().setKitSelectionMenu(combatant, this);
+		((CombatantCore)combatant).getDynamicMenuManager().setKitSelectionMenu(this);
 	}
 	
 	/* This will construct any further needed pages for Kit Selection. */

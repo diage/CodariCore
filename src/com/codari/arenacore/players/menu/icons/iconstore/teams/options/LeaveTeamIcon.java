@@ -27,5 +27,5 @@ public class LeaveTeamIcon extends ExecutableIcon {
 			Bukkit.broadcastMessage(ChatColor.RED + "A player doesn't have a team but is trying to leave one.");	//TODO
 		}	
 	}
-
+	
 }
