@@ -6,7 +6,6 @@ import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.NextIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.PreviousIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.settings.SelectWinConditionIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.settings.SelectTimeIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.settings.WinConditionIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
@@ -20,8 +19,7 @@ public class WinConditionSettings extends FunctionMenu {
 		super(combatant);
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
-		super.setSlot(FunctionMenuSlot.C_TWO,  new SelectWinConditionIcon(combatant, new WinConditionSelection(combatant, new BackIcon(combatant, this))));
-		super.setSlot(FunctionMenuSlot.C_THREE, new SelectTimeIcon(combatant, new WinConditionTimeSettings(combatant, new BackIcon(combatant, this))));
+		super.setSlot(FunctionMenuSlot.C_THREE,  new SelectWinConditionIcon(combatant, new WinConditionSelection(combatant, new BackIcon(combatant, this))));
 		((CombatantCore)combatant).getDynamicMenuManager().setWinConditionSettingsMenu(this);
 	}
 	
@@ -30,6 +28,7 @@ public class WinConditionSettings extends FunctionMenu {
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		super.setSlot(FunctionMenuSlot.C_TWO, previous);
+		super.setSlot(FunctionMenuSlot.C_THREE,  new SelectWinConditionIcon(combatant, new WinConditionSelection(combatant, new BackIcon(combatant, this))));
 	}
 
 	

@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class AddTimedActionsIcon extends MenuIcon {
 
 	public AddTimedActionsIcon(Combatant combatant, Menu menu) {
-		super(Material.DIAMOND_PICKAXE, combatant, menu, "Timed Actions Settings");
+		super(Material.BROWN_MUSHROOM, combatant, menu, "Timed Actions Settings");
 	}
 
 }
