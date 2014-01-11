@@ -19,7 +19,6 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.CodariI;
-import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaEndEvent;
