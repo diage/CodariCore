@@ -21,6 +21,8 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.builders.kit.KitBuilder;
+import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.menu.DynamicMenuManager;
 import com.codari.arenacore.players.menu.MenuManager;
@@ -75,12 +77,14 @@ public final class CombatantCore implements Combatant {
 		
 		
 		/*	   FIXME - Begin Testing 	 */
-		this.kitManager.createKitBuilder("2v2");
-		this.kitManager.getSelectedKitBuilder().setNumberOfTeams((byte) 2);
-		this.kitManager.getSelectedKitBuilder().setTime(true);
-		this.kitManager.getSelectedKitBuilder().setTeamSize((byte) 2);
-		this.kitManager.getSelectedKitBuilder().selectWinCondition(new WinCondition2v2(100));
-		this.kitManager.getSelectedKitBuilder().submitWinCondition();
+		this.kitManager.createKitBuilder(this, "2v2");
+		KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(this.player.getName());
+		kitBuilder.setNumberOfTeams((byte) 2);
+		kitBuilder.setTime(true);
+		kitBuilder.setTeamSize((byte) 2);
+		kitBuilder.selectWinCondition(new WinCondition2v2(100));
+		kitBuilder.submitWinCondition();
+		this.kitManager.submitKitBuilder(kitBuilder);
 		this.kitManager.createKit("TestKit");		
 		/* 			END TESTING				*/
 		

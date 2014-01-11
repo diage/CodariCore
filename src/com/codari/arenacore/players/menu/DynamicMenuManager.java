@@ -3,6 +3,8 @@ package com.codari.arenacore.players.menu;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.TimedActionSettings;
+import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.WinConditionSettings;
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitCreationBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupEditSelection;
@@ -23,6 +25,8 @@ public class DynamicMenuManager {
 	private PlayerSelection playerSelectionMenu;
 	private InitialTeamOptions initialTeamOptionsMenu;
 	private ArenaSelection arenaSelectionMenu;
+	private WinConditionSettings winConditionSettingsMenu;
+	private TimedActionSettings timedActionSettingsMenu;
 	
 	public DynamicMenuManager(Combatant combatant) {
 		this.combatant = combatant;
@@ -90,4 +94,20 @@ public class DynamicMenuManager {
 	public void addArenaIcon(String arenaName) {
 		this.arenaSelectionMenu.addArenaIcon(this.combatant, arenaName);
 	}
+	
+	public void setWinConditionSettingsMenu(WinConditionSettings winConditionSettings) {
+		this.winConditionSettingsMenu = winConditionSettings;
+	}
+	
+	public void addWinConditionIcon(String winconditionName) {
+		this.winConditionSettingsMenu.addWinConditionIcon(this.combatant, winconditionName);
+	}
+	
+	public void setTimedActionSettingsMenu(TimedActionSettings timedActionSettings) {
+		this.timedActionSettingsMenu = timedActionSettings;
+	}
+	
+	public void addTimedActionIcon(String timedAction) {
+		this.timedActionSettingsMenu.addTimedActionIcon(this.combatant, timedAction);
+	}	
 }

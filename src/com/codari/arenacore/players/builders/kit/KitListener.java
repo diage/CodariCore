@@ -55,7 +55,6 @@ public class KitListener implements Listener {
 	private void changeRandomDelayTime(IconHoverUpdateEvent e) {
 		Kit kit = KitListener.currentKits.get(e.getIcon().getCombatant().getPlayerReference().getName());
 		if(!(kit == null)) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "Successfully got the kit!");
 			if(e.getIcon() instanceof UpdateRandomDelayMinutesIcon) {
 				kit.updateRandomDelayMinutes(e.getNewInput());
 				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Minutes!");	//TODO
@@ -75,10 +74,13 @@ public class KitListener implements Listener {
 		if(!(kit == null)) {
 			if(e.getIcon() instanceof UpdateRandomRepeatMinutesIcon) {
 				kit.updateRandomRepeatMinutes(e.getNewInput());
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Repeat Minutes!");	//TODO
 			} else if(e.getIcon() instanceof UpdateRandomRepeatSecondsIcon) {
 				kit.updateRandomRepeatSeconds(e.getNewInput());
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Repeat Seconds!");	//TODO
 			} else if(e.getIcon() instanceof UpdateRandomRepeatTicksIcon) {
 				kit.updateRandomRepeatTicks(e.getNewInput());
+				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Repeat Ticks!");	//TODO
 			}
 		}		
 	}

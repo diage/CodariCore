@@ -24,22 +24,14 @@ public class GameRuleCore implements GameRule {
 	private static final long serialVersionUID = 3141996300251217554L;
 	//-----Fields-----//
 	private final String name;
-	private final List<WinCondition> winConditions;
 	private Time matchDuration;
-	private final Set<TimedAction> timedActions;
 	private byte teamSize, numberOfTeams;
+	private final List<WinCondition> winConditions;
+	private final Set<TimedAction> timedActions;
 	private RoleDelegation roleDelegation;
 	private List<RoleDeclaration> roleDeclarations;
 	
 	//-----Constructor-----//
-	@Deprecated
-	public GameRuleCore() {
-		this.name = null;
-		this.winConditions = new ArrayList<>();
-		this.timedActions = new HashSet<>();
-		this.roleDeclarations = new ArrayList<>();
-	}
-	
 	public GameRuleCore(String name) {
 		this.name = name;
 		this.winConditions = new ArrayList<>();
@@ -65,7 +57,7 @@ public class GameRuleCore implements GameRule {
 	
 	@Override
 	public boolean addWinCondition(final WinCondition winCondition, Time time, boolean after) {
-		if (this.addAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
+		if (this.addTimedAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
 			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
 				private static final long serialVersionUID = -3268071058821069399L;
 				@Override
@@ -109,8 +101,13 @@ public class GameRuleCore implements GameRule {
 	}
 	
 	@Override
-	public boolean addAction(TimedAction action) {
+	public boolean addTimedAction(TimedAction action) {
 		return this.timedActions.add(action);
+	}
+	
+	@Override
+	public void removeTimedAction(TimedAction action) {
+		this.timedActions.remove(action);
 	}
 	
 	@Override

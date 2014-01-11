@@ -5,28 +5,29 @@ import org.bukkit.ChatColor;
 
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.rules.GameRule;
+import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 
 public class KitBuilder {
 	private String name;
 	private GameRule gameRule;
-
+	
 	//-----TIME-----/
-	private boolean acceptingTimeChange;
 	private long minutes, seconds, ticks;
-
+	private boolean timeSet;
+	
 	//-----WIN CONDITION-----//
 	private WinCondition winCondition;
+	private String winConditionName;
 	private boolean winConditionAfterTime;
 	private long winConditionMin, winConditionSec, WinConditionTick;
-
+	
 	public KitBuilder(String name) {
 		this.name = name;
-		this.acceptingTimeChange = true;
-		this.gameRule = new GameRuleCore();
+		this.gameRule = new GameRuleCore(name);
 	}
-
+	
 	public String getName() {
 		return this.name;
 	}
@@ -35,32 +36,41 @@ public class KitBuilder {
 		if(this.gameRule.isValid()) {
 			return new Kit(kitName, this.gameRule);
 		} else {
-			Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warning: GameRule not valid!");
+			Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warning: GameRule not valid!");	//TODO
 			return null;
 		}
 	}
 
 	//-----TIME-----//
 	public void updateMinutes(long minutes) {
-		if(this.acceptingTimeChange) {
-			this.minutes = minutes;
-		}
+		this.minutes = minutes;
+		this.timeSet = true;
+	}
+	
+	public long getMinutes() {
+		return this.minutes;
 	}
 
 	public void updateSeconds(long seconds) {
-		if(this.acceptingTimeChange) {
-			this.seconds = seconds;
-		}
+		this.seconds = seconds;
+		this.timeSet = true;
+	}
+	
+	public long getSeconds() {
+		return this.seconds;
 	}
 
 	public void updateTicks(long ticks) {
-		if(this.acceptingTimeChange) {
-			this.ticks = ticks;
-		}
+		this.ticks = ticks;
+		this.timeSet = true;
 	}
-
-	public boolean isAcceptingTime() {
-		return this.acceptingTimeChange;
+	
+	public long getTicks() {
+		return this.ticks;
+	}
+	
+	public boolean timeSet() {
+		return this.timeSet;
 	}
 
 	public void setTime(boolean isInfinite) {
@@ -69,7 +79,6 @@ public class KitBuilder {
 		} else {
 			this.gameRule.setMatchDuration(new Time(this.minutes, this.seconds, this.ticks));
 		}
-		this.acceptingTimeChange = false;
 	}
 
 	//-----TEAM SIZE & NUMBER OF TEAMS-----//
@@ -88,6 +97,14 @@ public class KitBuilder {
 		this.winConditionMin = 0;
 		this.winConditionSec = 0;
 		this.WinConditionTick = 0;
+	}
+	
+	public void setWinConditionName(String winConditionName) {
+		this.winConditionName = winConditionName;
+	}
+	
+	public String getWinConditionName() {
+		return this.winConditionName;
 	}
 
 	public void setWinConditionMinute(long minute) {
@@ -116,10 +133,22 @@ public class KitBuilder {
 				this.gameRule.addWinCondition(this.winCondition);
 			}
 			this.winCondition = null;
+			this.winConditionName = null;
 			this.winConditionAfterTime = true;
 			this.winConditionMin = 0;
 			this.winConditionSec = 0;
 			this.WinConditionTick = 0;
 		}
+	}
+	
+	//-----WIN CONDITION-----//
+	public void submitTimedAction(TimedAction timedAction) {
+		if(timedAction != null) {
+			this.gameRule.addTimedAction(timedAction);
+		}
+	}
+	
+	public boolean isValid() {
+		return this.gameRule.isValid();
 	}
 }

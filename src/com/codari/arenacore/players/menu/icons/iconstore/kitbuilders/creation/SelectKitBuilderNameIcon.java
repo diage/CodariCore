@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.newkitbuildercreation;
+package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation;
 
 import org.bukkit.Material;
 
@@ -13,7 +13,7 @@ public class SelectKitBuilderNameIcon extends RequestIcon{
 
 	@Override
 	public String getConversationString() {
-		return "Type a name for the Kit Builder.";
+		return "Type in the name of the Kit Builder you would like to create.";
 	}
 
 }
