@@ -49,6 +49,7 @@ public class KitManager {
 		kitBuilder.addRoleDeclaration(new ArenaRoleDeclaration());	//FIXME - We will be changing this later.
 		this.kitBuilders.put(kitBuilderName, kitBuilder);
 		this.selectedBuilder = kitBuilder;		
+		KitBuilderListener.currentKitBuilders.remove(this.combatant.getPlayer().getName());
 	}	
 
 	public boolean containsKitBuilder(String kitBuilderName) {
