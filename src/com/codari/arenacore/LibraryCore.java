@@ -104,14 +104,13 @@ public class LibraryCore implements Library {
 		this.declarations.put(name, clazz);
 	}
 	
-	@Deprecated
-	public RoleDeclaration createRoleDeclaration(String name, Player player) {
+	public RoleDeclaration createRoleDeclaration(String name) {
 		Class<? extends RoleDeclaration> clazz = this.declarations.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return (RoleDeclaration) Reflector.invokeConstructor(clazz, player).getHandle();
+			return (RoleDeclaration) Reflector.invokeConstructor(clazz).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
 			return null;
@@ -172,14 +171,13 @@ public class LibraryCore implements Library {
 		this.conditions.put(name, clazz);
 	}
 	
-	@Deprecated
-	public WinCondition createWinCondition(String name, Player player) {
+	public WinCondition createWinCondition(String name) {
 		Class<? extends WinCondition> clazz = this.conditions.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return (WinCondition) Reflector.invokeConstructor(clazz, player).getHandle();
+			return (WinCondition) Reflector.invokeConstructor(clazz).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;

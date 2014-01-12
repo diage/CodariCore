@@ -108,7 +108,7 @@ public class KitBuilderListener implements Listener {
 	private void selectWinCondition(IconMenuClickEvent e) {
 		if(e.getIcon() instanceof WinConditionSelectionIcon) {
 			String winConditionName = ((WinConditionSelectionIcon) e.getIcon()).getWinConditionName();
-			WinCondition winCondition = ((LibraryCore) Codari.getLibrary()).createWinCondition(winConditionName, e.getIcon().getCombatant().getPlayer());
+			WinCondition winCondition = ((LibraryCore) Codari.getLibrary()).createWinCondition(winConditionName);
 			KitBuilder kitBuilder = currentKitBuilders.get(e.getIcon().getPlayerName());
 			kitBuilder.setWinConditionName(winConditionName);		
 			kitBuilder.selectWinCondition(winCondition);
