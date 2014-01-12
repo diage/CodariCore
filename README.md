@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.3.1
+CURRENT VERSION: 0.3.5
 ===========
 
 ===========
@@ -118,6 +118,8 @@ Version 0.4 Goals
 ---------------
 : Bugs to fix :
 ---------------
+-Menu has to be reset to player's initial inventory when the menu is closed and opened to the saved menu spot
+-Menu has to keep functioning after player logs out and back in
 
 ---------------
     : QOL :
