@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.rules.GameRule;
+import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arenacore.arena.rules.GameRuleCore;
@@ -150,5 +151,10 @@ public class KitBuilder {
 	
 	public boolean isValid() {
 		return this.gameRule.isValid();
+	}
+	
+	//-----ROLE DECLARATION-----//
+	public void addRoleDeclaration(RoleDeclaration roleDeclaration) {
+		this.gameRule.addRoleDeclaration(roleDeclaration);
 	}
 }

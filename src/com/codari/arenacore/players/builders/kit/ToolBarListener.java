@@ -21,6 +21,7 @@ import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaBuilderCore;
+import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class ToolBarListener implements Listener {
@@ -52,7 +53,7 @@ public class ToolBarListener implements Listener {
 			KitManager kitManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getKitManager();
 			if (kitManager.isToolBarEnabled()) {
 				Kit kit = kitManager.getToolbarKit();
-				ArenaBuilderCore builder = kit.getArenaBuilder();
+				ArenaBuilderCore builder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(kit.getName());
 				if (e.getItem().equals(kit.getTools()[4])) {
 					Location location = e.getClickedBlock().getLocation();
 					builder.addSpawnLocation(location);

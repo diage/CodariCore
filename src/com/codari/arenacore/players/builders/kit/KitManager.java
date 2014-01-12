@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
+import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena5.players.combatants.Combatant;
 
 
@@ -45,6 +46,7 @@ public class KitManager {
 	//---For Menu---//
 	public void submitKitBuilder(KitBuilder kitBuilder) {
 		String kitBuilderName = kitBuilder.getName();
+		kitBuilder.addRoleDeclaration(new ArenaRoleDeclaration());	//FIXME - We will be changing this later.
 		this.kitBuilders.put(kitBuilderName, kitBuilder);
 		this.selectedBuilder = kitBuilder;		
 	}	

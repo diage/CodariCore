@@ -18,6 +18,7 @@ import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arenacore.arena.ArenaBuilderCore;
+import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class Kit implements Listener {
 	private String name;
@@ -60,6 +61,7 @@ public class Kit implements Listener {
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
 		this.arenaBuilder = new ArenaBuilderCore(gameRule);
+		((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(this.name, this.arenaBuilder);
 		this.tools = new ItemStack[9];
 		this.tools[4] = SPAWN_SETTER;
 		this.tools[5] = TOOLBAR_EXIT;
@@ -67,10 +69,6 @@ public class Kit implements Listener {
 	
 	public String getName() {
 		return this.name;
-	}
-	
-	public ArenaBuilderCore getArenaBuilder() {
-		return this.arenaBuilder;
 	}
 	
 	public void setName(String name) {

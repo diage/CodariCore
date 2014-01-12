@@ -1,6 +1,8 @@
 package com.codari.arenacore.players.menu.menus.menustore.kits;
 
+import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
@@ -19,7 +21,7 @@ public class SpawnableGroupEditSelection extends FunctionMenu {
 	public SpawnableGroupEditSelection(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
-		for(String groupName : kit.getArenaBuilder().getRandomSpawnablesCopyMap().keySet()) {
+		for(String groupName : ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(kit.getName()).getRandomSpawnablesCopyMap().keySet()) {
 			this.addSpawnableGroupIcon(combatant, groupName);
 		}
 		this.kit = kit;
