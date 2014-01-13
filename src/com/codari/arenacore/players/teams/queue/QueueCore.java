@@ -80,6 +80,17 @@ public class QueueCore {
 		Team[] teamArray =  new Team[this.teams.size()];
 		this.removeTeamsFromQueue(this.teams.toArray(teamArray));
 	}
+	
+	public void checkIfMatchShouldStart() {
+		if(this.teams.size() >= this.arenaTeamSize) {
+			if(checkIfMatchIsNotInProgress(this.arena)) {		//check if the match is not already in progress
+				this.matchStarting = true;
+				this.countDown();
+			} else {
+				this.displayQueuePositions();	
+			}
+		}		
+	}		
 
 	private void startArena() {
 		Team[] teamArray =  new Team[this.arenaTeamSize];
@@ -88,9 +99,7 @@ public class QueueCore {
 		}
 		this.arena.start(teamArray);
 		this.matchStarting = false;
-		for(int i = 0; i < this.arenaTeamSize; i++) {
-			this.removeTeamsFromQueue(teamArray);
-		}
+		this.removeTeamsFromQueue(teamArray);
 	}
 
 	private void countDown() {
@@ -123,17 +132,6 @@ public class QueueCore {
 			}
 		}
 	}
-
-	public void checkIfMatchShouldStart() {
-		if(this.teams.size() >= this.arenaTeamSize) {
-			if(checkIfMatchIsNotInProgress(this.arena)) {		//check if the match is not already in progress
-				this.matchStarting = true;
-				this.countDown();
-			} else {
-				this.displayQueuePositions();	
-			}
-		}		
-	}	
 
 	//-----Static Methods-----//
 	private static boolean checkIfMatchIsNotInProgress(Arena arena) {
