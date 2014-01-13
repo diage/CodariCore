@@ -8,11 +8,11 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
-import com.codari.api5.player.CodariPlayers;
+import com.codari.api5.player.CodariPlayer;
 import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
-import com.codari.apicore.player.OfflineCodariPlayerCore;
+import com.codari.apicore.CodariCore;
 import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.combatants.Combatant;
@@ -34,7 +34,7 @@ public final class CombatantCore implements Combatant {
 	private final static String DATA_FILE_PATH = "Combatants" + File.separator + "%s" + ".dat";
 	
 	//-----Fields-----//
-	private final OfflineCodariPlayerCore player;
+	private final CodariPlayer player;
 	@SuppressWarnings("unused")
 	private final File dataFile;
 	private CombatantDataCore data;
@@ -61,7 +61,7 @@ public final class CombatantCore implements Combatant {
 	
 	//-----Constructor-----//
 	public CombatantCore(String name) {
-		this.player = (OfflineCodariPlayerCore) CodariPlayers.getOfflineCodariPlayer(name);
+		this.player = CodariCore.instance().getCodariPlayerManager().getCodariPlayer(name);
 		String dataFilePath = String.format(DATA_FILE_PATH, this.player.getName());
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
 		
@@ -94,7 +94,7 @@ public final class CombatantCore implements Combatant {
 	
 	//-----Public Methods-----//
 	@Override
-	public OfflineCodariPlayerCore getPlayerReference() {
+	public CodariPlayer getPlayerReference() {
 		return this.player;
 	}
 	

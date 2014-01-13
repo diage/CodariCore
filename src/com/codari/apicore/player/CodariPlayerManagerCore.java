@@ -2,11 +2,11 @@ package com.codari.apicore.player;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,62 +18,42 @@ import com.codari.apicore.CodariCore;
 
 public final class CodariPlayerManagerCore implements CodariPlayerManager {
 	//-----Fields-----//
-	private final Map<String, OfflineCodariPlayerCore> offlineCodariPlayers;
+	private final Map<String, CodariPlayerCore> codariPlayers;
 	private final Map<String, CodariPlayerCore> onlineCodariPlayers;
+	private boolean pendingListenerRegistration;
 	
 	//-----Constructor-----//
 	public CodariPlayerManagerCore() {
-		this.offlineCodariPlayers = new HashMap<>();
+		this.codariPlayers = new HashMap<>();
 		this.onlineCodariPlayers = new HashMap<>();
-		ConfigurationSerialization.registerClass(OfflineCodariPlayerCore.class);
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			String name = player.getName().toLowerCase();
+			CodariPlayerCore codariPlayer = new CodariPlayerCore(name);
+			this.codariPlayers.put(name, codariPlayer);
+			this.onlineCodariPlayers.put(name, codariPlayer);
+		}
+		pendingListenerRegistration = true;
 		ConfigurationSerialization.registerClass(CodariPlayerCore.class);
 	}
 	
-	//-----Public Methods-----//
-	@Override
-	public OfflineCodariPlayerCore getOfflineCodariPlayer(String name) {
-		name = name.toLowerCase();
-		OfflineCodariPlayerCore instance = this.offlineCodariPlayers.get(name);
-		if (instance == null) {
-			instance = new OfflineCodariPlayerCore(name);
-			this.offlineCodariPlayers.put(name, instance);
-		}
-		return instance;
-	}
-	
-	@Override
-	public OfflineCodariPlayerCore getOfflineCodariPlayer(OfflinePlayer player) {
-		return this.getOfflineCodariPlayer(player.getName());
-	}
-	
-	@Override
-	public OfflineCodariPlayerCore[] getOfflineCodariPlayers() {
-		OfflineCodariPlayerCore[] offlinePlayers = new OfflineCodariPlayerCore[this.offlineCodariPlayers.size()];
-		int i = 0;
-		for (Entry<String, OfflineCodariPlayerCore> e : this.offlineCodariPlayers.entrySet()) {
-			offlinePlayers[i++] = e.getValue();
-		}
-		return offlinePlayers;
-	}
-	
+	//-----Methods-----//
 	@Override
 	public CodariPlayerCore getCodariPlayer(String name) {
-		return this.onlineCodariPlayers.get(name.toLowerCase());
+		name = name.toLowerCase();
+		CodariPlayerCore codariPlayer = this.codariPlayers.get(name);
+		if (codariPlayer == null) {
+			codariPlayer = new CodariPlayerCore(name);
+			this.codariPlayers.put(name, codariPlayer);
+			if (codariPlayer.getHandle().isOnline()) {
+				this.onlineCodariPlayers.put(name, codariPlayer);
+			}
+		}
+		return codariPlayer;
 	}
 	
 	@Override
 	public CodariPlayerCore getCodariPlayer(OfflinePlayer player) {
 		return this.getCodariPlayer(player.getName());
-	}
-	
-	@Override
-	public CodariPlayerCore[] getOnlineCodariPlayers() {
-		CodariPlayerCore[] onlinePlayers = new CodariPlayerCore[this.onlineCodariPlayers.size()];
-		int i = 0;
-		for (Entry<String, CodariPlayerCore> e : this.onlineCodariPlayers.entrySet()) {
-			onlinePlayers[i++] = e.getValue();
-		}
-		return onlinePlayers;
 	}
 	
 	@Override
@@ -86,26 +66,33 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 		return this.isOnline(player.getName());
 	}
 	
-	public void registerPlayerListeners() {
-		Bukkit.getPluginManager().registerEvents(new PlayerConnectionListeners(), CodariCore.instance());
+	public void registerPlayerListener() {
+		if (this.pendingListenerRegistration) {
+			Bukkit.getPluginManager().registerEvents(new PlayerListener(), CodariCore.instance());
+			this.pendingListenerRegistration = false;
+		}
 	}
 	
-	//-----Player Connection Listeners-----//
-	private final class PlayerConnectionListeners implements Listener {
+	//-----Player Listener-----//
+	private final class PlayerListener implements Listener {
 		//-----Event Handlers-----//
 		@EventHandler(priority = EventPriority.LOWEST)
-		private void playerJoin(PlayerJoinEvent e) {
-			OfflineCodariPlayerCore offlineInstance = getOfflineCodariPlayer(e.getPlayer());
-			onlineCodariPlayers.put(offlineInstance.getName().toLowerCase(), null);
-			offlineInstance.update();
-			CodariPlayerCore codariPlayer = new CodariPlayerCore(offlineInstance);
-			onlineCodariPlayers.put(offlineInstance.getName().toLowerCase(), codariPlayer);
+		private void onPlayerJoin(PlayerJoinEvent e) {
+			String name = e.getPlayer().getName().toLowerCase();
+			CodariPlayerCore codariPlayer = codariPlayers.get(name);
+			if (!onlineCodariPlayers.containsKey(name)) {
+				onlineCodariPlayers.put(name, codariPlayer);
+			}
 		}
 		
 		@EventHandler(priority = EventPriority.MONITOR)
-		private void playerQuit(PlayerQuitEvent e) {
-			onlineCodariPlayers.remove(e.getPlayer().getName().toLowerCase()).invalidate();
-			getOfflineCodariPlayer(e.getPlayer()).update();
+		private void onPlayerQuit(PlayerQuitEvent e) {
+			String name = e.getPlayer().getName().toLowerCase();
+			CodariPlayerCore codariPlayer = onlineCodariPlayers.remove(name);
+			if (codariPlayer == null) {
+				codariPlayer = codariPlayers.get(name);
+			}
+			codariPlayer.invalidateOnlineReference();
 		}
 	}
 }
