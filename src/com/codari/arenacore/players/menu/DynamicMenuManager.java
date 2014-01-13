@@ -13,6 +13,10 @@ import com.codari.arenacore.players.menu.menus.menustore.teams.ArenaSelection;
 import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
 import com.codari.arenacore.players.menu.menus.menustore.teams.PlayerSelection;
 
+/** 
+ * This class is responsible for managing all the dynamic menus for a combatant.
+ * This will allow icons to be added to the player's menu while they are interacting with it.
+ * */
 public class DynamicMenuManager {
 	private Combatant combatant;
 	

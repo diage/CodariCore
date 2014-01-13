@@ -1,6 +1,5 @@
 package com.codari.arenacore.players.menu.menus;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,10 +21,10 @@ public class MenuListener implements Listener {
 				if(e.getSlot() == 8) {
 					if(!combatant.getMenuManager().isMenuOpen()) {
 						combatant.getMenuManager().enterMenu();
-						Bukkit.broadcastMessage(ChatColor.BLUE + "Opening menu!");	//TODO
+						player.sendMessage(ChatColor.BLUE + "Opening menu!");	
 					} else {
 						combatant.getMenuManager().exitMenu();
-						Bukkit.broadcastMessage(ChatColor.BLUE + "Closing menu!");	//TODO
+						player.sendMessage(ChatColor.BLUE + "Closing menu!");	
 					}
 					e.setCancelled(true);
 				}
@@ -41,6 +40,7 @@ public class MenuListener implements Listener {
 			if(!combatant.inArena()) {
 				if(combatant.getMenuManager().isMenuOpen()) {
 					combatant.getMenuManager().exitMenu();
+					player.sendMessage(ChatColor.BLUE + "Closing menu!");	
 				}
 			}
 		}
