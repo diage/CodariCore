@@ -92,7 +92,9 @@ public class DynamicMenuManager {
 	}
 	
 	public void addArenaIcon(String arenaName) {
-		this.arenaSelectionMenu.addArenaIcon(this.combatant, arenaName);
+		if(this.arenaSelectionMenu != null) {
+			this.arenaSelectionMenu.addArenaIcon(this.combatant, arenaName);
+		}
 	}
 	
 	public void setWinConditionSettingsMenu(WinConditionSettings winConditionSettings) {
