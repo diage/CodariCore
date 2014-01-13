@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.menus;
+package com.codari.arenacore.players.menu;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
