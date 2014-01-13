@@ -1,10 +1,12 @@
 package com.codari.arenacore.players.menu;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.codari.arena5.players.combatants.Combatant;
@@ -20,13 +22,14 @@ import com.codari.arenacore.players.menu.slots.UtilityMenuSlot;
 @SuppressWarnings("deprecation")
 public class MenuManager {
 	private Combatant combatant;
-	private PlayerInventory savedInventory;
 	private boolean inMenu;
 	private FunctionMenu functionMenu;
 	private UtilityMenu utilityMenu;
 	private MenuIcon mainMenuIcon;
 	private Map<FunctionMenuSlot, Icon> currentFunctionInventory;
 	private Map<UtilityMenuSlot, Icon> currentUtilityInventory;
+	private Map<FunctionMenuSlot, ItemStack> savedInventoryLeft;
+	private Map<UtilityMenuSlot, ItemStack> savedInventoryRight;
 
 	public MenuManager(Combatant combatant) {	
 		this.combatant = combatant;
@@ -35,7 +38,9 @@ public class MenuManager {
 		this.inMenu = false;
 		this.currentFunctionInventory = this.functionMenu.getIcons();
 		this.currentUtilityInventory = this.utilityMenu.getIcons();
-
+		this.savedInventoryLeft = new HashMap<>();
+		this.savedInventoryRight = new HashMap<>();
+		
 		this.setMenuIconExit();
 	}
 
@@ -83,8 +88,8 @@ public class MenuManager {
 
 	public void enterMenu() {
 		if(!this.inMenu) {
-			this.savedInventory = this.combatant.getPlayer().getInventory();
-			Bukkit.broadcastMessage(ChatColor.BLUE + "Saving Inventory - Check One");
+			this.getInventory();
+			this.combatant.getPlayer().sendMessage(ChatColor.BLUE + "Saving Inventory - Check One");
 
 			if(this.utilityMenu != null) {
 				this.resetUtilityMenu();
@@ -99,8 +104,8 @@ public class MenuManager {
 
 	public void enterMenu(UtilityMenu utilityMenu) {
 		if(!this.inMenu) {
-			this.savedInventory = this.combatant.getPlayer().getInventory();
-			Bukkit.broadcastMessage(ChatColor.BLUE + "Saving Inventory - Check Two");
+			this.getInventory();
+			this.combatant.getPlayer().sendMessage(ChatColor.BLUE + "Saving Inventory - Check Two");
 
 			this.inMenu = true;
 
@@ -117,8 +122,8 @@ public class MenuManager {
 
 	public void enterMenu(UtilityMenu utilityMenu, FunctionMenu functionMenu) {
 		if(!this.inMenu) {
-			this.savedInventory = this.combatant.getPlayer().getInventory();
-			Bukkit.broadcastMessage(ChatColor.BLUE + "Saving Inventory - Check Three");
+			this.getInventory();
+			this.combatant.getPlayer().sendMessage(ChatColor.BLUE + "Saving Inventory - Check Three");
 
 			this.inMenu = true;
 
@@ -135,7 +140,9 @@ public class MenuManager {
 
 	public void saveExitMenu() {
 		if(this.inMenu) {
-			this.combatant.getPlayer().getInventory().setContents(this.savedInventory.getContents());
+			this.setInventory();
+			this.combatant.getPlayer().sendMessage(ChatColor.GOLD + "Setting player's inventory to the saved one.");
+			
 			this.inMenu = false;
 			this.setMenuIconExit();
 		}
@@ -143,7 +150,9 @@ public class MenuManager {
 
 	public void exitMenu() {
 		if(this.inMenu) {
-			this.combatant.getPlayer().getInventory().setContents(this.savedInventory.getContents());
+			this.setInventory();
+			this.combatant.getPlayer().sendMessage(ChatColor.GOLD + "Setting player's inventory to the saved one.");
+			
 			this.functionMenu = new FunctionMenu(this.combatant);
 			this.currentFunctionInventory = this.functionMenu.getIcons();
 			this.utilityMenu = new UtilityMenu(this.combatant);
@@ -185,6 +194,27 @@ public class MenuManager {
 		this.combatant.getPlayer().updateInventory();
 	}
 
+	private void getInventory() {
+		Player player = this.combatant.getPlayer();
+		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()) {
+			this.savedInventoryRight.put(menuSlot, player.getInventory().getItem(menuSlot.getSlot()));
+		}
+		for(FunctionMenuSlot menuSlot : FunctionMenuSlot.values()) {
+			this.savedInventoryLeft.put(menuSlot, player.getInventory().getItem(menuSlot.getSlot()));
+		}
+	}
+	
+	private void setInventory() {
+		Player player = this.combatant.getPlayer();
+		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()) {
+			player.getInventory().setItem(menuSlot.getSlot(), this.savedInventoryRight.get(menuSlot));
+		}
+		for(FunctionMenuSlot menuSlot : FunctionMenuSlot.values()) {
+			player.getInventory().setItem(menuSlot.getSlot(), this.savedInventoryLeft.get(menuSlot));
+		}
+		player.updateInventory();
+	}	
+	
 	public Icon click(MenuSlot menuSlot) {
 		if(this.inMenu) {
 			if(menuSlot instanceof FunctionMenuSlot) {
