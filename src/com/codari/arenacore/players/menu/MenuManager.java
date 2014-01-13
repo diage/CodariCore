@@ -40,7 +40,7 @@ public class MenuManager {
 		this.currentUtilityInventory = this.utilityMenu.getIcons();
 		this.savedInventoryLeft = new HashMap<>();
 		this.savedInventoryRight = new HashMap<>();
-		
+
 		this.setMenuIconExit();
 	}
 
@@ -142,7 +142,7 @@ public class MenuManager {
 		if(this.inMenu) {
 			this.setInventory();
 			this.combatant.getPlayer().sendMessage(ChatColor.GOLD + "Setting player's inventory to the saved one.");
-			
+
 			this.inMenu = false;
 			this.setMenuIconExit();
 		}
@@ -152,7 +152,7 @@ public class MenuManager {
 		if(this.inMenu) {
 			this.setInventory();
 			this.combatant.getPlayer().sendMessage(ChatColor.GOLD + "Setting player's inventory to the saved one.");
-			
+
 			this.functionMenu = new FunctionMenu(this.combatant);
 			this.currentFunctionInventory = this.functionMenu.getIcons();
 			this.utilityMenu = new UtilityMenu(this.combatant);
@@ -197,24 +197,32 @@ public class MenuManager {
 	private void getInventory() {
 		Player player = this.combatant.getPlayer();
 		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()) {
-			this.savedInventoryRight.put(menuSlot, player.getInventory().getItem(menuSlot.getSlot()));
+			if(menuSlot != UtilityMenuSlot.NO_SLOT) {
+				this.savedInventoryRight.put(menuSlot, player.getInventory().getItem(menuSlot.getSlot()));
+			}
 		}
 		for(FunctionMenuSlot menuSlot : FunctionMenuSlot.values()) {
-			this.savedInventoryLeft.put(menuSlot, player.getInventory().getItem(menuSlot.getSlot()));
+			if(menuSlot != FunctionMenuSlot.NO_SLOT) {
+				this.savedInventoryLeft.put(menuSlot, player.getInventory().getItem(menuSlot.getSlot()));
+			}
 		}
 	}
-	
+
 	private void setInventory() {
 		Player player = this.combatant.getPlayer();
 		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()) {
-			player.getInventory().setItem(menuSlot.getSlot(), this.savedInventoryRight.get(menuSlot));
+			if(menuSlot != UtilityMenuSlot.NO_SLOT) {
+				player.getInventory().setItem(menuSlot.getSlot(), this.savedInventoryRight.get(menuSlot));
+			}
 		}
 		for(FunctionMenuSlot menuSlot : FunctionMenuSlot.values()) {
-			player.getInventory().setItem(menuSlot.getSlot(), this.savedInventoryLeft.get(menuSlot));
+			if(menuSlot != FunctionMenuSlot.NO_SLOT) {
+				player.getInventory().setItem(menuSlot.getSlot(), this.savedInventoryLeft.get(menuSlot));
+			}
 		}
 		player.updateInventory();
 	}	
-	
+
 	public Icon click(MenuSlot menuSlot) {
 		if(this.inMenu) {
 			if(menuSlot instanceof FunctionMenuSlot) {
