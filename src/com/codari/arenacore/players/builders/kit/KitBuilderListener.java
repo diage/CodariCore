@@ -43,22 +43,52 @@ public class KitBuilderListener implements Listener {
 			}
 		} 
 	}
-
-
-	@EventHandler()
-	private void changeMatchDurationTime(IconHoverUpdateEvent e) {
-		Player player = e.getIcon().getCombatant().getPlayer();
-		KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
-		if(kitBuilder != null) {
-			if(e.getIcon() instanceof MatchDurationMinutesIcon) {
+	
+	@EventHandler() 
+	private void changeMatchDurationMinute(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof MatchDurationMinutesIcon) {
+			Player player = e.getIcon().getCombatant().getPlayer();
+			if(currentKitBuilders.containsKey(player.getName())) {
+				KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
 				kitBuilder.updateMinutes(e.getNewInput());
-			} else if(e.getIcon() instanceof MatchDurationSecondsIcon) {
-				kitBuilder.updateSeconds(e.getNewInput());
-			} else if(e.getIcon() instanceof MatchDurationTicksIcon) {
-				kitBuilder.updateTicks(e.getNewInput());
+			} else {
+				player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
+				if(e.getNewInput() != 0) {
+					((HoverIcon) e.getIcon()).clear();
+				}
 			}
-		} else {
-			player.sendMessage(ChatColor.RED + "Failed to change Match Duration. You must set a name for the Kit Builder first!");
+		}
+	}
+	
+	@EventHandler() 
+	private void changeMatchDurationSecond(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof MatchDurationSecondsIcon) {
+			Player player = e.getIcon().getCombatant().getPlayer();
+			if(currentKitBuilders.containsKey(player.getName())) {
+				KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
+				kitBuilder.updateSeconds(e.getNewInput());
+			} else {
+				player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
+				if(e.getNewInput() != 0) {
+					((HoverIcon) e.getIcon()).clear();
+				}
+			}
+		}
+	}
+	
+	@EventHandler() 
+	private void changeMatchDurationTick(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof MatchDurationTicksIcon) {
+			Player player = e.getIcon().getCombatant().getPlayer();
+			if(currentKitBuilders.containsKey(player.getName())) {
+				KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
+				kitBuilder.updateTicks(e.getNewInput());
+			} else {
+				player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
+				if(e.getNewInput() != 0) {
+					((HoverIcon) e.getIcon()).clear();
+				}
+			}
 		}
 	}
 
@@ -116,20 +146,51 @@ public class KitBuilderListener implements Listener {
 		}
 	}
 	
-	@EventHandler()
-	private void changeWinConditionTime(IconHoverUpdateEvent e) {
-		Player player = e.getIcon().getCombatant().getPlayer();
-		KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
-		if(kitBuilder != null) {
-			if(e.getIcon() instanceof SetWinConditionMinuteIcon) {
+	@EventHandler() 
+	private void changeWinConditionMinute(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof SetWinConditionMinuteIcon) {
+			Player player = e.getIcon().getCombatant().getPlayer();
+			if(currentKitBuilders.containsKey(player.getName())) {
+				KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
 				kitBuilder.setWinConditionMinute(e.getNewInput());
-			} else if(e.getIcon() instanceof SetWinConditionSecondIcon) {
-				kitBuilder.SetWinConditionSecond(e.getNewInput());
-			} else if(e.getIcon() instanceof SetWinConditionTickIcon) {
-				kitBuilder.SetWinConditionTick(e.getNewInput());
+			} else {
+				player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
+				if(e.getNewInput() != 0) {
+					((HoverIcon) e.getIcon()).clear();
+				}
 			}
-		} else {
-			player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
 		}
 	}
+	
+	@EventHandler() 
+	private void changeWinConditionSecond(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof SetWinConditionSecondIcon) {
+			Player player = e.getIcon().getCombatant().getPlayer();
+			if(currentKitBuilders.containsKey(player.getName())) {
+				KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
+				kitBuilder.SetWinConditionSecond(e.getNewInput());
+			} else {
+				player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
+				if(e.getNewInput() != 0) {
+					((HoverIcon) e.getIcon()).clear();
+				}
+			}
+		}
+	}
+
+	@EventHandler() 
+	private void changeWinConditionTick(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof SetWinConditionTickIcon) {
+			Player player = e.getIcon().getCombatant().getPlayer();
+			if(currentKitBuilders.containsKey(player.getName())) {
+				KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
+				kitBuilder.SetWinConditionTick(e.getNewInput());
+			} else {
+				player.sendMessage(ChatColor.RED + "Failed to change Win Condition time. You must set a name for the Kit Builder first!");
+				if(e.getNewInput() != 0) {
+					((HoverIcon) e.getIcon()).clear();
+				}
+			}
+		}
+	}	
 }
