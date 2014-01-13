@@ -2,6 +2,7 @@ package com.codari.arenacore.players.menu;
 
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.PlayerInventory;
@@ -26,7 +27,7 @@ public class MenuManager {
 	private MenuIcon mainMenuIcon;
 	private Map<FunctionMenuSlot, Icon> currentFunctionInventory;
 	private Map<UtilityMenuSlot, Icon> currentUtilityInventory;
-	
+
 	public MenuManager(Combatant combatant) {	
 		this.combatant = combatant;
 		this.functionMenu = new FunctionMenu(combatant);
@@ -34,10 +35,10 @@ public class MenuManager {
 		this.inMenu = false;
 		this.currentFunctionInventory = this.functionMenu.getIcons();
 		this.currentUtilityInventory = this.utilityMenu.getIcons();
-		
+
 		this.setMenuIconExit();
 	}
-	
+
 	public void setMenu(Menu menu) {
 		if(menu instanceof FunctionMenu) {
 			this.functionMenu = (FunctionMenu) menu;
@@ -49,7 +50,7 @@ public class MenuManager {
 			if(this.inMenu) {this.resetUtilityMenu();}
 		}
 	}
-	
+
 	public void setMenuSlot(MenuSlot menuSlot, Icon icon) {
 		if(this.inMenu) {
 			PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
@@ -65,7 +66,7 @@ public class MenuManager {
 			this.combatant.getPlayer().updateInventory();
 		}
 	}
-	
+
 	public void removeMenuSlot(MenuSlot menuSlot) {
 		if(this.inMenu) {
 			PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
@@ -79,11 +80,12 @@ public class MenuManager {
 			this.combatant.getPlayer().updateInventory();
 		}
 	}
-	
+
 	public void enterMenu() {
 		if(!this.inMenu) {
 			this.savedInventory = this.combatant.getPlayer().getInventory();
-			
+			Bukkit.broadcastMessage(ChatColor.BLUE + "Saving Inventory - Check One");
+
 			if(this.utilityMenu != null) {
 				this.resetUtilityMenu();
 				if(this.functionMenu != null) {
@@ -94,39 +96,43 @@ public class MenuManager {
 			}
 		}
 	}
-	
+
 	public void enterMenu(UtilityMenu utilityMenu) {
 		if(!this.inMenu) {
 			this.savedInventory = this.combatant.getPlayer().getInventory();
+			Bukkit.broadcastMessage(ChatColor.BLUE + "Saving Inventory - Check Two");
+
 			this.inMenu = true;
-			
+
 			this.utilityMenu = utilityMenu;
 			this.currentUtilityInventory = utilityMenu.getIcons();
 			this.resetUtilityMenu();
-			
+
 			if(this.functionMenu != null) {
 				this.resetFunctionMenu();
 			}
 			this.setMenuIconEnter();
 		}
 	}
-	
+
 	public void enterMenu(UtilityMenu utilityMenu, FunctionMenu functionMenu) {
 		if(!this.inMenu) {
 			this.savedInventory = this.combatant.getPlayer().getInventory();
+			Bukkit.broadcastMessage(ChatColor.BLUE + "Saving Inventory - Check Three");
+
 			this.inMenu = true;
-			
+
 			this.utilityMenu = utilityMenu;
 			this.currentUtilityInventory = utilityMenu.getIcons();
 			this.resetUtilityMenu();
-			
+
 			this.functionMenu = functionMenu;
 			this.currentFunctionInventory = functionMenu.getIcons();
 			this.resetFunctionMenu();
 			this.setMenuIconEnter();
 		}
 	}
-	
+
 	public void saveExitMenu() {
 		if(this.inMenu) {
 			this.combatant.getPlayer().getInventory().setContents(this.savedInventory.getContents());
@@ -134,7 +140,7 @@ public class MenuManager {
 			this.setMenuIconExit();
 		}
 	}
-	
+
 	public void exitMenu() {
 		if(this.inMenu) {
 			this.combatant.getPlayer().getInventory().setContents(this.savedInventory.getContents());
@@ -146,7 +152,7 @@ public class MenuManager {
 			this.setMenuIconExit();
 		}
 	}
-	
+
 	private void resetFunctionMenu() {
 		PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 		for(FunctionMenuSlot menuSlot : FunctionMenuSlot.values()){
@@ -156,7 +162,7 @@ public class MenuManager {
 		}
 		this.combatant.getPlayer().updateInventory();
 	}
-	
+
 	private void resetUtilityMenu() {
 		PlayerInventory playerInventory = this.combatant.getPlayer().getInventory();
 		for(UtilityMenuSlot menuSlot : UtilityMenuSlot.values()){
@@ -166,28 +172,30 @@ public class MenuManager {
 		}
 		this.combatant.getPlayer().updateInventory();
 	}
-	
+
 	private void setMenuIconEnter() {
 		this.mainMenuIcon = new MenuIcon(Material.BED, this.combatant, ChatColor.GRAY + "Main Menu");
 		this.combatant.getPlayer().getInventory().setItem(8, this.mainMenuIcon);
 		this.combatant.getPlayer().updateInventory();
 	}
-	
+
 	private void setMenuIconExit() {
 		this.mainMenuIcon = new MenuIcon(Material.BED, combatant, this.functionMenu, this.utilityMenu, "Main Menu");
 		this.combatant.getPlayer().getInventory().setItem(8, this.mainMenuIcon);
 		this.combatant.getPlayer().updateInventory();
 	}
-	
+
 	public Icon click(MenuSlot menuSlot) {
-		if(menuSlot instanceof FunctionMenuSlot) {
-			return this.currentFunctionInventory.get(menuSlot);
-		} else if(menuSlot instanceof UtilityMenuSlot) {
-			return this.currentUtilityInventory.get(menuSlot);
+		if(this.inMenu) {
+			if(menuSlot instanceof FunctionMenuSlot) {
+				return this.currentFunctionInventory.get(menuSlot);
+			} else if(menuSlot instanceof UtilityMenuSlot) {
+				return this.currentUtilityInventory.get(menuSlot);
+			}
 		}
 		return null;
 	}
-	
+
 	public boolean isMenuOpen() {
 		return this.inMenu;
 	}	
