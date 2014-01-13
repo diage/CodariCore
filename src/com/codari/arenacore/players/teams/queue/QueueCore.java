@@ -21,21 +21,20 @@ public class QueueCore {
 	private boolean matchStarting;
 	private BukkitTask task;
 	private int countDown;
-	private static int countDownStartingValue = 10;
+	private final static int COUNT_DOWN_STARTING_VALUE = 10;
 
 	//-----Constructor-----//
 	public QueueCore(Arena arena) {
 		this.arena = arena;
 		this.arenaTeamSize = arena.getGameRule().getTeamSize();
 		this.teams = new ArrayList<Team>();
-		this.countDown = countDownStartingValue;
+		this.countDown = COUNT_DOWN_STARTING_VALUE;
 	}
 
 	//-----Public Methods-----//
 	public boolean addTeamToQueue(Team team) {
 		if(checkTeamSize(this.arena, team) &&										//check if the player's team size matches the arena's team size
 				checkIfTeamIsNotAlreadyInAnArena(team) &&							//check to make sure a team doesn't join two arenas at the same time
-				checkIfArenaHasAvailableSlots(this.arena, team, teams.size()) &&	//check to see whether an arena has available slots
 				checkIfTeamIsNotInQueue(team)) {									//check to make sure the team is not already in a queue
 			this.teams.add(team);
 			((TeamCore)team).setInQueue(true);
@@ -90,7 +89,7 @@ public class QueueCore {
 					countDown--;
 					if(countDown <= 0) {
 						startArena();
-						countDown = countDownStartingValue;
+						countDown = COUNT_DOWN_STARTING_VALUE;
 						task.cancel();
 						task = null;
 					}
@@ -150,17 +149,6 @@ public class QueueCore {
 		}
 		return true;
 	}	
-
-	private static boolean checkIfArenaHasAvailableSlots(Arena arena, Team team, int numberOfTeamsInQueue) {
-		int arenaSlots = arena.getGameRule().getTeamSize();
-		if(numberOfTeamsInQueue == arenaSlots) {
-			for(Player player : team.getPlayers()) {
-				player.sendMessage(ChatColor.RED + "The arena " + arena.getName() + " is already full!");
-			}
-			return false;
-		}	
-		return true;
-	}
 	
 	private static boolean checkIfTeamIsNotInQueue(Team team) {
 		if(((TeamCore)team).checkIfInQueue()) {
