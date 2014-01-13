@@ -50,17 +50,35 @@ public class QueueCore {
 				player.sendMessage(ChatColor.RED + "Failed to leave queue: The match is starting!");
 			}
 			return false;
-		}
+		} else if(this.teams.contains(team)) {
 		((TeamCore)team).setInQueue(false);
-		this.teams.remove(team);
+			this.teams.remove(team);
+			this.displayQueuePositions();
+			return true;
+		}
+		Bukkit.broadcastMessage(ChatColor.RED + "Failed to remove team from queue!"); //TODO
+		return false;
+	}
+
+	public void removeTeamsFromQueue(Team... teams) {
+		for(Team team : teams) {
+			if(this.matchStarting) {
+				for(Player player : team.getPlayers()) {
+					player.sendMessage(ChatColor.RED + "Failed to leave queue: The match is starting!");
+				}
+			} else if(this.teams.contains(team)) {
+				((TeamCore)team).setInQueue(false);
+				this.teams.remove(team);
+			} else {
+				Bukkit.broadcastMessage(ChatColor.RED + "Failed to remove team from queue!"); //TODO
+			}
+		}
 		this.displayQueuePositions();
-		return true;
 	}
 
 	public void removeAllTeamsFromQueue() {
-		for(Team team : this.teams) {
-			this.removeTeamFromQueue(team);
-		}
+		Team[] teamArray =  new Team[this.teams.size()];
+		this.removeTeamsFromQueue(this.teams.toArray(teamArray));
 	}
 
 	private void startArena() {
@@ -71,8 +89,7 @@ public class QueueCore {
 		this.arena.start(teamArray);
 		this.matchStarting = false;
 		for(int i = 0; i < this.arenaTeamSize; i++) {
-			((TeamCore)this.teams.get(i)).setInQueue(false);
-			this.teams.remove(0);
+			this.removeTeamsFromQueue(teamArray);
 		}
 	}
 
@@ -94,11 +111,11 @@ public class QueueCore {
 						task = null;
 					}
 				}
-	
+
 			}, 0, 20);
 		}
 	}
-	
+
 	private void displayQueuePositions() {
 		for(Team team : this.teams) {
 			for(Player player : team.getPlayers()) {
@@ -117,7 +134,7 @@ public class QueueCore {
 			}
 		}		
 	}	
-	
+
 	//-----Static Methods-----//
 	private static boolean checkIfMatchIsNotInProgress(Arena arena) {
 		if(arena.isMatchInProgress()) {
@@ -149,7 +166,7 @@ public class QueueCore {
 		}
 		return true;
 	}	
-	
+
 	private static boolean checkIfTeamIsNotInQueue(Team team) {
 		if(((TeamCore)team).checkIfInQueue()) {
 			for(Player player : team.getPlayers()) {
