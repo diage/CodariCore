@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.builders;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
@@ -12,7 +13,7 @@ import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class BuildingListener implements Listener {
-	private static Map<String, String> currentArenasBeingBuilt;
+	private static Map<String, String> currentArenasBeingBuilt = new HashMap<>();
 
 	@EventHandler()
 	private void buildingStartEvent(BuildingStartEvent e) {
