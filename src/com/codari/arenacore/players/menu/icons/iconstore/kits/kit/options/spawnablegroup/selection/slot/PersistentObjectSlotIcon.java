@@ -1,40 +1,43 @@
 package com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.selection.slot;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.codari.api5.util.Time;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.builders.kit.Kit;
+import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class PersistentObjectSlotIcon extends ExecutableIcon {
-	private Kit kit;
 	private String arenaObjectName;
-	private Time delayTime;
-	private boolean override;
 	private int slotNumber;
-	
-	public PersistentObjectSlotIcon(Combatant combatant, Kit kit, String arenaObjectName, Time delayTime, boolean override, int slotNumber) {
+
+	public PersistentObjectSlotIcon(Combatant combatant, String arenaObjectName, int slotNumber) {
 		super(Material.BED, combatant, "Slot " + slotNumber + 1);
-		this.kit = kit;
 		this.arenaObjectName = arenaObjectName;
-		this.delayTime = delayTime;
-		this.override = override;
+
 		this.slotNumber = slotNumber;
 	}
 
 	@Override
 	public void click() {
 		if(this.arenaObjectName != null) {
-			if(this.delayTime == null) {
-				this.kit.setTool(this.slotNumber, this.arenaObjectName);
+			Kit kit = KitListener.getKit(this.getCombatant());
+			if(kit != null) {
+				Time delayTime = kit.getPersistentDelayTime();
+				if(delayTime == null) {
+					kit.setTool(this.slotNumber, this.arenaObjectName);
+				} else {
+					boolean override = kit.getOverride();
+					kit.setTool(this.slotNumber, this.arenaObjectName, delayTime.toString(), Boolean.toString(override));
+				}
 			} else {
-				this.kit.setTool(this.slotNumber, this.arenaObjectName, this.delayTime.toString(), Boolean.toString(this.override));
+				Bukkit.broadcastMessage(ChatColor.RED + "Kit is null!");	//TODO
 			}
 		} else {
-			this.getCombatant().getPlayer().sendMessage(ChatColor.RED + "Failed to place object in toolbelt - "
-					+ "The persistent object is null!");
+			Bukkit.broadcastMessage(ChatColor.RED + "Persistent arena object is null!"); //TODO
 		}	
 	}	
 }

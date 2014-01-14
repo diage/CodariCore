@@ -25,7 +25,7 @@ public class BuildingListener implements Listener {
 				arenaObject.reveal();
 			}
 		}
-		currentArenasBeingBuilt.put(player.getName(), e.getArenaBuilderName());
+		currentArenasBeingBuilt.put(player.getName(), arenaBuilderName);
 	}
 
 	@EventHandler()

@@ -9,6 +9,11 @@ public class BuildingStartEvent extends Event {
 	//-----Static Fields-----//
 	private static final HandlerList handlers = new HandlerList();
 
+	//-----Static Methods-----//
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}	
+	
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;

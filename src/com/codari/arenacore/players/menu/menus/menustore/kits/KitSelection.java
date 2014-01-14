@@ -38,7 +38,7 @@ public class KitSelection extends FunctionMenu {
 	
 	public void addKitIcon(Combatant combatant, String kitName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore)combatant).getKitManager().getKit(kitName), new BackIcon(combatant, this)), kitName));
+			super.setSlot(super.getNextAvailableSlot(), new KitIcon(combatant, new KitOptions(combatant, ((CombatantCore) combatant).getKitManager().getKit(kitName), new BackIcon(combatant, this)), kitName));
 		} else {
 			if(this.nextPage != null) {
 				this.nextPage.addKitIcon(combatant, kitName);

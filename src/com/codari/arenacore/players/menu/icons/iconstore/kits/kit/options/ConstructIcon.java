@@ -8,21 +8,21 @@ import com.codari.api5.Codari;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class ConstructIcon extends ExecutableIcon {
-	private String arenaName;
 	
-	public ConstructIcon(Combatant combatant, String arenaName) {
+	public ConstructIcon(Combatant combatant) {
 		super(Material.REDSTONE_BLOCK, combatant, "Construct");
-		this.arenaName = arenaName;
 	}
 
 	@Override
 	public void click() {
-		ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(this.arenaName);
-		if(this.arenaName != null && arenaBuilder != null) {
-			Codari.getArenaManager().buildArena(this.arenaName, arenaBuilder);			
+		String arenaName = KitListener.getKit(this.getCombatant()).getName();
+		ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(arenaName);
+		if(arenaName != null && arenaBuilder != null) {
+			Codari.getArenaManager().buildArena(arenaName, arenaBuilder);			
 			Bukkit.broadcastMessage("Finalized!");	//TODO
 		} else {
 			Bukkit.broadcastMessage(ChatColor.RED + "Something is wrong in the ConstructIcon class!"); //TODO - For Testing

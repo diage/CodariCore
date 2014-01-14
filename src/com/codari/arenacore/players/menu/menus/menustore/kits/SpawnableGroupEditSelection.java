@@ -39,7 +39,7 @@ public class SpawnableGroupEditSelection extends FunctionMenu {
 	
 	public void addSpawnableGroupIcon(Combatant combatant, String groupName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SpawnableGroupEdit(combatant, this.kit, new BackIcon(combatant, this)), groupName));
+			super.setSlot(super.getNextAvailableSlot(), new SpawnableGroupIcon(combatant, new SpawnableGroupEdit(combatant, new BackIcon(combatant, this)), groupName));
 		} else {
 			if(this.nextPage != null) {
 				this.nextPage.addSpawnableGroupIcon(combatant, groupName);

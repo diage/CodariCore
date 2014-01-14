@@ -38,6 +38,10 @@ public class KitListener implements Listener {
 		currentKits.put(combatant.getPlayerReference().getName(), kit);
 	}
 	
+	public static Kit getKit(Combatant combatant) {
+		return currentKits.get(combatant.getPlayerReference().getName());
+	}
+	
 	@EventHandler()
 	private void kitSelection(IconMenuClickEvent e) {
 		if(e.getIcon() instanceof KitIcon) {

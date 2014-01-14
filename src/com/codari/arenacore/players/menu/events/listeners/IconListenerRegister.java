@@ -3,6 +3,7 @@ package com.codari.arenacore.players.menu.events.listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import com.codari.arenacore.players.builders.BuildingListener;
 import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.builders.kit.ToolBarListener;
@@ -24,5 +25,6 @@ public class IconListenerRegister {
 		Bukkit.getPluginManager().registerEvents(new CurrentArenaObjectNameListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new SaveTeamIconListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new SelectPlayerInviteIconListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new BuildingListener(), plugin);
 	}
 }

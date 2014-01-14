@@ -56,9 +56,9 @@ public class SpawnableGroup extends FunctionMenu {
 			if(RandomSpawnableObject.class.isAssignableFrom(objectEntry.getValue())) {
 				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectRandomIcon(combatant, this.spawnableGroupSelection, arenaObjectName));
 			} else if(FixedSpawnableObject.class.isAssignableFrom(objectEntry.getValue())) {
-				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectFixedIcon(combatant, new FixedSpawnableTimeSelection(combatant, kit, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
+				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectFixedIcon(combatant, new FixedSpawnableTimeSelection(combatant, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
 			} else if(PersistentObject.class.isAssignableFrom(objectEntry.getValue())) {
-				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectPersistentIcon(combatant, new PersistentObjectSettings(combatant, kit, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
+				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectPersistentIcon(combatant, new PersistentObjectSettings(combatant, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
 			} else {
 				Bukkit.broadcastMessage(ChatColor.RED + arenaObjectName + " was unable to be registered because an icon was not created for its Arena Object Type!"); //TODO
 			}
