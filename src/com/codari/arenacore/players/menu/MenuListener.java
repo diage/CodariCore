@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.menu;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +16,7 @@ public class MenuListener implements Listener {
 
 	@EventHandler() 
 	public void openMenuInventoryClick(InventoryClickEvent e) {
-		if(e.getWhoClicked() instanceof Player && e.getInventory().getType() == InventoryType.PLAYER) {
+		if(e.getWhoClicked() instanceof Player && e.getInventory().getType() == InventoryType.CRAFTING) {
 			Player player = ((Player)e.getWhoClicked());
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {
@@ -35,7 +36,7 @@ public class MenuListener implements Listener {
 	
 	@EventHandler()
 	public void closeMenu(InventoryCloseEvent e) {
-		if(e.getPlayer() instanceof Player && e.getInventory().getType() == InventoryType.PLAYER) {
+		if(e.getPlayer() instanceof Player && e.getInventory().getType() == InventoryType.CRAFTING) {
 			Player player = (Player)e.getPlayer();
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {
