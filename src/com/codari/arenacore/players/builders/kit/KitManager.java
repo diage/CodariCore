@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.builders.BuildingEndEvent;
+import com.codari.arenacore.players.builders.BuildingStartEvent;
 
 
 public class KitManager {
@@ -123,6 +125,9 @@ public class KitManager {
 		this.combatant.getPlayer().updateInventory();
 		this.combatant.setHotbarActibe(true);
 		this.toolbarKit = kit;
+		
+		BuildingStartEvent e = new BuildingStartEvent(this.combatant, kitName);
+		Bukkit.getPluginManager().callEvent(e);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -136,6 +141,9 @@ public class KitManager {
 			this.combatant.getPlayer().updateInventory();
 			this.combatant.setHotbarActibe(false);
 			this.toolbarKit = null;
+			
+			BuildingEndEvent e = new BuildingEndEvent(this.combatant);
+			Bukkit.getPluginManager().callEvent(e);
 		}
 	}
 

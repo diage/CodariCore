@@ -56,6 +56,7 @@ public class ToolBarListener implements Listener {
 				ArenaBuilderCore builder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(kit.getName());
 				if (e.getItem().equals(kit.getTools()[4])) {
 					Location location = e.getClickedBlock().getLocation();
+					location.setY(location.getY() + 1);
 					builder.addSpawnLocation(location);
 					kit.addSpawn(location);
 					kit.addSpawn(location, e.getItem());
@@ -64,6 +65,7 @@ public class ToolBarListener implements Listener {
 				}
 				String objectName = e.getItem().getItemMeta().getDisplayName();
 				Location location = e.getClickedBlock().getLocation();
+				location.setY(location.getY() + 1);
 				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
 				arenaObject.reveal();
 				List<String> extraInformation = e.getItem().getItemMeta().getLore();
