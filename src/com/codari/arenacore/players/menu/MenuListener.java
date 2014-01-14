@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 
 import com.codari.api5.Codari;
 import com.codari.arenacore.players.combatants.CombatantCore;
@@ -14,7 +15,7 @@ public class MenuListener implements Listener {
 
 	@EventHandler() 
 	public void openMenuInventoryClick(InventoryClickEvent e) {
-		if(e.getWhoClicked() instanceof Player) {
+		if(e.getWhoClicked() instanceof Player && e.getInventory().getType() == InventoryType.PLAYER) {
 			Player player = ((Player)e.getWhoClicked());
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {
@@ -34,7 +35,7 @@ public class MenuListener implements Listener {
 	
 	@EventHandler()
 	public void closeMenu(InventoryCloseEvent e) {
-		if(e.getPlayer() instanceof Player) {
+		if(e.getPlayer() instanceof Player && e.getInventory().getType() == InventoryType.PLAYER) {
 			Player player = (Player)e.getPlayer();
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {

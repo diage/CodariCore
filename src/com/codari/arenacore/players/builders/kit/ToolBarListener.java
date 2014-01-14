@@ -65,6 +65,7 @@ public class ToolBarListener implements Listener {
 				String objectName = e.getItem().getItemMeta().getDisplayName();
 				Location location = e.getClickedBlock().getLocation();
 				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+				arenaObject.reveal();
 				List<String> extraInformation = e.getItem().getItemMeta().getLore();
 				
 				//---Registering Arena Objects---//
