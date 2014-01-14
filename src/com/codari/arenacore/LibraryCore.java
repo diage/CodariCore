@@ -22,15 +22,20 @@ import com.codari.arena5.arena.rules.timedaction.TimedActionName;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionName;
 import com.codari.arena5.objects.ArenaObject;
+import com.codari.arena5.objects.ArenaObjectCallable;
 import com.codari.arena5.objects.ArenaObjectName;
+import com.codari.arena5.players.combatants.Combatant;
 
 public class LibraryCore implements Library {
-	private final Map<String, Class<? extends ArenaObject>> objects;
+	@Deprecated
+	private final Map<String, Class<? extends ArenaObject>> _INVALID_objects;
+	private final Map<String, ArenaObjectCallable<?>> objects;
 	private final Map<String, Class<? extends RoleDeclaration>> declarations;
 	private final Map<String, Class<? extends TimedAction>> actions;
 	private final Map<String, Class<? extends WinCondition>> conditions;
 	
 	public LibraryCore() {
+		this._INVALID_objects = new HashMap<>();
 		this.objects = new HashMap<>();
 		this.declarations = new HashMap<>();
 		this.actions = new HashMap<>();
@@ -50,12 +55,23 @@ public class LibraryCore implements Library {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Arena object named " + name + " already exists");
 			return;
 		}
-		this.objects.put(name, clazz);
+		this._INVALID_objects.put(name, clazz);
+	}
+
+	@Override
+	public <T extends ArenaObject> void registerArenaObject(Class<T> clazz, ArenaObjectCallable<T> callable) {
+		ArenaObjectName objectName = clazz.getAnnotation(ArenaObjectName.class);
+		if (objectName == null) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing arena object name for " + clazz);
+			return;
+		}
+		String name = objectName.value();
+		this.objects.put(name, callable);
 	}
 	
 	@Deprecated
 	public ArenaObject createObject(String name, Player player) {
-		Class<? extends ArenaObject> clazz = this.objects.get(name);
+		Class<? extends ArenaObject> clazz = this._INVALID_objects.get(name);
 		if (clazz == null) {
 			return null;
 		}
@@ -66,9 +82,10 @@ public class LibraryCore implements Library {
 			return null;
 		}
 	}
-	
+
+	@Deprecated
 	public ArenaObject createObject(String name, Location location) {
-		Class<? extends ArenaObject> clazz = this.objects.get(name);
+		Class<? extends ArenaObject> clazz = this._INVALID_objects.get(name);
 		if (clazz == null) {
 			return null;
 		}
@@ -80,12 +97,20 @@ public class LibraryCore implements Library {
 		}
 	}
 	
+	public ArenaObject createObject(String name, Combatant builder, Location clickedBlock) {
+		ArenaObjectCallable<?> callable = this.objects.get(name);
+		if (callable == null) {
+			return null;
+		}
+		return callable.call(builder, clickedBlock);
+	}
+	
 	public Collection<String> getObjectNames() {
-		return this.objects.keySet();
+		return this._INVALID_objects.keySet();
 	}
 	
 	public Set<Entry<String, Class<? extends ArenaObject>>> getObjectEntrys() {
-		return Collections.unmodifiableSet(this.objects.entrySet());
+		return Collections.unmodifiableSet(this._INVALID_objects.entrySet());
 	}
 	
 	//-----Role Declaration Related-----//
