@@ -32,6 +32,7 @@ public class BuildingListener implements Listener {
 		Player player = e.getCombatant().getPlayer();
 		if(currentArenasBeingBuilt.containsKey(player.getName())) {
 			String arenaBuilderName = currentArenasBeingBuilt.get(player.getName());
+			currentArenasBeingBuilt.remove(player.getName());
 			if(!currentArenasBeingBuilt.containsValue(arenaBuilderName)) {
 				ArenaBuilderCore arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(arenaBuilderName);
 				if(arenaBuilder != null) {
@@ -40,7 +41,6 @@ public class BuildingListener implements Listener {
 					}
 				}
 			}
-			currentArenasBeingBuilt.remove(player.getName());
 		}
 	}
 }
