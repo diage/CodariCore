@@ -89,8 +89,6 @@ public class MenuManager {
 	public void enterMenu() {
 		if(!this.inMenu) {
 			this.getInventory();
-			this.combatant.getPlayer().sendMessage(ChatColor.BLUE + "Saving Inventory - Check One");
-
 			if(this.utilityMenu != null) {
 				this.resetUtilityMenu();
 				if(this.functionMenu != null) {
@@ -105,8 +103,6 @@ public class MenuManager {
 	public void enterMenu(UtilityMenu utilityMenu) {
 		if(!this.inMenu) {
 			this.getInventory();
-			this.combatant.getPlayer().sendMessage(ChatColor.BLUE + "Saving Inventory - Check Two");
-
 			this.inMenu = true;
 
 			this.utilityMenu = utilityMenu;
@@ -123,8 +119,6 @@ public class MenuManager {
 	public void enterMenu(UtilityMenu utilityMenu, FunctionMenu functionMenu) {
 		if(!this.inMenu) {
 			this.getInventory();
-			this.combatant.getPlayer().sendMessage(ChatColor.BLUE + "Saving Inventory - Check Three");
-
 			this.inMenu = true;
 
 			this.utilityMenu = utilityMenu;
@@ -141,8 +135,6 @@ public class MenuManager {
 	public void saveExitMenu() {
 		if(this.inMenu) {
 			this.setInventory();
-			this.combatant.getPlayer().sendMessage(ChatColor.GOLD + "Setting player's inventory to the saved one.");
-
 			this.inMenu = false;
 			this.setMenuIconExit();
 		}
@@ -151,8 +143,6 @@ public class MenuManager {
 	public void exitMenu() {
 		if(this.inMenu) {
 			this.setInventory();
-			this.combatant.getPlayer().sendMessage(ChatColor.GOLD + "Setting player's inventory to the saved one.");
-
 			this.functionMenu = new FunctionMenu(this.combatant);
 			this.currentFunctionInventory = this.functionMenu.getIcons();
 			this.utilityMenu = new UtilityMenu(this.combatant);
