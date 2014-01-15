@@ -1,8 +1,10 @@
 package com.codari.arenacore;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -15,6 +17,7 @@ import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.ReflectionException;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
+import com.codari.arena5.arena.rules.TokenCallable;
 import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.arena.rules.roledelegation.RoleDeclarationName;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
@@ -29,12 +32,14 @@ public class LibraryCore implements Library {
 	private final Map<String, Class<? extends RoleDeclaration>> declarations;
 	private final Map<String, Class<? extends TimedAction>> actions;
 	private final Map<String, Class<? extends WinCondition>> conditions;
+	private final Map<Class<?>, TokenCallable<?>> tokenCallables;
 	
 	public LibraryCore() {
 		this.objects = new HashMap<>();
 		this.declarations = new HashMap<>();
 		this.actions = new HashMap<>();
 		this.conditions = new HashMap<>();
+		this.tokenCallables = new HashMap<>();
 	}
 	
 	//----ArenaObject Related----//
@@ -151,6 +156,35 @@ public class LibraryCore implements Library {
 		}
 	}
 	
+	public TimedAction createTimedAction(String name, List<String> tokens) {
+		Class<? extends TimedAction> clazz = this.actions.get(name);
+		if (clazz == null) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, name + " is not a registered timed action");
+			return null;
+		}
+		TimedActionName actionName = clazz.getAnnotation(TimedActionName.class);
+		Class<?>[] args = actionName.constructorArguments();
+		if (tokens.size() < args.length) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Not enough tokens to fill constructor for " + clazz);
+			return null;
+		}
+		Object[] objArgs = new Object[args.length];
+		for (int i = 0; i < args.length; i++) {
+			TokenCallable<?> callable = this.getTokenCallable(args[i]);
+			if (objArgs[i] == null) {
+				CodariI.INSTANCE.getLogger().log(Level.WARNING, clazz + " has no registered token callable");
+				return null;
+			}
+			try {
+				objArgs[i] = callable.call(tokens.get(i));
+			} catch (Exception ex) {
+				CodariI.INSTANCE.getLogger().log(Level.SEVERE, "Failed token call for " + args[i], ex);
+				return null;
+			}
+		}
+		return (TimedAction) Reflector.invokeConstructor(clazz, objArgs).getHandle();
+	}
+	
 	public Collection<String> getActionNames() {
 		return this.actions.keySet();
 	}
@@ -186,5 +220,19 @@ public class LibraryCore implements Library {
 	
 	public Collection<String> getConditionNames() {
 		return this.conditions.keySet();
+	}
+
+	@Override
+	public <T> void registerTokenCallable(Class<T> clazz, TokenCallable<T> callable) {
+		if (this.tokenCallables.containsKey(clazz)) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, clazz + " already has a token callable registered");
+			return;
+		}
+		this.tokenCallables.put(clazz, callable);
+	}
+	
+	@SuppressWarnings("unchecked")//Visible methods ensure this
+	public <T> TokenCallable<T> getTokenCallable(Class<T> clazz) {
+		return (TokenCallable<T>) this.tokenCallables.get(clazz);
 	}
 }
