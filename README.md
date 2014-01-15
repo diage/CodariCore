@@ -121,6 +121,7 @@ Version 0.4 Goals
 -Menu has to be reset to player's initial inventory when the menu is closed and opened to the saved menu spot
 -Menu has to keep functioning after player logs out and back in
 -When Spawnable Groups are added, they must be correctly added to the respective kit
+-When Objective Points are being captured, players w/o teams should not prevent players from capping points
 
 ---------------
     : QOL :
