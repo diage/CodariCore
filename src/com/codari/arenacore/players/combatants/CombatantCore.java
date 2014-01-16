@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.player.CodariPlayer;
-import com.codari.api5.stats.StatManager;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
 import com.codari.apicore.CodariCore;
@@ -38,7 +37,6 @@ public final class CombatantCore implements Combatant {
 	@SuppressWarnings("unused")
 	private final File dataFile;
 	private CombatantDataCore data;
-	private StatManager statManager;
 	private DynamicMenuManager dynamicMenuManager;
 	private MenuManager menuManager;
 	
@@ -68,7 +66,6 @@ public final class CombatantCore implements Combatant {
 		this.activeHotbar = false;
 		this.hotbarCooldown = new CodariRunnable(CodariI.INSTANCE) {public void run() {}};
 		
-		this.statManager = CodariI.INSTANCE.getStatFactory().createStatManager(this);
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		
 		this.kitManager = new KitManager(this);
@@ -153,11 +150,6 @@ public final class CombatantCore implements Combatant {
 			return true;
 		}
 		return false;
-	}
-	
-	@Override
-	public StatManager getStatManager() {
-		return this.statManager;
 	}
 
 	@Override

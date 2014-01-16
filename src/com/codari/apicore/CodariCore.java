@@ -6,12 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.Reflector;
+import com.codari.apicore.attribute.AttributeFactoryCore;
 import com.codari.apicore.command.CodariCommandCenter;
 import com.codari.apicore.command.CommandRegister;
 import com.codari.apicore.enchantment.EnchantmentManagerCore;
 import com.codari.apicore.itemdata.ItemDataManagerCore;
 import com.codari.apicore.player.CodariPlayerManagerCore;
-import com.codari.apicore.stats.StatFactoryCore;
 import com.codari.arena.objects.gate.Gate;
 import com.codari.arena.objects.itemspawner.MainItemSpawner;
 import com.codari.arena.objects.itemspawner.structure.ItemSpawnerListener;
@@ -56,7 +56,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private CodariPlayerManagerCore codariPlayerManager;
 	private ArenaManagerCore arenaManager;
 	private TeamManagerCore teamManager;
-	private StatFactoryCore statFactory;
+	private AttributeFactoryCore attributeFactory;
 	private LibraryCore library;
 	private EnchantmentManagerCore enchantmentManager;
 	private ItemDataManagerCore itemDataManager;
@@ -79,7 +79,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.itemDataManager = new ItemDataManagerCore();
 		this.arenaManager = new ArenaManagerCore();
 		this.teamManager = new TeamManagerCore();
-		this.statFactory = new StatFactoryCore();
+		this.attributeFactory = new AttributeFactoryCore();
 		this.library = new LibraryCore(); 
 		this.commandRegister = new CommandRegister();
 		
@@ -164,8 +164,8 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	@Override
-	public StatFactoryCore getStatFactory() {
-		return this.statFactory;
+	public AttributeFactoryCore getAttributeFactory() {
+		return this.attributeFactory;
 	}
 	
 	@Override
