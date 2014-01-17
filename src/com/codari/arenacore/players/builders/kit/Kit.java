@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -75,11 +76,17 @@ public class Kit implements Listener {
 		this.name = name;
 	}
 	
+	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Kit) {
 			return this.getName().equals(((Kit)obj).getName());
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(this.getName()).build();
 	}
 	
 	public Arena buildArena() {
