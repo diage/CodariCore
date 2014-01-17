@@ -1,7 +1,6 @@
 package com.codari.arenacore.players.teams;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
@@ -9,7 +8,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 
 
-public class TeamBuilder implements Listener {
+public class TeamBuilder {
 	public static Team createNewTeam(Player player, String teamName) {
 		Combatant combatant = CodariI.INSTANCE.getArenaManager().getCombatant(player);
 		Team team = new TeamCore(teamName, combatant);
