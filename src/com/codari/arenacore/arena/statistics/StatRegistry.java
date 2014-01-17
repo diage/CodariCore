@@ -1,6 +1,6 @@
 package com.codari.arenacore.arena.statistics;
 
-import com.codari.api5.CodariI;
+import com.codari.api5.Codari;
 
 public class StatRegistry {
 	public static final String KILLS_STAT_ID = "STATISTIC_KILLS";
@@ -12,13 +12,13 @@ public class StatRegistry {
 	private static final String DEATHS_DESCRIPTION = "The number of deaths a player has accumulated.";
 	
 	public StatRegistry() {
-		CodariI.INSTANCE.getAttributeFactory()
+		Codari.getAttributeFactory()
 				.templateBuilder(KILLS_STAT_ID)
 				.setName(KILLS_DISPLAY_NAME)
 				.setDescription(KILLS_DESCRIPTION)
 				.setMinValue(0)
 				.build();
-		CodariI.INSTANCE.getAttributeFactory()
+		Codari.getAttributeFactory()
 				.templateBuilder(DEATHS_STAT_ID)
 				.setName(DEATHS_DISPLAY_NAME)
 				.setDescription(DEATHS_DESCRIPTION)
