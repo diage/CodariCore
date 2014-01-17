@@ -11,7 +11,6 @@ import com.codari.arena5.players.guilds.Guild;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.GuildMenuListener;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.TeamMenuListener;
 
 public class InvitePlayerIcon extends ExecutableIcon {
 
@@ -24,7 +23,7 @@ public class InvitePlayerIcon extends ExecutableIcon {
 		Player player = this.getCombatant().getPlayer();
 		Guild guild = ((CombatantCore) this.getCombatant()).getGuild();	
 		if(GuildMenuListener.requestedGuildNames.containsKey(player.getName())) {
-			String invitedPlayerName = TeamMenuListener.requestedSelectPlayerNames.get(player.getName());
+			String invitedPlayerName = GuildMenuListener.requestedSelectPlayerNames.get(player.getName());
 			Player invitedPlayer = Bukkit.getPlayer(invitedPlayerName);
 			if(invitedPlayer != null) {
 				CombatantCore invitedCombatant = (CombatantCore) Codari.getArenaManager().getCombatant(invitedPlayer);
@@ -33,7 +32,7 @@ public class InvitePlayerIcon extends ExecutableIcon {
 						player.sendMessage(ChatColor.GREEN + "You have invited " + invitedPlayerName + " to your guild.");
 						invitedCombatant.getDynamicMenuManager().addGuildInvitationIcons(guild);
 						invitedCombatant.setBeingInvitedToGuild(true);
-						invitedPlayer.sendMessage(ChatColor.GREEN + "You have been invited to the team \"" + guild.getGuildName() + "\". "
+						invitedPlayer.sendMessage(ChatColor.GREEN + "You have been invited to the Guild \"" + guild.getGuildName() + "\". "
 								+ "Open up your Guild Menu to accept or decline.");
 					} else {
 						player.sendMessage(ChatColor.RED + invitedPlayerName + " is already being invited to a Guild!");
