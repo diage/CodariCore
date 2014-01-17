@@ -20,8 +20,8 @@ public class SelectPlayerInviteIconListener implements Listener {
 			if(!((TeamCore)e.getIcon().getCombatant().getTeam()).checkIfInQueue()) {
 				requestedSelectPlayerNames.put(e.getIcon().getPlayerName(), e.getPlayerInput());
 			} else {
-				e.getIcon().getCombatant().getPlayer().sendMessage(ChatColor.RED + "You can't select another queue while your team "
-						+ "is already in one!");
+				e.getIcon().getCombatant().getPlayer().sendMessage(ChatColor.RED + "You can't invite a player while your team "
+						+ "is in a queue.");
 			}
 		}
 	}

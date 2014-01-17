@@ -23,7 +23,7 @@ public class DeclineTeamInviteIcon extends ExecutableIcon  {
 	@Override
 	public void click() {
 		for(Player teamMatePlayer : this.team.getPlayers()) {
-			teamMatePlayer.sendMessage(ChatColor.RED + this.getCombatant().getPlayer().getName() + " has declined your team!");
+			teamMatePlayer.sendMessage(ChatColor.RED + this.getCombatant().getPlayer().getName() + " has declined your team invite!");
 		}
 		this.initialTeamOptions.removeInvitationIcons(this.getCombatant());
 		((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(false);	

@@ -31,14 +31,14 @@ public class AcceptTeamInviteIcon extends ExecutableIcon {
 					teamMatePlayer.sendMessage(ChatColor.BLUE + player.getName() + " has joined your team!");
 				}
 				this.team.addToTeam(this.getCombatant());
+				this.initialTeamOptions.removeInvitationIcons(this.getCombatant());
+				((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(false);
 			} else {
 				player.sendMessage(ChatColor.RED + "You can't join the Team because they are currently in a queue!");
 			}
 		} else {
 			player.sendMessage(ChatColor.RED + "You can't join the Team because they are currently in an arena!");
 		}
-		this.initialTeamOptions.removeInvitationIcons(this.getCombatant());
-		((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(false);
 	}
 
 }
