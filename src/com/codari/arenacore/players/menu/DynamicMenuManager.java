@@ -1,7 +1,11 @@
 package com.codari.arenacore.players.menu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.TimedActionSettings;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.WinConditionSettings;
@@ -24,16 +28,19 @@ public class DynamicMenuManager {
 	private KitSelection kitSelectionMenu;
 	private KitBuilderSelection kitBuilderSelectionMenu;
 	private KitCreationBuilderSelection kitCreationBuilderSelectionMenu;
-	private SpawnableGroupSelection spawnableGroupSelectionMenu;
-	private SpawnableGroupEditSelection spawnableGroupEditSelectionMenu;
 	private PlayerSelection playerSelectionMenu;
 	private InitialTeamOptions initialTeamOptionsMenu;
 	private ArenaSelection arenaSelectionMenu;
 	private WinConditionSettings winConditionSettingsMenu;
 	private TimedActionSettings timedActionSettingsMenu;
 	
+	private Map<Kit, SpawnableGroupSelection> spawnableGroupSelectionMenus;
+	private Map<Kit, SpawnableGroupEditSelection> spawnableGroupEditSelectionMenus;
+	
 	public DynamicMenuManager(Combatant combatant) {
 		this.combatant = combatant;
+		this.spawnableGroupSelectionMenus = new HashMap<>();
+		this.spawnableGroupEditSelectionMenus = new HashMap<>();
 	} 
 	
 	//-----Dynamic Menus-----//
@@ -58,17 +65,17 @@ public class DynamicMenuManager {
 		this.kitCreationBuilderSelectionMenu.addKitCreationBuilderIcon(this.combatant, kitBuilderName);
 	}
 	
-	public void setSpawnableGroupSelectionMenu(SpawnableGroupSelection spawnableGroupSelection) {
-		this.spawnableGroupSelectionMenu = spawnableGroupSelection;
+	public void setSpawnableGroupSelectionMenu(Kit kit, SpawnableGroupSelection spawnableGroupSelection) {
+		this.spawnableGroupSelectionMenus.put(kit, spawnableGroupSelection);
 	}
 	
-	public void setSpawnableGroupEditSelectionMenu(SpawnableGroupEditSelection spawnableGroupEditSelection) {
-		this.spawnableGroupEditSelectionMenu = spawnableGroupEditSelection;
+	public void setSpawnableGroupEditSelectionMenu(Kit kit, SpawnableGroupEditSelection spawnableGroupEditSelection) {
+		this.spawnableGroupEditSelectionMenus.put(kit, spawnableGroupEditSelection);
 	}
 	
-	public void addSpawnableGroupIcon(String groupName) {
-		this.spawnableGroupSelectionMenu.addSpawnableGroupIcon(this.combatant, groupName);
-		this.spawnableGroupEditSelectionMenu.addSpawnableGroupIcon(this.combatant, groupName);
+	public void addSpawnableGroupIcon(Kit kit, String groupName) {
+		this.spawnableGroupSelectionMenus.get(kit).addSpawnableGroupIcon(this.combatant, groupName);
+		this.spawnableGroupEditSelectionMenus.get(kit).addSpawnableGroupIcon(this.combatant, groupName);
 	}	
 	
 	public void setPlayerSelectionMenu(PlayerSelection playerSelection) {

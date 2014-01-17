@@ -75,6 +75,13 @@ public class Kit implements Listener {
 		this.name = name;
 	}
 	
+	public boolean equals(Object obj) {
+		if(obj instanceof Kit) {
+			return this.getName().equals(((Kit)obj).getName());
+		}
+		return false;
+	}
+	
 	public Arena buildArena() {
 		return Codari.getArenaManager().buildArena(name, this.arenaBuilder);
 	}
