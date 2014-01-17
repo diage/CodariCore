@@ -7,11 +7,8 @@ import com.codari.arenacore.players.builders.BuildingListener;
 import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.builders.kit.ToolBarListener;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.CurrentArenaObjectNameListener;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveKitIconListener;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveSpawnableGroupIconListener;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveTeamIconListener;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SelectPlayerInviteIconListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.GuildMenuListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.TeamMenuListener;
 
 public class IconListenerRegister {
 	
@@ -20,11 +17,8 @@ public class IconListenerRegister {
 		Bukkit.getPluginManager().registerEvents(new IconListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new KitListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new KitBuilderListener(), plugin);
-		Bukkit.getPluginManager().registerEvents(new SaveKitIconListener(), plugin);
-		Bukkit.getPluginManager().registerEvents(new SaveSpawnableGroupIconListener(), plugin);
-		Bukkit.getPluginManager().registerEvents(new CurrentArenaObjectNameListener(), plugin);
-		Bukkit.getPluginManager().registerEvents(new SaveTeamIconListener(), plugin);
-		Bukkit.getPluginManager().registerEvents(new SelectPlayerInviteIconListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new TeamMenuListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new GuildMenuListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new BuildingListener(), plugin);
 	}
 }

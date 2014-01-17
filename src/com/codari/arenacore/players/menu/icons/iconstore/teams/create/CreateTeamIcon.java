@@ -6,32 +6,29 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveTeamIconListener;
-import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.TeamMenuListener;
 import com.codari.arenacore.players.teams.TeamBuilder;
 
-public class CreateTeamIcon extends ExecutableIcon {
-	private InitialTeamOptions initialTeamOptions;
-	
-	public CreateTeamIcon(Combatant combatant, InitialTeamOptions initialTeamOptions) {
+public class CreateTeamIcon extends ExecutableIcon {	
+	public CreateTeamIcon(Combatant combatant) {
 		super(Material.EMERALD_BLOCK, combatant, "Create Team");
-		this.initialTeamOptions = initialTeamOptions;
 	}
 
 	@Override
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
-		if(SaveTeamIconListener.requestedTeamNames.containsKey(player.getName())) {
+		if(TeamMenuListener.requestedTeamNames.containsKey(player.getName())) {
 			if(this.getCombatant().getTeam() == null) {
-				String teamName = SaveTeamIconListener.requestedTeamNames.get(player.getName());
+				String teamName = TeamMenuListener.requestedTeamNames.get(player.getName());
 				if(!Codari.getTeamManager().containsTeam(teamName)) {
 					TeamBuilder.createNewTeam(this.getCombatant().getPlayer(), teamName);
 					player.sendMessage(ChatColor.GREEN + "You have created a new team named " + "\"" + teamName + "\"");
-					this.initialTeamOptions.setHasTeamIcons(this.getCombatant());
-					SaveTeamIconListener.requestedTeamNames.remove(player.getName());
+					((CombatantCore) this.getCombatant()).getDynamicMenuManager().addHasTeamIcons();
+					TeamMenuListener.requestedTeamNames.remove(player.getName());
 				} else {
-					player.sendMessage(ChatColor.RED + "A team with the name \"" + teamName + "\" already exists");
+					player.sendMessage(ChatColor.RED + "A team with the name \"" + teamName + "\" already exists.");
 				}
 			} else {
 				player.sendMessage(ChatColor.RED + "You are already on the team: " + "\"" + this.getCombatant().getTeam().getTeamName() + 

@@ -41,7 +41,7 @@ public final class CombatantCore implements Combatant {
 	private DynamicMenuManager dynamicMenuManager;
 	private MenuManager menuManager;
 	
-	private boolean isLeader, inArena, isBeingInvitedToATeam;
+	private boolean isLeader, inArena, isBeingInvitedToATeam, isBeingInvitedToAGuild;
 	private TeamCore team;
 	private Role role;
 	private String arenaName;
@@ -202,6 +202,14 @@ public final class CombatantCore implements Combatant {
 	
 	public boolean checkIfBeingInvitedToTeam() {
 		return this.isBeingInvitedToATeam;
+	}
+	
+	public void setBeingInvitedToGuild(boolean isBeingInvitedToAGuild) {
+		this.isBeingInvitedToAGuild = isBeingInvitedToAGuild;
+	}
+	
+	public boolean checkIfBeingInvitedToGuild() {
+		return this.isBeingInvitedToAGuild;
 	}
 
 	@Override

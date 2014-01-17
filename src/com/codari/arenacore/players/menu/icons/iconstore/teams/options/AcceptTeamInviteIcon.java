@@ -8,17 +8,15 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
+import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public class AcceptTeamInviteIcon extends ExecutableIcon {
 	private TeamCore team;
-	private InitialTeamOptions initialTeamOptions;
 	
-	public AcceptTeamInviteIcon(Combatant combatant, Team team, InitialTeamOptions initialTeamOptions) {
+	public AcceptTeamInviteIcon(Combatant combatant, Team team) {
 		super(Material.ENCHANTMENT_TABLE, combatant, "Accept Team Invite");
 		this.team = (TeamCore) team;
-		this.initialTeamOptions = initialTeamOptions;
 	}
 
 	@Override
@@ -30,8 +28,8 @@ public class AcceptTeamInviteIcon extends ExecutableIcon {
 				for(Player teamMatePlayer : this.team.getPlayers()) {
 					teamMatePlayer.sendMessage(ChatColor.BLUE + player.getName() + " has joined your team!");
 				}
-				this.team.addToTeam(this.getCombatant());
-				this.initialTeamOptions.removeInvitationIcons(this.getCombatant());
+				TeamBuilder.addPlayer(team, this.getCombatant());
+				((CombatantCore) this.getCombatant()).getDynamicMenuManager().removeTeamInvitationIcons();
 				((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(false);
 			} else {
 				player.sendMessage(ChatColor.RED + "You can't join the Team because they are currently in a queue!");

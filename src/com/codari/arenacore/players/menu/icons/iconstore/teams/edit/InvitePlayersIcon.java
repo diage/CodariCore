@@ -10,7 +10,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SelectPlayerInviteIconListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.TeamMenuListener;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public class InvitePlayersIcon extends ExecutableIcon {
@@ -24,15 +24,16 @@ public class InvitePlayersIcon extends ExecutableIcon {
 		Player player = this.getCombatant().getPlayer();
 		Team team = this.getCombatant().getTeam();
 		if(!((TeamCore) team).checkIfInQueue()) {
-			if(SelectPlayerInviteIconListener.requestedSelectPlayerNames.containsKey(player.getName())) {
-				String invitedPlayerName = SelectPlayerInviteIconListener.requestedSelectPlayerNames.get(player.getName());
+			if(TeamMenuListener.requestedSelectPlayerNames.containsKey(player.getName())) {
+				String invitedPlayerName = TeamMenuListener.requestedSelectPlayerNames.get(player.getName());
 				Player invitedPlayer = Bukkit.getPlayer(invitedPlayerName);
 				if(invitedPlayer != null) {
 					CombatantCore invitedCombatant = (CombatantCore) Codari.getArenaManager().getCombatant(invitedPlayer);
 					if(invitedCombatant.getTeam() == null) {
 						if(!invitedCombatant.checkIfBeingInvitedToTeam()) {
 							player.sendMessage(ChatColor.GREEN + "You have invited " + invitedPlayerName + " to your team.");
-							invitedCombatant.getDynamicMenuManager().addInvitationIcons(team);
+							invitedCombatant.getDynamicMenuManager().addTeamInvitationIcons(team);
+							invitedCombatant.setBeingInvitedToTeam(true);
 							invitedPlayer.sendMessage(ChatColor.GREEN + "You have been invited to the team \"" + team.getTeamName() + "\". "
 									+ "Open up your Team Menu to accept or decline.");
 						} else {

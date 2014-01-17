@@ -17,8 +17,7 @@ public class TeamBuilder {
 		return team;
 	}
 	
-	public static void addPlayer(TeamCore team, Player player) {
-		Combatant combatant = CodariI.INSTANCE.getArenaManager().getCombatant(player);
+	public static void addPlayer(TeamCore team, Combatant combatant) {
 		team.addToTeam(combatant);
 	}
 	

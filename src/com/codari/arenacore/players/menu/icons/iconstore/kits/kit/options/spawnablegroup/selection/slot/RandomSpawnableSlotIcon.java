@@ -9,7 +9,6 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.CurrentArenaObjectNameListener;
 
 public class RandomSpawnableSlotIcon extends ExecutableIcon {
 	private Combatant combatant;
@@ -25,7 +24,7 @@ public class RandomSpawnableSlotIcon extends ExecutableIcon {
 
 	@Override
 	public void click() {
-		String arenaObjectName = CurrentArenaObjectNameListener.currentRandomArenaObjectNames.get(this.combatant.getPlayerReference().getName());
+		String arenaObjectName = KitListener.currentRandomArenaObjectNames.get(this.combatant.getPlayerReference().getName());
 		if(this.randomSpawnableGroupName != null && arenaObjectName != null) {
 			Kit kit = KitListener.getKit(this.getCombatant());
 			if(kit != null) {		

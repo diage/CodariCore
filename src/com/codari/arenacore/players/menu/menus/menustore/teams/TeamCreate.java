@@ -8,17 +8,15 @@ import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class TeamCreate extends FunctionMenu {
-	private InitialTeamOptions initialTeamOptions;
 	
-	public TeamCreate(Combatant combatant, InitialTeamOptions initialTeamOptions, BackIcon backIcon) {
+	public TeamCreate(Combatant combatant, BackIcon backIcon) {
 		super(combatant);
-		this.initialTeamOptions = initialTeamOptions;
 		this.addIcons(combatant, backIcon);
 	}
 
 	private void addIcons(Combatant combatant, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new SelectTeamNameIcon(combatant));
-		super.setSlot(FunctionMenuSlot.A_TWO, new CreateTeamIcon(combatant, this.initialTeamOptions));
+		super.setSlot(FunctionMenuSlot.A_TWO, new CreateTeamIcon(combatant));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 	}
 }
