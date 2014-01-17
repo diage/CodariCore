@@ -22,7 +22,7 @@ public class InvitePlayerIcon extends ExecutableIcon {
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
 		Guild guild = ((CombatantCore) this.getCombatant()).getGuild();	
-		if(GuildMenuListener.requestedGuildNames.containsKey(player.getName())) {
+		if(GuildMenuListener.requestedSelectPlayerNames.containsKey(player.getName())) {
 			String invitedPlayerName = GuildMenuListener.requestedSelectPlayerNames.get(player.getName());
 			Player invitedPlayer = Bukkit.getPlayer(invitedPlayerName);
 			if(invitedPlayer != null) {
