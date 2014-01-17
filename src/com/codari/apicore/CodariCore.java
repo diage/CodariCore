@@ -87,7 +87,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.attributeFactory = new AttributeFactoryCore();
 		this.library = new LibraryCore(); 
 		this.commandRegister = new CommandRegister();
-		new StatRegistry();
+		//new StatRegistry();
 		
 		//---Arena Objects---//
 		Codari.getLibrary().registerArenaObject(Gate.class);
