@@ -15,6 +15,7 @@ import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.ReflectionException;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
+import com.codari.arena5.arena.rules.Argument;
 import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.arena.rules.roledelegation.RoleDeclarationName;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
@@ -104,17 +105,26 @@ public class LibraryCore implements Library {
 		this.declarations.put(name, clazz);
 	}
 	
-	public RoleDeclaration createRoleDeclaration(String name) {
+	public RoleDeclaration createRoleDeclaration(String name, Object... args) {
 		Class<? extends RoleDeclaration> clazz = this.declarations.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return (RoleDeclaration) Reflector.invokeConstructor(clazz).getHandle();
+			return (RoleDeclaration) Reflector.invokeConstructor(clazz, args).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create role declaration named " + name, ex);
 			return null;
 		}
+	}
+	
+	public Argument[] RoleDeclarationArguments(String name) {
+		Class<? extends RoleDeclaration> clazz = this.declarations.get(name);
+		if (clazz == null) {
+			return new Argument[]{};
+		}
+		RoleDeclarationName declarationName = clazz.getAnnotation(RoleDeclarationName.class);
+		return declarationName.constructorArguments();
 	}
 	
 	public Collection<String> getDeclarationNames() {
@@ -151,6 +161,28 @@ public class LibraryCore implements Library {
 		}
 	}
 	
+	public TimedAction createTimedAction(String name, Object... args) {
+		Class<? extends TimedAction> clazz = this.actions.get(name);
+		if (clazz == null) {
+			return null;
+		}
+		try {
+			return (TimedAction) Reflector.invokeConstructor(clazz, args).getHandle();
+		} catch (ReflectionException ex) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
+			return null;
+		}
+	}
+	
+	public Argument[] TimedActionArguments(String name) {
+		Class<? extends TimedAction> clazz = this.actions.get(name);
+		if (clazz == null) {
+			return new Argument[]{};
+		}
+		TimedActionName actionName = clazz.getAnnotation(TimedActionName.class);
+		return actionName.constructorArguments();
+	}
+	
 	public Collection<String> getActionNames() {
 		return this.actions.keySet();
 	}
@@ -171,17 +203,26 @@ public class LibraryCore implements Library {
 		this.conditions.put(name, clazz);
 	}
 	
-	public WinCondition createWinCondition(String name) {
+	public WinCondition createWinCondition(String name, Object... args) {
 		Class<? extends WinCondition> clazz = this.conditions.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return (WinCondition) Reflector.invokeConstructor(clazz).getHandle();
+			return (WinCondition) Reflector.invokeConstructor(clazz, args).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create win condition named " + name, ex);
 			return null;
 		}
+	}
+	
+	public Argument[] WinConditionArguments(String name) {
+		Class<? extends WinCondition> clazz = this.conditions.get(name);
+		if (clazz == null) {
+			return new Argument[]{};
+		}
+		WinConditionName conditionName = clazz.getAnnotation(WinConditionName.class);
+		return conditionName.constructorArguments();
 	}
 	
 	public Collection<String> getConditionNames() {
