@@ -17,7 +17,7 @@ public class GuildCore implements Guild {
 	public GuildCore(Combatant combatant, String name) {
 		this.name = name;
 		this.guildMembers = new HashMap<>();
-		this.addGuildMemberOrSetMemberRanking(combatant, GuildRanking.GUILDLEADER);
+		this.setCombatantGuildStanding(combatant, GuildRanking.GUILDLEADER);
 	}
 	
 	@Override
@@ -33,9 +33,9 @@ public class GuildCore implements Guild {
 		}
 		return null;
 	}
-	
+		
 	@Override
-	public void addGuildMemberOrSetMemberRanking(Combatant combatant, GuildRanking guildRanking) {
+	public void setCombatantGuildStanding(Combatant combatant, GuildRanking guildRanking) {
 		if(!this.guildMembers.containsKey(combatant)) {
 			((CombatantCore) combatant).setGuild(this);
 		}

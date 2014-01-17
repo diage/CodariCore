@@ -13,7 +13,7 @@ public class GuildBuilder {
 	}
 
 	public static void addGuildMember(Combatant combatant, Guild guild, GuildRanking guildRanking) {
-		guild.addGuildMemberOrSetMemberRanking(combatant, guildRanking);
+		guild.setCombatantGuildStanding(combatant, guildRanking);
 	}
 
 	public static void removePlayer(Combatant combatant, Guild guild) {
