@@ -5,9 +5,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.icons.iconstore.listeners.SaveKitIconListener;
 
 public class SaveKitIcon extends ExecutableIcon {
 	
@@ -18,13 +18,13 @@ public class SaveKitIcon extends ExecutableIcon {
 	@Override
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
-		if(SaveKitIconListener.requestedKitNames.containsKey(player.getName())) {
+		if(KitListener.requestedKitNames.containsKey(player.getName())) {
 			if(((CombatantCore)this.getCombatant()).getKitManager().getSelectedKitBuilder() != null) {
-				String kitName = SaveKitIconListener.requestedKitNames.get(player.getName());
+				String kitName = KitListener.requestedKitNames.get(player.getName());
 				if(!((CombatantCore)this.getCombatant()).getKitManager().containsKit(kitName)) {
 					if(((CombatantCore)this.getCombatant()).getKitManager().createKit(kitName)) {
 						player.sendMessage(ChatColor.GREEN + "You have succesfully created a Kit!");
-						SaveKitIconListener.requestedKitNames.remove(player.getName());
+						KitListener.requestedKitNames.remove(player.getName());
 						((CombatantCore)this.getCombatant()).getDynamicMenuManager().addKitIcon(this.getCombatant(), kitName);
 					}
 				} else {

@@ -13,6 +13,8 @@ import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
 import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectRandomIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.SelectNameIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelaySecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelayTicksIcon;
@@ -29,9 +31,14 @@ import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawna
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelaySecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.newkitcreation.SelectKitNameIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.selectionmenu.KitIcon;
 
 public class KitListener implements Listener {
+	public static Map<String, String> requestedKitNames = new HashMap<>();
+	public static Map<String, String> currentRandomArenaObjectNames = new HashMap<>();
+	public static Map<String, String> requestedSpawnableGroupNames = new HashMap<>();
+	
 	private static Map<String, Kit> currentKits = new HashMap<>();
 	
 	public static void changeKit(Combatant combatant, Kit kit) {
@@ -54,6 +61,27 @@ public class KitListener implements Listener {
 			}
 		}
 	}
+	
+	@EventHandler()
+	public void setCurrentRandomArenaObjectName(IconMenuClickEvent e) {
+		if(e.getIcon() instanceof ArenaObjectRandomIcon) {
+			currentRandomArenaObjectNames.put(e.getIcon().getPlayerName(), ((ArenaObjectRandomIcon)e.getIcon()).getRandomArenaObjectName());
+		}
+	}	
+	
+	@EventHandler()
+	public void setKitName(IconRequestEvent e) {
+		if(e.getIcon() instanceof SelectKitNameIcon) {
+			requestedKitNames.put(e.getIcon().getPlayerName(), e.getPlayerInput());			
+		}
+	}	
+
+	@EventHandler()
+	public void setSpawnableGroupName(IconRequestEvent e) {
+		if(e.getIcon() instanceof SelectNameIcon) {
+			requestedSpawnableGroupNames.put(e.getIcon().getPlayerName(), e.getPlayerInput());			
+		}
+	}		
 	
 	@EventHandler()
 	private void changeRandomDelayTime(IconHoverUpdateEvent e) {

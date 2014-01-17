@@ -42,7 +42,7 @@ public class CommandInvitePlayerToTeam implements CodariCommand {
 				//Method so that player could accept or decline invite here
 
 				if(true/*invited player accepted the invite*/) {
-					TeamBuilder.addPlayer(team, invitedPlayer);
+					TeamBuilder.addPlayer(team, invitedCombatant);
 					player.sendMessage(invitedPlayer.getName() + " has joined your team.");
 				}
 				return true;				

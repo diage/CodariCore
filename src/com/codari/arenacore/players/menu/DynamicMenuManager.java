@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.guilds.Guild;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.players.builders.kit.Kit;
+import com.codari.arenacore.players.menu.menus.menustore.guilds.InitialGuildOptions;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.KitBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.TimedActionSettings;
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.WinConditionSettings;
@@ -30,6 +32,7 @@ public class DynamicMenuManager {
 	private KitCreationBuilderSelection kitCreationBuilderSelectionMenu;
 	private PlayerSelection playerSelectionMenu;
 	private InitialTeamOptions initialTeamOptionsMenu;
+	private InitialGuildOptions initialGuildOptionsMenu;
 	private ArenaSelection arenaSelectionMenu;
 	private WinConditionSettings winConditionSettingsMenu;
 	private TimedActionSettings timedActionSettingsMenu;
@@ -90,12 +93,40 @@ public class DynamicMenuManager {
 		this.initialTeamOptionsMenu = initialTeamOptions;
 	}
 	
-	public void addInvitationIcons(Team team) {
-		this.initialTeamOptionsMenu.addInvitationIcons(this.combatant, team);
+	public void addTeamInvitationIcons(Team team) {
+		this.initialTeamOptionsMenu.addTeamInvitationIcons(team);
 	}	
 	
+	public void removeTeamInvitationIcons() {
+		this.initialTeamOptionsMenu.removeTeamInvitationIcons();
+	}
+	
 	public void addHasTeamIcons() {
-		this.initialTeamOptionsMenu.setHasTeamIcons(this.combatant);
+		this.initialTeamOptionsMenu.setHasTeamIcons();
+	}
+	
+	public void addNoTeamIcons() {
+		this.initialTeamOptionsMenu.setNoTeamIcon();
+	}
+	
+	public void setInitialGuildOptionsMenu(InitialGuildOptions initialGuildOptions) {
+		this.initialGuildOptionsMenu = initialGuildOptions;
+	}
+	
+	public void addGuildInvitationIcons(Guild guild) {
+		this.initialGuildOptionsMenu.addGuildInvitationIcons(guild);
+	}
+	
+	public void removeGuildInvitationIcons() {
+		this.initialGuildOptionsMenu.removeGuildInvitationIcons();
+	}
+	
+	public void addHasGuildIcons() {
+		this.initialGuildOptionsMenu.setHasGuildIcons();
+	}
+	
+	public void addNoGuildIcons() {
+		this.initialGuildOptionsMenu.setNoGuildIcon();
 	}
 	
 	public void setArenaSelectionMenu(ArenaSelection arenaSelection) {

@@ -1,31 +1,34 @@
 package com.codari.arenacore.players.menu.icons.iconstore.teams.options;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
-import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
 import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public class LeaveTeamIcon extends ExecutableIcon {
-	private InitialTeamOptions initialTeamOptions;
 	
-	public LeaveTeamIcon(Combatant combatant, InitialTeamOptions initialTeamOptions) {
+	public LeaveTeamIcon(Combatant combatant) {
 		super(Material.REDSTONE_BLOCK, combatant, "Leave Team");
-		this.initialTeamOptions = initialTeamOptions;
 	}
 
 	@Override
 	public void click() {
-		if(this.getCombatant().getTeam() != null) {
-			this.initialTeamOptions.setNoTeamIcon(this.getCombatant());
-			TeamBuilder.removePlayer((TeamCore) this.getCombatant().getTeam(), this.getCombatant().getPlayer());
+		if((TeamCore) this.getCombatant().getTeam().getArena() == null) {
+			if(!((TeamCore) this.getCombatant().getTeam()).checkIfInQueue()) {
+				if(this.getCombatant().getTeam() != null) {
+					((CombatantCore) this.getCombatant()).getDynamicMenuManager().addNoTeamIcons();
+					TeamBuilder.removePlayer((TeamCore) this.getCombatant().getTeam(), this.getCombatant().getPlayer());
+					this.getCombatant().getPlayer().sendMessage(ChatColor.BLUE + "You have left your team.");
+				}
+			} else {
+				this.getCombatant().getPlayer().sendMessage(ChatColor.RED + "You can't leave your team while you're in a queue!");
+			}
 		} else {
-			Bukkit.broadcastMessage(ChatColor.RED + "A player doesn't have a team but is trying to leave one.");	//TODO
-		}	
+			this.getCombatant().getPlayer().sendMessage(ChatColor.RED + "You can't leave your team while you're in an arena!");
+		}
 	}
-	
 }

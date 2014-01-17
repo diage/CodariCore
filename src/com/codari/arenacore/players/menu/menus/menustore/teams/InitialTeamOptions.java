@@ -13,50 +13,52 @@ import com.codari.arenacore.players.menu.menus.FunctionMenu;
 import com.codari.arenacore.players.menu.slots.FunctionMenuSlot;
 
 public class InitialTeamOptions extends FunctionMenu {
-	private LeaveTeamIcon leaveTeamIcon;
+	private Combatant combatant;
 	private CreateTeamMenuIcon createTeamMenuIcon;
+	private LeaveTeamIcon leaveTeamIcon;
 	
 	public InitialTeamOptions(Combatant combatant) {
 		super(combatant);
-		this.leaveTeamIcon = new LeaveTeamIcon(combatant, this);
-		this.createTeamMenuIcon = new CreateTeamMenuIcon(combatant, new TeamCreate(combatant, this, new BackIcon(combatant, this)));
-		this.addIcons(combatant);
-		((CombatantCore) combatant).getDynamicMenuManager().setInitialTeamOptionsMenu(this);
+		this.combatant = combatant;
+		this.createTeamMenuIcon = new CreateTeamMenuIcon(this.combatant, new TeamCreate(this.combatant, new BackIcon(this.combatant, this)));
+		this.leaveTeamIcon = new LeaveTeamIcon(this.combatant);
+		this.addIcons();
+		((CombatantCore) this.combatant).getDynamicMenuManager().setInitialTeamOptionsMenu(this);
 	}
 	
-	public void setHasTeamIcons(Combatant combatant) {
-		super.setSlot(FunctionMenuSlot.A_ONE, new TeamIcon(combatant, new TeamEdit(combatant, combatant.getTeam(), new BackIcon(combatant, this)), combatant.getTeam().getTeamName()));
+	public void setHasTeamIcons() {
+		super.setSlot(FunctionMenuSlot.A_ONE, new TeamIcon(this.combatant, new TeamEdit(this.combatant, this.combatant.getTeam(), new BackIcon(this.combatant, this)), this.combatant.getTeam().getTeamName()));
 		super.setSlot(FunctionMenuSlot.A_TWO, this.leaveTeamIcon);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void setNoTeamIcon(Combatant combatant) {
+	public void setNoTeamIcon() {
 		if(super.hasSlot(FunctionMenuSlot.A_TWO)) {
-			((CombatantCore) combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.A_TWO);
+			((CombatantCore) this.combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.A_TWO);
 		} 
 		super.setSlot(FunctionMenuSlot.A_ONE, this.createTeamMenuIcon);
-		combatant.getPlayer().updateInventory();
+		this.combatant.getPlayer().updateInventory();
 	}
 	
-	public void addInvitationIcons(Combatant combatant, Team team) {
-		super.setSlot(FunctionMenuSlot.B_ONE, new AcceptTeamInviteIcon(combatant, team, this));
-		super.setSlot(FunctionMenuSlot.B_TWO, new DeclineTeamInviteIcon(combatant, team, this));
+	public void addTeamInvitationIcons(Team team) {
+		super.setSlot(FunctionMenuSlot.B_ONE, new AcceptTeamInviteIcon(this.combatant, team));
+		super.setSlot(FunctionMenuSlot.B_TWO, new DeclineTeamInviteIcon(this.combatant));
 	}
 	
-	public void removeInvitationIcons(Combatant combatant) {
+	public void removeTeamInvitationIcons() {
 		if(super.hasSlot(FunctionMenuSlot.B_ONE)) {
-			((CombatantCore) combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.B_ONE);
+			((CombatantCore) this.combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.B_ONE);
 		} 
 		if(super.hasSlot(FunctionMenuSlot.B_TWO)) {
-			((CombatantCore) combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.B_TWO);
+			((CombatantCore) this.combatant).getMenuManager().removeMenuSlot(FunctionMenuSlot.B_TWO);
 		} 
 	}
 	
-	private void addIcons(Combatant combatant) {
-		if(combatant.getTeam() != null) {
-			this.setHasTeamIcons(combatant);
+	private void addIcons() {
+		if(this.combatant.getTeam() != null) {
+			this.setHasTeamIcons();
 		} else {
-			this.setNoTeamIcon(combatant);
+			this.setNoTeamIcon();
 		}
 	}
 }
