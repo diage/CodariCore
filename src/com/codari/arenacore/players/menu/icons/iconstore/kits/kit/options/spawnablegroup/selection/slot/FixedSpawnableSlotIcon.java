@@ -17,7 +17,7 @@ public class FixedSpawnableSlotIcon extends ExecutableIcon{
 	public FixedSpawnableSlotIcon(Combatant combatant, String arenaObjectName, int slotNumber) {
 		super(Material.BED, combatant, "Slot " + (++slotNumber));
 		this.arenaObjectName = arenaObjectName;
-		this.slotNumber = slotNumber;
+		this.slotNumber = slotNumber - 1;
 	}
 
 	@Override

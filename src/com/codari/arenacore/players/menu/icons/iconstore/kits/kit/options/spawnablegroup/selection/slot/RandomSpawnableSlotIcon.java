@@ -19,7 +19,7 @@ public class RandomSpawnableSlotIcon extends ExecutableIcon {
 		super(Material.BED, combatant, "Slot " + (++slotNumber));
 		this.combatant = combatant;
 		this.randomSpawnableGroupName = randomSpawnableGroupName;
-		this.slotNumber = slotNumber;
+		this.slotNumber = slotNumber - 1;
 	}
 
 	@Override

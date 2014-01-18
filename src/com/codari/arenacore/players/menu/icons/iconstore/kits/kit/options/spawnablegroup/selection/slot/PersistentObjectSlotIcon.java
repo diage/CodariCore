@@ -18,7 +18,7 @@ public class PersistentObjectSlotIcon extends ExecutableIcon {
 		super(Material.BED, combatant, "Slot " + (++slotNumber));
 		this.arenaObjectName = arenaObjectName;
 
-		this.slotNumber = slotNumber;
+		this.slotNumber = slotNumber - 1;
 	}
 
 	@Override

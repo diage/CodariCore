@@ -147,14 +147,13 @@ public class LibraryCore implements Library {
 		this.actions.put(name, clazz);
 	}
 	
-	@Deprecated
-	public TimedAction createTimedAction(String name, Player player) {
+	public TimedAction createTimedAction(String name) {
 		Class<? extends TimedAction> clazz = this.actions.get(name);
 		if (clazz == null) {
 			return null;
 		}
 		try {
-			return (TimedAction) Reflector.invokeConstructor(clazz, player).getHandle();
+			return (TimedAction) Reflector.invokeConstructor(clazz).getHandle();
 		} catch (ReflectionException ex) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create timed action named " + name, ex);
 			return null;
