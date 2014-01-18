@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.selection.timesettings;
+package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.selection.options;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,9 +21,13 @@ public class SaveWinConditionIcon extends ExecutableIcon {
 		Player player = this.getCombatant().getPlayer();
 		if(KitBuilderListener.currentKitBuilders.containsKey(player.getName())) {
 			KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
-			((CombatantCore) this.getCombatant()).getDynamicMenuManager().addWinConditionIcon(kitBuilder.getWinConditionName());
-			kitBuilder.submitWinCondition();		
-			player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Win Condition.");
+			if(kitBuilder.winConditionArgumentsFilled()) {
+				((CombatantCore) this.getCombatant()).getDynamicMenuManager().addWinConditionIcon(kitBuilder.getWinConditionName());
+				kitBuilder.submitWinCondition();		
+				player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Win Condition.");
+			} else {
+				player.sendMessage(ChatColor.RED + "You must fill out all the Win Condition arguments!");
+			}
 		} else {
 			player.sendMessage(ChatColor.RED + "You must select a name for the Kit Builder before you add a Win Condition.");
 		}

@@ -12,7 +12,6 @@ import com.codari.api5.player.CodariPlayer;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
 import com.codari.apicore.CodariCore;
-import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
@@ -20,8 +19,6 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
-import com.codari.arenacore.players.builders.kit.KitBuilder;
-import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.guilds.GuildCore;
 import com.codari.arenacore.players.menu.DynamicMenuManager;
@@ -73,17 +70,17 @@ public final class CombatantCore implements Combatant {
 		this.kitManager = new KitManager(this);
 		this.dynamicMenuManager = new DynamicMenuManager(this);
 		
-		
+		//This won't work anymore because of the new WinCondition Setup
 		/*	   FIXME - Begin Testing 	 */
-		this.kitManager.createKitBuilder(this, "2v2");
-		KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(this.player.getName());
-		kitBuilder.setNumberOfTeams((byte) 2);
-		kitBuilder.setTime(true);
-		kitBuilder.setTeamSize((byte) 2);
-		kitBuilder.selectWinCondition(new WinCondition2v2(100));
-		kitBuilder.submitWinCondition();
-		this.kitManager.submitKitBuilder(kitBuilder);
-		this.kitManager.createKit("TestKit");		
+		//this.kitManager.createKitBuilder(this, "2v2");
+		//KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(this.player.getName());
+		//kitBuilder.setNumberOfTeams((byte) 2);
+		//kitBuilder.setTime(true);
+		//kitBuilder.setTeamSize((byte) 2);
+		//kitBuilder.selectNewWinCondition(new WinCondition2v2(100));
+		//kitBuilder.submitWinCondition();
+		//this.kitManager.submitKitBuilder(kitBuilder);
+		//this.kitManager.createKit("TestKit");		
 		/* 			END TESTING				*/
 		
 		this.menuManager = new MenuManager(this); 

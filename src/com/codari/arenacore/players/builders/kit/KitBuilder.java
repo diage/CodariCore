@@ -3,11 +3,13 @@ package com.codari.arenacore.players.builders.kit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
+import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
+import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 
 public class KitBuilder {
@@ -23,6 +25,7 @@ public class KitBuilder {
 	private String winConditionName;
 	private boolean winConditionAfterTime;
 	private long winConditionMin, winConditionSec, WinConditionTick;
+	private Object[] winConditionArguments;
 	
 	public KitBuilder(String name) {
 		this.name = name;
@@ -92,16 +95,13 @@ public class KitBuilder {
 	}
 
 	//-----WIN CONDITION-----//
-	public void selectWinCondition(WinCondition winCondition) {
-		this.winCondition = winCondition;
+	public void selectNewWinCondition(String winConditionName) {
 		this.winConditionAfterTime = true;
 		this.winConditionMin = 0;
 		this.winConditionSec = 0;
 		this.WinConditionTick = 0;
-	}
-	
-	public void setWinConditionName(String winConditionName) {
 		this.winConditionName = winConditionName;
+		this.winConditionArguments = new Object[((LibraryCore) Codari.getLibrary()).getWinConditionArguments(winConditionName).length];		
 	}
 	
 	public String getWinConditionName() {
@@ -123,8 +123,22 @@ public class KitBuilder {
 	public void setWinConditionAfter(boolean after) {
 		this.winConditionAfterTime = after;
 	}
+	
+	public void addWinConditionArgument(int index, Object argument) {
+		this.winConditionArguments[index] = argument;
+	}
+	
+	public boolean winConditionArgumentsFilled() {
+		for(int i = 0; i < this.winConditionArguments.length; i++) {
+			if(this.winConditionArguments[i] == null) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public void submitWinCondition() {
+		this.addWinConditionArguments();
 		if(!(this.winCondition == null)) {
 			if(this.winConditionMin > 0 
 					|| this.winConditionSec > 0
@@ -151,6 +165,12 @@ public class KitBuilder {
 	
 	public boolean isValid() {
 		return this.gameRule.isValid();
+	}
+	
+	private void addWinConditionArguments() {
+		if(this.winConditionArguments.length > 0) {
+			this.winCondition = ((LibraryCore) Codari.getLibrary()).createWinCondition(this.winConditionName, this.winConditionArguments);
+		}
 	}
 	
 	//-----ROLE DECLARATION-----//

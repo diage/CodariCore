@@ -44,6 +44,10 @@ public class WinConditionSettings extends FunctionMenu {
 			}
 		}
 	}
+	
+	public void removeAllWinConditionIcons() {
+		//FIXME
+	}
 
 	private void addNextPage(Combatant combatant) {
 		Icon prevIcon = new PreviousIcon(combatant, this);

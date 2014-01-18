@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 public class DeclineGuildInviteIcon extends ExecutableIcon {
 
 	public DeclineGuildInviteIcon(Combatant combatant) {
-		super(Material.SPRUCE_WOOD_STAIRS, combatant, "Decline Team Invite");
+		super(Material.SPRUCE_WOOD_STAIRS, combatant, "Decline Guild Invite");
 	}
 
 	@Override

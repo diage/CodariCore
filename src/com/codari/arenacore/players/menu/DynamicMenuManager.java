@@ -139,12 +139,21 @@ public class DynamicMenuManager {
 		}
 	}
 	
+	public void resetKitBuilderDynamicMenus() {
+		this.removeAllWinConditionIcons();
+		this.removeAllTimedActionIcons();
+	}
+	
 	public void setWinConditionSettingsMenu(WinConditionSettings winConditionSettings) {
 		this.winConditionSettingsMenu = winConditionSettings;
 	}
 	
 	public void addWinConditionIcon(String winconditionName) {
 		this.winConditionSettingsMenu.addWinConditionIcon(this.combatant, winconditionName);
+	}
+	
+	private void removeAllWinConditionIcons() {
+		this.winConditionSettingsMenu.removeAllWinConditionIcons();
 	}
 	
 	public void setTimedActionSettingsMenu(TimedActionSettings timedActionSettings) {
@@ -154,4 +163,8 @@ public class DynamicMenuManager {
 	public void addTimedActionIcon(String timedAction) {
 		this.timedActionSettingsMenu.addTimedActionIcon(this.combatant, timedAction);
 	}	
+	
+	private void removeAllTimedActionIcons() {
+		this.timedActionSettingsMenu.remoeveAllTimedActionsIcons();
+	}
 }

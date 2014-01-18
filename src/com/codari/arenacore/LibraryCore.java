@@ -216,7 +216,7 @@ public class LibraryCore implements Library {
 		}
 	}
 	
-	public Argument[] WinConditionArguments(String name) {
+	public Argument[] getWinConditionArguments(String name) {
 		Class<? extends WinCondition> clazz = this.conditions.get(name);
 		if (clazz == null) {
 			return new Argument[]{};

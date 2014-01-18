@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.selection.timesettings.winafter;
+package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.selection.options.winafter;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,21 +8,21 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
-public class SetTrueIcon extends ExecutableIcon {
+public class SetFalseIcon extends ExecutableIcon {
 
-	public SetTrueIcon(Combatant combatant) {
-		super(Material.BOW, combatant, "TRUE");
+	public SetFalseIcon(Combatant combatant) {
+		super(Material.ARROW, combatant, "FALSE");
 	}
 
 	@Override
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
 		if(KitBuilderListener.currentKitBuilders.containsKey(player.getName())) {
-			KitBuilderListener.currentKitBuilders.get(player.getName()).setWinConditionAfter(true);
-			player.sendMessage(ChatColor.GREEN + "Win Condition Set to After Win Condition Time");
+			KitBuilderListener.currentKitBuilders.get(player.getName()).setWinConditionAfter(false);
+			player.sendMessage(ChatColor.GREEN + "Win Condition Set to Before Win Condition Time");
 		} else {
 			player.sendMessage(ChatColor.RED + "You must select a name for the Kit Builder before you add a Win Condition.");
-		}	
+		}
 	}
 
 }

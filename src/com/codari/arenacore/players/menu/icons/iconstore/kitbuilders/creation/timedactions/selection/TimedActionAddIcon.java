@@ -8,6 +8,7 @@ import com.codari.api5.Codari;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.players.builders.kit.KitBuilder;
 import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
@@ -25,7 +26,8 @@ public class TimedActionAddIcon extends ExecutableIcon{
 		Player player = this.getCombatant().getPlayer();
 		if(KitBuilderListener.currentKitBuilders.containsKey(player.getName())) {
 			TimedAction timedAction = ((LibraryCore) Codari.getLibrary()).createTimedAction(this.timedActionName, player);
-			KitBuilderListener.currentKitBuilders.get(player.getName()).submitTimedAction(timedAction);
+			KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(player.getName());
+			kitBuilder.submitTimedAction(timedAction);
 			((CombatantCore) this.getCombatant()).getDynamicMenuManager().addTimedActionIcon(this.timedActionName);
 			player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Timed Action!");
 		} else {

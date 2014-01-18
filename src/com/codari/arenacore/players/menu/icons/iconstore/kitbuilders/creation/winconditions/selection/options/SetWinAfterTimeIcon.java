@@ -1,4 +1,4 @@
-package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.selection.timesettings;
+package com.codari.arenacore.players.menu.icons.iconstore.kitbuilders.creation.winconditions.selection.options;
 
 import org.bukkit.Material;
 

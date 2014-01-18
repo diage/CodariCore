@@ -23,6 +23,7 @@ public class SubmitKitBuilderIcon extends ExecutableIcon {
 		if(!((CombatantCore) this.getCombatant()).getKitManager().getKitBuilders().containsKey(kitBuilder.getName())) {
 			if(kitBuilder != null && kitBuilder.isValid()) {
 				((CombatantCore) this.getCombatant()).getKitManager().submitKitBuilder(kitBuilder);
+				((CombatantCore) this.getCombatant()).getDynamicMenuManager().resetKitBuilderDynamicMenus();
 				player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Kit Builder named " + kitBuilder.getName());
 			} else {
 				player.sendMessage(ChatColor.RED + "Unable to create Kit Builder. The Kit Builder must have a name, a match duration, "

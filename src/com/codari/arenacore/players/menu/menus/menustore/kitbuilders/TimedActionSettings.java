@@ -44,6 +44,10 @@ public class TimedActionSettings extends FunctionMenu {
 			}
 		}
 	}
+	
+	public void remoeveAllTimedActionsIcons() {
+		//FIXME 
+	}
 
 	private void addNextPage(Combatant combatant) {
 		Icon prevIcon = new PreviousIcon(combatant, this);

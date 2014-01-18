@@ -38,7 +38,7 @@ public class WinConditionSelection extends FunctionMenu {
 	
 	private void addWinConditionIcon(Combatant combatant, String winConditionName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new WinConditionSelectionIcon(combatant, new WinConditionTimeSettings(combatant, new BackIcon(combatant, this)), winConditionName));
+			super.setSlot(super.getNextAvailableSlot(), new WinConditionSelectionIcon(combatant, new WinConditionOptions(combatant, winConditionName, new BackIcon(combatant, this)), winConditionName));
 		} else {
 			if(this.nextPage != null) {
 				this.nextPage.addWinConditionIcon(combatant, winConditionName);
