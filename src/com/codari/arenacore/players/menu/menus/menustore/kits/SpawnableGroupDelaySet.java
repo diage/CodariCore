@@ -18,10 +18,10 @@ public class SpawnableGroupDelaySet extends FunctionMenu {
 
 	public SpawnableGroupDelaySet(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
-		this.addIcons(combatant, kit, backIcon);
 		this.randomDelayM = new UpdateRandomDelayMinutesIcon(combatant);
 		this.randomDelayS = new UpdateRandomDelaySecondsIcon(combatant);
 		this.randomDelayT = new UpdateRandomDelayTicksIcon(combatant);
+		this.addIcons(combatant, kit, backIcon);
 	}
 	
 	public void clearLore() {

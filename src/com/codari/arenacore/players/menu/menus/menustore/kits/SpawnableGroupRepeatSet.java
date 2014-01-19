@@ -18,10 +18,10 @@ public class SpawnableGroupRepeatSet extends FunctionMenu {
 	
 	public SpawnableGroupRepeatSet(Combatant combatant, Kit kit, BackIcon backIcon) {
 		super(combatant);
-		this.addIcons(combatant, kit, backIcon);
 		this.randomRepeatM = new UpdateRandomRepeatMinutesIcon(combatant);
 		this.randomRepeatS = new UpdateRandomRepeatSecondsIcon(combatant);
 		this.randomRepeatT = new UpdateRandomRepeatTicksIcon(combatant);
+		this.addIcons(combatant, kit, backIcon);
 	}
 	
 	public void clearLore() {
