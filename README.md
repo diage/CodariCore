@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.4.0
+CURRENT VERSION: 0.4.5
 ===========
 
 ===========
