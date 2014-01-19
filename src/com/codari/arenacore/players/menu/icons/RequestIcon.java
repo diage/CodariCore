@@ -1,6 +1,7 @@
 package com.codari.arenacore.players.menu.icons;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.conversations.ConversationAbandonedListener;
@@ -20,12 +21,13 @@ import com.codari.arenacore.players.menu.icons.structure.IconType;
 
 public abstract class RequestIcon extends Icon {
 	private ConversationFactory conversationFactory;
+	private static final int INPUT_TIME_OUT = 10;
 	
 	public RequestIcon(Material material, Combatant combatant, String displayName) {
 		super(material, combatant, IconType.REQUEST, displayName);
 		this.conversationFactory = new ConversationFactory(CodariI.INSTANCE)
 					.addConversationAbandonedListener(new ConvoListener())
-					.withTimeout(10)
+					.withTimeout(INPUT_TIME_OUT)
 					.withEscapeSequence("/quit")
 					.thatExcludesNonPlayersWithMessage("No consoles!")
 					.withFirstPrompt(new ConversationPrompt(this));
@@ -44,9 +46,10 @@ public abstract class RequestIcon extends Icon {
 		@Override
 		public void conversationAbandoned(ConversationAbandonedEvent abandonedEvent) {
 	        if (abandonedEvent.gracefulExit()) {
-	            abandonedEvent.getContext().getForWhom().sendRawMessage("Conversation exited gracefully.");
+	            abandonedEvent.getContext().getForWhom().sendRawMessage(ChatColor.AQUA + "Input received. Open Menu to continue.");
 	        } else {
-	            abandonedEvent.getContext().getForWhom().sendRawMessage("Conversation abandoned by" + abandonedEvent.getCanceller().getClass().getName());
+	            abandonedEvent.getContext().getForWhom().sendRawMessage(ChatColor.RED + "Failed to receive input. You must respond within "
+	            		+ INPUT_TIME_OUT + " seconds. Reselect the Request Icon to try again.");
 	        }
 	    }
 	}
