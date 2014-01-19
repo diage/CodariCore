@@ -35,6 +35,7 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, ArenaRoleGroup> roleGroups;
 	private final Map<String, QueueCore> queues;
 	private final Map<String, GameRuleCore> gameRules;
+	private final File builderDir;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
@@ -47,6 +48,18 @@ public class ArenaManagerCore implements ArenaManager {
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
 		ConfigurationSerialization.registerClass(ArenaBuilderCore.class);
 		ConfigurationSerialization.registerClass(ArenaBuilderCore.ObjectDataPacket.class);
+		this.builderDir = new File(CodariCore.instance().getDataFolder(), "DEM_BUILDERS");
+		if (this.builderDir.exists()) {
+			for (File file : this.builderDir.listFiles()) {
+				try {
+					this.loadArena(file);
+				} catch (Exception ex) {
+					CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt find potato in " + file, ex);
+				}
+			}
+		} else {
+			this.builderDir.mkdirs();
+		}
 	}
 	
 	//-----Public Methods-----//
@@ -181,6 +194,7 @@ public class ArenaManagerCore implements ArenaManager {
 
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
 		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
+		this.saveArenaBuilder(arenaName);
 	}
 	
 	public ArenaBuilderCore getArenaBuilder(String arenaName) {
@@ -236,17 +250,19 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public boolean saveArenaBuilder(String name, File file) {
+	public boolean saveArenaBuilder(String name) {
 		if (!this.arenaBuilders.containsKey(name)) {
 			CodariCore.instance().getLogger().log(Level.WARNING, "No arena builder saved under the name " + name);
 			return false;
 		}
+		File file = new File(this.builderDir, name);
 		CodariSerialization.serialize(file, this.getArenaBuilder(name));
 		return true;
 	}
 
 	@Override
-	public boolean loadArenaBuilder(String name, File file) {
+	public boolean loadArenaBuilder(File file) {
+		String name = file.getName();
 		if (this.arenaBuilders.containsKey(name)) {
 			CodariCore.instance().getLogger().log(Level.WARNING, "Can not load arena builder to the name "
 					+ name + " as a arena builder already exists with that name");
