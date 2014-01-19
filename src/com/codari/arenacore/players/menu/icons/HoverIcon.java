@@ -75,8 +75,9 @@ public class HoverIcon extends Icon {
 		return this.itemMeta = super.getItemMeta();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void updateLore() {
-		List<String> newLore = itemMeta.getLore();
+		List<String> newLore = this.itemMeta.getLore();
 		if(newLore == null) {
 			newLore = new ArrayList<>();
 		}
@@ -92,5 +93,6 @@ public class HoverIcon extends Icon {
 		}
 		this.itemMeta.setLore(newLore);
 		super.setItemMeta(this.itemMeta);
+		this.getCombatant().getPlayer().updateInventory();
 	}
 }

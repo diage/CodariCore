@@ -45,8 +45,10 @@ public class TimedActionSettings extends FunctionMenu {
 		}
 	}
 	
-	public void remoeveAllTimedActionsIcons() {
-		//FIXME 
+	public void resetMenu(Combatant combatant) {
+		super.clearMenu();
+		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
+		super.setSlot(FunctionMenuSlot.C_THREE, new SelectTimedActionIcon(combatant, new TimedActionSelection(combatant, new BackIcon(combatant, this))));
 	}
 
 	private void addNextPage(Combatant combatant) {

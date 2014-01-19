@@ -153,7 +153,7 @@ public class DynamicMenuManager {
 	}
 	
 	private void removeAllWinConditionIcons() {
-		this.winConditionSettingsMenu.removeAllWinConditionIcons();
+		this.winConditionSettingsMenu.resetMenu(this.combatant);
 	}
 	
 	public void setTimedActionSettingsMenu(TimedActionSettings timedActionSettings) {
@@ -165,6 +165,6 @@ public class DynamicMenuManager {
 	}	
 	
 	private void removeAllTimedActionIcons() {
-		this.timedActionSettingsMenu.remoeveAllTimedActionsIcons();
+		this.timedActionSettingsMenu.resetMenu(this.combatant);
 	}
 }

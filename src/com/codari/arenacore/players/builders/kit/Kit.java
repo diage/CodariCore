@@ -101,12 +101,12 @@ public class Kit implements Listener {
 		if(this.randomTimeLineRepeatTime == null) {
 			this.arenaBuilder.createRandomTimelineGroup(this.groupName, this.randomTimeLineDelayTime);
 			this.groupName = null;
-			this.randomTimeLineDelayTime = null;
+			this.resetRandomDelayTime();
 		} else {
 			this.arenaBuilder.createRandomTimelineGroup(this.groupName, this.randomTimeLineDelayTime, randomTimeLineRepeatTime);
 			this.groupName = null;
-			this.randomTimeLineDelayTime = null;
-			this.randomTimeLineRepeatTime = null;
+			this.resetRandomDelayTime();
+			this.resetRandomRepeatTime();
 		}
 		return true;
 	}
@@ -133,6 +133,13 @@ public class Kit implements Listener {
 		Bukkit.broadcastMessage(ChatColor.GREEN + "Current random delay time - Minutes: " + this.randomDelayMinutes + " Seconds: " + this.randomDelaySeconds  + " Ticks: " + this.randomDelayTicks);	//TODO
 	}
 	
+	public void resetRandomDelayTime() {
+		this.randomDelayMinutes = 0;
+		this.randomDelaySeconds = 0;
+		this.randomDelayTicks = 0;
+		this.randomTimeLineDelayTime = null;
+	}
+	
 	//---Random Repeat Time---//
 	public void updateRandomRepeatMinutes(long minutes) {
 		this.randomRepeatMinutes = minutes;
@@ -148,6 +155,13 @@ public class Kit implements Listener {
 	
 	public void createRandomRepeatTime() {
 		this.randomTimeLineRepeatTime = new Time(this.randomRepeatMinutes, this.randomRepeatSeconds, this.randomRepeatTicks);
+	}
+	
+	public void resetRandomRepeatTime() {
+		this.randomRepeatMinutes = 0;
+		this.randomRepeatSeconds = 0;
+		this.randomRepeatTicks = 0;
+		this.randomTimeLineRepeatTime = null;
 	}
 	
 	//-----Fixed Spawnable-----//

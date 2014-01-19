@@ -1,8 +1,5 @@
 package com.codari.arenacore.players.menu.menus.menustore.kitbuilders;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
 import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.LibraryCore;
@@ -23,7 +20,6 @@ public class WinConditionSelection extends FunctionMenu {
 		this.backIcon = backIcon;
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		for(String winConditionName : ((LibraryCore)Codari.getLibrary()).getConditionNames()) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "Adding Win Condition to Menu!"); //TODO - for testing
 			this.addWinConditionIcon(combatant, winConditionName);
 		}
 	}

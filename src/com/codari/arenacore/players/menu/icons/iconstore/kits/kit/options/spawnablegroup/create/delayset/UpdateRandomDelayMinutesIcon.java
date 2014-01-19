@@ -10,4 +10,5 @@ public class UpdateRandomDelayMinutesIcon extends HoverIcon {
 	public UpdateRandomDelayMinutesIcon(Combatant combatant) {
 		super(Material.COAL_BLOCK, combatant, "Minute");
 	}
+
 }
