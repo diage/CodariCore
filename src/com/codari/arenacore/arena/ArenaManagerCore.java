@@ -194,7 +194,11 @@ public class ArenaManagerCore implements ArenaManager {
 
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
 		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
-		this.saveArenaBuilder(arenaName);
+		try {
+			this.saveArenaBuilder(arenaName);
+		} catch (Exception ex) {
+			CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt save potato in " + arenaName, ex);
+		}
 	}
 	
 	public ArenaBuilderCore getArenaBuilder(String arenaName) {
