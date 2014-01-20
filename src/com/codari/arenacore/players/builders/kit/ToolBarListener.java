@@ -22,13 +22,14 @@ import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.players.builders.ToolbarManager;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class ToolBarListener implements Listener {
 	@EventHandler
 	public void toolSelect(HotbarSelectEvent e) {
-		KitManager kitManager = ((CombatantCore) e.getCombatant()).getKitManager();
-		if (kitManager.isToolBarEnabled()) {
+		ToolbarManager toolbarManager = ((CombatantCore) e.getCombatant()).getToolbarManager();
+		if (toolbarManager.isToolBarEnabled()) {
 			switch (e.getOption()) {
 			case HOTBAR_1:
 			case HOTBAR_2:
@@ -39,7 +40,7 @@ public class ToolBarListener implements Listener {
 				e.getCombatant().getPlayer().getInventory().setItem(7, item);
 				break;
 			case HOTBAR_6:
-				kitManager.disableToolBar();
+				toolbarManager.disableToolBar();
 				break;
 			default:
 				break;
@@ -50,9 +51,9 @@ public class ToolBarListener implements Listener {
 	@EventHandler
 	public void placeObject(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null) {
-			KitManager kitManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getKitManager();
-			if (kitManager.isToolBarEnabled()) {
-				Kit kit = kitManager.getToolbarKit();
+			ToolbarManager toolbarManager = ((CombatantCore) Codari.getArenaManager().getCombatant(e.getPlayer())).getToolbarManager();
+			if (toolbarManager.isToolBarEnabled()) {
+				Kit kit = toolbarManager.getToolbarKit();
 				ArenaBuilderCore builder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(kit.getName());
 				if (e.getItem().equals(kit.getTools()[4])) {
 					Location location = e.getClickedBlock().getLocation();

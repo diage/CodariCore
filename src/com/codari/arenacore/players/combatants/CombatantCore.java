@@ -19,6 +19,7 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
+import com.codari.arenacore.players.builders.ToolbarManager;
 import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.guilds.GuildCore;
 import com.codari.arenacore.players.menu.DynamicMenuManager;
@@ -45,16 +46,16 @@ public final class CombatantCore implements Combatant {
 	private GuildCore guild;
 	
 	//---Hotbar---//
-	//Skill Bar
+	//***Skill Bar***//
 	private boolean activeHotbar;
 	private final CodariRunnable hotbarCooldown;
 	
-	//Arena Tool Bar
+	//***Arena Tool Bar***//
+	private ToolbarManager toolbarManager;
 	
 	//---Building Arena---//
 	private boolean isBuilding;
 	private String currentArenaBuildName;
-	private KitManager kitManager;
 	
 	//-----Constructor-----//
 	public CombatantCore(String name) {
@@ -67,23 +68,10 @@ public final class CombatantCore implements Combatant {
 		
 		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
 		
-		this.kitManager = new KitManager(this);
-		this.dynamicMenuManager = new DynamicMenuManager(this);
-		
-		//This won't work anymore because of the new WinCondition Setup
-		/*	   FIXME - Begin Testing 	 */
-		//this.kitManager.createKitBuilder(this, "2v2");
-		//KitBuilder kitBuilder = KitBuilderListener.currentKitBuilders.get(this.player.getName());
-		//kitBuilder.setNumberOfTeams((byte) 2);
-		//kitBuilder.setTime(true);
-		//kitBuilder.setTeamSize((byte) 2);
-		//kitBuilder.selectNewWinCondition(new WinCondition2v2(100));
-		//kitBuilder.submitWinCondition();
-		//this.kitManager.submitKitBuilder(kitBuilder);
-		//this.kitManager.createKit("TestKit");		
-		/* 			END TESTING				*/
-		
+		//this.kitManager = new KitManager(this);	FIXME //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		this.dynamicMenuManager = new DynamicMenuManager(this);	
 		this.menuManager = new MenuManager(this); 
+		this.toolbarManager = new ToolbarManager(this);
 		this.inArena = false;
 	}
 	
@@ -242,16 +230,20 @@ public final class CombatantCore implements Combatant {
 		return this.currentArenaBuildName;
 	}
 	
-	public KitManager getKitManager() {
-		return this.kitManager;
-	}
-	
 	public DynamicMenuManager getDynamicMenuManager() {
 		return this.dynamicMenuManager;
 	}
 	
 	public MenuManager getMenuManager() {
 		return this.menuManager;
+	}
+	
+	public KitManager getKitManager() {
+		return ((CodariCore) CodariI.INSTANCE).getKitManager();
+	}
+	
+	public ToolbarManager getToolbarManager() {
+		return this.toolbarManager;
 	}
 	
 	public int hashCode() {

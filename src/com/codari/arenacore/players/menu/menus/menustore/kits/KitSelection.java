@@ -25,7 +25,7 @@ public class KitSelection extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_THREE, new NewKitIcon(combatant, new KitCreation(combatant, new BackIcon(combatant, this))));
 		for(String kitName : ((CombatantCore)combatant).getKitManager().getKits().keySet()) {
 			this.addKitIcon(combatant, kitName);
-		}
+		}		
 		((CombatantCore)combatant).getDynamicMenuManager().setKitSelectionMenu(this);
 	}
 	

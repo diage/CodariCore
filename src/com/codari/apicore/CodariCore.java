@@ -36,6 +36,7 @@ import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
 import com.codari.arenacore.develop.FinalizeCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
+import com.codari.arenacore.players.builders.kit.KitManager;
 import com.codari.arenacore.players.guilds.GuildManagerCore;
 import com.codari.arenacore.players.menu.MenuListener;
 import com.codari.arenacore.players.menu.events.listeners.IconListenerRegister;
@@ -57,6 +58,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Fields-----//
 	private CodariPlayerManagerCore codariPlayerManager;
 	private ArenaManagerCore arenaManager;
+	private KitManager kitManager;
 	private TeamManagerCore teamManager;
 	private GuildManagerCore guildManager;
 	private AttributeFactoryCore attributeFactory;
@@ -81,6 +83,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.enchantmentManager.packetStuff();
 		this.itemDataManager = new ItemDataManagerCore();
 		this.arenaManager = new ArenaManagerCore();
+		this.kitManager = new KitManager();
 		this.teamManager = new TeamManagerCore();
 		this.guildManager = new GuildManagerCore();
 		this.attributeFactory = new AttributeFactoryCore();
@@ -157,6 +160,10 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	@Override
 	public ArenaManagerCore getArenaManager() {
 		return this.arenaManager;
+	}
+	
+	public KitManager getKitManager() {
+		return this.kitManager;
 	}
 	
 	@Override

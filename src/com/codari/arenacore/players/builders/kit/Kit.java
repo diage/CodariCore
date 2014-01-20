@@ -68,6 +68,15 @@ public class Kit implements Listener {
 		this.tools[5] = TOOLBAR_EXIT;
 	}
 	
+	/* Constructor for serialized Arena Builders */
+	public Kit(String name, ArenaBuilderCore arenaBuilder) {
+		this.name = name;
+		this.arenaBuilder = arenaBuilder;
+		this.tools = new ItemStack[9];
+		this.tools[4] = SPAWN_SETTER;
+		this.tools[5] = TOOLBAR_EXIT;
+	}
+	
 	public String getName() {
 		return this.name;
 	}
