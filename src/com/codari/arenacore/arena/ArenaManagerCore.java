@@ -1,6 +1,7 @@
 package com.codari.arenacore.arena;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -81,6 +82,10 @@ public class ArenaManagerCore implements ArenaManager {
 	public Combatant getCombatant(OfflinePlayer player) {
 		return this.getCombatant(player.getName());
 	}
+	
+	public Collection<Combatant> getCombatants() {
+		return this.combatants.values();
+	} 
 	
 	@Override
 	public Team getTeam(String arenaName, String teamName) {

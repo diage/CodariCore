@@ -61,14 +61,10 @@ public final class CombatantCore implements Combatant {
 	public CombatantCore(String name) {
 		this.player = CodariCore.instance().getCodariPlayerManager().getCodariPlayer(name);
 		String dataFilePath = String.format(DATA_FILE_PATH, this.player.getName());
-		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);
-		
+		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);	
 		this.activeHotbar = false;
-		this.hotbarCooldown = new CodariRunnable(CodariI.INSTANCE) {public void run() {}};
-		
-		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));
-		
-		//this.kitManager = new KitManager(this);	FIXME //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		this.hotbarCooldown = new CodariRunnable(CodariI.INSTANCE) {public void run() {}};	
+		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));		
 		this.dynamicMenuManager = new DynamicMenuManager(this);	
 		this.menuManager = new MenuManager(this); 
 		this.toolbarManager = new ToolbarManager(this);
