@@ -101,7 +101,7 @@ public class ArenaManagerCore implements ArenaManager {
 	//----Role Related----//
 	@Override
 	public Role getNewRole(String name) {
-		return new RoleCore(name);
+		return new RoleCore(name, null);
 	}
 	
 	@Override
@@ -236,12 +236,12 @@ public class ArenaManagerCore implements ArenaManager {
 		
 		public ArenaRoleGroup() {
 			this.roleGroup = new HashMap<>(); 
-			this.roleGroup.put("Non Combatant", new RoleCore("Non Combatant"));
+			this.roleGroup.put("Non Combatant", new RoleCore("Non Combatant", null));
 		}
 		
 		public ArenaRoleGroup(Role role) {
 			this.roleGroup = new HashMap<>(); 
-			this.roleGroup.put("Non Combatant", new RoleCore("Non Combatant"));
+			this.roleGroup.put("Non Combatant", new RoleCore("Non Combatant", null));
 			this.roleGroup.put(role.getName(), role);
 		}
 		

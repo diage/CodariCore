@@ -15,6 +15,7 @@ import com.codari.arenacore.players.menu.menus.menustore.kits.KitCreationBuilder
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupEditSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupSelection;
+import com.codari.arenacore.players.menu.menus.menustore.roles.RoleSelection;
 import com.codari.arenacore.players.menu.menus.menustore.teams.ArenaSelection;
 import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
 import com.codari.arenacore.players.menu.menus.menustore.teams.PlayerSelection;
@@ -30,6 +31,7 @@ public class DynamicMenuManager {
 	private KitSelection kitSelectionMenu;
 	private KitBuilderSelection kitBuilderSelectionMenu;
 	private KitCreationBuilderSelection kitCreationBuilderSelectionMenu;
+	private RoleSelection roleSelectionMenu;
 	private PlayerSelection playerSelectionMenu;
 	private InitialTeamOptions initialTeamOptionsMenu;
 	private InitialGuildOptions initialGuildOptionsMenu;
@@ -66,6 +68,14 @@ public class DynamicMenuManager {
 	public void addKitBuilderIcon(String kitBuilderName) {
 		this.kitBuilderSelectionMenu.addKitBuilderIcon(this.combatant, kitBuilderName);
 		this.kitCreationBuilderSelectionMenu.addKitCreationBuilderIcon(this.combatant, kitBuilderName);
+	}
+	
+	public void setRoleSelectionMenu(RoleSelection roleSelection) {
+		this.roleSelectionMenu = roleSelection;
+	}
+	
+	public void addRoleIcon(String roleName) {
+		this.roleSelectionMenu.addRoleIcon(this.combatant, roleName);
 	}
 	
 	public void setSpawnableGroupSelectionMenu(Kit kit, SpawnableGroupSelection spawnableGroupSelection) {

@@ -22,10 +22,10 @@ public class KitOptions extends FunctionMenu {
 
 	private void addIcons(Combatant combatant, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new EditIcon(combatant, new SpawnableGroup(combatant, kit, new BackIcon(combatant, this))));
-		super.setSlot(FunctionMenuSlot.A_TWO, new ConstructIcon(combatant));
+		super.setSlot(FunctionMenuSlot.A_TWO, new TurnOnToolbeltIcon(combatant));
+		super.setSlot(FunctionMenuSlot.A_THREE, new TurnOffToolbeltIcon(combatant));
 		super.setSlot(FunctionMenuSlot.A_FOUR, new RenameIcon(combatant));	
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
-		super.setSlot(FunctionMenuSlot.C_THREE, new TurnOnToolbeltIcon(combatant));
-		super.setSlot(FunctionMenuSlot.C_FOUR, new TurnOffToolbeltIcon(combatant));
+		super.setSlot(FunctionMenuSlot.C_FIVE, new ConstructIcon(combatant));
 	}
 }

@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.util.reflect.ReflectionException;
@@ -24,23 +23,29 @@ import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionName;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
+import com.codari.arena5.players.skills.Skill;
+import com.codari.arena5.players.skills.SkillName;
 
 public class LibraryCore implements Library {
 	private final Map<String, Class<? extends ArenaObject>> objects;
 	private final Map<String, Class<? extends RoleDeclaration>> declarations;
 	private final Map<String, Class<? extends TimedAction>> actions;
 	private final Map<String, Class<? extends WinCondition>> conditions;
+	private final Map<String, Class<? extends Skill>> skills;
+	private final Map<String, Set<String>> links;
 	
 	public LibraryCore() {
 		this.objects = new HashMap<>();
 		this.declarations = new HashMap<>();
 		this.actions = new HashMap<>();
 		this.conditions = new HashMap<>();
+		this.skills = new HashMap<>();
+		this.links = new HashMap<>();
 	}
 	
 	//----ArenaObject Related----//
 	@Override
-	public void registerArenaObject(Class<? extends ArenaObject> clazz) {
+	public void registerArenaObject(Class<? extends ArenaObject> clazz) {	//FIXME - Add in Links
 		ArenaObjectName objectName = clazz.getAnnotation(ArenaObjectName.class);
 		if (objectName == null) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing arena object name for " + clazz);
@@ -52,20 +57,6 @@ public class LibraryCore implements Library {
 			return;
 		}
 		this.objects.put(name, clazz);
-	}
-	
-	@Deprecated
-	public ArenaObject createObject(String name, Player player) {
-		Class<? extends ArenaObject> clazz = this.objects.get(name);
-		if (clazz == null) {
-			return null;
-		}
-		try {
-			return (ArenaObject) Reflector.invokeConstructor(clazz, player.getLocation()).getHandle();
-		} catch (ReflectionException ex) {
-			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create arena object named " + name, ex);
-			return null;
-		}
 	}
 	
 	public ArenaObject createObject(String name, Location location) {
@@ -227,4 +218,49 @@ public class LibraryCore implements Library {
 	public Collection<String> getConditionNames() {
 		return this.conditions.keySet();
 	}
+	
+	//-----Skills-----//
+	public void registerSkill(Class<? extends Skill> clazz) {
+		SkillName skillName = clazz.getAnnotation(SkillName.class);	
+		if (skillName == null) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing skill name for " + clazz);
+			return;
+		}
+		String name = skillName.value();
+		if (this.skills.containsKey(name)) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Skill named " + name + " already exists");
+			return;
+		}
+		this.skills.put(name, clazz);
+	}
+	
+	public Skill createSkill(String name) {
+		Class<? extends Skill> clazz = this.skills.get(name);
+		if (clazz == null) {
+			return null;
+		}
+		try {
+			return (Skill) Reflector.invokeConstructor(clazz).getHandle();
+		} catch (ReflectionException ex) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create skill named " + name, ex);
+			return null;
+		}
+	}
+	
+	public Collection<String> getSkillNames() {
+		return this.skills.keySet();
+	}
+	
+	public Set<Entry<String, Class<? extends Skill>>> getSkills() {
+		return this.skills.entrySet();
+	}
+	
+	//-----Link-----//
+	public Set<String> getLinks(String arenaObjectName) {
+		if(this.links.containsKey(arenaObjectName)) {
+			return this.links.get(arenaObjectName);
+		}
+		return null;
+	}
+
 }

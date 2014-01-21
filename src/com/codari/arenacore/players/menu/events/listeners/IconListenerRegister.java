@@ -8,6 +8,7 @@ import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.builders.kit.ToolBarListener;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.GuildMenuListener;
+import com.codari.arenacore.players.menu.icons.iconstore.listeners.RoleMenuListener;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.TeamMenuListener;
 
 public class IconListenerRegister {
@@ -19,6 +20,7 @@ public class IconListenerRegister {
 		Bukkit.getPluginManager().registerEvents(new KitBuilderListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new TeamMenuListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new GuildMenuListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new RoleMenuListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new BuildingListener(), plugin);
 	}
 }

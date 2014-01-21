@@ -41,6 +41,7 @@ import com.codari.arenacore.players.guilds.GuildManagerCore;
 import com.codari.arenacore.players.menu.MenuListener;
 import com.codari.arenacore.players.menu.events.listeners.IconListenerRegister;
 import com.codari.arenacore.players.menu.hotbar.HotbarListener;
+import com.codari.arenacore.players.role.RoleManagerCore;
 import com.codari.arenacore.players.skills.SkillListener;
 import com.codari.arenacore.players.teams.TeamManagerCore;
 import com.codari.arenacore.players.teams.commands.ComandLeaveTeam;
@@ -59,6 +60,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private CodariPlayerManagerCore codariPlayerManager;
 	private ArenaManagerCore arenaManager;
 	private KitManager kitManager;
+	private RoleManagerCore roleManager;
 	private TeamManagerCore teamManager;
 	private GuildManagerCore guildManager;
 	private AttributeFactoryCore attributeFactory;
@@ -84,6 +86,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.itemDataManager = new ItemDataManagerCore();
 		this.arenaManager = new ArenaManagerCore();
 		this.kitManager = new KitManager();
+		this.roleManager = new RoleManagerCore();
 		this.teamManager = new TeamManagerCore();
 		this.guildManager = new GuildManagerCore();
 		this.attributeFactory = new AttributeFactoryCore();
@@ -164,6 +167,10 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	
 	public KitManager getKitManager() {
 		return this.kitManager;
+	}
+	
+	public RoleManagerCore getRoleManager() {
+		return this.roleManager;
 	}
 	
 	@Override
