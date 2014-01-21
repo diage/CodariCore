@@ -1,9 +1,12 @@
 package com.codari.arenacore.arena;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -79,6 +82,10 @@ public class ArenaManagerCore implements ArenaManager {
 	public Combatant getCombatant(OfflinePlayer player) {
 		return this.getCombatant(player.getName());
 	}
+	
+	public Collection<Combatant> getCombatants() {
+		return this.combatants.values();
+	} 
 	
 	@Override
 	public Team getTeam(String arenaName, String teamName) {
@@ -202,6 +209,10 @@ public class ArenaManagerCore implements ArenaManager {
 	
 	public boolean containsArenaBuilder(String arenaName) {
 		return this.arenaBuilders.containsKey(arenaName);
+	}
+	
+	public Set<Entry<String, ArenaBuilderCore>> getArenaBuilders() {
+		return this.arenaBuilders.entrySet();
 	}
 	
 	public void registerGameRule(String key, GameRuleCore gameRule) {
