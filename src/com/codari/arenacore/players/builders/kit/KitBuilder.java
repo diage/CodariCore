@@ -32,8 +32,18 @@ public class KitBuilder {
 		this.gameRule = new GameRuleCore(name);
 	}
 	
+	/* Constructor for serialized Game Rules */
+	public KitBuilder(GameRule gameRule) {
+		this.name = gameRule.getName();
+		this.gameRule = gameRule;
+	}
+	
 	public String getName() {
 		return this.name;
+	}
+	
+	public GameRuleCore getGameRule() {
+		return (GameRuleCore) this.gameRule;
 	}
 
 	public Kit buildKit(String kitName) {

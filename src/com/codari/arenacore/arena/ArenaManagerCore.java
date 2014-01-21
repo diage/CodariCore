@@ -236,15 +236,19 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenaBuilders.entrySet();
 	}
 	
-	public void registerGameRule(String key, GameRuleCore gameRule) {
-		if (this.gameRules.containsKey(key)) {
+	public void registerGameRule(GameRuleCore gameRule) {
+		if (this.gameRules.containsKey(gameRule.getName())) {
 			throw new IllegalArgumentException("Game rule with that name already exists");
 		}
-		this.gameRules.put(key, gameRule);
+		this.gameRules.put(gameRule.getName(), gameRule);
 	}
 	
 	public GameRuleCore getGameRule(String key) {
 		return this.gameRules.get(key);
+	}
+	
+	public Set<Entry<String, GameRuleCore>> getGameRules() {
+		return this.gameRules.entrySet();
 	}
 
 	public class ArenaRoleGroup {

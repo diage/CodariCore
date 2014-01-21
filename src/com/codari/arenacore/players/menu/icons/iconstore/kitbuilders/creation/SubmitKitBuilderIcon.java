@@ -4,7 +4,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.builders.kit.KitBuilder;
 import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.combatants.CombatantCore;
@@ -23,8 +25,10 @@ public class SubmitKitBuilderIcon extends ExecutableIcon {
 		if(!((CombatantCore) this.getCombatant()).getKitManager().getKitBuilders().containsKey(kitBuilder.getName())) {
 			if(kitBuilder != null && kitBuilder.isValid()) {
 				((CombatantCore) this.getCombatant()).getKitManager().submitKitBuilder(kitBuilder);
-				((CombatantCore) this.getCombatant()).getDynamicMenuManager().addKitBuilderIcon(kitBuilder.getName());
 				((CombatantCore) this.getCombatant()).getDynamicMenuManager().resetKitBuilderDynamicMenus();
+				for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {
+					((CombatantCore) combatant).getDynamicMenuManager().addKitBuilderIcon(kitBuilder.getName());
+				}
 				KitBuilderListener.currentKitBuilders.remove(player.getName());
 				player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Kit Builder named " + kitBuilder.getName());
 			} else {

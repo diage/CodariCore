@@ -11,6 +11,7 @@ import com.codari.api5.Codari;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 
 
 public class KitManager {
@@ -21,6 +22,9 @@ public class KitManager {
 	public KitManager() {
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
+		for(Entry<String, GameRuleCore> gameRuleEntry : ((ArenaManagerCore) Codari.getArenaManager()).getGameRules()) {
+			this.kitBuilders.put(gameRuleEntry.getKey(), new KitBuilder(gameRuleEntry.getValue()));
+		}
 		for(Entry<String, ArenaBuilderCore> arenaBuilderEntry : ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilders()) {
 			this.kits.put(arenaBuilderEntry.getKey(), new Kit(arenaBuilderEntry.getKey(), arenaBuilderEntry.getValue()));
 		}
@@ -38,6 +42,7 @@ public class KitManager {
 	public void submitKitBuilder(KitBuilder kitBuilder) {
 		String kitBuilderName = kitBuilder.getName();
 		kitBuilder.addRoleDeclaration(new ArenaRoleDeclaration());	//FIXME - We will be changing this later.
+		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(kitBuilder.getGameRule());
 		this.kitBuilders.put(kitBuilderName, kitBuilder);
 		this.selectedBuilder = kitBuilder;		
 	}	
