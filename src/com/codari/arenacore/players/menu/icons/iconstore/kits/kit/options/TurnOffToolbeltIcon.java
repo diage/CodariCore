@@ -13,8 +13,8 @@ public class TurnOffToolbeltIcon extends ExecutableIcon {
 
 	@Override
 	public void click() {
-		if(((CombatantCore)this.getCombatant()).getKitManager().isToolBarEnabled()) {
-			((CombatantCore)this.getCombatant()).getKitManager().disableToolBar();
+		if(((CombatantCore)this.getCombatant()).getToolbarManager().isToolBarEnabled()) {
+			((CombatantCore)this.getCombatant()).getToolbarManager().disableToolBar();
 		}
 	}
 

@@ -139,7 +139,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	public void onDisable() {
 		this.setInstanceAccess(false);
 		this.enchantmentManager.unregisterCustomEnchantments();
-		this.arenaManager.saveArenaBuilders();
 	}
 	
 	//-----Public Methods-----//

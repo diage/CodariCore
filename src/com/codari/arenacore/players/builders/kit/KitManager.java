@@ -2,30 +2,28 @@ package com.codari.arenacore.players.builders.kit;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
 
+import com.codari.api5.Codari;
 import com.codari.arena.rules.ArenaRoleDeclaration;
-import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.builders.BuildingEndEvent;
-import com.codari.arenacore.players.builders.BuildingStartEvent;
+import com.codari.arenacore.arena.ArenaBuilderCore;
+import com.codari.arenacore.arena.ArenaManagerCore;
 
 
 public class KitManager {
-	private Combatant combatant;
 	private KitBuilder selectedBuilder;
 	private Map<String, KitBuilder> kitBuilders;
 	private Map<String, Kit> kits;
-	private ItemStack[] savedHotbar;
-	private Kit toolbarKit;
 
-	public KitManager(Combatant combatant) {
-		this.combatant = combatant;
+	public KitManager() {
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
-		this.savedHotbar = new ItemStack[9];
+		for(Entry<String, ArenaBuilderCore> arenaBuilderEntry : ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilders()) {
+			this.kits.put(arenaBuilderEntry.getKey(), new Kit(arenaBuilderEntry.getKey(), arenaBuilderEntry.getValue()));
+		}
 	}
 
 	public void setSelectedKitBuilder(String name) {
@@ -36,22 +34,12 @@ public class KitManager {
 		return this.selectedBuilder;
 	}
 
-	public void createKitBuilder(Combatant combatant, String name) {
-		if(!this.kitBuilders.containsKey(name)) {
-			KitBuilder kitBuilder = new KitBuilder(name);
-			KitBuilderListener.currentKitBuilders.put(combatant.getPlayerReference().getName(), kitBuilder);
-		} else {
-			Bukkit.broadcastMessage(ChatColor.RED + "You can't create a Kit Builder with the same name as a previous one.");
-		}
-	}
-
 	//---For Menu---//
 	public void submitKitBuilder(KitBuilder kitBuilder) {
 		String kitBuilderName = kitBuilder.getName();
 		kitBuilder.addRoleDeclaration(new ArenaRoleDeclaration());	//FIXME - We will be changing this later.
 		this.kitBuilders.put(kitBuilderName, kitBuilder);
 		this.selectedBuilder = kitBuilder;		
-		KitBuilderListener.currentKitBuilders.remove(this.combatant.getPlayer().getName());
 	}	
 
 	public boolean containsKitBuilder(String kitBuilderName) {
@@ -103,55 +91,5 @@ public class KitManager {
 
 	public Map<String, KitBuilder> getKitBuilders() {
 		return new LinkedHashMap<>(this.kitBuilders);
-	}
-
-	//-----TOOL BAR STUFF-----//
-	@SuppressWarnings("deprecation")
-	public void enableToolBar(String kitName) {
-		Kit kit = this.kits.get(kitName);
-		if (kit == null) {
-			throw new IllegalArgumentException("no kit exists with the name " + kitName +
-					" for the player " + this.combatant.getPlayer());
-		}
-		ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
-		ItemStack[] tools = kit.getTools();
-		for (int i = 0; i < this.savedHotbar.length; i++) {
-			if (!this.isToolBarEnabled()) {
-				this.savedHotbar[i] = inventoryContents[i];
-			}
-			inventoryContents[i] = tools[i];
-		}
-		this.combatant.getPlayer().getInventory().setContents(inventoryContents);
-		this.combatant.getPlayer().updateInventory();
-		this.combatant.setHotbarActibe(true);
-		this.toolbarKit = kit;
-		
-		BuildingStartEvent e = new BuildingStartEvent(this.combatant, kitName);
-		Bukkit.getPluginManager().callEvent(e);
-	}
-
-	@SuppressWarnings("deprecation")
-	public void disableToolBar() {
-		if (this.isToolBarEnabled()) {
-			ItemStack[] inventoryContents = this.combatant.getPlayer().getInventory().getContents();
-			for (int i = 0; i < this.savedHotbar.length; i++) {
-				inventoryContents[i] = this.savedHotbar[i];
-			}
-			this.combatant.getPlayer().getInventory().setContents(inventoryContents);
-			this.combatant.getPlayer().updateInventory();
-			this.combatant.setHotbarActibe(false);
-			this.toolbarKit = null;
-			
-			BuildingEndEvent e = new BuildingEndEvent(this.combatant);
-			Bukkit.getPluginManager().callEvent(e);
-		}
-	}
-
-	public boolean isToolBarEnabled() {
-		return this.toolbarKit != null;
-	}
-
-	public Kit getToolbarKit() {
-		return this.toolbarKit;
 	}
 }

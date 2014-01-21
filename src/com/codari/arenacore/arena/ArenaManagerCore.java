@@ -201,6 +201,11 @@ public class ArenaManagerCore implements ArenaManager {
 
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
 		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
+		try {
+			this.saveArenaBuilder(arenaName);
+		} catch (Exception ex) {
+			CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt save potato in " + arenaName, ex);
+		}
 	}
 	
 	public ArenaBuilderCore getArenaBuilder(String arenaName) {
@@ -256,16 +261,6 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 		public void removeRole(String roleName) {
 			this.roleGroup.remove(roleName);
-		}
-	}
-	
-	public void saveArenaBuilders() {
-		for (String name : this.arenaBuilders.keySet()) {
-			try {
-				this.saveArenaBuilder(name);
-			} catch (Exception ex) {
-				CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt find potato in " + name, ex);
-			}
 		}
 	}
 
