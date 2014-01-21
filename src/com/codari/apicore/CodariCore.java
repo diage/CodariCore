@@ -89,6 +89,8 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.roleManager = new RoleManagerCore();
 		this.teamManager = new TeamManagerCore();
 		this.guildManager = new GuildManagerCore();
+		this.teamManager = new TeamManagerCore();
+		this.guildManager = new GuildManagerCore();
 		this.attributeFactory = new AttributeFactoryCore();
 		this.library = new LibraryCore(); 
 		this.commandRegister = new CommandRegister();
