@@ -3,6 +3,7 @@ package com.codari.arenacore.arena;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<ImmediatePersistentObject> immediatePersistentObjects;
 	private final List<DelayedPersistentObject> delayedPersistentObjects;
 	private final List<ArenaObject> objects;
+	private final List<String> objectsWithLinks;	//FIXME - when arena objects are loaded, if they do have links they have to be added here
 	private final List<SerializableLocation> spawners;
 	private final List<ObjectDataPacket> data;
 	
@@ -52,6 +54,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.immediatePersistentObjects = new ArrayList<>();
 		this.delayedPersistentObjects = new ArrayList<>();
 		this.objects = new ArrayList<>();
+		this.objectsWithLinks = new ArrayList<>();
 		this.spawners = new ArrayList<>();
 		this.data = new ArrayList<>();
 	}
@@ -103,7 +106,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return false;
 		}
 		randomTimelineGroup.addObject(object);
-		this.objects.add(object);
+		this.addArenaObject(object);
 		this.data.add(new ObjectDataPacket(object, groupName));
 		return true;
 	}
@@ -118,7 +121,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time) {
-		this.objects.add(object);
+		this.addArenaObject(object);
 		return this.registerFixedSpawnable(object, time, Time.NULL);
 	}
 	
@@ -126,7 +129,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
 		//FIXME - check time
 		this.fixedSpawnables.add(new FixedSpawnableAction(object, time, repeatTime));
-		this.objects.add(object);
+		this.addArenaObject(object);
 		this.data.add(new ObjectDataPacket(object, time.toString(), repeatTime.toString()));
 		return true;
 	}
@@ -134,7 +137,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public boolean registerPersistent(ImmediatePersistentObject immediatePersistentObject) {
 		this.immediatePersistentObjects.add(immediatePersistentObject);
-		this.objects.add(immediatePersistentObject);
+		this.addArenaObject(immediatePersistentObject);
 		this.data.add(new ObjectDataPacket(immediatePersistentObject));
 		return true;
 	}
@@ -142,7 +145,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
 		this.delayedPersistentObjects.add(delayedPersistentObject);
-		this.objects.add(delayedPersistentObject);
+		this.addArenaObject(delayedPersistentObject);
 		this.data.add(new ObjectDataPacket(delayedPersistentObject, time.toString(), Boolean.toString(override)));
 		return true;
 	}
@@ -153,6 +156,22 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	public Map<String, RandomTimelineGroup> getRandomSpawnablesCopyMap() {
 		return new HashMap<String, RandomTimelineGroup>(this.randomSpawnables);
+	}
+	
+	public boolean hasAllLinks(Collection<String> links) {
+		for(String link : this.objectsWithLinks) {
+			if(!links.contains(link)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private void addArenaObject(ArenaObject object) {
+		if(((LibraryCore) Codari.getLibrary()).getLinks(object.getName()) != null) {
+			this.objectsWithLinks.add(object.getName());
+		}
+		this.addArenaObject(object);
 	}
 	
 	//-----Random Timeline Group-----//
@@ -383,13 +402,5 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			}
 			return result;
 		}
-	}
-	
-	
-
-	//----- NEW STUFF -----//
-	
-	private class ArenaObjectData {
-		
 	}
 }
