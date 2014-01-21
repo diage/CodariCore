@@ -384,4 +384,12 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return result;
 		}
 	}
+	
+	
+
+	//----- NEW STUFF -----//
+	
+	private class ArenaObjectData {
+		
+	}
 }

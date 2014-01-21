@@ -21,7 +21,6 @@ import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
 
 public class GameRuleCore implements GameRule {
-	private static final long serialVersionUID = 3141996300251217554L;
 	//-----Fields-----//
 	private final String name;
 	private Time matchDuration;
