@@ -2,6 +2,7 @@ package com.codari.arenacore.players.builders.kit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -10,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -21,7 +21,7 @@ import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 
-public class Kit implements Listener {
+public class Kit {
 	private String name;
 	private ArenaBuilderCore arenaBuilder;
 	
@@ -244,6 +244,10 @@ public class Kit implements Listener {
 	
 	public boolean getOverride() {
 		return this.override;
+	}
+	
+	public boolean hasAllLinks(Collection<String> links) {
+		return this.arenaBuilder.hasAllLinks(links);
 	}
 	
 	//-----TOOL BAR STUFF-----//

@@ -13,8 +13,11 @@ import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.TimedAction
 import com.codari.arenacore.players.menu.menus.menustore.kitbuilders.WinConditionSettings;
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitCreationBuilderSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.KitSelection;
+import com.codari.arenacore.players.menu.menus.menustore.kits.RoleAddition;
+import com.codari.arenacore.players.menu.menus.menustore.kits.RoleSettings;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupEditSelection;
 import com.codari.arenacore.players.menu.menus.menustore.kits.SpawnableGroupSelection;
+import com.codari.arenacore.players.menu.menus.menustore.roles.RoleSelection;
 import com.codari.arenacore.players.menu.menus.menustore.teams.ArenaSelection;
 import com.codari.arenacore.players.menu.menus.menustore.teams.InitialTeamOptions;
 import com.codari.arenacore.players.menu.menus.menustore.teams.PlayerSelection;
@@ -30,6 +33,7 @@ public class DynamicMenuManager {
 	private KitSelection kitSelectionMenu;
 	private KitBuilderSelection kitBuilderSelectionMenu;
 	private KitCreationBuilderSelection kitCreationBuilderSelectionMenu;
+	private RoleSelection roleSelectionMenu;
 	private PlayerSelection playerSelectionMenu;
 	private InitialTeamOptions initialTeamOptionsMenu;
 	private InitialGuildOptions initialGuildOptionsMenu;
@@ -39,11 +43,15 @@ public class DynamicMenuManager {
 	
 	private Map<Kit, SpawnableGroupSelection> spawnableGroupSelectionMenus;
 	private Map<Kit, SpawnableGroupEditSelection> spawnableGroupEditSelectionMenus;
+	private Map<Kit, RoleSettings> roleSettingsMenus;
+	private Map<Kit, RoleAddition> roleAdditionMenus;
 	
 	public DynamicMenuManager(Combatant combatant) {
 		this.combatant = combatant;
 		this.spawnableGroupSelectionMenus = new HashMap<>();
 		this.spawnableGroupEditSelectionMenus = new HashMap<>();
+		this.roleSettingsMenus = new HashMap<>();
+		this.roleAdditionMenus = new HashMap<>();
 	} 
 	
 	//-----Dynamic Menus-----//
@@ -68,6 +76,28 @@ public class DynamicMenuManager {
 		this.kitCreationBuilderSelectionMenu.addKitCreationBuilderIcon(this.combatant, kitBuilderName);
 	}
 	
+	//-----Role-----//
+	public void setRoleSelectionMenu(RoleSelection roleSelection) {
+		this.roleSelectionMenu = roleSelection;
+	}
+	
+	public void setRoleAdditionMenu(Kit kit, RoleAddition roleAddition) {
+		this.roleAdditionMenus.put(kit, roleAddition);
+	}
+	
+	public void addRoleIcon(String roleName, Kit kit) {
+		this.roleSelectionMenu.addRoleIcon(this.combatant, roleName);
+		this.roleAdditionMenus.get(kit).addRoleIcon(this.combatant, roleName);
+	}
+	
+	public void setRoleSettingsMenu(Kit kit, RoleSettings roleSettings) {
+		this.roleSettingsMenus.put(kit, roleSettings);
+	}
+	
+	public void addArenaRoleIcon(Kit kit, String roleName) {
+		this.roleSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
+	}
+	
 	public void setSpawnableGroupSelectionMenu(Kit kit, SpawnableGroupSelection spawnableGroupSelection) {
 		this.spawnableGroupSelectionMenus.put(kit, spawnableGroupSelection);
 	}
@@ -79,8 +109,8 @@ public class DynamicMenuManager {
 	public void addSpawnableGroupIcon(Kit kit, String groupName) {
 		this.spawnableGroupSelectionMenus.get(kit).addSpawnableGroupIcon(this.combatant, groupName);
 		this.spawnableGroupEditSelectionMenus.get(kit).addSpawnableGroupIcon(this.combatant, groupName);
-	}	
-	
+	}
+		
 	public void setPlayerSelectionMenu(PlayerSelection playerSelection) {
 		this.playerSelectionMenu = playerSelection;
 	}

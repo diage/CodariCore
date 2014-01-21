@@ -136,4 +136,9 @@ public class PlayerRole implements Role {
 
 		runner.runTaskTimer(CodariI.INSTANCE, 20, 20);
 	}
+
+	@Override
+	public String getLink(String arenaObjectName) {
+		return this.role.getLink(arenaObjectName);
+	}
 }

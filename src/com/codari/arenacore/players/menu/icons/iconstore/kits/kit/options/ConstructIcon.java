@@ -22,8 +22,12 @@ public class ConstructIcon extends ExecutableIcon {
 		String arenaName = KitListener.getKit(this.getCombatant()).getName();
 		ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(arenaName);
 		if(arenaName != null && arenaBuilder != null) {
-			Codari.getArenaManager().buildArena(arenaName, arenaBuilder);			
-			Bukkit.broadcastMessage("Finalized!");	//TODO
+			if(((ArenaManagerCore) Codari.getArenaManager()).hasAnExistingRole(arenaName)) {
+				Codari.getArenaManager().buildArena(arenaName, arenaBuilder);			
+				Bukkit.broadcastMessage("Finalized!");	//TODO
+			} else {
+				this.getCombatant().getPlayer().sendMessage(ChatColor.RED + "Failed to create arena - the arena must have at least one role!"); 
+			}
 		} else {
 			Bukkit.broadcastMessage(ChatColor.RED + "Something is wrong in the ConstructIcon class!"); //TODO - For Testing
 		}
