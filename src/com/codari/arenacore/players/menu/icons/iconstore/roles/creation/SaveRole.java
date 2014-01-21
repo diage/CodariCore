@@ -1,10 +1,18 @@
 package com.codari.arenacore.players.menu.icons.iconstore.roles.creation;
 
+import java.util.Map.Entry;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
+import com.codari.apicore.CodariCore;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.players.builders.kit.Kit;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.RoleMenuListener;
 import com.codari.arenacore.players.role.RoleFactory;
@@ -24,6 +32,11 @@ public class SaveRole extends ExecutableIcon {
 				String roleName = roleFactory.getName();
 				if(roleFactory.buildRole()) {
 					player.sendMessage(ChatColor.GREEN + "Successfully built the role named " + roleName + ".");
+					for(Combatant combatant : ((ArenaManagerCore)Codari.getArenaManager()).getCombatants()) {
+						for(Entry<String, Kit> kits : ((CodariCore) CodariI.INSTANCE).getKitManager().getKits().entrySet()) {
+							((CombatantCore) combatant).getDynamicMenuManager().addRoleIcon(roleName, kits.getValue());
+						}
+					}
 					RoleMenuListener.currentRoleFactories.remove(player.getName());
 				} else {
 					player.sendMessage(ChatColor.RED + "There is already a role named " + roleName + ". Please choose another name.");

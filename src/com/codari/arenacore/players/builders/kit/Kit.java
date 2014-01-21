@@ -2,6 +2,7 @@ package com.codari.arenacore.players.builders.kit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -243,6 +244,10 @@ public class Kit {
 	
 	public boolean getOverride() {
 		return this.override;
+	}
+	
+	public boolean hasAllLinks(Collection<String> links) {
+		return this.arenaBuilder.hasAllLinks(links);
 	}
 	
 	//-----TOOL BAR STUFF-----//

@@ -1,9 +1,11 @@
 package com.codari.arenacore.arena;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -133,6 +135,20 @@ public class ArenaManagerCore implements ArenaManager {
 		return null;
 	}
 	
+	public boolean hasAnExistingRole(String arenaName) {
+		if(this.roleGroups.containsKey(arenaName)) {
+			return this.roleGroups.get(arenaName).getRoleNames().size() > 0;
+		}
+		return false;
+	}
+	
+	public Collection<String> getExistingRoleNames(String arenaName) {
+		if(this.roleGroups.containsKey(arenaName)) {
+			return this.roleGroups.get(arenaName).getRoleNames();
+		}
+		return null;
+	}
+	
 	//----Arena Builder Related----//
 	@Override
 	public ArenaCore getArena(String name) {
@@ -233,15 +249,16 @@ public class ArenaManagerCore implements ArenaManager {
 
 	public class ArenaRoleGroup {
 		private Map<String, Role> roleGroup;
+		private static final String NON_COMBATANT = "Non Combatant";
 		
 		public ArenaRoleGroup() {
 			this.roleGroup = new HashMap<>(); 
-			this.roleGroup.put("Non Combatant", new RoleCore("Non Combatant", null));
+			this.roleGroup.put(NON_COMBATANT, new RoleCore(NON_COMBATANT, null));
 		}
 		
 		public ArenaRoleGroup(Role role) {
 			this.roleGroup = new HashMap<>(); 
-			this.roleGroup.put("Non Combatant", new RoleCore("Non Combatant", null));
+			this.roleGroup.put(NON_COMBATANT, new RoleCore(NON_COMBATANT, null));
 			this.roleGroup.put(role.getName(), role);
 		}
 		
@@ -259,6 +276,17 @@ public class ArenaManagerCore implements ArenaManager {
 			}
 			return null;
 		}
+		
+		public Collection<String> getRoleNames() {
+			List<String> roleNames = new ArrayList<>();
+			for(String roleName : this.roleGroup.keySet()) {
+				if(!roleName.equals(NON_COMBATANT)) {
+					roleNames.add(roleName);
+				}
+			}
+			return roleNames;
+		}
+		
 		public void removeRole(String roleName) {
 			this.roleGroup.remove(roleName);
 		}

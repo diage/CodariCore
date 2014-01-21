@@ -2,6 +2,7 @@ package com.codari.arenacore.players.menu.menus.menustore.roles;
 
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.roles.creation.ArenaObjectLinkSelectionIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.roles.creation.SelectRoleName;
 import com.codari.arenacore.players.menu.icons.iconstore.roles.creation.SkillTypeSelectionIcon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
@@ -17,7 +18,7 @@ public class RoleCreation extends FunctionMenu {
 	private void addIcons(Combatant combatant, BackIcon backIcon) {
 		super.setSlot(FunctionMenuSlot.A_ONE, new SelectRoleName(combatant));
 		super.setSlot(FunctionMenuSlot.A_TWO, new SkillTypeSelectionIcon(combatant, new SkillActivationTypes(combatant, new BackIcon(combatant, this))));
-		
+		super.setSlot(FunctionMenuSlot.A_THREE, new ArenaObjectLinkSelectionIcon(combatant, new ArenaObjectSelection(combatant, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 	}
 

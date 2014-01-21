@@ -251,11 +251,11 @@ public class LibraryCore implements Library {
 		return this.skills.keySet();
 	}
 	
-	public Set<Entry<String, Class<? extends Skill>>> getSkills() {
-		return this.skills.entrySet();
+	//-----Link-----//
+	public Set<String> getArenaObjectsWithLinks() {
+		return this.links.keySet();
 	}
 	
-	//-----Link-----//
 	public Set<String> getLinks(String arenaObjectName) {
 		if(this.links.containsKey(arenaObjectName)) {
 			return this.links.get(arenaObjectName);

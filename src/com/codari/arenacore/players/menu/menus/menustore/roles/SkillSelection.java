@@ -26,7 +26,7 @@ public class SkillSelection extends FunctionMenu {
 			Skill skill = ((LibraryCore) Codari.getLibrary()).createSkill(skillName);
 			if(skill != null) {
 				if(skill.getSkillActivation() == this.skillActivation) {
-					this.addSkillActivationIcon(combatant, skill, skillName);
+					this.addSkillIconIcon(combatant, skill, skillName);
 				}
 			}
 		}
@@ -41,15 +41,15 @@ public class SkillSelection extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 	}	
 
-	public void addSkillActivationIcon(Combatant combatant, Skill skill, String skillName) {
+	private void addSkillIconIcon(Combatant combatant, Skill skill, String skillName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
 			super.setSlot(super.getNextAvailableSlot(), new SkillIcon(combatant, skill, skillName));
 		} else {
 			if(this.nextPage != null) {
-				this.nextPage.addSkillActivationIcon(combatant, skill, skillName);
+				this.nextPage.addSkillIconIcon(combatant, skill, skillName);
 			} else {
 				this.addNextPage(combatant);
-				this.nextPage.addSkillActivationIcon(combatant, skill, skillName);
+				this.nextPage.addSkillIconIcon(combatant, skill, skillName);
 			}
 		}
 	}	
