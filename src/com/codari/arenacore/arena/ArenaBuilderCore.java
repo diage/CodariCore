@@ -174,22 +174,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.addArenaObject(object);
 	}
 	
-	public boolean hasAllLinks(Collection<String> links) {
-		for(String link : this.objectsWithLinks) {
-			if(!links.contains(link)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	private void addArenaObject(ArenaObject object) {
-		if(((LibraryCore) Codari.getLibrary()).getLinks(object.getName()) != null) {
-			this.objectsWithLinks.add(object.getName());
-		}
-		this.addArenaObject(object);
-	}
-	
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
 		private static final long serialVersionUID = -1455939781657809306L;
