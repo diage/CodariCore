@@ -15,6 +15,8 @@ public class LinkIcon extends ExecutableIcon {
 	
 	public LinkIcon(Combatant combatant, String arenaObjectName, String linkName) {
 		super(Material.STAINED_CLAY, combatant, linkName);
+		this.arenaObjectName = arenaObjectName;
+		this.linkName = linkName;
 	}
 
 	@Override
