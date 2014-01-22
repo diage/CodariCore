@@ -61,31 +61,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	@Override
 	@Deprecated
 	public boolean addWinCondition(final WinCondition winCondition, Time time, boolean after) {
-		if (this.addTimedAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
-			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
-				private static final long serialVersionUID = -3268071058821069399L;
-				@Override
-				public void action() {
-					if (winCondition.conditionMet()) {
-						Collection<Combatant> winners = winCondition.getWinners();
-						Arena arena = null;
-						for (Combatant c : winners) {
-							if (c.getTeam().getArena() != null) {
-								arena = c.getTeam().getArena();
-								break;
-							}
-						}
-						if (arena == null) {
-							return;
-						}
-						Bukkit.getPluginManager().callEvent(new ArenaWinEvent(arena, winners));
-						arena.stop();
-					}
-				}
-			});
-			this.winConditions.add(winCondition);
-			return true;
-		}
+		
 		return false;
 	}
 	
@@ -131,13 +107,14 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
-	@Deprecated
 	public boolean addTimedAction(TimedAction action) {
 		return this.timedActions.add(action);
 	}
 	
 	public boolean addTimedAction(String name, Object... args) {
-		
+		TimedAction action = ((LibraryCore) Codari.getLibrary()).createTimedAction(name, args);
+		this.timedActions.add(action);
+		this.dataStuff.add(new TimeActionDataStuff(name, args));
 		return false;
 	}
 	
@@ -212,7 +189,15 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		result.put("match_duration", this.matchDuration);
 		result.put("team_size", this.teamSize);
 		result.put("number_of_teams", this.numberOfTeams);
+		for (int i = 0; i < this.dataStuff.size(); i++) {
+			result.put("data_stuff_" + i, this.dataStuff.get(i));
+		}
 		return result;
+	}
+	
+	public static GameRuleCore deserialize(Map<String, Object> args) {
+		
+		return null;
 	}
 	
 	//-----Data Stuff-----//
@@ -220,17 +205,18 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		public void apply(GameRuleCore rule);
 	}
 	
-	private enum Data {
-		WIN,
-		TIME;
-	}
-	
+	@SerializableAs("Time_Action_Data_Stuff")
 	public static class TimeActionDataStuff implements DataStuff {
 		//-----Fields-----//
 		private final String name;
 		private final Object[] args;
 		
 		//-----Constructor-----//
+		private TimeActionDataStuff(String name, Object[] args) {
+			this.name = name;
+			this.args = args;
+		}
+		
 		@Override
 		public Map<String, Object> serialize() {
 			Map<String, Object> result = new LinkedHashMap<>();
@@ -251,10 +237,8 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 
 		@Override
 		public void apply(GameRuleCore rule) {
-			// TODO Auto-generated method stub
-			
+			rule.addTimedAction(name, args);
 		}
-		
 	}
 	
 	@SerializableAs("Win_Condition_Data_Stuff")
@@ -262,7 +246,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		//-----Fields-----//
 		private final String name;
 		private final Object[] args;
-		private final Data type = Data.WIN;
 		private final Time time;
 		private final boolean after;
 		
