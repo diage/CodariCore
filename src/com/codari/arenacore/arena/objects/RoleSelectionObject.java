@@ -13,7 +13,7 @@ import com.codari.arena5.players.combatants.Combatant;
 @ArenaObjectName("Role Selection Object")
 public class RoleSelectionObject implements ImmediatePersistentObject {
 	private static final long serialVersionUID = 3577897723052477603L;
-	private transient BlockState redStoneBlockState;
+	private transient BlockState quartzBlockState;
 	private Material quartzBlockMaterial = Material.QUARTZ_BLOCK;
 	
 	private Map<String, RoleData> roleDatas;
@@ -25,6 +25,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		this.location = location;
 		ArenaObjectName arenaObjectName = this.getClass().getAnnotation(ArenaObjectName.class);
 		this.name = arenaObjectName.value();
+		this.quartzBlockState = location.getBlock().getState();
 	}
 	
 	public void setRoleDatas(Map<String, RoleData> roleDatas) {
@@ -33,12 +34,12 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	
 	@Override
 	public void reveal() {
-		this.redStoneBlockState.getBlock().setType(quartzBlockMaterial);
+		this.quartzBlockState.getBlock().setType(quartzBlockMaterial);
 	}
 
 	@Override
 	public void hide() {
-		this.redStoneBlockState.update(true);	
+		this.quartzBlockState.update(true);	
 	}
 
 	@Override
