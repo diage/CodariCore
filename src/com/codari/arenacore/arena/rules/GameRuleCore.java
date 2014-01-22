@@ -29,7 +29,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	private Time matchDuration;
 	private byte teamSize, numberOfTeams;
 	private final List<WinCondition> winConditions;
-	private final Set<TimedAction> timedActions;
+	private final List<TimedAction> timedActions;
 	private RoleDelegation roleDelegation;
 	//private List<RoleDeclaration> roleDeclarations;
 	
@@ -37,7 +37,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	public GameRuleCore(String name) {
 		this.name = name;
 		this.winConditions = new ArrayList<>();
-		this.timedActions = new HashSet<>();
+		this.timedActions = new ArrayList<>();
 		//this.roleDeclarations = new ArrayList<>();
 	}
 	
@@ -222,7 +222,9 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new LinkedHashMap<>();
 		result.put("name", this.name);
-		
+		result.put("match_duration", this.matchDuration);
+		result.put("team_size", this.teamSize);
+		result.put("number_of_teams", this.numberOfTeams);
 		return result;
 	}
 }
