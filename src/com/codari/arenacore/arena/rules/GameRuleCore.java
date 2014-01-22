@@ -3,10 +3,13 @@ package com.codari.arenacore.arena.rules;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
@@ -20,7 +23,7 @@ import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
 
-public class GameRuleCore implements GameRule {
+public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	//-----Fields-----//
 	private final String name;
 	private Time matchDuration;
@@ -197,5 +200,13 @@ public class GameRuleCore implements GameRule {
 	@Override
 	public byte getNumberOfTeams() {
 		return this.numberOfTeams;
+	}
+	
+	@Override
+	public Map<String, Object> serialize() {
+		Map<String, Object> result = new LinkedHashMap<>();
+		result.put("name", this.name);
+		
+		return result;
 	}
 }
