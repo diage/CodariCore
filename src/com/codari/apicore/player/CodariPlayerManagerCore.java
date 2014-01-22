@@ -12,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.permissions.PermissionAttachment;
 
 import com.codari.api5.player.CodariPlayerManager;
 import com.codari.apicore.CodariCore;
@@ -21,6 +22,7 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 	private final Map<String, CodariPlayerCore> codariPlayers;
 	private final Map<String, CodariPlayerCore> onlineCodariPlayers;
 	private boolean pendingListenerRegistration;
+	private final Map<String, PermissionAttachment> perms;
 	
 	//-----Constructor-----//
 	public CodariPlayerManagerCore() {
@@ -33,6 +35,7 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 			this.onlineCodariPlayers.put(name, codariPlayer);
 		}
 		pendingListenerRegistration = true;
+		this.perms = new HashMap<>();
 		ConfigurationSerialization.registerClass(CodariPlayerCore.class);
 	}
 	
@@ -80,9 +83,8 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 		private void onPlayerJoin(PlayerJoinEvent e) {
 			String name = e.getPlayer().getName().toLowerCase();
 			CodariPlayerCore codariPlayer = codariPlayers.get(name);
-			if (!onlineCodariPlayers.containsKey(name)) {
-				onlineCodariPlayers.put(name, codariPlayer);
-			}
+			onlineCodariPlayers.put(name, codariPlayer);
+			perms.put(name, e.getPlayer().addAttachment(CodariCore.instance()));
 		}
 		
 		@EventHandler(priority = EventPriority.MONITOR)
@@ -93,6 +95,15 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 				codariPlayer = codariPlayers.get(name);
 			}
 			codariPlayer.invalidateOnlineReference();
+			perms.remove(name);
+		}
+	}
+
+	@Override
+	public void setPerm(String player, String perm, boolean value) {
+		player = player.toLowerCase();
+		if (this.perms.containsKey(player)) {
+			this.perms.get(player).setPermission(perm, value);
 		}
 	}
 }
