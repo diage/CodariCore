@@ -226,6 +226,7 @@ public class LibraryCore implements Library {
 	}
 	
 	//-----Skills-----//
+	@Override
 	public void registerSkill(Class<? extends Skill> clazz) {
 		SkillName skillName = clazz.getAnnotation(SkillName.class);	
 		if (skillName == null) {

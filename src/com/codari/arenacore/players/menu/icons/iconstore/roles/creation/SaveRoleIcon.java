@@ -17,9 +17,9 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.RoleMenuListener;
 import com.codari.arenacore.players.role.RoleFactory;
 
-public class SaveRole extends ExecutableIcon {
+public class SaveRoleIcon extends ExecutableIcon {
 
-	public SaveRole(Combatant combatant) {
+	public SaveRoleIcon(Combatant combatant) {
 		super(Material.STONE_HOE, combatant, "Save Role");
 	}
 

@@ -26,6 +26,8 @@ import com.codari.arena.objects.traps.PoisonSnareTrap;
 import com.codari.arena.objects.traps.structure.TrapListener;
 import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.roleswitch.RoleSwitchListener;
+import com.codari.arena.players.skills.DamageReductionSkill;
+import com.codari.arena.players.skills.TeleportSkill;
 import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.players.guilds.GuildManager;
@@ -108,6 +110,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Codari.getLibrary().registerArenaObject(PoisonSnareTrap.class);
 		Codari.getLibrary().registerRoleDeclaration(ArenaRoleDeclaration.class);
 		Codari.getLibrary().registerWinCondition(WinCondition2v2.class);
+		
+		//---Skills---//
+		Codari.getLibrary().registerSkill(DamageReductionSkill.class);
+		Codari.getLibrary().registerSkill(TeleportSkill.class);	
+		
 		//---Events---//
 		Bukkit.getPluginManager().registerEvents(new RoleSwitchListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ObjectivePointListener(), this);
