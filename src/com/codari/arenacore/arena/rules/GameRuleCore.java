@@ -23,6 +23,7 @@ import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	//-----Fields-----//
@@ -196,7 +197,14 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	public static GameRuleCore deserialize(Map<String, Object> args) {
-		
+		GameRuleCore rule = new GameRuleCore((String) args.remove("name"));
+		rule.setMatchDuration((Time) args.remove("match_duration"));
+		rule.setTeamSize((byte) args.remove("team_size"));
+		rule.setNumberOfTeams((byte) args.remove("number_of_teams"));
+		for (int i = 0; i < args.size(); i++) {
+			((DataStuff) args.get("data_stuff_" + i)).apply(rule);
+		}
+		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(rule);
 		return null;
 	}
 	

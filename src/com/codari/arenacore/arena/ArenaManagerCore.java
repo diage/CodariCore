@@ -43,6 +43,7 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, QueueCore> queues;
 	private final Map<String, GameRuleCore> gameRules;
 	private final File builderDir;
+	private final File roleDir;
 	
 	//-----Constructor-----//
 	public ArenaManagerCore() {
@@ -61,6 +62,7 @@ public class ArenaManagerCore implements ArenaManager {
 		ConfigurationSerialization.registerClass(GameRuleCore.TimeActionDataStuff.class);
 		ConfigurationSerialization.registerClass(GameRuleCore.WinConditionDataStuff.class);
 		this.builderDir = new File(CodariCore.instance().getDataFolder(), "DEM_BUILDERS");
+		this.roleDir = new File(CodariCore.instance().getDataFolder(), "ALL DA RULZ");
 		if (this.builderDir.exists()) {
 			for (File file : this.builderDir.listFiles()) {
 				try {
@@ -320,6 +322,27 @@ public class ArenaManagerCore implements ArenaManager {
 		
 		public void removeRole(String roleName) {
 			this.roleGroup.remove(roleName);
+		}
+	}
+	
+	public void saveArenaBuilders() {
+		for (Entry<String, ArenaBuilderCore> e : this.arenaBuilders.entrySet()) {
+			try {
+				File file = new File(this.builderDir, e.getKey());
+				CodariSerialization.serialize(file, e.getValue());
+			} catch (Exception ex) {
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt save potato in " + e.getValue(), ex);
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+			}
 		}
 	}
 
