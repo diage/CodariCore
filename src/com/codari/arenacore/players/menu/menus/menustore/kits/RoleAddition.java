@@ -17,6 +17,7 @@ public class RoleAddition extends FunctionMenu {
 	
 	public RoleAddition(Combatant combatant) {
 		super(combatant);
+		super.setSlot(FunctionMenuSlot.C_ONE, new BackIcon(combatant, null));
 		for(String roleName : ((CodariCore) CodariI.INSTANCE).getRoleManager().getRoles()) {
 			this.addRoleIcon(combatant, roleName);	
 		}

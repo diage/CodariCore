@@ -103,6 +103,8 @@ public class ToolBarListener implements Listener {
 					Bukkit.broadcastMessage(ChatColor.RED + "We are trying to place an object that isn't a random spawnable object "
 							+ "/ fixed spawnable object / persistent object !"); //TODO - for testing
 				}
+				//After an Arena Object is added, all the roles have to be checked again to make sure they have the required links
+				kit.checkIfRolesHaveRequiredLinks();
 			}
 		}
 	}
