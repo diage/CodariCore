@@ -48,11 +48,13 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
+	@Deprecated
 	public void addWinCondition(WinCondition winCondition) {
 		this.addWinCondition(winCondition, Time.NULL, true);
 	}
 	
 	@Override
+	@Deprecated
 	public boolean addWinCondition(final WinCondition winCondition, Time time, boolean after) {
 		if (this.addTimedAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
 			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
@@ -83,11 +85,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
-	public void removeWinCondition(WinCondition winCondition) {
-		this.winConditions.remove(winCondition);
-	}
-	
-	@Override
 	public void setMatchDuration(Time time) {
 		this.matchDuration = time;
 	}
@@ -98,13 +95,14 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
+	@Deprecated
 	public boolean addTimedAction(TimedAction action) {
 		return this.timedActions.add(action);
 	}
 	
-	@Override
-	public void removeTimedAction(TimedAction action) {
-		this.timedActions.remove(action);
+	public boolean addTimedAction(String name, Object... args) {
+		
+		return false;
 	}
 	
 	@Override
