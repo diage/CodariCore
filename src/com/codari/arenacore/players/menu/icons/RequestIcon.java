@@ -24,7 +24,7 @@ public abstract class RequestIcon extends Icon {
 	private static final int INPUT_TIME_OUT = 10;
 	
 	public RequestIcon(Material material, Combatant combatant, String displayName) {
-		super(material, combatant, IconType.REQUEST, displayName);
+		super(material, combatant, IconType.REQUEST, ChatColor.LIGHT_PURPLE + displayName);
 		this.conversationFactory = new ConversationFactory(CodariI.INSTANCE)
 					.addConversationAbandonedListener(new ConvoListener())
 					.withTimeout(INPUT_TIME_OUT)
