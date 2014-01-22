@@ -111,6 +111,10 @@ public class DynamicMenuManager {
 		this.roleSelectionObjectSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
 	}
 	
+	public void removeArenaRoleIcon(Kit kit, String roleName) {
+		//FIXME
+	}
+	
 	public void setSpawnableGroupSelectionMenu(Kit kit, SpawnableGroupSelection spawnableGroupSelection) {
 		this.spawnableGroupSelectionMenus.put(kit, spawnableGroupSelection);
 	}
