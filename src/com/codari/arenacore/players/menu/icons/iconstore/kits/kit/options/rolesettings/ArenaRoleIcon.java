@@ -35,7 +35,9 @@ public class ArenaRoleIcon extends ExecutableIcon {
 				if(kit.hasAllLinks(((RoleCore) role).getObjectsWithLinks())) {
 					((ArenaManagerCore) Codari.getArenaManager()).submitRole(arenaName, role);
 					this.getCombatant().getPlayer().sendMessage(ChatColor.GREEN + "Role added!");
-					((CombatantCore) this.getCombatant()).getDynamicMenuManager().addArenaRoleIcon(kit, arenaName);
+					for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {
+						((CombatantCore) combatant).getDynamicMenuManager().addArenaRoleIcon(kit, this.roleName);
+					}
 				} else {
 					this.getCombatant().getPlayer().sendMessage(ChatColor.RED + "Failed to add role! - " + this.roleName + " does not have "
 							+ "all the required links for the arena's objects!");

@@ -16,7 +16,7 @@ public class RenameIcon extends RequestIcon implements Listener {
 	private Combatant combatant;
 	
 	public RenameIcon(Combatant combatant) {
-		super(Material.REDSTONE_BLOCK, combatant, "Rename");
+		super(Material.WOOD_AXE, combatant, "Rename");
 		this.combatant = combatant;
 	}
 

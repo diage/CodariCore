@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 public class TurnOnToolbeltIcon extends ExecutableIcon {
 	
 	public TurnOnToolbeltIcon(Combatant combatant) {
-		super(Material.REDSTONE_BLOCK, combatant, "Turn on Toolbelt");
+		super(Material.COOKED_CHICKEN, combatant, "Turn on Toolbelt");
 	}
 
 	@Override

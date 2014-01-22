@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import com.codari.api5.Codari;
-import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
@@ -41,7 +40,6 @@ public class KitManager {
 	//---For Menu---//
 	public void submitKitBuilder(KitBuilder kitBuilder) {
 		String kitBuilderName = kitBuilder.getName();
-		kitBuilder.addRoleDeclaration(new ArenaRoleDeclaration());	//FIXME - We will be changing this later.
 		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(kitBuilder.getGameRule());
 		this.kitBuilders.put(kitBuilderName, kitBuilder);
 		this.selectedBuilder = kitBuilder;		

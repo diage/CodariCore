@@ -171,7 +171,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		if(((LibraryCore) Codari.getLibrary()).getLinks(object.getName()) != null) {
 			this.objectsWithLinks.add(object.getName());
 		}
-		this.addArenaObject(object);
+		this.objects.add(object);
 	}
 	
 	//-----Random Timeline Group-----//

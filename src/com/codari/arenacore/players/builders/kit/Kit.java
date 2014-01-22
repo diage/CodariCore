@@ -3,7 +3,9 @@ package com.codari.arenacore.players.builders.kit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -20,6 +22,7 @@ import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.arena.objects.RoleData;
 
 public class Kit {
 	private String name;
@@ -43,6 +46,9 @@ public class Kit {
 	private Time persistentDelayTime;
 	private boolean override;
 	
+	//----Role Selection-----//
+	private Map<String, RoleData> roleDatas;
+	
 	//-----Tool Bar-----//
 	private final ItemStack[] tools;
 	private final static ItemStack SPAWN_SETTER = new ItemStack(Material.STICK);
@@ -62,6 +68,7 @@ public class Kit {
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
 		this.arenaBuilder = new ArenaBuilderCore(gameRule);
+		this.roleDatas = new HashMap<>();
 		((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(this.name, this.arenaBuilder);
 		this.tools = new ItemStack[9];
 		this.tools[4] = SPAWN_SETTER;
@@ -249,6 +256,15 @@ public class Kit {
 	public boolean hasAllLinks(Collection<String> links) {
 		return this.arenaBuilder.hasAllLinks(links);
 	}
+	
+	//-----Role Selection-----//
+	public void addRoleData(RoleData roleData) {
+		this.roleDatas.put(roleData.getRole().getName(), roleData);
+	}
+	
+	public Map<String, RoleData> getRoleDatas() {
+		return this.roleDatas;
+	}	
 	
 	//-----TOOL BAR STUFF-----//
 	public void setTool(int slot, String objectName, String... extraInformation) throws IllegalArgumentException {

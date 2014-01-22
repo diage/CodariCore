@@ -6,6 +6,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.ConstructIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.EditIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.RenameIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.RoleSettingsMenuIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.TurnOffToolbeltIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.TurnOnToolbeltIcon;
 import com.codari.arenacore.players.menu.menus.FunctionMenu;
@@ -25,6 +26,7 @@ public class KitOptions extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.A_TWO, new TurnOnToolbeltIcon(combatant));
 		super.setSlot(FunctionMenuSlot.A_THREE, new TurnOffToolbeltIcon(combatant));
 		super.setSlot(FunctionMenuSlot.A_FOUR, new RenameIcon(combatant));	
+		super.setSlot(FunctionMenuSlot.A_FIVE, new RoleSettingsMenuIcon(combatant, new RoleSettings(combatant, kit, new BackIcon(combatant, this))));
 		super.setSlot(FunctionMenuSlot.C_ONE, backIcon);
 		super.setSlot(FunctionMenuSlot.C_FIVE, new ConstructIcon(combatant));
 	}

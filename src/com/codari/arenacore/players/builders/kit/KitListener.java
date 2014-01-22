@@ -8,11 +8,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.role.Role;
+import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.arena.objects.RoleData;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
 import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
+import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.rolesettings.AddRoleIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectRandomIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.SelectNameIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.create.delayset.UpdateRandomDelayMinutesIcon;
@@ -31,6 +37,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawna
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayMinutesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelaySecondsIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.persistent.delayset.UpdatePersistentDelayTicksIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.selection.role.data.SetNumberOfRolesIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.newkitcreation.SelectKitNameIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.selectionmenu.KitIcon;
 
@@ -166,4 +173,26 @@ public class KitListener implements Listener {
 			kit.setOverride(Boolean.parseBoolean(e.getPlayerInput()));
 		}
 	}	
+	
+	@EventHandler()
+	private void setNumberOfRoles(IconHoverUpdateEvent e) {
+		if(e.getIcon() instanceof SetNumberOfRolesIcon) {
+			Kit kit = getKit(e.getIcon().getCombatant());
+			if(kit != null) {
+				String roleName = ((SetNumberOfRolesIcon) e.getIcon()).getRoleName();
+				Role role = ((ArenaManagerCore) Codari.getArenaManager()).getExistingRole(kit.getName(), roleName);
+				int numberOfRoles = e.getNewInput();
+				kit.addRoleData(new RoleData(role, numberOfRoles));
+				e.getIcon().getCombatant().getPlayer().sendMessage(ChatColor.AQUA + roleName + " set to " + numberOfRoles + ".");
+			}
+		}
+	}
+	
+	@EventHandler()
+	private void setBackIcon(IconMenuClickEvent e) {
+		if(e.getIcon() instanceof AddRoleIcon) {
+			CombatantCore combatant = ((CombatantCore) e.getIcon().getCombatant());
+			combatant.getDynamicMenuManager().setRoleAdditionMenu(new BackIcon(combatant, ((AddRoleIcon) e.getIcon()).getRoleSettings()));
+		}
+	}
 }

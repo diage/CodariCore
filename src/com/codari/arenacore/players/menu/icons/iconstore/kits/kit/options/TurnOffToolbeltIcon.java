@@ -8,7 +8,7 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 
 public class TurnOffToolbeltIcon extends ExecutableIcon {		
 	public TurnOffToolbeltIcon(Combatant combatant) {
-		super(Material.OBSIDIAN, combatant, "Turn off toolbelt");
+		super(Material.COBBLESTONE_STAIRS, combatant, "Turn off toolbelt");
 	}
 
 	@Override

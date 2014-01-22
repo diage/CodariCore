@@ -9,8 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class DeleteIcon extends MenuIcon {
 
 	public DeleteIcon(Combatant combatant, Menu menu) {
-		super(Material.REDSTONE_BLOCK, combatant, menu, "Delete");
-		// TODO Auto-generated constructor stub
+		super(Material.REDSTONE_COMPARATOR_ON, combatant, menu, "Delete");
 	}
 
 }

@@ -12,6 +12,7 @@ import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.objects.RoleSelectionObject;
 import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.NextIcon;
@@ -19,6 +20,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.common.PreviousIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectFixedIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectPersistentIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectRandomIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectRoleSelectionIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.CreateSpawnableGroupIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.EditSpawnableGroupIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
@@ -58,7 +60,11 @@ public class SpawnableGroup extends FunctionMenu {
 			} else if(FixedSpawnableObject.class.isAssignableFrom(objectEntry.getValue())) {
 				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectFixedIcon(combatant, new FixedSpawnableTimeSelection(combatant, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
 			} else if(PersistentObject.class.isAssignableFrom(objectEntry.getValue())) {
-				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectPersistentIcon(combatant, new PersistentObjectSettings(combatant, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
+				if(RoleSelectionObject.class.isAssignableFrom(objectEntry.getValue())) {
+					super.setSlot(super.getNextAvailableSlot(), new ArenaObjectRoleSelectionIcon(combatant, new RoleSelectionObjectSettings(combatant, kit, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
+				} else {
+					super.setSlot(super.getNextAvailableSlot(), new ArenaObjectPersistentIcon(combatant, new PersistentObjectSettings(combatant, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
+				}
 			} else {
 				Bukkit.broadcastMessage(ChatColor.RED + arenaObjectName + " was unable to be registered because an icon was not created for its Arena Object Type!"); //TODO
 			}

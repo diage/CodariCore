@@ -1,17 +1,12 @@
 package com.codari.arenacore.players.menu.icons.iconstore.roles.creation;
 
-import java.util.Map.Entry;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
-import com.codari.api5.CodariI;
-import com.codari.apicore.CodariCore;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.arena.ArenaManagerCore;
-import com.codari.arenacore.players.builders.kit.Kit;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.RoleMenuListener;
@@ -33,9 +28,7 @@ public class SaveRoleIcon extends ExecutableIcon {
 				if(roleFactory.buildRole()) {
 					player.sendMessage(ChatColor.GREEN + "Successfully built the role named " + roleName + ".");
 					for(Combatant combatant : ((ArenaManagerCore)Codari.getArenaManager()).getCombatants()) {
-						for(Entry<String, Kit> kits : ((CodariCore) CodariI.INSTANCE).getKitManager().getKits().entrySet()) {
-							((CombatantCore) combatant).getDynamicMenuManager().addRoleIcon(roleName, kits.getValue());
-						}
+						((CombatantCore) combatant).getDynamicMenuManager().addRoleIcon(roleName);				
 					}
 					RoleMenuListener.currentRoleFactories.remove(player.getName());
 				} else {

@@ -3,8 +3,6 @@ package com.codari.arenacore.players.menu.menus.menustore.kits;
 import com.codari.api5.CodariI;
 import com.codari.apicore.CodariCore;
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.players.builders.kit.Kit;
-import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.iconstore.common.BackIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.NextIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.common.PreviousIcon;
@@ -17,14 +15,11 @@ public class RoleAddition extends FunctionMenu {
 	private RoleAddition nextPage;
 	private BackIcon backIcon;
 	
-	public RoleAddition(Combatant combatant, Kit kit, BackIcon backIcon) {
+	public RoleAddition(Combatant combatant) {
 		super(combatant);
-		this.backIcon = backIcon;
-		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		for(String roleName : ((CodariCore) CodariI.INSTANCE).getRoleManager().getRoles()) {
 			this.addRoleIcon(combatant, roleName);	
 		}
-		((CombatantCore)combatant).getDynamicMenuManager().setRoleAdditionMenu(kit, this);
 	}
 	
 	private RoleAddition(Combatant combatant, Icon previous, BackIcon backIcon) {
@@ -45,6 +40,14 @@ public class RoleAddition extends FunctionMenu {
 				this.addNextPage(combatant);
 				this.nextPage.addRoleIcon(combatant, roleName);
 			}
+		}
+	}
+	
+	public void setBackIcon(BackIcon backIcon) {
+		this.backIcon = backIcon;
+		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
+		if(this.nextPage != null) {
+			this.nextPage.setBackIcon(backIcon);
 		}
 	}
 

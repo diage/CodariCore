@@ -22,6 +22,7 @@ import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
+import com.codari.arenacore.arena.objects.RoleSelectionObject;
 import com.codari.arenacore.players.builders.ToolbarManager;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
@@ -87,7 +88,12 @@ public class ToolBarListener implements Listener {
 					}
 				} else if(arenaObject instanceof ImmediatePersistentObject) {
 					builder.registerPersistent((ImmediatePersistentObject) arenaObject);
-					e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+					if(arenaObject instanceof RoleSelectionObject) {
+						((RoleSelectionObject) arenaObject).setRoleDatas(kit.getRoleDatas());
+						e.getPlayer().sendMessage(ChatColor.BLUE + "Role Selection Object placed");
+					} else {
+						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+					}
 				} else if(arenaObject instanceof DelayedPersistentObject) {
 					if(extraInformation != null && extraInformation.size() >= 2) {
 						builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));

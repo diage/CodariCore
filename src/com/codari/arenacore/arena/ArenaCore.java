@@ -24,7 +24,6 @@ import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaEndEvent;
 import com.codari.arena5.arena.events.ArenaStartEvent;
 import com.codari.arena5.arena.rules.GameRule;
-import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.objects.ArenaObject;
@@ -58,9 +57,9 @@ public final class ArenaCore implements Arena {
 		in.defaultReadObject();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
-		for(RoleDeclaration roleDeclaration : this.rules.getRoleDeclaration()) {
-			roleDeclaration.initalizeRoles();
-		}
+		//for(RoleDeclaration roleDeclaration : this.rules.getRoleDeclaration()) {
+			//roleDeclaration.initalizeRoles();
+		//}
 	}
 	
 	//-----Public Methods-----//

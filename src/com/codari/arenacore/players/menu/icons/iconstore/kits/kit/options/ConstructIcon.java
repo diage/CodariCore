@@ -14,7 +14,7 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 public class ConstructIcon extends ExecutableIcon {
 	
 	public ConstructIcon(Combatant combatant) {
-		super(Material.REDSTONE_BLOCK, combatant, "Construct");
+		super(Material.SHEARS, combatant, "Construct");
 	}
 
 	@Override
