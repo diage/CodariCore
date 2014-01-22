@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class NewKitIcon extends MenuIcon {
 
 	public NewKitIcon(Combatant combatant, Menu menu) {
-		super(Material.REDSTONE_BLOCK, combatant, menu, "New Kit");
+		super(Material.SHEARS, combatant, menu, "New Kit");
 	}
 
 }

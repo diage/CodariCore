@@ -10,7 +10,7 @@ public class KitIcon extends MenuIcon {
 	private String kitName;
 	
 	public KitIcon(Combatant combatant, Menu menu, String kitName) {
-		super(Material.OBSIDIAN, combatant, menu, kitName);
+		super(Material.ENDER_PEARL, combatant, menu, kitName);
 		this.kitName = kitName;
 	}
 	

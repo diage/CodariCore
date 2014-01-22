@@ -8,6 +8,6 @@ import com.codari.arenacore.players.menu.menus.Menu;
 
 public class KitBuilderIcon extends MenuIcon {
 	public KitBuilderIcon(Combatant combatant, Menu menu, String kitBuilderName) {
-		super(Material.OBSIDIAN, combatant, menu, kitBuilderName);
+		super(Material.DROPPER, combatant, menu, kitBuilderName);
 	}
 }
