@@ -17,6 +17,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import com.codari.api5.io.CodariSerialization;
+import com.codari.api5.util.Tick;
+import com.codari.api5.util.Time;
 import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.ArenaBuilder;
@@ -53,6 +55,8 @@ public class ArenaManagerCore implements ArenaManager {
 		ConfigurationSerialization.registerClass(CombatantDataCore.class);
 		ConfigurationSerialization.registerClass(ArenaBuilderCore.class);
 		ConfigurationSerialization.registerClass(ArenaBuilderCore.ObjectDataPacket.class);
+		ConfigurationSerialization.registerClass(Tick.class);
+		ConfigurationSerialization.registerClass(Time.class);
 		this.builderDir = new File(CodariCore.instance().getDataFolder(), "DEM_BUILDERS");
 		if (this.builderDir.exists()) {
 			for (File file : this.builderDir.listFiles()) {
