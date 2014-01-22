@@ -8,7 +8,9 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 
+import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
@@ -20,6 +22,7 @@ import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.LibraryCore;
 
 public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	//-----Fields-----//
@@ -28,12 +31,14 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	private byte teamSize, numberOfTeams;
 	private final List<WinCondition> winConditions;
 	private final List<TimedAction> timedActions;
+	private final List<DataStuff> dataStuff;
 	
 	//-----Constructor-----//
 	public GameRuleCore(String name) {
 		this.name = name;
 		this.winConditions = new ArrayList<>();
 		this.timedActions = new ArrayList<>();
+		this.dataStuff = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
@@ -79,6 +84,37 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 				}
 			});
 			this.winConditions.add(winCondition);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean addWinCondition(Time time, boolean after, String name, Object... args) {
+		final WinCondition winCondition = ((LibraryCore) Codari.getLibrary()).createWinCondition(name, args);
+		if (this.addTimedAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
+			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
+				private static final long serialVersionUID = -3268071058821069399L;
+				@Override
+				public void action() {
+					if (winCondition.conditionMet()) {
+						Collection<Combatant> winners = winCondition.getWinners();
+						Arena arena = null;
+						for (Combatant c : winners) {
+							if (c.getTeam().getArena() != null) {
+								arena = c.getTeam().getArena();
+								break;
+							}
+						}
+						if (arena == null) {
+							return;
+						}
+						Bukkit.getPluginManager().callEvent(new ArenaWinEvent(arena, winners));
+						arena.stop();
+					}
+				}
+			});
+			this.winConditions.add(winCondition);
+			this.dataStuff.add(new WinConditionDataStuff(name, args, time, after));
 			return true;
 		}
 		return false;
@@ -177,5 +213,93 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		result.put("team_size", this.teamSize);
 		result.put("number_of_teams", this.numberOfTeams);
 		return result;
+	}
+	
+	//-----Data Stuff-----//
+	private static interface DataStuff extends ConfigurationSerializable {
+		public void apply(GameRuleCore rule);
+	}
+	
+	private enum Data {
+		WIN,
+		TIME;
+	}
+	
+	public static class TimeActionDataStuff implements DataStuff {
+		//-----Fields-----//
+		private final String name;
+		private final Object[] args;
+		
+		//-----Constructor-----//
+		@Override
+		public Map<String, Object> serialize() {
+			Map<String, Object> result = new LinkedHashMap<>();
+			result.put("name", this.name);
+			for (int i = 0; i < args.length; i++) {
+				result.put("arg_" + i, args[i]);
+			}
+			return result;
+		}
+		
+		public TimeActionDataStuff(Map<String, Object> args) {
+			this.name = (String) args.remove("name");
+			this.args = new Object[args.size()];
+			for (int i = 0; i < this.args.length; i++) {
+				this.args[i] = args.get("arg_" + i); 
+			}
+		}
+
+		@Override
+		public void apply(GameRuleCore rule) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	@SerializableAs("Win_Condition_Data_Stuff")
+	public static class WinConditionDataStuff implements DataStuff {
+		//-----Fields-----//
+		private final String name;
+		private final Object[] args;
+		private final Data type = Data.WIN;
+		private final Time time;
+		private final boolean after;
+		
+		//-----Constructor-----//
+		private WinConditionDataStuff(String name, Object[] args, Time time, boolean after) {
+			this.name = name;
+			this.args = args;
+			this.time = time;
+			this.after = after;
+		}
+		
+		//-----Constructor-----//
+		@Override
+		public Map<String, Object> serialize() {
+			Map<String, Object> result = new LinkedHashMap<>();
+			result.put("name", this.name);
+			result.put("time", time);
+			result.put("after", after);
+			for (int i = 0; i < args.length; i++) {
+				result.put("arg_" + i, args[i]);
+			}
+			return result;
+		}
+		
+		public WinConditionDataStuff(Map<String, Object> args) {
+			this.name = (String) args.remove("name");
+			this.time = (Time) args.remove("time");
+			this.after = (boolean) args.remove("after");
+			this.args = new Object[args.size()];
+			for (int i = 0; i < this.args.length; i++) {
+				this.args[i] = args.get("arg_" + i); 
+			}
+		}
+
+		@Override
+		public void apply(GameRuleCore rule) {
+			rule.addWinCondition(time, after, name, args);
+		}
 	}
 }
