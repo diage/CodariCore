@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,7 +19,7 @@ public class HoverIcon extends Icon {
 	private int inputRow;
 	
 	public HoverIcon(Material material, Combatant combatant, String displayName) {
-		super(material, combatant, IconType.HOVER, displayName);
+		super(material, combatant, IconType.HOVER, ChatColor.AQUA + displayName);
 		this.itemMeta = super.getItemMeta();
 		this.input = 0;
 	}
