@@ -1,8 +1,10 @@
 package com.codari.arenacore;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -52,9 +54,13 @@ public class LibraryCore implements Library {
 			return;
 		}
 		String name = objectName.value();
+		String[] links = objectName.links();
 		if (this.conditions.containsKey(name)) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Arena object named " + name + " already exists");
 			return;
+		}
+		if(links.length > 0) {
+			this.links.put(name, new HashSet<String>(Arrays.asList(links)));
 		}
 		this.objects.put(name, clazz);
 	}
