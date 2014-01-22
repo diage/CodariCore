@@ -2,11 +2,9 @@ package com.codari.arenacore.arena.rules;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -30,15 +28,12 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	private byte teamSize, numberOfTeams;
 	private final List<WinCondition> winConditions;
 	private final List<TimedAction> timedActions;
-	private RoleDelegation roleDelegation;
-	//private List<RoleDeclaration> roleDeclarations;
 	
 	//-----Constructor-----//
 	public GameRuleCore(String name) {
 		this.name = name;
 		this.winConditions = new ArrayList<>();
 		this.timedActions = new ArrayList<>();
-		//this.roleDeclarations = new ArrayList<>();
 	}
 	
 	//-----Public Methods-----//
@@ -141,16 +136,13 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 
 	@Override
 	public boolean addRoleDelegation(RoleDelegation roleDelegation) {
-		if(roleDelegation.isValidRoleDelegation()) {
-			this.roleDelegation = roleDelegation;
-			return true;
-		}
+		
 		return false;
 	}
 
 	@Override
 	public RoleDelegation getRoleDelegation() {
-		return this.roleDelegation;
+		return null;
 	}
 	
 	//-----Win Condition Action-----//
