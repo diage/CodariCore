@@ -48,11 +48,13 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
+	@Deprecated
 	public void addWinCondition(WinCondition winCondition) {
 		this.addWinCondition(winCondition, Time.NULL, true);
 	}
 	
 	@Override
+	@Deprecated
 	public boolean addWinCondition(final WinCondition winCondition, Time time, boolean after) {
 		if (this.addTimedAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
 			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
@@ -83,11 +85,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
-	public void removeWinCondition(WinCondition winCondition) {
-		this.winConditions.remove(winCondition);
-	}
-	
-	@Override
 	public void setMatchDuration(Time time) {
 		this.matchDuration = time;
 	}
@@ -98,13 +95,14 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	@Override
+	@Deprecated
 	public boolean addTimedAction(TimedAction action) {
 		return this.timedActions.add(action);
 	}
 	
-	@Override
-	public void removeTimedAction(TimedAction action) {
-		this.timedActions.remove(action);
+	public boolean addTimedAction(String name, Object... args) {
+		
+		return false;
 	}
 	
 	@Override
@@ -132,17 +130,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	@Override
 	public Time getMatchDuration() { 
 		return this.matchDuration;
-	}
-
-	@Override
-	public boolean addRoleDelegation(RoleDelegation roleDelegation) {
-		
-		return false;
-	}
-
-	@Override
-	public RoleDelegation getRoleDelegation() {
-		return null;
 	}
 	
 	//-----Win Condition Action-----//
@@ -172,20 +159,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		}
 	}
 
-	/*
-	@Override
-	public boolean addRoleDeclaration(RoleDeclaration roleDeclaration) {
-		roleDeclaration.initalizeRoles();
-		this.roleDeclarations.add(roleDeclaration);
-		return true; 	//FIXME - improve overall role declaration
-	}
-
-	@Override
-	public List<RoleDeclaration> getRoleDeclaration() {
-		return this.roleDeclarations;
-	}
-	*/
-
 	@Override
 	public void setNumberOfTeams(byte numberOfTeams) {
 		this.numberOfTeams = numberOfTeams; 
@@ -194,20 +167,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	@Override
 	public byte getNumberOfTeams() {
 		return this.numberOfTeams;
-	}
-
-	@Override
-	@Deprecated
-	public boolean addRoleDeclaration(RoleDeclaration roleDeclaration) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	@Deprecated
-	public List<RoleDeclaration> getRoleDeclaration() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
