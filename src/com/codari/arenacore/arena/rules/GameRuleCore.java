@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
@@ -81,6 +82,11 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 			this.winConditions.add(winCondition);
 			return true;
 		}
+		return false;
+	}
+	
+	public boolean addWinCondition(Time time, boolean after, String name, Object... args) {
+		
 		return false;
 	}
 	
@@ -177,5 +183,49 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		result.put("team_size", this.teamSize);
 		result.put("number_of_teams", this.numberOfTeams);
 		return result;
+	}
+	
+	private static interface DataStuff extends ConfigurationSerializable {}
+	
+	private enum Data {
+		WIN,
+		TIME;
+	}
+	
+	//-----Data Stuff-----//
+	@SerializableAs("Win_Condition_Data_Stuff")
+	public static class WinConditionDataStuff implements DataStuff {
+		//-----Fields-----//
+		private final String name;
+		private final Object[] args;
+		private final Data type = Data.WIN;
+		private final Time time;
+		private final boolean after;
+		
+		//-----Constructor-----//
+		private WinConditionDataStuff(String name, Object[] args, Time time, boolean after) {
+			this.name = name;
+			this.args = args;
+			this.time = time;
+			this.after = after;
+		}
+		
+		//-----Constructor-----//
+		@Override
+		public Map<String, Object> serialize() {
+			Map<String, Object> result = new LinkedHashMap<>();
+			result.put("name", this.name);
+			result.put("time", time);
+			result.put("after", after);
+			for (int i = 0; i < args.length; i++) {
+				result.put("arg_" + i, args[i]);
+			}
+			return result;
+		}
+		
+		public static WinConditionDataStuff deserialize(Map<String, Object> args) {
+			
+			return null;
+		}
 	}
 }
