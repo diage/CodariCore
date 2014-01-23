@@ -87,23 +87,29 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 
 	private void addRole(String oldRoleName) {
 		if(!roleDatas.get(oldRoleName).isInfinite()) {
-			this.roleDatas.get(oldRoleName).increment();
 			ItemStack[] itemStacks = this.inventory.getContents();
+			boolean itemFound = false;
+			this.roleDatas.get(oldRoleName).increment();
 			for(ItemStack itemStack : itemStacks) {
 				if(itemStack.getItemMeta().getDisplayName().equals(oldRoleName)) {
 					itemStack.setAmount(itemStack.getAmount() + 1);
+					itemFound = true;
 					break;
 				}
 			}
-			this.inventory.setContents(itemStacks);
+			if(itemFound) {
+				this.inventory.setContents(itemStacks);
+			} else {
+				this.inventory.setItem(this.getNextAvailableSlot(), this.createIcon(oldRoleName, 1));
+			}
 			this.refreshInventory();
 		}
 	}
 
 	private void removeRole(String newRoleName) {
 		if(!roleDatas.get(newRoleName).isInfinite()) {
-			this.roleDatas.get(newRoleName).decrement();	
 			ItemStack[] itemStacks = this.inventory.getContents();
+			this.roleDatas.get(newRoleName).decrement();	
 			for(ItemStack itemStack : itemStacks) {
 				if(itemStack.getItemMeta().getDisplayName().equals(newRoleName)) {
 					itemStack.setAmount(itemStack.getAmount() - 1);
@@ -150,6 +156,10 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 				((Player) humanEntity).updateInventory();
 			}
 		}
+	}
+	
+	private int getNextAvailableSlot() {
+		return 0;
 	}
 
 	private void activate() {
