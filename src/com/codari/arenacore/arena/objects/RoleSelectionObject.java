@@ -2,6 +2,7 @@ package com.codari.arenacore.arena.objects;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 
+import com.codari.api5.CodariI;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.players.combatants.Combatant;
@@ -28,6 +31,8 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	
 	public static final String INVENTORY_NAME = "Role Selection";
 	private Inventory inventory;
+	
+	public static final String META_DATA_STRING = RandomStringUtils.randomAscii(69);
 
 	public RoleSelectionObject(Location location) {
 		this.location = location;
@@ -117,6 +122,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			int numberOfRoles = this.roleDatas.get(roleName).getCounter();
 			this.inventory.setItem(counter++, this.createIcon(roleName, numberOfRoles));
 		}
+		this.activate();
 	}
 	
 	private ItemStack createIcon(String roleName, int numberOfRoles) {
@@ -135,5 +141,13 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 				((Player) humanEntity).updateInventory();
 			}
 		}
+	}
+	
+	private void activate() {
+		this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
+	}
+	
+	private void deactivate() {
+		this.quartzBlockState.removeMetadata(META_DATA_STRING, CodariI.INSTANCE);
 	}
 }
