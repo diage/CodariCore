@@ -20,8 +20,9 @@ public class ExampleHoverIcon extends HoverIcon {
 		ItemMeta itemMeta = super.getItemMeta();
 		List<String> lore = new ArrayList<>();
 		lore.add("This is an example of a Hover Icon.");
-		lore.add("Hover your mouse over the Icon and press a number (1-9).");
-		lore.add("Press Shift + Right-Click in order to backspace.");
+		lore.add("Hover your mouse over the Icon and");
+		lore.add("press a number (1-9). Press Shift +");
+		lore.add("Right-Click in order to backspace.");
 		itemMeta.setLore(lore);
 		super.setItemMeta(itemMeta);
 	}

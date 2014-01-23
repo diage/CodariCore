@@ -26,8 +26,9 @@ public class ExampleRequestIcon extends RequestIcon {
 		ItemMeta itemMeta = super.getItemMeta();
 		List<String> lore = new ArrayList<>();
 		lore.add("This is an example of a Request Icon.");
-		lore.add("Clicking on this Icon will create a Conversation Factory ");
-		lore.add("which will ask for further input.");
+		lore.add("Clicking on this Icon will create a ");
+		lore.add("Conversation Factory which will ask");
+		lore.add("for further input.");
 		itemMeta.setLore(lore);
 		super.setItemMeta(itemMeta);
 	}

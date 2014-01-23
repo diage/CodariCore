@@ -152,9 +152,11 @@ public class KitBuilder {
 			if(this.winConditionMin > 0 
 					|| this.winConditionSec > 0
 					|| this.WinConditionTick > 0) {
-				this.gameRule.addWinCondition(this.winCondition, new Time(this.winConditionMin, this.winConditionSec, this.WinConditionTick), this.winConditionAfterTime);
+				//this.gameRule.addWinCondition(this.winCondition, new Time(this.winConditionMin, this.winConditionSec, this.WinConditionTick), this.winConditionAfterTime);
+				((GameRuleCore) this.gameRule).addWinCondition(new Time(this.winConditionMin, this.winConditionSec, this.WinConditionTick), this.winConditionAfterTime, this.winConditionName, this.winConditionArguments);
 			} else {
-				this.gameRule.addWinCondition(this.winCondition);
+				//this.gameRule.addWinCondition(this.winCondition);
+				((GameRuleCore) this.gameRule).addWinCondition(Time.NULL, true, this.winConditionName, this.winConditionArguments);
 			}
 			this.winCondition = null;
 			this.winConditionName = null;

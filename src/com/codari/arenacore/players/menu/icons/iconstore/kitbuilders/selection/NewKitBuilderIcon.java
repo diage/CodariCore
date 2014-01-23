@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class NewKitBuilderIcon extends MenuIcon {
 
 	public NewKitBuilderIcon(Combatant combatant, Menu menu) {
-		super(Material.POTATO, combatant, menu, "Create New Kit Builder");
+		super(Material.COAL_ORE, combatant, menu, "Create New Kit Builder");
 	}
 	
 }
