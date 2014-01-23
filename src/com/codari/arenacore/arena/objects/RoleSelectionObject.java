@@ -75,14 +75,10 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	}
 
 	public void adjustRoleIcons(Combatant combatant, String newRoleName) {
-		if(combatant.getRole() != null) {
-			if(combatant.getRole().getName().equals(CombatantCore.NON_COMBATANT)) {
-				this.removeRole(newRoleName);
-			} else {
-				this.swapRole(combatant.getRole().getName(), newRoleName);
-			}
+		if(combatant.getRole().getName().equals(CombatantCore.NON_COMBATANT)) {
+			this.removeRole(newRoleName);
 		} else {
-			Bukkit.broadcastMessage(ChatColor.RED + "There is a combatant without a role! - For debugging.");
+			this.swapRole(combatant.getRole().getName(), newRoleName);
 		}
 	}
 

@@ -55,12 +55,16 @@ public class RoleSelectionObjectListener implements Listener {
 				Combatant combatant = Codari.getArenaManager().getCombatant(player);
 				String newRoleName = e.getCurrentItem().getItemMeta().getDisplayName();
 				Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(newRoleName);
-				if(role != null) {
-					roleSelectionObjects.get(player.getName()).adjustRoleIcons(combatant, newRoleName);
-					combatant.setRole(role);
-					player.sendMessage(ChatColor.AQUA + "Your role is now " + newRoleName + ".");
+				if(role != null && combatant.getRole() != null) {
+					if(!combatant.getRole().getName().equals(newRoleName)) {
+						roleSelectionObjects.get(player.getName()).adjustRoleIcons(combatant, newRoleName);
+						combatant.setRole(role);
+						player.sendMessage(ChatColor.AQUA + "Your role is now " + newRoleName + ".");
+					} else {
+						player.sendMessage(ChatColor.AQUA + "You already have that role!");
+					}
 				} else {
-					Bukkit.broadcastMessage(ChatColor.RED + "COmbatant is trying to select arole but it's not working!"); //TODO - for testing
+					Bukkit.broadcastMessage(ChatColor.RED + "COmbatant is trying to select a role but it's not working!"); //TODO - for testing
 				}
 			}
 			e.setCancelled(true);
