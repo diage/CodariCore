@@ -63,10 +63,10 @@ public class ArenaManagerCore implements ArenaManager {
 		ConfigurationSerialization.registerClass(GameRuleCore.WinConditionDataStuff.class);
 		this.builderDir = new File(CodariCore.instance().getDataFolder(), "DEM_BUILDERS");
 		this.roleDir = new File(CodariCore.instance().getDataFolder(), "ALL DA RULZ");
-		if (this.builderDir.exists()) {
-			for (File file : this.builderDir.listFiles()) {
+		if (this.roleDir.exists()) {
+			for (File file : this.roleDir.listFiles()) {
 				try {
-					this.loadArena(file);
+					this.loadGameRule(file);
 				} catch (Exception ex) {
 					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
 					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
@@ -82,12 +82,12 @@ public class ArenaManagerCore implements ArenaManager {
 				}
 			}
 		} else {
-			this.builderDir.mkdirs();
+			this.roleDir.mkdirs();
 		}
-		if (this.roleDir.exists()) {
-			for (File file : this.roleDir.listFiles()) {
+		if (this.builderDir.exists()) {
+			for (File file : this.builderDir.listFiles()) {
 				try {
-					this.loadGameRule(file);
+					this.loadArena(file);
 				} catch (Exception ex) {
 					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
 					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
@@ -252,7 +252,7 @@ public class ArenaManagerCore implements ArenaManager {
 
 	@Override
 	public ArenaBuilder getArenaBuider(GameRule gameRule) {
-		return new ArenaBuilderCore(gameRule);
+		return new ArenaBuilderCore((GameRuleCore) gameRule);
 	}
 
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {

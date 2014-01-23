@@ -32,6 +32,7 @@ import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 
 @SerializableAs("Arena_Builder")
 public class ArenaBuilderCore implements ArenaBuilder {
@@ -47,7 +48,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<ObjectDataPacket> data;
 	
 	//-----Constructor-----//
-	public ArenaBuilderCore(GameRule rules) {
+	public ArenaBuilderCore(GameRuleCore rules) {
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
 		this.fixedSpawnables = new ArrayList<>();
@@ -243,6 +244,11 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	@Override
 	public Map<String, Object> serialize() {
+		Map<String, Object> result = new LinkedHashMap<>();
+		result.put("GameRule", this.getGameRule().getName());
+		
+		
+		//FIXME
 		return new ConfigurationOutput()
 				.addString("GameRule", this.getGameRule().getName())
 				.add(new TimelineGroupOutputFunction(), new ArrayList<RandomTimelineGroup>(this.randomSpawnables.values()))

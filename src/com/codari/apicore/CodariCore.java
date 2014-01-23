@@ -87,9 +87,9 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.codariPlayerManager.registerPlayerListener();
 		this.enchantmentManager.packetStuff();
 		this.itemDataManager = new ItemDataManagerCore();
+		this.roleManager = new RoleManagerCore();
 		this.arenaManager = new ArenaManagerCore();
 		this.kitManager = new KitManager();
-		this.roleManager = new RoleManagerCore();
 		this.teamManager = new TeamManagerCore();
 		this.guildManager = new GuildManagerCore();
 		this.teamManager = new TeamManagerCore();
@@ -155,6 +155,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.enchantmentManager.unregisterCustomEnchantments();
 		this.arenaManager.saveArenaBuilders();
 		this.arenaManager.saveGameRules();
+		this.roleManager.saveRoles();
 	}
 	
 	//-----Public Methods-----//

@@ -25,6 +25,7 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.objects.RoleData;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.role.RoleCore;
 
@@ -71,7 +72,7 @@ public class Kit {
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
-		this.arenaBuilder = new ArenaBuilderCore(gameRule);
+		this.arenaBuilder = new ArenaBuilderCore((GameRuleCore) gameRule);
 		this.roleDatas = new HashMap<>();
 		((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(this.name, this.arenaBuilder);
 		this.tools = new ItemStack[9];
