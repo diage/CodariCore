@@ -25,10 +25,12 @@ import com.codari.arenacore.players.guilds.GuildCore;
 import com.codari.arenacore.players.menu.DynamicMenuManager;
 import com.codari.arenacore.players.menu.MenuManager;
 import com.codari.arenacore.players.role.PlayerRole;
+import com.codari.arenacore.players.role.RoleCore;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public final class CombatantCore implements Combatant {
 	//-----Constants-----//
+	public final static String NON_COMBATANT = "Non Combatant";
 	private final static String DATA_FILE_PATH = "Combatants" + File.separator + "%s" + ".dat";
 	
 	//-----Fields-----//
@@ -64,7 +66,7 @@ public final class CombatantCore implements Combatant {
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);	
 		this.activeHotbar = false;
 		this.hotbarCooldown = new CodariRunnable(CodariI.INSTANCE) {public void run() {}};	
-		this.role = new PlayerRole(this, CodariI.INSTANCE.getArenaManager().getExistingRole(null, "Non Combatant"));		
+		this.role = new PlayerRole(this, new RoleCore(NON_COMBATANT, null));		
 		this.dynamicMenuManager = new DynamicMenuManager(this);	
 		this.menuManager = new MenuManager(this); 
 		this.toolbarManager = new ToolbarManager(this);

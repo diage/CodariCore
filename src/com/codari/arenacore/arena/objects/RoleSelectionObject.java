@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -18,20 +19,21 @@ import com.codari.api5.CodariI;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.players.combatants.CombatantCore;
 
 @ArenaObjectName("Role Selection Object")
 public class RoleSelectionObject implements ImmediatePersistentObject {
 	private static final long serialVersionUID = 3577897723052477603L;
 	private transient BlockState quartzBlockState;
 	private Material quartzBlockMaterial = Material.QUARTZ_BLOCK;
-	
+
 	private Map<String, RoleData> roleDatas;
 	private Location location;
 	private final String name;
-	
+
 	public static final String INVENTORY_NAME = "Role Selection";
 	private Inventory inventory;
-	
+
 	public static final String META_DATA_STRING = RandomStringUtils.randomAscii(69);
 
 	public RoleSelectionObject(Location location) {
@@ -40,12 +42,12 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		this.name = arenaObjectName.value();
 		this.quartzBlockState = location.getBlock().getState();
 	}
-	
+
 	public void setRoleDatas(Map<String, RoleData> roleDatas) {
 		this.roleDatas = roleDatas;
 		this.setupInventory();
 	}
-	
+
 	@Override
 	public void reveal() {
 		this.quartzBlockState.getBlock().setType(quartzBlockMaterial);
@@ -71,19 +73,23 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		Player player = combatant.getPlayer();
 		player.openInventory(this.inventory);
 	}
-	
+
 	public void adjustRoleIcons(Combatant combatant, String newRoleName) {
-		if(combatant.getRole().getName().equals("Non Combatant")) {
-			this.removeRole(newRoleName);
+		if(combatant.getRole() != null) {
+			if(combatant.getRole().getName().equals(CombatantCore.NON_COMBATANT)) {
+				this.removeRole(newRoleName);
+			} else {
+				this.swapRole(combatant.getRole().getName(), newRoleName);
+			}
 		} else {
-			this.swapRole(combatant.getRole().getName(), newRoleName);
+			Bukkit.broadcastMessage(ChatColor.RED + "There is a combatant without a role! - For debugging.");
 		}
 	}
-	
+
 	public int getRoleCounter(String roleName) {
 		return this.roleDatas.get(roleName).getCounter();
 	}	
-	
+
 	private void addRole(String oldRoleName) {
 		this.roleDatas.get(oldRoleName).increment();
 		ItemStack[] itemStacks = this.inventory.getContents();
@@ -95,7 +101,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		this.inventory.setContents(itemStacks);
 		this.refreshInventory();
 	}
-	
+
 	private void removeRole(String newRoleName) {
 		this.roleDatas.get(newRoleName).decrement();	
 		ItemStack[] itemStacks = this.inventory.getContents();
@@ -107,12 +113,12 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		this.inventory.setContents(itemStacks);
 		this.refreshInventory();
 	}
-	
+
 	private void swapRole(String oldRoleName, String newRoleName) {
 		this.addRole(oldRoleName);
 		this.removeRole(newRoleName);
 	}
-	
+
 	private void setupInventory() {
 		int size = this.roleDatas.size();
 		size = size < 0 ? 0 : (size > 54 ? 54 : (size % 9 != 0 ? (((size + 8) / 9) * 9) : size));
@@ -124,7 +130,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		}
 		this.activate();
 	}
-	
+
 	private ItemStack createIcon(String roleName, int numberOfRoles) {
 		ItemStack roleItem = new ItemStack(Material.EXPLOSIVE_MINECART);
 		ItemMeta itemMeta = roleItem.getItemMeta();
@@ -133,7 +139,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		roleItem.setAmount(numberOfRoles);
 		return roleItem;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	private void refreshInventory() {
 		for(HumanEntity humanEntity : this.inventory.getViewers()) {
@@ -142,11 +148,11 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			}
 		}
 	}
-	
+
 	private void activate() {
 		this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
 	}
-	
+
 	private void deactivate() {
 		this.quartzBlockState.removeMetadata(META_DATA_STRING, CodariI.INSTANCE);
 	}
