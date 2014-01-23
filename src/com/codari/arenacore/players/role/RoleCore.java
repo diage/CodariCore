@@ -33,7 +33,7 @@ public class RoleCore implements Role, ConfigurationSerializable {
 	public RoleCore(String name, Map<String, String> links) {
 		this.name = name;
 		this.skills = new EnumMap<>(SkillActivation.class);
-		this.links = new LinkedHashMap<>(links);
+		this.links = new LinkedHashMap<>();
 	}
 	
 	@Override
