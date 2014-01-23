@@ -3,6 +3,9 @@ package com.codari.arenacore.players.menu;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.guilds.Guild;
 import com.codari.arena5.players.teams.Team;
@@ -107,8 +110,16 @@ public class DynamicMenuManager {
 	}
 	
 	public void addArenaRoleIcon(Kit kit, String roleName) {
-		this.roleSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
-		this.roleSelectionObjectSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
+		if(this.roleSettingsMenus.get(kit) != null) {
+			this.roleSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
+		} else {
+			Bukkit.broadcastMessage(ChatColor.RED + "Failed to add Arena Role Icon - For Debugging");
+		}
+		if(this.roleSelectionObjectSettingsMenus.get(kit) != null) {
+			this.roleSelectionObjectSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
+		} else {
+			Bukkit.broadcastMessage(ChatColor.RED + "Failed to add Arena Role Icon - For Debugging");
+		}
 	}
 	
 	public void removeArenaRoleIcon(Kit kit, String roleName) {
