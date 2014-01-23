@@ -3,6 +3,7 @@ package com.codari.arenacore.players.menu.events.listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import com.codari.arenacore.arena.objects.RoleSelectionObjectListener;
 import com.codari.arenacore.players.builders.BuildingListener;
 import com.codari.arenacore.players.builders.kit.KitBuilderListener;
 import com.codari.arenacore.players.builders.kit.KitListener;
@@ -22,5 +23,6 @@ public class IconListenerRegister {
 		Bukkit.getPluginManager().registerEvents(new GuildMenuListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new RoleMenuListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new BuildingListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new RoleSelectionObjectListener(), plugin);
 	}
 }
