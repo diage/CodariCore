@@ -13,16 +13,16 @@ import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
 import com.codari.arenacore.players.menu.events.IconRequestEvent;
 import com.codari.arenacore.players.menu.icons.iconstore.roles.creation.SelectRoleName;
 import com.codari.arenacore.players.menu.icons.iconstore.roles.selection.NewRoleIcon;
-import com.codari.arenacore.players.role.RoleFactory;
+import com.codari.arenacore.players.role.RoleBuilder;
 
 public class RoleMenuListener implements Listener {
-	public static Map<String, RoleFactory> currentRoleFactories = new HashMap<>();
+	public static Map<String, RoleBuilder> currentRoleFactories = new HashMap<>();
 	
 	@EventHandler()
 	private void selectNewRole(IconMenuClickEvent e) {
 		if(e.getIcon() instanceof NewRoleIcon) {
 			if(!currentRoleFactories.containsKey(e.getIcon().getPlayerName())) {
-				currentRoleFactories.put(e.getIcon().getPlayerName(), new RoleFactory());
+				currentRoleFactories.put(e.getIcon().getPlayerName(), new RoleBuilder());
 			}
 		}
 	}
@@ -31,7 +31,7 @@ public class RoleMenuListener implements Listener {
 	private void selectRoleName(IconRequestEvent e) {
 		if(e.getIcon() instanceof SelectRoleName) {
 			if(!currentRoleFactories.containsKey(e.getIcon().getPlayerName())) {
-				currentRoleFactories.put(e.getIcon().getPlayerName(), new RoleFactory());
+				currentRoleFactories.put(e.getIcon().getPlayerName(), new RoleBuilder());
 			}
 			if(!((CodariCore) CodariI.INSTANCE).getRoleManager().containsRole(e.getPlayerInput())) {
 				currentRoleFactories.get(e.getIcon().getPlayerName()).setName(e.getPlayerInput());

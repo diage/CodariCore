@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.RoleMenuListener;
-import com.codari.arenacore.players.role.RoleFactory;
+import com.codari.arenacore.players.role.RoleBuilder;
 
 public class LinkIcon extends ExecutableIcon {
 	private String arenaObjectName;
@@ -23,7 +23,7 @@ public class LinkIcon extends ExecutableIcon {
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
 		if(!RoleMenuListener.currentRoleFactories.containsKey(player.getName())) {
-			RoleMenuListener.currentRoleFactories.put(player.getName(), new RoleFactory());
+			RoleMenuListener.currentRoleFactories.put(player.getName(), new RoleBuilder());
 		}
 		RoleMenuListener.currentRoleFactories.get(player.getName()).addLink(this.arenaObjectName, this.linkName);
 		player.sendMessage(ChatColor.GREEN + this.linkName + " link has been set for " + this.arenaObjectName);

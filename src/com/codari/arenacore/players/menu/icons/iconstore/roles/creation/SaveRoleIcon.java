@@ -10,7 +10,7 @@ import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.listeners.RoleMenuListener;
-import com.codari.arenacore.players.role.RoleFactory;
+import com.codari.arenacore.players.role.RoleBuilder;
 
 public class SaveRoleIcon extends ExecutableIcon {
 
@@ -22,7 +22,7 @@ public class SaveRoleIcon extends ExecutableIcon {
 	public void click() {
 		Player player = this.getCombatant().getPlayer();
 		if(RoleMenuListener.currentRoleFactories.containsKey(player.getName())) {
-			RoleFactory roleFactory = RoleMenuListener.currentRoleFactories.get(player.getName());
+			RoleBuilder roleFactory = RoleMenuListener.currentRoleFactories.get(player.getName());
 			if(roleFactory.getName() != null) {
 				String roleName = roleFactory.getName();
 				if(roleFactory.buildRole()) {

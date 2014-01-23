@@ -10,12 +10,12 @@ import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.skills.Skill;
 import com.codari.arena5.players.skills.SkillActivation;
 
-public class RoleFactory {
+public class RoleBuilder {
 	private String roleName;
 	private Map<SkillActivation, Skill> skills;
 	private Map<String, String> links;
 	
-	public RoleFactory() {
+	public RoleBuilder() {
 		this.skills = new HashMap<>();
 		this.links = new HashMap<>();
 	}
