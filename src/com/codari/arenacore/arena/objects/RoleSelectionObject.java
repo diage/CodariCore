@@ -34,11 +34,11 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		ArenaObjectName arenaObjectName = this.getClass().getAnnotation(ArenaObjectName.class);
 		this.name = arenaObjectName.value();
 		this.quartzBlockState = location.getBlock().getState();
-		this.setupInventory();
 	}
 	
 	public void setRoleDatas(Map<String, RoleData> roleDatas) {
 		this.roleDatas = roleDatas;
+		this.setupInventory();
 	}
 	
 	@Override
