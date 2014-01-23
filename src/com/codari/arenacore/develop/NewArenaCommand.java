@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.apicore.command.CodariCommand;
-import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
@@ -15,7 +14,7 @@ public class NewArenaCommand implements CodariCommand {
 	
 	private static byte teamSize = 2;
 	private static byte numberOfTeams = 2;
-	private static int numberOfPointsToWin = 100;
+	//private static int numberOfPointsToWin = 100;
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
 		if(sender instanceof Player && args[0].equalsIgnoreCase(COMMAND_NAME) && args.length == 2) {
@@ -28,7 +27,7 @@ public class NewArenaCommand implements CodariCommand {
 				gameRule.setMatchDurationInfinite();
 				gameRule.setTeamSize(teamSize);		//set team size to 2
 				gameRule.setNumberOfTeams(numberOfTeams);
-				gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
+				//gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
 				//gameRule.addRoleDeclaration(new ArenaRoleDeclaration());
 				//ArenaBuilder construction//
 				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
