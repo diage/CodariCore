@@ -236,21 +236,6 @@ public class ArenaManagerCore implements ArenaManager {
 
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
 		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
-		try {
-			this.saveArenaBuilder(arenaName);
-		} catch (Exception ex) {
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt save potato in " + arenaName, ex);
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-			CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
-		}
 	}
 	
 	public ArenaBuilderCore getArenaBuilder(String arenaName) {
