@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -81,9 +82,17 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		}
 	}
 
-	public int getRoleCounter(String roleName) {
-		return this.roleDatas.get(roleName).getCounter();
-	}	
+	public void activate() {	//TODO - call this when the Arena starts up
+		if(!this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
+			this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
+		}
+	}
+
+	public void deactivate() {	//TODO - call this when the Arena startup is done
+		if(this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
+			this.quartzBlockState.removeMetadata(META_DATA_STRING, CodariI.INSTANCE);
+		}
+	}
 
 	private void addRole(String oldRoleName) {
 		if(!roleDatas.get(oldRoleName).isInfinite()) {
@@ -91,16 +100,20 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			boolean itemFound = false;
 			this.roleDatas.get(oldRoleName).increment();
 			for(ItemStack itemStack : itemStacks) {
-				if(itemStack.getItemMeta().getDisplayName().equals(oldRoleName)) {
-					itemStack.setAmount(itemStack.getAmount() + 1);
-					itemFound = true;
-					break;
+				if(itemStack != null) {
+					if(itemStack.getItemMeta().getDisplayName().equals(oldRoleName)) {
+						itemStack.setAmount(itemStack.getAmount() + 1);
+						itemFound = true;
+						break;
+					}
 				}
 			}
 			if(itemFound) {
 				this.inventory.setContents(itemStacks);
+			} else if(this.inventory.firstEmpty() != -1) {
+				this.inventory.setItem(this.inventory.firstEmpty(), this.createIcon(oldRoleName, 1));
 			} else {
-				this.inventory.setItem(this.getNextAvailableSlot(), this.createIcon(oldRoleName, 1));
+				Bukkit.broadcastMessage(ChatColor.RED + "Failed to add Role Icon to Role Selection Object - There are no available slots!"); //TODO
 			}
 			this.refreshInventory();
 		}
@@ -111,9 +124,11 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			ItemStack[] itemStacks = this.inventory.getContents();
 			this.roleDatas.get(newRoleName).decrement();	
 			for(ItemStack itemStack : itemStacks) {
-				if(itemStack.getItemMeta().getDisplayName().equals(newRoleName)) {
-					itemStack.setAmount(itemStack.getAmount() - 1);
-					break;
+				if(itemStack != null) {
+					if(itemStack.getItemMeta().getDisplayName().equals(newRoleName)) {
+						itemStack.setAmount(itemStack.getAmount() - 1);
+						break;
+					}
 				}
 			}
 			this.inventory.setContents(itemStacks);
@@ -135,7 +150,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			int numberOfRoles = this.roleDatas.get(roleName).getCounter();
 			this.inventory.setItem(counter++, this.createIcon(roleName, numberOfRoles));
 		}
-		this.activate();
+		this.activate();	//TODO - Remove this when we call the activate method from the Arena startup
 	}
 
 	private ItemStack createIcon(String roleName, int numberOfRoles) {
@@ -156,17 +171,5 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 				((Player) humanEntity).updateInventory();
 			}
 		}
-	}
-	
-	private int getNextAvailableSlot() {
-		return 0;
-	}
-
-	private void activate() {
-		this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
-	}
-
-	private void deactivate() {
-		this.quartzBlockState.removeMetadata(META_DATA_STRING, CodariI.INSTANCE);
 	}
 }
