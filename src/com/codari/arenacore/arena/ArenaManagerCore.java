@@ -84,6 +84,27 @@ public class ArenaManagerCore implements ArenaManager {
 		} else {
 			this.builderDir.mkdirs();
 		}
+		if (this.roleDir.exists()) {
+			for (File file : this.roleDir.listFiles()) {
+				try {
+					this.loadGameRule(file);
+				} catch (Exception ex) {
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt find potato in " + file, ex);
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				}
+			}
+		} else {
+			this.builderDir.mkdirs();
+		}
 	}
 	
 	//-----Public Methods-----//
@@ -330,6 +351,27 @@ public class ArenaManagerCore implements ArenaManager {
 			}
 		}
 	}
+	
+	public void saveGameRules() {
+		for (Entry<String, GameRuleCore> e : this.gameRules.entrySet()) {
+			try {
+				File file = new File(this.roleDir, e.getKey());
+				CodariSerialization.serialize(file, e.getValue());
+			} catch (Exception ex) {
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "Couldnt save potato in " + e.getValue(), ex);
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+				CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
+			}
+		}
+	}
 
 	@Override
 	public boolean saveArenaBuilder(String name) {
@@ -352,6 +394,27 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 		ArenaBuilderCore arenaBuilder = (ArenaBuilderCore) CodariSerialization.deserialize(file);
 		this.arenaBuilders.put(name, arenaBuilder);
+		return true;
+	}
+	
+	public boolean saveGameRule(String name) {
+		if (!this.gameRules.containsKey(name)) {
+			CodariCore.instance().getLogger().log(Level.WARNING, "No game rule saved under the name " + name);
+			return false;
+		}
+		File file = new File(this.roleDir, name);
+		CodariSerialization.serialize(file, this.getGameRule(name));
+		return true;
+	}
+	public boolean loadGameRule(File file) {
+		String name = file.getName();
+		if (this.gameRules.containsKey(name)) {
+			CodariCore.instance().getLogger().log(Level.WARNING, "Can not game rule to the name "
+					+ name + " as a arena builder already exists with that name");
+			return false;
+		}
+		GameRuleCore rule = (GameRuleCore) CodariSerialization.deserialize(file);
+		this.gameRules.put(name, rule);
 		return true;
 	}
 }
