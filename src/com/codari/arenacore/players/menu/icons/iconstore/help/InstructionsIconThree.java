@@ -19,15 +19,16 @@ public class InstructionsIconThree extends MenuIcon {	//FIXME - should be a Disp
 	private void updateLore() {
 		ItemMeta itemMeta = super.getItemMeta();
 		List<String> lore = new ArrayList<>();
-		lore.add("While creating your Arena Objects you'll notice");
-		lore.add("the ability to select a slot. Clicking on a slot");
-		lore.add("will place that Arena Object on your hotbar.");
-		lore.add("Make sure your hotbar is enabled from the Kit");
-		lore.add("Options Menu. You must turn the hotbar off and on");
-		lore.add("to see any added Arena Objects. Right click w/");
-		lore.add("the Arena Object equipped in order to place it down.");
-		lore.add("Finalizing the arena will give Teams the ability");
-		lore.add("to join its queue.");
+		lore.add("While creating your Arena Objects you'll");
+		lore.add("notice the ability to select a slot.");  
+		lore.add("Clicking on a slot will place that Arena"); 
+		lore.add("Object on your hotbar. Make sure your"); 
+		lore.add("hotbar is enabled from the Kit Options Menu."); 
+		lore.add("You must turn the hotbar off and on to see"); 
+		lore.add("any added Arena Objects. Right click with");
+		lore.add("the Arena Object equipped in order to place"); 
+		lore.add("it down. Finalizing the arena will give"); 
+		lore.add("Teams the ability to join its queue.");
 		itemMeta.setLore(lore);
 		super.setItemMeta(itemMeta);
 	}
