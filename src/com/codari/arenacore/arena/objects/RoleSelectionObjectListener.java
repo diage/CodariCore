@@ -50,7 +50,7 @@ public class RoleSelectionObjectListener implements Listener {
 	@EventHandler() 
 	private void selectRoleIcon(InventoryClickEvent e) {
 		if(e.getInventory().getTitle().equals(RoleSelectionObject.INVENTORY_NAME)) {
-			if(e.getWhoClicked() instanceof Player) {
+			if(e.getWhoClicked() instanceof Player && e.getCurrentItem() != null) {
 				Player player = (Player) e.getWhoClicked();
 				Combatant combatant = Codari.getArenaManager().getCombatant(player);
 				String newRoleName = e.getCurrentItem().getItemMeta().getDisplayName();

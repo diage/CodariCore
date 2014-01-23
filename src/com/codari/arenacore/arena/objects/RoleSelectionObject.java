@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -87,27 +86,33 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	}	
 
 	private void addRole(String oldRoleName) {
-		this.roleDatas.get(oldRoleName).increment();
-		ItemStack[] itemStacks = this.inventory.getContents();
-		for(ItemStack itemStack : itemStacks) {
-			if(itemStack.getItemMeta().getDisplayName().equals(oldRoleName)) {
-				itemStack.setAmount(itemStack.getAmount() + 1);
+		if(!roleDatas.get(oldRoleName).isInfinite()) {
+			this.roleDatas.get(oldRoleName).increment();
+			ItemStack[] itemStacks = this.inventory.getContents();
+			for(ItemStack itemStack : itemStacks) {
+				if(itemStack.getItemMeta().getDisplayName().equals(oldRoleName)) {
+					itemStack.setAmount(itemStack.getAmount() + 1);
+					break;
+				}
 			}
+			this.inventory.setContents(itemStacks);
+			this.refreshInventory();
 		}
-		this.inventory.setContents(itemStacks);
-		this.refreshInventory();
 	}
 
 	private void removeRole(String newRoleName) {
-		this.roleDatas.get(newRoleName).decrement();	
-		ItemStack[] itemStacks = this.inventory.getContents();
-		for(ItemStack itemStack : itemStacks) {
-			if(itemStack.getItemMeta().getDisplayName().equals(newRoleName)) {
-				itemStack.setAmount(itemStack.getAmount() - 1);
+		if(!roleDatas.get(newRoleName).isInfinite()) {
+			this.roleDatas.get(newRoleName).decrement();	
+			ItemStack[] itemStacks = this.inventory.getContents();
+			for(ItemStack itemStack : itemStacks) {
+				if(itemStack.getItemMeta().getDisplayName().equals(newRoleName)) {
+					itemStack.setAmount(itemStack.getAmount() - 1);
+					break;
+				}
 			}
+			this.inventory.setContents(itemStacks);
+			this.refreshInventory();
 		}
-		this.inventory.setContents(itemStacks);
-		this.refreshInventory();
 	}
 
 	private void swapRole(String oldRoleName, String newRoleName) {
@@ -132,7 +137,9 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		ItemMeta itemMeta = roleItem.getItemMeta();
 		itemMeta.setDisplayName(roleName);
 		roleItem.setItemMeta(itemMeta);
-		roleItem.setAmount(numberOfRoles);
+		if(numberOfRoles != RoleData.INFINITE) {
+			roleItem.setAmount(numberOfRoles);
+		} 
 		return roleItem;
 	}
 
