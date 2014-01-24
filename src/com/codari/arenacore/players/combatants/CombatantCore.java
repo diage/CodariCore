@@ -147,7 +147,7 @@ public final class CombatantCore implements Combatant {
 			this.arenaName = arena.getName();
 			this.inArena = true;
 			this.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));
-			this.setHotbarActibe(true);
+			this.setHotbarActive(true);
 			this.getPlayer().teleport(((ArenaCore)arena).getSpawn(this));
 			return true;
 		}
@@ -261,7 +261,7 @@ public final class CombatantCore implements Combatant {
 	}
 
 	@Override
-	public void setHotbarActibe(boolean active) {
+	public void setHotbarActive(boolean active) {
 		this.activeHotbar = active;
 	}
 	

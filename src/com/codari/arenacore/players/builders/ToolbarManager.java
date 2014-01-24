@@ -34,7 +34,7 @@ public class ToolbarManager {
 		}
 		this.combatant.getPlayer().getInventory().setContents(inventoryContents);
 		this.combatant.getPlayer().updateInventory();
-		this.combatant.setHotbarActibe(true);
+		this.combatant.setHotbarActive(true);
 		this.toolbarKit = kit;
 		
 		BuildingStartEvent e = new BuildingStartEvent(this.combatant, kit.getName());
@@ -50,7 +50,7 @@ public class ToolbarManager {
 			}
 			this.combatant.getPlayer().getInventory().setContents(inventoryContents);
 			this.combatant.getPlayer().updateInventory();
-			this.combatant.setHotbarActibe(false);
+			this.combatant.setHotbarActive(false);
 			this.toolbarKit = null;
 			
 			BuildingEndEvent e = new BuildingEndEvent(this.combatant);

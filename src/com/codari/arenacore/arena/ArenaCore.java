@@ -222,7 +222,7 @@ public final class ArenaCore implements Arena {
 				((TeamCore) entry.getValue()).setArena(null);
 				teamsIterator.remove();
 				for (Combatant combatant : entry.getValue().combatants()) {
-					combatant.setHotbarActibe(false);
+					combatant.setHotbarActive(false);
 				}
 			}
 			for (ArenaObject o : this.objects) {

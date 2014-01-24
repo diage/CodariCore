@@ -11,9 +11,9 @@ import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 
 public class HotbarTest implements Listener {
 	public HotbarTest() {
-		Codari.getArenaManager().getCombatant("Soren_Endon").setHotbarActibe(true);
-		Codari.getArenaManager().getCombatant("Diage").setHotbarActibe(true);
-		Codari.getArenaManager().getCombatant("Soren025").setHotbarActibe(true);
+		Codari.getArenaManager().getCombatant("Soren_Endon").setHotbarActive(true);
+		Codari.getArenaManager().getCombatant("Diage").setHotbarActive(true);
+		Codari.getArenaManager().getCombatant("Soren025").setHotbarActive(true);
 	}
 	
 	private final PotionEffect shield = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, (int) BukkitTime.HOUR.tickUnit(), 125);
