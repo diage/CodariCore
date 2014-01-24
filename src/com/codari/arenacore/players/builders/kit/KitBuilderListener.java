@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.codari.arena5.arena.rules.Argument;
+import com.codari.arenacore.arena.rules.GameRuleCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.events.IconHoverUpdateEvent;
 import com.codari.arenacore.players.menu.events.IconMenuClickEvent;
@@ -93,10 +94,12 @@ public class KitBuilderListener implements Listener {
 			Player player = e.getIcon().getCombatant().getPlayer();
 			if(currentKitBuilders.containsKey(player.getName())) {
 				KitBuilder kitBuilder = currentKitBuilders.get(player.getName());
-				if(e.getNewInput() > 1 && e.getNewInput() < 16) {
+				if(e.getNewInput() >= GameRuleCore.MIN_NUMBER_OF_PLAYERS_PER_TEAM && e.getNewInput() <= GameRuleCore.MAX_NUMBER_OF_PLAYERS_PER_TEAM) {
 					kitBuilder.setTeamSize((byte) e.getNewInput());
 				} else {
-					player.sendMessage(ChatColor.RED + "Failed to set Team size. The Team size must be greater than 1 and less than 16!");
+					player.sendMessage(ChatColor.RED + "Failed to set Team size. The Team size must be greater than or equal to "
+							+ GameRuleCore.MIN_NUMBER_OF_PLAYERS_PER_TEAM + " and less than or equal to "
+							+ GameRuleCore.MAX_NUMBER_OF_PLAYERS_PER_TEAM + "!");
 				}
 			} else if(e.getNewInput() != 0) {
 				player.sendMessage(ChatColor.RED + "Failed to set Team size. You must set a name for the Kit Builder first!");
@@ -112,11 +115,11 @@ public class KitBuilderListener implements Listener {
 			Player player = e.getIcon().getCombatant().getPlayer();
 			if(currentKitBuilders.containsKey(player.getName())) {
 				KitBuilder kitBuilder = currentKitBuilders.get(player.getName());
-				if(e.getNewInput() > 1 && e.getNewInput() < 16) {
+				if(e.getNewInput() >= GameRuleCore.MIN_NUMBER_OF_TEAMS && e.getNewInput() <= GameRuleCore.MAX_NUMBER_OF_TEAMS) {
 					kitBuilder.setNumberOfTeams((byte) e.getNewInput());
 				} else {
-					player.sendMessage(ChatColor.RED + "Failed to set number of Teams. The number of teams must be greater than 1 "
-							+ "and less than 16!");
+					player.sendMessage(ChatColor.RED + "Failed to set number of Teams. The number of teams must be greater than or equal to "
+							+ GameRuleCore.MIN_NUMBER_OF_TEAMS + " and less than or equal to " + GameRuleCore.MAX_NUMBER_OF_TEAMS + "!");
 				}
 			} else if(e.getNewInput() != 0) {
 				player.sendMessage(ChatColor.RED + "Failed to set number of Teams. You must set a name for the Kit Builder first!");
