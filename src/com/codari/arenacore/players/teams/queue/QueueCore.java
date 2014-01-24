@@ -103,7 +103,7 @@ public class QueueCore {
 	}
 
 	private void countDown() {
-		if (this.task == null) {
+		if(this.task == null) {
 			this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
 				@Override
 				public void run() {

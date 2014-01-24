@@ -1,5 +1,7 @@
 package com.codari.arenacore.arena.objects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -52,10 +54,18 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	public void reveal() {
 		this.quartzBlockState.getBlock().setType(quartzBlockMaterial);
 	}
+	
+	@Override
+	public void activate() {	
+		if(!this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
+			this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
+		}
+	}
 
 	@Override
 	public void hide() {
 		this.quartzBlockState.update(true);	
+		this.deactivate();
 	}
 
 	@Override
@@ -81,17 +91,22 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			this.swapRole(combatant.getRole().getName(), newRoleName);
 		}
 	}
-
-	public void activate() {	//TODO - call this when the Arena starts up
-		if(!this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
-			this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
+	
+	public List<RoleData> getRemainingRoles() {
+		List<RoleData> remainingRoles = new ArrayList<>();
+		for(String roleName : this.roleDatas.keySet()) {
+			if(this.roleDatas.get(roleName).getCounter() > 0 || this.roleDatas.get(roleName).getCounter() == RoleData.INFINITE) {
+				remainingRoles.add(this.roleDatas.get(roleName));
+			}
 		}
+		return remainingRoles;
 	}
 
-	public void deactivate() {	//TODO - call this when the Arena startup is done
+	private void deactivate() {	
 		if(this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
 			this.quartzBlockState.removeMetadata(META_DATA_STRING, CodariI.INSTANCE);
 		}
+		this.closeInventoryViewers();
 	}
 
 	private void addRole(String oldRoleName) {
@@ -150,7 +165,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			int numberOfRoles = this.roleDatas.get(roleName).getCounter();
 			this.inventory.setItem(counter++, this.createIcon(roleName, numberOfRoles));
 		}
-		this.activate();	//TODO - Remove this when we call the activate method from the Arena startup
+		//this.activate();	//TODO - Remove this when we call the activate method from the Arena startup
 	}
 
 	private ItemStack createIcon(String roleName, int numberOfRoles) {
@@ -170,6 +185,12 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			if(humanEntity instanceof Player) {
 				((Player) humanEntity).updateInventory();
 			}
+		}
+	}
+	
+	private void closeInventoryViewers() {
+		for(HumanEntity humanEntity : this.inventory.getViewers()) {
+			humanEntity.closeInventory();
 		}
 	}
 }

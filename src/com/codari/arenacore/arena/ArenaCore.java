@@ -1,8 +1,8 @@
 package com.codari.arenacore.arena;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,16 +10,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
 import com.codari.api5.util.SerializableLocation;
+import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaEndEvent;
 import com.codari.arena5.arena.events.ArenaStartEvent;
@@ -27,8 +31,12 @@ import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.objects.ArenaObject;
+import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.arena.objects.RoleSelectionObject;
+import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.teams.TeamCore;
 
 public final class ArenaCore implements Arena {
@@ -38,9 +46,15 @@ public final class ArenaCore implements Arena {
 	private final GameRule rules;
 	private final List<TimedAction> actions;
 	private final List<ArenaObject> objects;
+	private final List<ImmediatePersistentObject> immediatePersistentObjects;
+	private final List<RoleSelectionObject> roleSelectionObjects;
 	private final List<SerializableLocation> spawns;
 	private transient Map<String, Team> teams;
 	private transient Set<BukkitTask> tasks;
+	
+	private int warmUpPeriodTime = 25;
+	private BukkitTask task;
+	private int countDown = 25;
 	
 	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
@@ -48,18 +62,37 @@ public final class ArenaCore implements Arena {
 		this.rules = builder.getGameRule();
 		this.actions = builder.compileActions();
 		this.objects = builder.compileObjects();
+		this.immediatePersistentObjects = this.setupImmediatePersistentObjects(this.objects);
+		this.roleSelectionObjects = this.setupRoleSelectionObjects(this.immediatePersistentObjects);
 		this.spawns = builder.compileSpawners();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
+	}
+	
+	private List<ImmediatePersistentObject> setupImmediatePersistentObjects(final List<ArenaObject> arenaObjects) {
+		List<ImmediatePersistentObject> immediatePersistentObjects = new ArrayList<>();
+		for(ArenaObject arenaObject : arenaObjects) {
+			if(arenaObject instanceof ImmediatePersistentObject) {
+				immediatePersistentObjects.add((ImmediatePersistentObject) arenaObject);
+			}
+		}
+		return immediatePersistentObjects;
+	}
+	
+	private List<RoleSelectionObject> setupRoleSelectionObjects(final List<ImmediatePersistentObject> immediatePersistentObjects) {
+		List<RoleSelectionObject> roleSelectionObjects = new ArrayList<>();
+		for(ImmediatePersistentObject immediatePersistentObject : immediatePersistentObjects) {
+			if(immediatePersistentObject instanceof RoleSelectionObject) {
+				roleSelectionObjects.add((RoleSelectionObject) immediatePersistentObject);
+			}	
+		}
+		return roleSelectionObjects;
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
-		//for(RoleDeclaration roleDeclaration : this.rules.getRoleDeclaration()) {
-			//roleDeclaration.initalizeRoles();
-		//}
 	}
 	
 	//-----Public Methods-----//
@@ -76,11 +109,6 @@ public final class ArenaCore implements Arena {
 	@Override
 	public GameRule getGameRule() {
 		return this.rules;
-	}
-	
-	@Deprecated
-	public void serializeTest(File file) {
-		//CodariSerialization.serialize(file, this);	//FIXME
 	}
 	
 	public Location getSpawn(Combatant combatant) {
@@ -101,7 +129,40 @@ public final class ArenaCore implements Arena {
 	}
 	
 	@Override
-	public boolean start(Team... teams) {
+	public void start(Team... teams) {
+		this.warmUpPeriod(teams);
+	}
+	
+	private void warmUpPeriod(final Team... teams) {
+		this.revealAndActivateImmediatePersistentObjects();
+		if(this.task == null) {
+			this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
+				@Override
+				public void run() {
+					for(Team team : teams) {
+						for(Player player : team.getPlayers()) {
+							if(countDown == warmUpPeriodTime) {
+								player.sendMessage("Warmup Period - " + warmUpPeriodTime + " seconds");
+							} 
+							player.sendMessage("[" + countDown + "]");
+						}
+					}
+					countDown--;
+					if(countDown <= 0) {
+						countDown = warmUpPeriodTime;
+						startArena(teams);
+						hideRoleSelectionObjects();
+						assignRolesIfPlayerDidntPickOne(teams);
+						task.cancel();
+						task = null;
+					}
+				}
+
+			}, 0, 20);
+		}
+	}
+	
+	private boolean startArena(Team... teams) {
 		if (!this.isMatchInProgress()) {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
@@ -174,5 +235,40 @@ public final class ArenaCore implements Arena {
 	@Override
 	public boolean isMatchInProgress() {
 		return !this.teams.isEmpty();
+	}
+	
+	private void revealAndActivateImmediatePersistentObjects() {
+		for(ImmediatePersistentObject immediatePersistentObject : this.immediatePersistentObjects) {
+			immediatePersistentObject.reveal();
+			immediatePersistentObject.activate();
+		}
+	}
+	
+	private void hideRoleSelectionObjects() {
+		for(RoleSelectionObject roleSelectionObject : this.roleSelectionObjects) {
+			roleSelectionObject.hide();
+		}
+	}
+	
+	private void assignRolesIfPlayerDidntPickOne(Team... teams) {
+		for(Team team : teams) {
+			for(Player player : team.getPlayers()) {
+				Combatant combatant = Codari.getArenaManager().getCombatant(player);
+				if(combatant.getRole().getName().equals(CombatantCore.NON_COMBATANT)) {
+					List<String> roleNames = new ArrayList<>();
+					roleNames.addAll(((ArenaManagerCore) Codari.getArenaManager()).getExistingRoleNames(this.name));
+					int size = roleNames.size();
+					Random random = new Random(System.currentTimeMillis());
+					String roleName = roleNames.get(random.nextInt(size));
+					Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(roleName);
+					if(role != null) {				
+						combatant.setRole(role);
+						player.sendMessage(ChatColor.AQUA + "You have been assigned to the " + role.getName() + " role.");
+					} else {
+						Bukkit.broadcastMessage(ChatColor.RED + "Player failed to be assigned a role because the roll is null!"); //TODO - for testing
+					}
+				}	//FIXME - the roles are supposed to be randomly chosen from the remaining role selection object roles if there is one
+			}		//FIXME - Role Selection Objects needs teams to do this
+		}			//FIXME - Method to get remaining roles from Role Selection Object is .getRemainingRoles()
 	}
 }
