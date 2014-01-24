@@ -16,8 +16,6 @@ import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaWinEvent;
 import com.codari.arena5.arena.rules.GameRule;
-import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
-import com.codari.arena5.arena.rules.roledelegation.RoleDelegation;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
@@ -27,6 +25,11 @@ import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	//-----Fields-----//
+	public final static int MAX_NUMBER_OF_TEAMS = 16;
+	public final static int MIN_NUMBER_OF_TEAMS = 2;
+	public final static int MAX_NUMBER_OF_PLAYERS_PER_TEAM = 16;
+	public final static int MIN_NUMBER_OF_PLAYERS_PER_TEAM = 1; //FIXME - Min. Team size allowed to be 1 for now to making testing easier
+	
 	private final String name;
 	private Time matchDuration;
 	private byte teamSize, numberOfTeams;
@@ -122,8 +125,8 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	@Override
 	public boolean isValid() {
 		return this.matchDuration != null && !this.winConditions.isEmpty() 
-				&& this.numberOfTeams > 1 && this.teamSize > 1
-				&& this.numberOfTeams < 16 && this.teamSize < 16;
+				&& this.numberOfTeams >= MIN_NUMBER_OF_TEAMS && this.teamSize >= MIN_NUMBER_OF_PLAYERS_PER_TEAM	
+				&& this.numberOfTeams <= MAX_NUMBER_OF_TEAMS && this.teamSize <= MAX_NUMBER_OF_PLAYERS_PER_TEAM;
 	}
 
 	@Override
