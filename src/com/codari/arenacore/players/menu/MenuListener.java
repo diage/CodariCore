@@ -3,6 +3,7 @@ package com.codari.arenacore.players.menu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -36,29 +37,31 @@ public class MenuListener implements Listener {
 
 	@EventHandler()
 	public void openMenuInteract(PlayerInteractEvent e) {
-		if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
-			Player player = e.getPlayer();
-			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
-			if(!combatant.inArena()) {
-				if(!combatant.getMenuManager().isMenuOpen()) {
-					combatant.getMenuManager().enterMenu();
-					player.sendMessage(ChatColor.BLUE + "Opening menu - Open your inventory!");	
-				} else {
-					combatant.getMenuManager().exitMenu();
-					player.sendMessage(ChatColor.BLUE + "Closing menu!");	
+		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
+			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
+				Player player = e.getPlayer();
+				CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
+				if(!combatant.inArena()) {
+					if(!combatant.getMenuManager().isMenuOpen()) {
+						combatant.getMenuManager().enterMenu();
+						player.sendMessage(ChatColor.BLUE + "Opening menu - Open your inventory!");	
+					} else {
+						combatant.getMenuManager().exitMenu();
+						player.sendMessage(ChatColor.BLUE + "Closing menu!");	
+					}
+					e.setCancelled(true);
 				}
-				e.setCancelled(true);
 			}
 		}
 	}
-	
-	@EventHandler()
+
+	@EventHandler(priority = EventPriority.HIGH)
 	public void dropMenu(PlayerDropItemEvent e) {
 		if(e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
 			e.setCancelled(true);
 		}
 	}
-	
+
 	/*	/FIXME - Removing this based on feedback. Will leave the code here until we make a final decision.
 	@EventHandler()
 	public void closeMenu(InventoryCloseEvent e) {
@@ -73,5 +76,5 @@ public class MenuListener implements Listener {
 			}
 		}
 	}
-	*/
+	 */
 }
