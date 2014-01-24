@@ -16,7 +16,7 @@ import com.codari.arenacore.players.teams.TeamCore;
 public class QueueCore {
 	//-----Fields-----//
 	private Arena arena;
-	private int arenaTeamSize;
+	private int arenaNumberOfTeams;
 	private List<Team> teams;
 	private boolean matchStarting;
 	private BukkitTask task;
@@ -26,7 +26,7 @@ public class QueueCore {
 	//-----Constructor-----//
 	public QueueCore(Arena arena) {
 		this.arena = arena;
-		this.arenaTeamSize = arena.getGameRule().getTeamSize();
+		this.arenaNumberOfTeams = arena.getGameRule().getNumberOfTeams();
 		this.teams = new ArrayList<Team>();
 		this.countDown = COUNT_DOWN_STARTING_VALUE;
 	}
@@ -82,7 +82,7 @@ public class QueueCore {
 	}
 	
 	public void checkIfMatchShouldStart() {
-		if(this.teams.size() >= this.arenaTeamSize) {
+		if(this.teams.size() >= this.arenaNumberOfTeams) {
 			if(checkIfMatchIsNotInProgress(this.arena)) {		//check if the match is not already in progress
 				this.matchStarting = true;
 				this.countDown();
@@ -93,8 +93,8 @@ public class QueueCore {
 	}		
 
 	private void startArena() {
-		Team[] teamArray =  new Team[this.arenaTeamSize];
-		for(int i = 0; i < this.arenaTeamSize; i++) {
+		Team[] teamArray =  new Team[this.arenaNumberOfTeams];
+		for(int i = 0; i < this.arenaNumberOfTeams; i++) {
 			teamArray[i] = this.teams.get(i);
 		}
 		this.arena.start(teamArray);
@@ -144,8 +144,6 @@ public class QueueCore {
 	private static boolean checkTeamSize(Arena arena, Team team) {
 		int teamSize = team.getTeamSize();
 		int arenaTeamSize = arena.getGameRule().getTeamSize();
-		Bukkit.broadcastMessage("Team size: " + teamSize);
-		Bukkit.broadcastMessage("Arena team size: " + arenaTeamSize);
 		if(teamSize != arenaTeamSize) {
 			for(Player player : team.getPlayers()) {
 				player.sendMessage(ChatColor.RED + "You're team has to have " + arena.getGameRule().getTeamSize() + " players to join that arena!");
