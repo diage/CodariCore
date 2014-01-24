@@ -66,6 +66,8 @@ public abstract class RequestIcon extends Icon {
 			context.setSessionData("input", playerInput);
 			Bukkit.getPluginManager().callEvent(new IconRequestEvent(icon, playerInput));
 			((CombatantCore)this.icon.getCombatant()).getMenuManager().enterMenu();
+			//FIXME - for testing to see if menu is smoother - Menu doens't have to be closed if we do it this way
+			this.icon.getCombatant().getPlayer().openInventory(this.icon.getCombatant().getPlayer().getInventory());	
 			return Prompt.END_OF_CONVERSATION;
 		}
 

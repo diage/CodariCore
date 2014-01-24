@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.codari.api5.Codari;
 import com.codari.arenacore.players.combatants.CombatantCore;
@@ -32,7 +33,26 @@ public class MenuListener implements Listener {
 			}
 		}
 	}
-	
+
+	@EventHandler()
+	public void openMenuInteract(PlayerInteractEvent e) {
+		if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals("Main Menu")) {
+			Player player = e.getPlayer();
+			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
+			if(!combatant.inArena()) {
+				if(!combatant.getMenuManager().isMenuOpen()) {
+					combatant.getMenuManager().enterMenu();
+					player.sendMessage(ChatColor.BLUE + "Opening menu!");	
+				} else {
+					combatant.getMenuManager().exitMenu();
+					player.sendMessage(ChatColor.BLUE + "Closing menu!");	
+				}
+				e.setCancelled(true);
+			}
+		}
+	}
+
+	/*	/FIXME - Removing this based on feedback. Will leave the code here until we make a final decision.
 	@EventHandler()
 	public void closeMenu(InventoryCloseEvent e) {
 		if(e.getPlayer() instanceof Player && e.getInventory().getType() == InventoryType.CRAFTING) {
@@ -46,4 +66,5 @@ public class MenuListener implements Listener {
 			}
 		}
 	}
+	*/
 }

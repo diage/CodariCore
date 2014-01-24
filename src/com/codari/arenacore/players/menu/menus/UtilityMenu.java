@@ -43,7 +43,7 @@ public class UtilityMenu implements Menu {
 		this.setSlot(UtilityMenuSlot.FOUR, new TeamsIcon(combatant, new InitialTeamOptions(combatant)));
 		this.setSlot(UtilityMenuSlot.FIVE, new GuildsIcon(combatant, new InitialGuildOptions(combatant)));
 		this.setSlot(UtilityMenuSlot.SIX, new HelpIcon(combatant, new HelpMenu(combatant)));
-		this.setSlot(UtilityMenuSlot.NINE, new ExitIcon(Material.OBSIDIAN, combatant));		
+		this.setSlot(UtilityMenuSlot.NINE, new ExitIcon(Material.BLAZE_ROD, combatant));		
 	}
 	
 	@Override

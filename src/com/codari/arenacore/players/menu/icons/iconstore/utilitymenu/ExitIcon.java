@@ -1,6 +1,7 @@
 package com.codari.arenacore.players.menu.icons.iconstore.utilitymenu;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.codari.arena5.players.combatants.Combatant;
@@ -17,5 +18,6 @@ public class ExitIcon extends ExecutableIcon{
 	public void click() {
 		((CombatantCore) this.getCombatant()).getMenuManager().exitMenu();
 		Bukkit.getPlayer(this.playerName).closeInventory();
+		this.getCombatant().getPlayer().sendMessage(ChatColor.BLUE + "Closing menu!");
 	}
 }
