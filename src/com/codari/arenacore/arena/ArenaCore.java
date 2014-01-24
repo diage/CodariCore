@@ -31,7 +31,7 @@ import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.objects.ArenaObject;
-import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
+import com.codari.arena5.objects.persistant.PersistentObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
@@ -46,7 +46,7 @@ public final class ArenaCore implements Arena {
 	private final GameRule rules;
 	private final List<TimedAction> actions;
 	private final List<ArenaObject> objects;
-	private final List<ImmediatePersistentObject> immediatePersistentObjects;
+	private final List<PersistentObject> persistentObjects;
 	private final List<RoleSelectionObject> roleSelectionObjects;
 	private final List<SerializableLocation> spawns;
 	private transient Map<String, Team> teams;
@@ -62,8 +62,8 @@ public final class ArenaCore implements Arena {
 		this.rules = builder.getGameRule();
 		this.actions = builder.compileActions();
 		this.objects = builder.compileObjects();
-		this.immediatePersistentObjects = this.setupImmediatePersistentObjects(this.objects);
-		this.roleSelectionObjects = this.setupRoleSelectionObjects(this.immediatePersistentObjects);
+		this.persistentObjects = this.setupPersistentObjects(this.objects);
+		this.roleSelectionObjects = this.setupRoleSelectionObjects(this.persistentObjects);
 		this.spawns = builder.compileSpawners();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
@@ -71,21 +71,21 @@ public final class ArenaCore implements Arena {
 		this.countDown = this.warmUpPeriodTime;
 	}
 	
-	private List<ImmediatePersistentObject> setupImmediatePersistentObjects(final List<ArenaObject> arenaObjects) {
-		List<ImmediatePersistentObject> immediatePersistentObjects = new ArrayList<>();
+	private List<PersistentObject> setupPersistentObjects(final List<ArenaObject> arenaObjects) {
+		List<PersistentObject> persistentObjects = new ArrayList<>();
 		for(ArenaObject arenaObject : arenaObjects) {
-			if(arenaObject instanceof ImmediatePersistentObject) {
-				immediatePersistentObjects.add((ImmediatePersistentObject) arenaObject);
+			if(arenaObject instanceof PersistentObject) {
+				persistentObjects.add((PersistentObject) arenaObject);
 			}
 		}
-		return immediatePersistentObjects;
+		return persistentObjects;
 	}
 	
-	private List<RoleSelectionObject> setupRoleSelectionObjects(final List<ImmediatePersistentObject> immediatePersistentObjects) {
+	private List<RoleSelectionObject> setupRoleSelectionObjects(final List<PersistentObject> persistentObjects) {
 		List<RoleSelectionObject> roleSelectionObjects = new ArrayList<>();
-		for(ImmediatePersistentObject immediatePersistentObject : immediatePersistentObjects) {
-			if(immediatePersistentObject instanceof RoleSelectionObject) {
-				roleSelectionObjects.add((RoleSelectionObject) immediatePersistentObject);
+		for(PersistentObject persistentObject : persistentObjects) {
+			if(persistentObject instanceof RoleSelectionObject) {
+				roleSelectionObjects.add((RoleSelectionObject) persistentObject);
 			}	
 		}
 		return roleSelectionObjects;
@@ -136,7 +136,7 @@ public final class ArenaCore implements Arena {
 	}
 	
 	private void warmUpPeriod(final Team... teams) {
-		this.revealAndActivateImmediatePersistentObjects();
+		this.revealAndActivatePersistentObjects();
 		if(this.task == null) {
 			this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
 				@Override
@@ -239,10 +239,10 @@ public final class ArenaCore implements Arena {
 		return !this.teams.isEmpty();
 	}
 	
-	private void revealAndActivateImmediatePersistentObjects() {
-		for(ImmediatePersistentObject immediatePersistentObject : this.immediatePersistentObjects) {
-			immediatePersistentObject.reveal();
-			immediatePersistentObject.activate();
+	private void revealAndActivatePersistentObjects() {
+		for(PersistentObject persistentObject : this.persistentObjects) {
+			persistentObject.reveal();
+			persistentObject.activate();
 		}
 	}
 	
