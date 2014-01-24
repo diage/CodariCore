@@ -37,7 +37,7 @@ public class MenuListener implements Listener {
 
 	@EventHandler()
 	public void openMenuInteract(PlayerInteractEvent e) {
-		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
+		if(e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
 			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
 				Player player = e.getPlayer();
 				CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
