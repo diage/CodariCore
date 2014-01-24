@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.codari.api5.Codari;
@@ -48,6 +49,13 @@ public class MenuListener implements Listener {
 				}
 				e.setCancelled(true);
 			}
+		}
+	}
+	
+	@EventHandler()
+	public void dropMenu(PlayerDropItemEvent e) {
+		if(e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
+			e.setCancelled(true);
 		}
 	}
 	
