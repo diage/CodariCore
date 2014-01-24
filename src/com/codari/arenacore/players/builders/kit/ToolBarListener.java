@@ -48,7 +48,7 @@ public class ToolBarListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void placeObject(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null) {
@@ -69,42 +69,46 @@ public class ToolBarListener implements Listener {
 				Location location = e.getClickedBlock().getLocation();
 				location.setY(location.getY() + 1);
 				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
-				arenaObject.reveal();
-				List<String> extraInformation = e.getItem().getItemMeta().getLore();
-				
-				//---Registering Arena Objects---//
-				if(arenaObject instanceof RandomSpawnableObject) {
-					builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
-					e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
-				} else if(arenaObject instanceof FixedSpawnableObject) {
-					if (extraInformation != null) {
-						if(extraInformation.size() == 1) {
-							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
-							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
-						} else if(extraInformation.size() >= 2) {
-							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
+				if(arenaObject != null) {
+					arenaObject.reveal();
+					List<String> extraInformation = e.getItem().getItemMeta().getLore();
+
+					//---Registering Arena Objects---//
+					if(arenaObject instanceof RandomSpawnableObject) {
+						builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
+						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+					} else if(arenaObject instanceof FixedSpawnableObject) {
+						if (extraInformation != null) {
+							if(extraInformation.size() == 1) {
+								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
+								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+							} else if(extraInformation.size() >= 2) {
+								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
+								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+							}
+						}
+					} else if(arenaObject instanceof ImmediatePersistentObject) {
+						builder.registerPersistent((ImmediatePersistentObject) arenaObject);
+						if(arenaObject instanceof RoleSelectionObject) {
+							((RoleSelectionObject) arenaObject).setRoleDatas(kit.getRoleDatas());
+							e.getPlayer().sendMessage(ChatColor.BLUE + "Role Selection Object placed");
+						} else {
 							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						}
-					}
-				} else if(arenaObject instanceof ImmediatePersistentObject) {
-					builder.registerPersistent((ImmediatePersistentObject) arenaObject);
-					if(arenaObject instanceof RoleSelectionObject) {
-						((RoleSelectionObject) arenaObject).setRoleDatas(kit.getRoleDatas());
-						e.getPlayer().sendMessage(ChatColor.BLUE + "Role Selection Object placed");
+					} else if(arenaObject instanceof DelayedPersistentObject) {
+						if(extraInformation != null && extraInformation.size() >= 2) {
+							builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
+							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+						}
 					} else {
-						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+						Bukkit.broadcastMessage(ChatColor.RED + "We are trying to place an object that isn't a random spawnable object "
+								+ "/ fixed spawnable object / persistent object !"); //TODO - for testing
 					}
-				} else if(arenaObject instanceof DelayedPersistentObject) {
-					if(extraInformation != null && extraInformation.size() >= 2) {
-						builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
-						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
-					}
+					//After an Arena Object is added, all the roles have to be checked again to make sure they have the required links
+					kit.checkIfRolesHaveRequiredLinks();
 				} else {
-					Bukkit.broadcastMessage(ChatColor.RED + "We are trying to place an object that isn't a random spawnable object "
-							+ "/ fixed spawnable object / persistent object !"); //TODO - for testing
+					e.getPlayer().sendMessage(ChatColor.RED + "Failed to create object!");
 				}
-				//After an Arena Object is added, all the roles have to be checked again to make sure they have the required links
-				kit.checkIfRolesHaveRequiredLinks();
 			}
 		}
 	}
