@@ -52,9 +52,9 @@ public final class ArenaCore implements Arena {
 	private transient Map<String, Team> teams;
 	private transient Set<BukkitTask> tasks;
 	
-	private int warmUpPeriodTime = 25;
+	private int warmUpPeriodTime;
 	private BukkitTask task;
-	private int countDown = 25;
+	private int countDown;
 	
 	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
@@ -67,6 +67,8 @@ public final class ArenaCore implements Arena {
 		this.spawns = builder.compileSpawners();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
+		this.warmUpPeriodTime = 25;
+		this.countDown = this.warmUpPeriodTime;
 	}
 	
 	private List<ImmediatePersistentObject> setupImmediatePersistentObjects(final List<ArenaObject> arenaObjects) {
