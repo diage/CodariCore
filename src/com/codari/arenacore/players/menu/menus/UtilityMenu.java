@@ -3,8 +3,6 @@ package com.codari.arenacore.players.menu.menus;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Material;
-
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.menu.icons.iconstore.BorderIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.utilitymenu.ExitIcon;
@@ -43,7 +41,7 @@ public class UtilityMenu implements Menu {
 		this.setSlot(UtilityMenuSlot.FOUR, new TeamsIcon(combatant, new InitialTeamOptions(combatant)));
 		this.setSlot(UtilityMenuSlot.FIVE, new GuildsIcon(combatant, new InitialGuildOptions(combatant)));
 		this.setSlot(UtilityMenuSlot.SIX, new HelpIcon(combatant, new HelpMenu(combatant)));
-		this.setSlot(UtilityMenuSlot.NINE, new ExitIcon(Material.BLAZE_ROD, combatant));		
+		this.setSlot(UtilityMenuSlot.NINE, new ExitIcon(combatant));		
 	}
 	
 	@Override

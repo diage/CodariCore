@@ -173,13 +173,13 @@ public class MenuManager {
 	}
 
 	private void setMenuIconEnter() {
-		this.mainMenuIcon = new MenuIcon(Material.BED, this.combatant, ChatColor.GRAY + "Main Menu");
+		this.mainMenuIcon = new MenuIcon(Material.MAGMA_CREAM, this.combatant, ChatColor.DARK_AQUA + "Main Menu");
 		this.combatant.getPlayer().getInventory().setItem(8, this.mainMenuIcon);
 		this.combatant.getPlayer().updateInventory();
 	}
 
 	private void setMenuIconExit() {
-		this.mainMenuIcon = new MenuIcon(Material.BED, combatant, this.functionMenu, this.utilityMenu, "Main Menu");
+		this.mainMenuIcon = new MenuIcon(Material.MAGMA_CREAM, combatant, this.functionMenu, this.utilityMenu, ChatColor.DARK_AQUA + "Main Menu");
 		this.combatant.getPlayer().getInventory().setItem(8, this.mainMenuIcon);
 		this.combatant.getPlayer().updateInventory();
 	}

@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -36,13 +35,13 @@ public class MenuListener implements Listener {
 
 	@EventHandler()
 	public void openMenuInteract(PlayerInteractEvent e) {
-		if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals("Main Menu")) {
+		if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
 			Player player = e.getPlayer();
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {
 				if(!combatant.getMenuManager().isMenuOpen()) {
 					combatant.getMenuManager().enterMenu();
-					player.sendMessage(ChatColor.BLUE + "Opening menu!");	
+					player.sendMessage(ChatColor.BLUE + "Opening menu - Open your inventory!");	
 				} else {
 					combatant.getMenuManager().exitMenu();
 					player.sendMessage(ChatColor.BLUE + "Closing menu!");	
@@ -51,7 +50,7 @@ public class MenuListener implements Listener {
 			}
 		}
 	}
-
+	
 	/*	/FIXME - Removing this based on feedback. Will leave the code here until we make a final decision.
 	@EventHandler()
 	public void closeMenu(InventoryCloseEvent e) {
