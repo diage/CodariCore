@@ -24,9 +24,11 @@ public class MenuListener implements Listener {
 				if(e.getSlot() == 8) {
 					if(!combatant.getMenuManager().isMenuOpen()) {
 						combatant.getMenuManager().enterMenu();
+						//FIXME - open inventory when we switch over to the other inventory type
 						player.sendMessage(ChatColor.BLUE + "Opening menu!");	
 					} else {
 						combatant.getMenuManager().exitMenu();
+						combatant.getPlayer().closeInventory();
 						player.sendMessage(ChatColor.BLUE + "Closing menu!");	
 					}
 					e.setCancelled(true);
@@ -44,6 +46,7 @@ public class MenuListener implements Listener {
 				if(!combatant.inArena()) {
 					if(!combatant.getMenuManager().isMenuOpen()) {
 						combatant.getMenuManager().enterMenu();
+						//FIXME - open inventory when we switch over to the other inventory type
 						player.sendMessage(ChatColor.BLUE + "Opening menu - Open your inventory!");	
 					} else {
 						combatant.getMenuManager().exitMenu();
