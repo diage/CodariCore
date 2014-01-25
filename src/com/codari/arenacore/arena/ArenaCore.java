@@ -155,8 +155,6 @@ public final class ArenaCore implements Arena {
 						countDown--;
 						if(countDown <= 0) {
 							startArena(teams);
-							hideRoleSelectionObjects();
-							assignRolesIfPlayerDidntPickOne(teams);
 							warmUpTask.cancel();
 							warmUpTask = null;
 							countDown = warmUpPeriodTime;
@@ -169,7 +167,12 @@ public final class ArenaCore implements Arena {
 	}
 
 	private boolean startArena(Team... teams) {
+		Bukkit.broadcastMessage("Going into startArena Method");
+		Bukkit.broadcastMessage(ChatColor.BLUE + "Teams are not empty: " + this.isMatchInProgress());
 		if (!this.isMatchInProgress()) {
+			Bukkit.broadcastMessage(ChatColor.AQUA + "Arena objects are going to be spawned!");
+			hideRoleSelectionObjects();
+			assignRolesIfPlayerDidntPickOne(teams);
 			ArenaStartEvent e = new ArenaStartEvent(this);
 			Bukkit.getPluginManager().callEvent(e);
 			if (e.isCancelled()) {

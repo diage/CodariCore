@@ -14,14 +14,15 @@ import com.codari.api5.Codari;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class MenuListener implements Listener {
-
+	private static final int MAIN_MENU_SLOT_NUMBER = 8;
+	
 	@EventHandler() 
 	public void openMenuInventoryClick(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player && e.getInventory().getType() == InventoryType.CRAFTING) {
 			Player player = ((Player)e.getWhoClicked());
 			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
 			if(!combatant.inArena()) {
-				if(e.getSlot() == 8) {
+				if(e.getSlot() == MAIN_MENU_SLOT_NUMBER) {
 					if(!combatant.getMenuManager().isMenuOpen()) {
 						combatant.getMenuManager().enterMenu();
 						//FIXME - open inventory when we switch over to the other inventory type
@@ -40,21 +41,19 @@ public class MenuListener implements Listener {
 
 	@EventHandler()
 	public void openMenuInteract(PlayerInteractEvent e) {
-		if(e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
-			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
-				Player player = e.getPlayer();
-				CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
-				if(!combatant.inArena()) {
-					if(!combatant.getMenuManager().isMenuOpen()) {
-						combatant.getMenuManager().enterMenu();
-						//FIXME - open inventory when we switch over to the other inventory type
-						player.sendMessage(ChatColor.BLUE + "Opening menu - Open your inventory!");	
-					} else {
-						combatant.getMenuManager().exitMenu();
-						player.sendMessage(ChatColor.BLUE + "Closing menu!");	
-					}
-					e.setCancelled(true);
+		if(e.getPlayer().getInventory().getHeldItemSlot() == MAIN_MENU_SLOT_NUMBER) {
+			Player player = e.getPlayer();
+			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
+			if(!combatant.inArena()) {
+				if(!combatant.getMenuManager().isMenuOpen()) {
+					combatant.getMenuManager().enterMenu();
+					//FIXME - open inventory when we switch over to the other inventory type
+					player.sendMessage(ChatColor.BLUE + "Opening menu - Open your inventory!");	
+				} else {
+					combatant.getMenuManager().exitMenu();
+					player.sendMessage(ChatColor.BLUE + "Closing menu!");	
 				}
+				e.setCancelled(true);
 			}
 		}
 	}
