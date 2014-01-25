@@ -167,10 +167,7 @@ public final class ArenaCore implements Arena {
 	}
 
 	private boolean startArena(Team... teams) {
-		Bukkit.broadcastMessage("Going into startArena Method");
-		Bukkit.broadcastMessage(ChatColor.BLUE + "Teams are not empty: " + this.isMatchInProgress());
-		if (!this.isMatchInProgress()) {
-			Bukkit.broadcastMessage(ChatColor.AQUA + "Arena objects are going to be spawned!");
+		if (this.isMatchInProgress()) {
 			hideRoleSelectionObjects();
 			assignRolesIfPlayerDidntPickOne(teams);
 			ArenaStartEvent e = new ArenaStartEvent(this);
