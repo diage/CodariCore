@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -51,11 +52,11 @@ public final class ArenaCore implements Arena {
 	private final List<SerializableLocation> spawns;
 	private transient Map<String, Team> teams;
 	private transient Set<BukkitTask> tasks;
-	
+
 	private int warmUpPeriodTime;
-	private BukkitTask task;
+	private BukkitTask warmUpTask;
 	private int countDown;
-	
+
 	//-----Constructors-----//
 	public ArenaCore(String name, ArenaBuilderCore builder) {
 		this.name = name;
@@ -70,7 +71,7 @@ public final class ArenaCore implements Arena {
 		this.warmUpPeriodTime = 25;
 		this.countDown = this.warmUpPeriodTime;
 	}
-	
+
 	private List<PersistentObject> setupPersistentObjects(final List<ArenaObject> arenaObjects) {
 		List<PersistentObject> persistentObjects = new ArrayList<>();
 		for(ArenaObject arenaObject : arenaObjects) {
@@ -80,7 +81,7 @@ public final class ArenaCore implements Arena {
 		}
 		return persistentObjects;
 	}
-	
+
 	private List<RoleSelectionObject> setupRoleSelectionObjects(final List<PersistentObject> persistentObjects) {
 		List<RoleSelectionObject> roleSelectionObjects = new ArrayList<>();
 		for(PersistentObject persistentObject : persistentObjects) {
@@ -90,13 +91,13 @@ public final class ArenaCore implements Arena {
 		}
 		return roleSelectionObjects;
 	}
-	
+
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		this.teams = new LinkedHashMap<>();
 		this.tasks = new HashSet<>();
 	}
-	
+
 	//-----Public Methods-----//
 	@Override
 	public String getName() {
@@ -107,12 +108,12 @@ public final class ArenaCore implements Arena {
 	public Map<String, Team> getTeams() {
 		return new HashMap<String, Team>(this.teams);
 	}
-	
+
 	@Override
 	public GameRule getGameRule() {
 		return this.rules;
 	}
-	
+
 	public Location getSpawn(Combatant combatant) {
 		if (!this.isMatchInProgress()) {
 			return null;
@@ -129,52 +130,81 @@ public final class ArenaCore implements Arena {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public void start(Team... teams) {
+		Bukkit.broadcastMessage(ChatColor.GREEN + "Arena starting up!"); //TODO - for testing
 		this.warmUpPeriod(teams);
 	}
-	
+
 	private void warmUpPeriod(final Team... teams) {
-		this.revealAndActivatePersistentObjects();
-		if(this.task == null) {
-			this.task = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
-				@Override
-				public void run() {
-					for(Team team : teams) {
-						for(Player player : team.getPlayers()) {
-							if(countDown == warmUpPeriodTime) {
-								player.sendMessage("Warmup Period - " + warmUpPeriodTime + " seconds");
-							} 
-							player.sendMessage("[" + countDown + "]");
+		if(this.initializeTeams(teams)) {
+			this.initializePersistentObjects();
+			if(this.warmUpTask == null) {
+				this.warmUpTask = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
+					@Override
+					public void run() {
+						for(Team team : teams) {
+							for(Player player : team.getPlayers()) {
+								if(countDown == warmUpPeriodTime) {
+									player.sendMessage("Warmup Period - " + warmUpPeriodTime + " seconds");
+								} 
+								player.sendMessage("[" + countDown + "]");
+							}
+						}
+						countDown--;
+						if(countDown <= 0) {
+							startArena(teams);
+							hideRoleSelectionObjects();
+							assignRolesIfPlayerDidntPickOne(teams);
+							warmUpTask.cancel();
+							warmUpTask = null;
+							countDown = warmUpPeriodTime;
 						}
 					}
-					countDown--;
-					if(countDown <= 0) {
-						countDown = warmUpPeriodTime;
-						startArena(teams);
-						hideRoleSelectionObjects();
-						assignRolesIfPlayerDidntPickOne(teams);
-						task.cancel();
-						task = null;
-					}
-				}
 
-			}, 0, 20);
+				}, 0, 20);
+			}
 		}
 	}
-	
+
 	private boolean startArena(Team... teams) {
+		if (!this.isMatchInProgress()) {
+			ArenaStartEvent e = new ArenaStartEvent(this);
+			Bukkit.getPluginManager().callEvent(e);
+			if (e.isCancelled()) {
+				this.teams.clear();
+				return false;
+			}
+
+			for (WinCondition winCond : this.rules.getWinConditions()) {
+				winCond.initialize(this);
+			}
+
+			for (TimedAction action : this.actions) {
+				long delay, period;
+				delay = action.getDelay() != null ? action.getDelay().ticks() : 1l;
+				period = action.getPeriod() != null ? action.getPeriod().ticks() : 0l;
+
+				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action, delay, period));
+			}
+
+			return true;
+		}
+		return false;
+	}
+
+	private boolean initializeTeams(Team... teams) {
 		if (!this.isMatchInProgress()) {
 			if (ArrayUtils.isEmpty(teams)) {
 				return false;
 			}
-			
+
 			if (!(teams.length == this.spawns.size())) {
 				Bukkit.broadcastMessage(ChatColor.DARK_RED + "Incorrect number of spawns!");
 				return false;
 			}
-			
+
 			for (Team team : teams) {
 				if(!(team.getTeamSize() == this.rules.getTeamSize())) {
 					this.teams.clear();
@@ -186,31 +216,11 @@ public final class ArenaCore implements Arena {
 					return false;
 				}
 			}
-			
-			ArenaStartEvent e = new ArenaStartEvent(this);
-			Bukkit.getPluginManager().callEvent(e);
-			if (e.isCancelled()) {
-				this.teams.clear();
-				return false;
-			}
-			
-			for (WinCondition winCond : this.rules.getWinConditions()) {
-				winCond.initialize(this);
-			}
-			
-			for (TimedAction action : this.actions) {
-				long delay, period;
-				delay = action.getDelay() != null ? action.getDelay().ticks() : 1l;
-				period = action.getPeriod() != null ? action.getPeriod().ticks() : 0l;
-				
-				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action, delay, period));
-			}
-			
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void stop() {
 		if (this.isMatchInProgress()) {
@@ -233,25 +243,38 @@ public final class ArenaCore implements Arena {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isMatchInProgress() {
 		return !this.teams.isEmpty();
 	}
-	
-	private void revealAndActivatePersistentObjects() {
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof ArenaCore) {
+			return this.getName().equals(((ArenaCore)obj).getName());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(this.getName()).build();
+	}
+
+	private void initializePersistentObjects() {
 		for(PersistentObject persistentObject : this.persistentObjects) {
 			persistentObject.reveal();
 			persistentObject.activate();
 		}
 	}
-	
+
 	private void hideRoleSelectionObjects() {
 		for(RoleSelectionObject roleSelectionObject : this.roleSelectionObjects) {
 			roleSelectionObject.hide();
 		}
 	}
-	
+
 	private void assignRolesIfPlayerDidntPickOne(Team... teams) {
 		for(Team team : teams) {
 			for(Player player : team.getPlayers()) {
@@ -265,7 +288,7 @@ public final class ArenaCore implements Arena {
 					Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(roleName);
 					if(role != null) {				
 						combatant.setRole(role);
-						player.sendMessage(ChatColor.AQUA + "You have been assigned to the " + role.getName() + " role.");
+						player.sendMessage(ChatColor.AQUA + "You have been assigned to the " + roleName + " role.");
 					} else {
 						Bukkit.broadcastMessage(ChatColor.RED + "Player failed to be assigned a role because the roll is null!"); //TODO - for testing
 					}

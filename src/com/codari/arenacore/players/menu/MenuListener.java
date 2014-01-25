@@ -25,6 +25,7 @@ public class MenuListener implements Listener {
 					if(!combatant.getMenuManager().isMenuOpen()) {
 						combatant.getMenuManager().enterMenu();
 						//FIXME - open inventory when we switch over to the other inventory type
+						//combatant.getPlayer().openInventory();
 						player.sendMessage(ChatColor.BLUE + "Opening menu!");	
 					} else {
 						combatant.getMenuManager().exitMenu();

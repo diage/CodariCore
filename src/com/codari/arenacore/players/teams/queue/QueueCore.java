@@ -1,7 +1,9 @@
 package com.codari.arenacore.players.teams.queue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,6 +23,7 @@ public class QueueCore {
 	private boolean matchStarting;
 	private BukkitTask task;
 	private int countDown;
+	private Map<String, Integer> previouslyDisplayedQueueTimes;
 	private final static int COUNT_DOWN_STARTING_VALUE = 10;
 
 	//-----Constructor-----//
@@ -29,6 +32,7 @@ public class QueueCore {
 		this.arenaNumberOfTeams = arena.getGameRule().getNumberOfTeams();
 		this.teams = new ArrayList<Team>();
 		this.countDown = COUNT_DOWN_STARTING_VALUE;
+		this.previouslyDisplayedQueueTimes = new HashMap<>();
 	}
 
 	//-----Public Methods-----//
@@ -51,8 +55,11 @@ public class QueueCore {
 			}
 			return false;
 		} else if(this.teams.contains(team)) {
-		((TeamCore)team).setInQueue(false);
+			((TeamCore)team).setInQueue(false);
 			this.teams.remove(team);
+			if(this.previouslyDisplayedQueueTimes.containsKey(team.getTeamName())) {
+				this.previouslyDisplayedQueueTimes.remove(team.getTeamName());
+			}
 			this.displayQueuePositions();
 			return true;
 		}
@@ -60,32 +67,24 @@ public class QueueCore {
 		return false;
 	}
 
-	public void removeTeamsFromQueue(Team... teams) {
+	public void removeTeamsFromQueue(Team[] teams) {
 		for(Team team : teams) {
-			if(this.matchStarting) {
-				for(Player player : team.getPlayers()) {
-					player.sendMessage(ChatColor.RED + "Failed to leave queue: The match is starting!");
-				}
-			} else if(this.teams.contains(team)) {
-				((TeamCore)team).setInQueue(false);
-				this.teams.remove(team);
-			} else {
-				Bukkit.broadcastMessage(ChatColor.RED + "Failed to remove team from queue!"); //TODO
-			}
+			this.removeTeamFromQueue(team);
 		}
-		this.displayQueuePositions();
 	}
 
 	public void removeAllTeamsFromQueue() {
 		Team[] teamArray =  new Team[this.teams.size()];
 		this.removeTeamsFromQueue(this.teams.toArray(teamArray));
 	}
-	
+
 	public void checkIfMatchShouldStart() {
 		if(this.teams.size() >= this.arenaNumberOfTeams) {
-			if(checkIfMatchIsNotInProgress(this.arena)) {		//check if the match is not already in progress
-				this.matchStarting = true;
-				this.countDown();
+			if(!this.matchStarting) {
+				if(checkIfMatchIsNotInProgress(this.arena)) {		
+					this.matchStarting = true;
+					this.countDown();
+				}
 			} else {
 				this.displayQueuePositions();	
 			}
@@ -115,9 +114,9 @@ public class QueueCore {
 					countDown--;
 					if(countDown <= 0) {
 						startArena();
-						countDown = COUNT_DOWN_STARTING_VALUE;
 						task.cancel();
 						task = null;
+						countDown = COUNT_DOWN_STARTING_VALUE;
 					}
 				}
 
@@ -127,8 +126,13 @@ public class QueueCore {
 
 	private void displayQueuePositions() {
 		for(Team team : this.teams) {
-			for(Player player : team.getPlayers()) {
-				player.sendMessage(ChatColor.BLUE + "Waiting for the arena to open up. Your team's queue positon is " + (this.teams.indexOf(team) + 1));
+			int queuePosition = this.teams.indexOf(team);
+			Integer previouslyDisplayedPosition = this.previouslyDisplayedQueueTimes.get(team.getTeamName());
+			this.previouslyDisplayedQueueTimes.put(team.getTeamName(), queuePosition);
+			if(previouslyDisplayedPosition == null || previouslyDisplayedPosition.intValue() != queuePosition) {
+				for(Player player : team.getPlayers()) {
+					player.sendMessage(ChatColor.BLUE + "Waiting for the arena to open up. Your team's queue positon is " + queuePosition);
+				}
 			}
 		}
 	}

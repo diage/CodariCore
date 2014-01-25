@@ -38,6 +38,7 @@ public class ArenaManagerCore implements ArenaManager {
 	//-----Fields-----//
 	private final Map<String, Combatant> combatants;
 	private final Map<String, ArenaCore> arenas;
+	//private final Map<String, ArenaGroupCore> arenaGroups;
 	private final Map<String, ArenaBuilderCore> arenaBuilders;
 	private final Map<String, ArenaRoleGroup> roleGroups;
 	private final Map<String, QueueCore> queues;
@@ -49,6 +50,7 @@ public class ArenaManagerCore implements ArenaManager {
 	public ArenaManagerCore() {
 		this.combatants = new HashMap<>();
 		this.arenas = new HashMap<>();
+		//this.arenaGroups = new HashMap<>();
 		this.arenaBuilders = new HashMap<>();
 		this.roleGroups = new HashMap<>();
 		this.queues = new HashMap<>();
