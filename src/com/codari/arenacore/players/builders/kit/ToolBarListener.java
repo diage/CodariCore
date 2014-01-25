@@ -79,7 +79,11 @@ public class ToolBarListener implements Listener {
 						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 					} else if(arenaObject instanceof FixedSpawnableObject) {
 						if (extraInformation != null) {
-							if(extraInformation.size() == 1) {
+							if(extraInformation.size() == 0) {
+								e.getPlayer().sendMessage(ChatColor.AQUA + "Fixed Spawnable w/ no delay time and no repeat time placed!");
+								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, Time.NULL);
+								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+							} else if(extraInformation.size() == 1) {
 								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
 								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 							} else if(extraInformation.size() >= 2) {

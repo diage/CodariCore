@@ -27,7 +27,9 @@ public class FixedSpawnableSlotIcon extends ExecutableIcon{
 			if(kit != null) {
 				Time delayTime = kit.getFixedDelayTime();
 				Time repeatTime = kit.getFixedRepeatTime();
-				if(repeatTime == null) {
+				if(repeatTime == null && delayTime == null) {
+					kit.setTool(this.slotNumber, this.arenaObjectName);
+				} else if(repeatTime == null) {
 					kit.setTool(this.slotNumber, this.arenaObjectName, delayTime.toString());
 				} else {
 					kit.setTool(this.slotNumber, this.arenaObjectName, delayTime.toString(), repeatTime.toString());

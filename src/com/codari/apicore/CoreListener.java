@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -212,6 +214,7 @@ public class CoreListener implements Listener {
 			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
 				combatant.setRole(new RoleCore(CombatantCore.NON_COMBATANT, null));
+				Bukkit.broadcastMessage(ChatColor.GREEN + combatant.getRole().getName());	//TODO
 				Player player = combatant.getPlayer();
 				player.getInventory().setContents(playerInventories.get(player.getName()));
 				player.updateInventory();

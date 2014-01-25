@@ -3,7 +3,9 @@ package com.codari.arenacore.players.role;
 import java.util.Collection;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.CodariI;
@@ -124,6 +126,9 @@ public class PlayerRole implements Role {
 					super.cancel();
 				}
 				if(cooldown > 0) {
+					if(player.getInventory().getItem(0) == null) {
+						player.getInventory().setItem(0, new ItemStack(Material.RED_ROSE));
+					}
 					player.getInventory().getItem(0).setAmount(cooldown); 
 					player.updateInventory();
 					cooldown--;
