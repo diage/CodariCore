@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.builders.kit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -71,25 +72,23 @@ public class ToolBarListener implements Listener {
 				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
 				if(arenaObject != null) {
 					arenaObject.reveal();
-					List<String> extraInformation = e.getItem().getItemMeta().getLore();
+					List<String> extraInformation = e.getItem().getItemMeta().hasLore() ? e.getItem().getItemMeta().getLore() : new ArrayList<String>();
 
 					//---Registering Arena Objects---//
 					if(arenaObject instanceof RandomSpawnableObject) {
 						builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
 						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 					} else if(arenaObject instanceof FixedSpawnableObject) {
-						if (extraInformation != null) {
-							if(extraInformation.size() == 0) {
-								e.getPlayer().sendMessage(ChatColor.AQUA + "Fixed Spawnable w/ no delay time and no repeat time placed!");
-								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, Time.NULL);
-								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
-							} else if(extraInformation.size() == 1) {
-								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
-								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
-							} else if(extraInformation.size() >= 2) {
-								builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
-								e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
-							}
+						if(extraInformation.size() == 0) {
+							e.getPlayer().sendMessage(ChatColor.AQUA + "Fixed Spawnable w/ no delay time and no repeat time placed!");
+							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, Time.NULL);
+							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+						} else if(extraInformation.size() == 1) {
+							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))));
+							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
+						} else if(extraInformation.size() >= 2) {
+							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
+							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						}
 					} else if(arenaObject instanceof ImmediatePersistentObject) {
 						builder.registerPersistent((ImmediatePersistentObject) arenaObject);
@@ -100,7 +99,7 @@ public class ToolBarListener implements Listener {
 							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						}
 					} else if(arenaObject instanceof DelayedPersistentObject) {
-						if(extraInformation != null && extraInformation.size() >= 2) {
+						if(extraInformation.size() >= 2) {
 							builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
 							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						}
