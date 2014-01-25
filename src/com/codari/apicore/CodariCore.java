@@ -25,7 +25,6 @@ import com.codari.arena.objects.traps.FireTrap;
 import com.codari.arena.objects.traps.PoisonSnareTrap;
 import com.codari.arena.objects.traps.structure.TrapListener;
 import com.codari.arena.players.RoleHotbarListener;
-import com.codari.arena.players.roleswitch.RoleSwitchListener;
 import com.codari.arena.players.skills.DamageReductionSkill;
 import com.codari.arena.players.skills.TeleportSkill;
 import com.codari.arena.rules.ArenaRoleDeclaration;
@@ -118,7 +117,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Codari.getLibrary().registerSkill(TeleportSkill.class);	
 		
 		//---Events---//
-		Bukkit.getPluginManager().registerEvents(new RoleSwitchListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ObjectivePointListener(), this);
 		Bukkit.getPluginManager().registerEvents(new TrapListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ItemSpawnerListener(), this);

@@ -16,6 +16,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
+import com.codari.api5.CodariI;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.api5.util.Tick;
 import com.codari.api5.util.Time;
@@ -173,6 +174,19 @@ public class ArenaManagerCore implements ArenaManager {
 	public Role getExistingRole(String arenaName, String roleName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			return this.roleGroups.get(arenaName).getRole(roleName);
+		}
+		return null;
+	}
+	
+@Override
+	public Collection<Role> getExistingRoles(String arenaName) {
+		if(this.roleGroups.containsKey(arenaName)) {
+			List<Role> roles = new ArrayList<>();
+			for(String roleName : this.roleGroups.get(arenaName).getRoleNames()) {
+				Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(roleName);
+				roles.add(role);
+			}
+			return roles;
 		}
 		return null;
 	}
