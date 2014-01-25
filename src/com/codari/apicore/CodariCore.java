@@ -12,6 +12,7 @@ import com.codari.apicore.command.CommandRegister;
 import com.codari.apicore.enchantment.EnchantmentManagerCore;
 import com.codari.apicore.itemdata.ItemDataManagerCore;
 import com.codari.apicore.player.CodariPlayerManagerCore;
+import com.codari.arena.objects.RoleSwitchListenerObject;
 import com.codari.arena.objects.gate.Gate;
 import com.codari.arena.objects.itemspawner.MainItemSpawner;
 import com.codari.arena.objects.itemspawner.structure.ItemSpawnerListener;
@@ -99,6 +100,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		//new StatRegistry();
 		
 		//---Arena Objects---//
+		Codari.getLibrary().registerArenaObject(RoleSwitchListenerObject.class);
 		Codari.getLibrary().registerArenaObject(Gate.class);
 		Codari.getLibrary().registerArenaObject(MainItemSpawner.class);
 		Codari.getLibrary().registerArenaObject(DiamondObjectivePoint.class);
