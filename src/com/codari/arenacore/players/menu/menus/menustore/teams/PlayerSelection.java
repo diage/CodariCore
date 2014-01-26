@@ -21,7 +21,7 @@ public class PlayerSelection extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		if(combatant.getTeam() != null && combatant.getTeam().getTeamSize() > 1) {
 			for(Combatant teamMate: combatant.getTeam().getTeamMates(combatant)) {
-				this.addPlayerIcon(combatant, teamMate.getPlayer().getName());
+				this.addPlayerIcon(combatant, teamMate.getPlayer().getName()); //FIXME -- This is causing an error when a player is not currently logged into the game. 
 			}
 		}
 		((CombatantCore)combatant).getDynamicMenuManager().setPlayerSelectionMenu(this);
