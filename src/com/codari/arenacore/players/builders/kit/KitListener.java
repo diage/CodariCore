@@ -96,13 +96,10 @@ public class KitListener implements Listener {
 		if(!(kit == null)) {
 			if(e.getIcon() instanceof UpdateRandomDelayMinutesIcon) {
 				kit.updateRandomDelayMinutes(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Minutes!");	//TODO
 			} else if(e.getIcon() instanceof UpdateRandomDelaySecondsIcon) {
 				kit.updateRandomDelaySeconds(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Seconds!");
 			} else if(e.getIcon() instanceof UpdateRandomDelayTicksIcon) {
 				kit.updateRandomDelayTicks(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Delay Ticks!");
 			}
 		}
 	}
@@ -113,13 +110,10 @@ public class KitListener implements Listener {
 		if(!(kit == null)) {
 			if(e.getIcon() instanceof UpdateRandomRepeatMinutesIcon) {
 				kit.updateRandomRepeatMinutes(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Repeat Minutes!");	//TODO
 			} else if(e.getIcon() instanceof UpdateRandomRepeatSecondsIcon) {
 				kit.updateRandomRepeatSeconds(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Repeat Seconds!");	//TODO
 			} else if(e.getIcon() instanceof UpdateRandomRepeatTicksIcon) {
 				kit.updateRandomRepeatTicks(e.getNewInput());
-				Bukkit.broadcastMessage(ChatColor.GREEN + "Updated Random Repeat Ticks!");	//TODO
 			}
 		}		
 	}
