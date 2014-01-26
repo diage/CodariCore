@@ -15,7 +15,7 @@ import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class MenuListener implements Listener {
 	private static final int MAIN_MENU_SLOT_NUMBER = 8;
-	
+
 	@EventHandler() 
 	public void openMenuInventoryClick(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player && e.getInventory().getType() == InventoryType.CRAFTING) {
@@ -60,8 +60,10 @@ public class MenuListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void dropMenu(PlayerDropItemEvent e) {
-		if(e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
-			e.setCancelled(true);
+		if(e.getItemDrop().getItemStack() != null && e.getItemDrop().getItemStack().getItemMeta().hasDisplayName()) {
+			if(e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Main Menu")) {
+				e.setCancelled(true);
+			}
 		}
 	}
 

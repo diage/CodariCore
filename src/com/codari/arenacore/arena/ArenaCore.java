@@ -133,7 +133,6 @@ public final class ArenaCore implements Arena {
 
 	@Override
 	public void start(Team... teams) {
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Arena starting up!"); //TODO - for testing
 		this.warmUpPeriod(teams);
 	}
 
@@ -279,6 +278,16 @@ public final class ArenaCore implements Arena {
 		for(Team team : teams) {
 			for(Player player : team.getPlayers()) {
 				Combatant combatant = Codari.getArenaManager().getCombatant(player);
+				if(combatant == null) {
+					Bukkit.broadcastMessage(ChatColor.RED + "Combatant is null!");
+					return;
+				} else if(combatant.getRole() == null) {
+					Bukkit.broadcastMessage(ChatColor.RED + "Role is null!");
+					return;
+				} else if(combatant.getRole().getName() == null) {
+					Bukkit.broadcastMessage(ChatColor.RED + "Role Name is null!");
+					return;
+				}
 				if(combatant.getRole().getName().equals(CombatantCore.NON_COMBATANT)) {
 					List<String> roleNames = new ArrayList<>();
 					roleNames.addAll(((ArenaManagerCore) Codari.getArenaManager()).getExistingRoleNames(this.name));

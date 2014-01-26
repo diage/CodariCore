@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
+import com.codari.arena.objects.RoleSwitchListenerObject;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
@@ -79,8 +80,10 @@ public class ToolBarListener implements Listener {
 						builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
 						e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 					} else if(arenaObject instanceof FixedSpawnableObject) {
+						if(arenaObject instanceof RoleSwitchListenerObject) {
+							((RoleSwitchListenerObject) arenaObject).setArenaName(kit.getName());	
+						}
 						if(extraInformation.size() == 0) {
-							e.getPlayer().sendMessage(ChatColor.AQUA + "Fixed Spawnable w/ no delay time and no repeat time placed!");
 							builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, Time.NULL);
 							e.getPlayer().sendMessage(ChatColor.GREEN + " Object Placed: " + arenaObject.getName());
 						} else if(extraInformation.size() == 1) {

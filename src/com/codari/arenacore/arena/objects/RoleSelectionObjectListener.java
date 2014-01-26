@@ -40,7 +40,7 @@ public class RoleSelectionObjectListener implements Listener {
 			if(metaDataValue != null) {
 				RoleSelectionObject roleSelectionObject = (RoleSelectionObject) metaDataValue.value();
 				Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
-				if(/*combatant.inArena()*/true) {	//FIXME - leaving this out for testing purposes
+				if(combatant.inArena()) {	
 					roleSelectionObject.interact(combatant);
 					roleSelectionObjects.put(e.getPlayer().getName(), roleSelectionObject);
 				}
@@ -55,22 +55,26 @@ public class RoleSelectionObjectListener implements Listener {
 			if(e.getWhoClicked() instanceof Player && e.getCurrentItem() != null) {
 				Player player = (Player) e.getWhoClicked();
 				Combatant combatant = Codari.getArenaManager().getCombatant(player);
-				if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
-					String newRoleName = e.getCurrentItem().getItemMeta().getDisplayName();
-					Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(newRoleName);
-					if(role != null && combatant.getRole() != null) {
-						if(!combatant.getRole().getName().equals(newRoleName)) {
-							roleSelectionObjects.get(player.getName()).adjustRoleIcons(combatant, newRoleName);
-							combatant.setRole(role);
-							player.sendMessage(ChatColor.AQUA + "Your role is now " + newRoleName + ".");
+				if(e.getCurrentItem().hasItemMeta()) {
+					if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
+						String newRoleName = e.getCurrentItem().getItemMeta().getDisplayName();
+						Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(newRoleName);
+						if(role != null && combatant.getRole() != null) {
+							if(!combatant.getRole().getName().equals(newRoleName)) {
+								roleSelectionObjects.get(player.getName()).adjustRoleIcons(combatant, newRoleName);
+								combatant.setRole(role);
+								player.sendMessage(ChatColor.AQUA + "Your role is now " + newRoleName + ".");
+							} else {
+								player.sendMessage(ChatColor.AQUA + "You already have that role!");
+							}
 						} else {
-							player.sendMessage(ChatColor.AQUA + "You already have that role!");
+							Bukkit.broadcastMessage(ChatColor.RED + "Combatant is trying to select a role but it's not working!"); //TODO - for testing
 						}
 					} else {
-						Bukkit.broadcastMessage(ChatColor.RED + "Combatant is trying to select a role but it's not working!"); //TODO - for testing
+						Bukkit.broadcastMessage(ChatColor.RED + "Icon doesn't have a role name set as its display name!");	//TODO - for testing
 					}
 				} else {
-					Bukkit.broadcastMessage(ChatColor.RED + "Icon doesn't have a role name set as its display name!");	//TODO - for testing
+					Bukkit.broadcastMessage(ChatColor.RED + "Item doesn't have item meta!");	//TODO - for testing
 				}
 			}
 			e.setCancelled(true);
