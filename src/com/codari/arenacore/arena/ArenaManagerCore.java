@@ -46,7 +46,7 @@ public class ArenaManagerCore implements ArenaManager {
 	private final Map<String, GameRuleCore> gameRules;
 	private final File builderDir;
 	private final File roleDir;
-	
+
 	//-----Constructor-----//
 	public ArenaManagerCore() {
 		this.combatants = new HashMap<>();
@@ -109,7 +109,7 @@ public class ArenaManagerCore implements ArenaManager {
 			this.builderDir.mkdirs();
 		}
 	}
-	
+
 	//-----Public Methods-----//
 	//----Combatant Related----//
 	@Override
@@ -122,16 +122,16 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 		return combatant;
 	}
-	
+
 	@Override
 	public Combatant getCombatant(OfflinePlayer player) {
 		return this.getCombatant(player.getName());
 	}
-	
+
 	public Collection<Combatant> getCombatants() {
 		return this.combatants.values();
 	} 
-	
+
 	@Override
 	public Team getTeam(String arenaName, String teamName) {
 		return this.getArena(arenaName).getTeams().get(teamName);
@@ -141,14 +141,14 @@ public class ArenaManagerCore implements ArenaManager {
 	public Team getTeam(Combatant combatant) {
 		return combatant.getTeam();
 	}
-	
-	
+
+
 	//----Role Related----//
 	@Override
 	public Role getNewRole(String name) {
 		return new RoleCore(name, null);
 	}
-	
+
 	@Override
 	public boolean submitRole(String arenaName, Role role) {
 		if(this.roleGroups.containsKey(arenaName)) {
@@ -162,14 +162,14 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void clearRole(String arenaName, String roleName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			this.roleGroups.get(arenaName).removeRole(roleName);
 		}
 	}
-	
+
 	@Override
 	public Role getExistingRole(String arenaName, String roleName) {
 		if(this.roleGroups.containsKey(arenaName)) {
@@ -177,8 +177,8 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 		return null;
 	}
-	
-@Override
+
+	@Override
 	public Collection<Role> getExistingRoles(String arenaName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			List<Role> roles = new ArrayList<>();
@@ -190,35 +190,35 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 		return null;
 	}
-	
+
 	public boolean hasAnExistingRole(String arenaName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			return this.roleGroups.get(arenaName).getRoleNames().size() > 0;
 		}
 		return false;
 	}
-	
+
 	public Collection<String> getExistingRoleNames(String arenaName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			return this.roleGroups.get(arenaName).getRoleNames();
 		}
 		return null;
 	}
-	
+
 	//----Arena Builder Related----//
 	@Override
 	public ArenaCore getArena(String name) {
 		return this.arenas.get(name);
 	}
-	
+
 	public Map<String, ArenaCore> getArenaList() {
 		return new LinkedHashMap<>(this.arenas);
 	}
-	
+
 	public boolean containsArena(String arenaName) {
 		return this.arenas.containsKey(arenaName);
 	}
-	
+
 	@Override
 	public boolean addToQueue(String arenaName, Team team) {
 		if(!this.queues.containsKey(arenaName)) {
@@ -227,7 +227,7 @@ public class ArenaManagerCore implements ArenaManager {
 		((TeamCore) team).setQueue(this.queues.get(arenaName));
 		return ((TeamCore) team).getQueue().addTeamToQueue(team);
 	}
-	
+
 	@Override
 	public boolean removeFromQueue(Team team) {
 		QueueCore queue = ((TeamCore) team).getQueue();
@@ -238,30 +238,34 @@ public class ArenaManagerCore implements ArenaManager {
 		Bukkit.broadcastMessage(ChatColor.RED + "Trying to remove a team that's not in queue from a queue.");	//TODO
 		return false;
 	}
-	
+
 	public QueueCore getQueue(String arenaName) {
 		return this.queues.get(arenaName);
 	}
-	
+
 	@Override
 	public Arena buildArena(String requestedName, ArenaBuilder arenaBuilder) {
 		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
 		this.arenas.put(requestedName, arena);
 		this.queues.put(requestedName, new QueueCore(arena));
 		for(Combatant combatant : this.combatants.values()) {
-			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(requestedName);
-			combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
+			if(combatant != null) {
+				((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(requestedName);
+				combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
+			}
 		}
 		return arena;
 	}
-	
+
 	public Arena loadArena(File file) {
 		ArenaCore arena = (ArenaCore) CodariSerialization.deserialize(file);
 		this.arenas.put(arena.getName(), arena);
 		this.queues.put(arena.getName(), new QueueCore(arena));
 		for(Combatant combatant : this.combatants.values()) {
-			((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
-			combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
+			if(combatant != null) {
+				((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
+				combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
+			}
 		}
 		return arena;
 	}
@@ -274,30 +278,30 @@ public class ArenaManagerCore implements ArenaManager {
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
 		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
 	}
-	
+
 	public ArenaBuilderCore getArenaBuilder(String arenaName) {
 		return this.arenaBuilders.get(arenaName);
 	}
-	
+
 	public boolean containsArenaBuilder(String arenaName) {
 		return this.arenaBuilders.containsKey(arenaName);
 	}
-	
+
 	public Set<Entry<String, ArenaBuilderCore>> getArenaBuilders() {
 		return this.arenaBuilders.entrySet();
 	}
-	
+
 	public void registerGameRule(GameRuleCore gameRule) {
 		if (this.gameRules.containsKey(gameRule.getName())) {
 			throw new IllegalArgumentException("Game rule with that name already exists");
 		}
 		this.gameRules.put(gameRule.getName(), gameRule);
 	}
-	
+
 	public GameRuleCore getGameRule(String key) {
 		return this.gameRules.get(key);
 	}
-	
+
 	public Set<Entry<String, GameRuleCore>> getGameRules() {
 		return this.gameRules.entrySet();
 	}
@@ -305,33 +309,33 @@ public class ArenaManagerCore implements ArenaManager {
 	public class ArenaRoleGroup {
 		private Map<String, Role> roleGroup;
 		private static final String NON_COMBATANT = "Non Combatant";
-		
+
 		public ArenaRoleGroup() {
 			this.roleGroup = new HashMap<>(); 
 			this.roleGroup.put(NON_COMBATANT, new RoleCore(NON_COMBATANT, null));
 		}
-		
+
 		public ArenaRoleGroup(Role role) {
 			this.roleGroup = new HashMap<>(); 
 			this.roleGroup.put(NON_COMBATANT, new RoleCore(NON_COMBATANT, null));
 			this.roleGroup.put(role.getName(), role);
 		}
-		
+
 		public void addRole(Role role) {
 			this.roleGroup.put(role.getName(), role);
 		}
-		
+
 		public boolean contains(Role role) {
 			return this.roleGroup.containsKey(role.getName());
 		}
-		
+
 		public Role getRole(String roleName) {
 			if(this.roleGroup.containsKey(roleName)) {
 				return this.roleGroup.get(roleName);
 			}
 			return null;
 		}
-		
+
 		public Collection<String> getRoleNames() {
 			List<String> roleNames = new ArrayList<>();
 			for(String roleName : this.roleGroup.keySet()) {
@@ -341,12 +345,12 @@ public class ArenaManagerCore implements ArenaManager {
 			}
 			return roleNames;
 		}
-		
+
 		public void removeRole(String roleName) {
 			this.roleGroup.remove(roleName);
 		}
 	}
-	
+
 	public void saveArenaBuilders() {
 		for (Entry<String, ArenaBuilderCore> e : this.arenaBuilders.entrySet()) {
 			try {
@@ -367,7 +371,7 @@ public class ArenaManagerCore implements ArenaManager {
 			}
 		}
 	}
-	
+
 	public void saveGameRules() {
 		for (Entry<String, GameRuleCore> e : this.gameRules.entrySet()) {
 			try {
@@ -412,7 +416,7 @@ public class ArenaManagerCore implements ArenaManager {
 		this.arenaBuilders.put(name, arenaBuilder);
 		return true;
 	}
-	
+
 	public boolean saveGameRule(String name) {
 		if (!this.gameRules.containsKey(name)) {
 			CodariCore.instance().getLogger().log(Level.WARNING, "No game rule saved under the name " + name);
