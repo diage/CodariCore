@@ -32,6 +32,7 @@ public final class CombatantCore implements Combatant {
 	//-----Constants-----//
 	public final static String NON_COMBATANT = "Non Combatant";
 	private final static String DATA_FILE_PATH = "Combatants" + File.separator + "%s" + ".dat";
+	private final static Role NON_COMBATANT_ROLE = new RoleCore(NON_COMBATANT, null);
 	
 	//-----Fields-----//
 	private final CodariPlayer player;
@@ -66,7 +67,7 @@ public final class CombatantCore implements Combatant {
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);	
 		this.activeHotbar = false;
 		this.hotbarCooldown = new CodariRunnable(CodariI.INSTANCE) {public void run() {}};	
-		this.role = new PlayerRole(this, new RoleCore(NON_COMBATANT, null));		
+		this.role = new PlayerRole(this, NON_COMBATANT_ROLE);		
 		this.dynamicMenuManager = new DynamicMenuManager(this);	
 		this.menuManager = new MenuManager(this); 
 		this.toolbarManager = new ToolbarManager(this);
@@ -130,7 +131,7 @@ public final class CombatantCore implements Combatant {
 		if(arena != null) {
 			this.arenaName = null;
 			this.inArena = false;
-			this.setRole(null);
+			this.setRole(NON_COMBATANT_ROLE);
 			return true;
 		}
 		return false;

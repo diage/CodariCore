@@ -306,11 +306,13 @@ public class Kit {
 		return ArrayUtils.clone(this.tools);
 	}
 	
-	void addSpawn(Location location) {
-		addSpawn(location, this.tools[4]);
+	protected String addSpawn(ItemStack itemStack, Location location) {
+		this.addSpawn(location, this.tools[4]);
+		this.addSpawn(location, itemStack);
+		return this.spawnString(location);
 	}
 	
-	void addSpawn(Location location, ItemStack itemStack) {
+	private void addSpawn(Location location, ItemStack itemStack) {
 		ItemMeta meta = itemStack.getItemMeta();
 		List<String> lore = meta.getLore();
 		lore.add(spawnString(location));
@@ -318,7 +320,7 @@ public class Kit {
 		itemStack.setItemMeta(meta);
 	}
 	
-	String spawnString(Location location) {
+	private String spawnString(Location location) {
 		return ChatColor.GREEN + "Spawn:" +
 				" x=" + location.getBlockX() +
 				" y=" + location.getBlockY() +

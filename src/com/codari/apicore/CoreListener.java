@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -38,8 +36,6 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.hotbar.HotbarOption;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
-import com.codari.arenacore.players.combatants.CombatantCore;
-import com.codari.arenacore.players.role.RoleCore;
 import com.codari.arenacore.players.teams.TeamBuilder;
 import com.codari.arenacore.players.teams.TeamCore;
 
@@ -213,8 +209,6 @@ public class CoreListener implements Listener {
 		for(Entry<String, Team> teamEntry : e.getArena().getTeams().entrySet()) {
 			Team team = teamEntry.getValue();
 			for(Combatant combatant : team.combatants()) {
-				combatant.setRole(new RoleCore(CombatantCore.NON_COMBATANT, null));
-				Bukkit.broadcastMessage(ChatColor.GREEN + combatant.getRole().getName());	//TODO
 				Player player = combatant.getPlayer();
 				player.getInventory().setContents(playerInventories.get(player.getName()));
 				player.updateInventory();
