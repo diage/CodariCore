@@ -60,5 +60,9 @@ public class InitialGuildOptions extends FunctionMenu {
 		} else {
 			this.setNoGuildIcon();
 		}
+		
+		if(((CombatantCore) this.combatant).checkIfBeingInvitedToGuild()) {
+			this.addGuildInvitationIcons(((CombatantCore) this.combatant).getInviteGuild());
+		}
 	}
 }

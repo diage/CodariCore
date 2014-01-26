@@ -15,7 +15,7 @@ public class DeclineTeamInviteIcon extends ExecutableIcon  {
 	@Override
 	public void click() {
 		((CombatantCore) this.getCombatant()).getDynamicMenuManager().removeTeamInvitationIcons();
-		((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(false);	
+		((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(null);	
 	}
 	
 }

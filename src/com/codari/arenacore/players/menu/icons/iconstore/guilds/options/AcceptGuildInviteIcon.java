@@ -28,7 +28,7 @@ public class AcceptGuildInviteIcon extends ExecutableIcon {
 		}
 		GuildBuilder.addGuildMember(this.getCombatant(), guild, GuildRanking.MEMBER);
 		((CombatantCore) this.getCombatant()).getDynamicMenuManager().removeGuildInvitationIcons();
-		((CombatantCore) this.getCombatant()).setBeingInvitedToGuild(false);
+		((CombatantCore) this.getCombatant()).setBeingInvitedToGuild(null);
 	}
 
 }

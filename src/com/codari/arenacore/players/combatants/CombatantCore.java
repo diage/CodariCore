@@ -15,6 +15,7 @@ import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
+import com.codari.arena5.players.guilds.Guild;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
@@ -42,11 +43,11 @@ public final class CombatantCore implements Combatant {
 	private DynamicMenuManager dynamicMenuManager;
 	private MenuManager menuManager;
 	
-	private boolean isLeader, inArena, isBeingInvitedToATeam, isBeingInvitedToAGuild;
-	private TeamCore team;
+	private boolean isLeader, inArena;
+	private TeamCore team, inviteTeam;
+	private GuildCore guild, inviteGuild;
 	private Role role;
 	private String arenaName;
-	private GuildCore guild;
 	
 	//---Hotbar---//
 	//***Skill Bar***//
@@ -180,20 +181,28 @@ public final class CombatantCore implements Combatant {
 		return this.isLeader;
 	}
 	
-	public void setBeingInvitedToTeam(boolean isBeingInvitedToATeam) {
-		this.isBeingInvitedToATeam = isBeingInvitedToATeam;
+	public void setBeingInvitedToTeam(Team inviteTeam) {
+		this.inviteTeam = (TeamCore) team;
 	}
 	
 	public boolean checkIfBeingInvitedToTeam() {
-		return this.isBeingInvitedToATeam;
+		return this.inviteTeam != null;
 	}
 	
-	public void setBeingInvitedToGuild(boolean isBeingInvitedToAGuild) {
-		this.isBeingInvitedToAGuild = isBeingInvitedToAGuild;
+	public Team getInviteTeam() {
+		return this.inviteTeam;
+	}
+	
+	public void setBeingInvitedToGuild(Guild inviteGuild) {
+		this.inviteGuild = (GuildCore) inviteGuild;
 	}
 	
 	public boolean checkIfBeingInvitedToGuild() {
-		return this.isBeingInvitedToAGuild;
+		return this.inviteGuild != null;
+	}
+	
+	public Guild getInviteGuild() {
+		return this.inviteGuild;
 	}
 
 	@Override

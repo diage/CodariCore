@@ -321,7 +321,8 @@ public class Kit {
 	}
 	
 	private String spawnString(Location location) {
-		return ChatColor.GREEN + "Spawn:" +
+		return ChatColor.GREEN + "Spawn #" + 
+				this.arenaBuilder.getNumberOfSpawns() + ":" +
 				" x=" + location.getBlockX() +
 				" y=" + location.getBlockY() +
 				" z=" + location.getBlockZ();

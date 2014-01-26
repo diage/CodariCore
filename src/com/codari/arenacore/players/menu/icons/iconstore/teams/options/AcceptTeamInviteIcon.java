@@ -30,7 +30,7 @@ public class AcceptTeamInviteIcon extends ExecutableIcon {
 				}
 				TeamBuilder.addPlayer(team, this.getCombatant());
 				((CombatantCore) this.getCombatant()).getDynamicMenuManager().removeTeamInvitationIcons();
-				((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(false);
+				((CombatantCore) this.getCombatant()).setBeingInvitedToTeam(null);
 			} else {
 				player.sendMessage(ChatColor.RED + "You can't join the Team because they are currently in a queue!");
 			}

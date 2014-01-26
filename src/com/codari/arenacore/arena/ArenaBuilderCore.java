@@ -77,6 +77,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		return this.spawners;
 	}
 	
+	public int getNumberOfSpawns() {
+		return this.spawners.size();
+	}
+	
 	public void setGameRule(GameRule rule) {
 		this.rules = rule;
 	}

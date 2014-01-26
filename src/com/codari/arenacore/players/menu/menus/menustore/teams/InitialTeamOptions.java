@@ -60,5 +60,9 @@ public class InitialTeamOptions extends FunctionMenu {
 		} else {
 			this.setNoTeamIcon();
 		}
+		
+		if(((CombatantCore) this.combatant).checkIfBeingInvitedToTeam()) {
+			this.addTeamInvitationIcons(((CombatantCore) this.combatant).getInviteTeam());	
+		}
 	}
 }

@@ -33,7 +33,7 @@ public class InvitePlayersIcon extends ExecutableIcon {
 						if(!invitedCombatant.checkIfBeingInvitedToTeam()) {
 							player.sendMessage(ChatColor.GREEN + "You have invited " + invitedPlayerName + " to your team.");
 							invitedCombatant.getDynamicMenuManager().addTeamInvitationIcons(team);
-							invitedCombatant.setBeingInvitedToTeam(true);
+							invitedCombatant.setBeingInvitedToTeam(team);
 							invitedPlayer.sendMessage(ChatColor.GREEN + "You have been invited to the team \"" + team.getTeamName() + "\". "
 									+ "Open up your Team Menu to accept or decline.");
 						} else {

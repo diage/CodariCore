@@ -31,7 +31,7 @@ public class InvitePlayerIcon extends ExecutableIcon {
 					if(!invitedCombatant.checkIfBeingInvitedToGuild()) {
 						player.sendMessage(ChatColor.GREEN + "You have invited " + invitedPlayerName + " to your guild.");
 						invitedCombatant.getDynamicMenuManager().addGuildInvitationIcons(guild);
-						invitedCombatant.setBeingInvitedToGuild(true);
+						invitedCombatant.setBeingInvitedToGuild(guild);
 						invitedPlayer.sendMessage(ChatColor.GREEN + "You have been invited to the Guild \"" + guild.getGuildName() + "\". "
 								+ "Open up your Guild Menu to accept or decline.");
 					} else {

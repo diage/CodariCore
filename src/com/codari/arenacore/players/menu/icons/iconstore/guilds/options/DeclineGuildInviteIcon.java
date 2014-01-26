@@ -15,7 +15,7 @@ public class DeclineGuildInviteIcon extends ExecutableIcon {
 	@Override
 	public void click() {
 		((CombatantCore) this.getCombatant()).getDynamicMenuManager().removeGuildInvitationIcons();
-		((CombatantCore) this.getCombatant()).setBeingInvitedToGuild(false);
+		((CombatantCore) this.getCombatant()).setBeingInvitedToGuild(null);
 	}
 
 }
