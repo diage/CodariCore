@@ -14,6 +14,12 @@ public class RoleData {
 		 this.roleCounter = this.MAX;
 	 }
 	 
+	 public RoleData(RoleData other) {
+		 this.role = other.role;
+		 this.MAX = other.MAX;
+		 this.roleCounter = this.MAX;
+	 }
+	 
 	 public Role getRole() {
 		 return this.role;
 	 }
@@ -40,5 +46,9 @@ public class RoleData {
 	 
 	 public boolean isInfinite() {
 		 return this.roleCounter == INFINITE;
+	 }
+	 
+	 public void resetToInitialSettings() {
+		 this.roleCounter = this.MAX;
 	 }
 }

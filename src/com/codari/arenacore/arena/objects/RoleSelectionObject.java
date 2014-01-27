@@ -32,6 +32,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	private Map<String, RoleData> roleDatas;
 	private Location location;
 	private final String name;
+	List<RoleData> remainingRoles;
 
 	public static final String INVENTORY_NAME = "Role Selection";
 	private Inventory inventory;
@@ -43,22 +44,27 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		ArenaObjectName arenaObjectName = this.getClass().getAnnotation(ArenaObjectName.class);
 		this.name = arenaObjectName.value();
 		this.quartzBlockState = location.getBlock().getState();
+		this.remainingRoles = new ArrayList<>();
 	}
 
 	public void setRoleDatas(Map<String, RoleData> roleDatas) {
 		this.roleDatas = roleDatas;
-		this.setupInventory();
+		int size = this.roleDatas.size();
+		size = size < 0 ? 0 : (size > 54 ? 54 : (size % 9 != 0 ? (((size + 8) / 9) * 9) : size));
+		this.inventory = Bukkit.createInventory(null, size, INVENTORY_NAME);
 	}
 
 	@Override
 	public void reveal() {
 		this.quartzBlockState.getBlock().setType(quartzBlockMaterial);
 	}
-	
+
 	@Override
 	public void activate() {	
 		if(!this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
 			this.quartzBlockState.setMetadata(META_DATA_STRING, new FixedMetadataValue(CodariI.INSTANCE, this));
+			this.remainingRoles.clear();
+			this.initializeInventory();
 		}
 	}
 
@@ -91,20 +97,32 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			this.swapRole(combatant.getRole().getName(), newRoleName);
 		}
 	}
-	
+
 	public List<RoleData> getRemainingRoles() {
-		List<RoleData> remainingRoles = new ArrayList<>();
-		for(String roleName : this.roleDatas.keySet()) {
-			if(this.roleDatas.get(roleName).getCounter() > 0 || this.roleDatas.get(roleName).getCounter() == RoleData.INFINITE) {
-				remainingRoles.add(this.roleDatas.get(roleName));
+		return this.remainingRoles;
+	}
+
+	private void storeRemainingRoles() {
+		if(this.roleDatas.size() > 0) {
+			for(String roleName : this.roleDatas.keySet()) {
+				if(this.roleDatas.get(roleName).getCounter() > 0 || this.roleDatas.get(roleName).getCounter() == RoleData.INFINITE) {
+					this.remainingRoles.add(new RoleData(this.roleDatas.get(roleName)));
+				}
 			}
 		}
-		return remainingRoles;
+	}
+
+	private void resetRoleDatas() {
+		for(String roleName : this.roleDatas.keySet()) {
+			this.roleDatas.get(roleName).resetToInitialSettings();
+		}
 	}
 
 	private void deactivate() {	
 		if(this.quartzBlockState.hasMetadata(META_DATA_STRING)) {
 			this.quartzBlockState.removeMetadata(META_DATA_STRING, CodariI.INSTANCE);
+			this.storeRemainingRoles();
+			this.resetRoleDatas();
 		}
 		this.closeInventoryViewers();
 	}
@@ -156,16 +174,13 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		this.removeRole(newRoleName);
 	}
 
-	private void setupInventory() {
-		int size = this.roleDatas.size();
-		size = size < 0 ? 0 : (size > 54 ? 54 : (size % 9 != 0 ? (((size + 8) / 9) * 9) : size));
-		this.inventory = Bukkit.createInventory(null, size, INVENTORY_NAME);
+	private void initializeInventory() {
+		this.inventory.clear();
 		int counter = 0;
 		for(String roleName : this.roleDatas.keySet()) {
 			int numberOfRoles = this.roleDatas.get(roleName).getCounter();
 			this.inventory.setItem(counter++, this.createIcon(roleName, numberOfRoles));
 		}
-		//this.activate();	//TODO - Remove this when we call the activate method from the Arena startup
 	}
 
 	private ItemStack createIcon(String roleName, int numberOfRoles) {
@@ -187,7 +202,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 			}
 		}
 	}
-	
+
 	private void closeInventoryViewers() {
 		for(HumanEntity humanEntity : this.inventory.getViewers()) {
 			humanEntity.closeInventory();

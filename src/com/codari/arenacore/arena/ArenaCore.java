@@ -143,14 +143,10 @@ public final class ArenaCore implements Arena {
 				this.warmUpTask = Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, new Runnable() {
 					@Override
 					public void run() {
-						for(Team team : teams) {
-							for(Player player : team.getPlayers()) {
-								if(countDown == warmUpPeriodTime) {
-									player.sendMessage("Warmup Period - " + warmUpPeriodTime + " seconds");
-								} 
-								player.sendMessage("[" + countDown + "]");
-							}
+						if(countDown == warmUpPeriodTime) {
+							sendMessageToAllPlayers("Warmup Period - " + warmUpPeriodTime + " seconds");
 						}
+						sendMessageToAllPlayers("[" + countDown + "]");
 						countDown--;
 						if(countDown <= 0) {
 							startArena(teams);
@@ -165,32 +161,29 @@ public final class ArenaCore implements Arena {
 		}
 	}
 
-	private boolean startArena(Team... teams) {
-		if (this.isMatchInProgress()) {
-			hideRoleSelectionObjects();
-			assignRolesIfPlayerDidntPickOne(teams);
-			ArenaStartEvent e = new ArenaStartEvent(this);
-			Bukkit.getPluginManager().callEvent(e);
-			if (e.isCancelled()) {
-				this.teams.clear();
-				return false;
-			}
-
-			for (WinCondition winCond : this.rules.getWinConditions()) {
-				winCond.initialize(this);
-			}
-
-			for (TimedAction action : this.actions) {
-				long delay, period;
-				delay = action.getDelay() != null ? action.getDelay().ticks() : 1l;
-				period = action.getPeriod() != null ? action.getPeriod().ticks() : 0l;
-
-				this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action, delay, period));
-			}
-
-			return true;
+	private void startArena(Team... teams) {
+		this.sendMessageToAllPlayers(this.compileTeamNames());
+		hideRoleSelectionObjects();
+		assignRolesIfPlayerDidntPickOne(teams);
+		ArenaStartEvent e = new ArenaStartEvent(this);
+		Bukkit.getPluginManager().callEvent(e);
+		if (e.isCancelled()) {
+			this.teams.clear();
+			Bukkit.broadcastMessage(ChatColor.BOLD + "Arena was cancelled!");
+			return;
 		}
-		return false;
+
+		for (WinCondition winCond : this.rules.getWinConditions()) {
+			winCond.initialize(this);
+		}
+
+		for (TimedAction action : this.actions) {
+			long delay, period;
+			delay = action.getDelay() != null ? action.getDelay().ticks() : 1l;
+			period = action.getPeriod() != null ? action.getPeriod().ticks() : 0l;
+
+			this.tasks.add(Bukkit.getScheduler().runTaskTimer(CodariI.INSTANCE, action, delay, period));
+		}
 	}
 
 	private boolean initializeTeams(Team... teams) {
@@ -294,5 +287,35 @@ public final class ArenaCore implements Arena {
 				}	//FIXME - the roles are supposed to be randomly chosen from the remaining role selection object roles if there is one
 			}		//FIXME - Role Selection Objects needs teams to do this
 		}			//FIXME - Method to get remaining roles from Role Selection Object is .getRemainingRoles()
+	}
+	
+	private void sendMessageToAllPlayers(String message) {
+		for(String teamName : this.teams.keySet()) {
+			for(Player player : this.teams.get(teamName).getPlayers()) {
+				player.sendMessage(message);
+			}
+		}
+	}
+	
+	private String compileTeamNames() {
+		StringBuffer teamNames = new StringBuffer();
+		int counter = 1;
+		for(String teamName : this.teams.keySet()) {
+			if(counter != 1) {
+				teamNames.append(" vs. ");
+			}
+			switch(counter++ % 3) {
+			case 0:
+				teamNames.append(ChatColor.GREEN + teamName);
+				break;
+			case 1:
+				teamNames.append(ChatColor.RED + teamName);
+				break;
+			case 2:
+				teamNames.append(ChatColor.BLUE + teamName);
+				break;
+			}
+		}
+		return new String(teamNames);
 	}
 }
