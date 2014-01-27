@@ -9,12 +9,9 @@ import java.util.logging.Level;
 
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
-import com.codari.api5.Codari;
 import com.codari.api5.io.CodariSerialization;
 import com.codari.apicore.CodariCore;
 import com.codari.arena5.players.role.Role;
-import com.codari.arenacore.arena.ArenaManagerCore;
-import com.codari.arenacore.arena.rules.GameRuleCore;
 
 public class RoleManagerCore {
 	private Map<String, Role> roles;

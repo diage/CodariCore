@@ -248,15 +248,12 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> result = new LinkedHashMap<>();
+		Map<String, Object> result = new ConfigurationOutput()
+		.addString("GameRule", this.getGameRule().getName())
+		.add(new TimelineGroupOutputFunction(), new ArrayList<RandomTimelineGroup>(this.randomSpawnables.values()))
+		.add(new DataOutputFunction(), this.data).result();
 		result.put("GameRule", this.getGameRule().getName());
-		
-		
-		//FIXME
-		return new ConfigurationOutput()
-				.addString("GameRule", this.getGameRule().getName())
-				.add(new TimelineGroupOutputFunction(), new ArrayList<RandomTimelineGroup>(this.randomSpawnables.values()))
-				.add(new DataOutputFunction(), this.data).result();
+		return result;
 	}
 	
 	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
