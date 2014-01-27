@@ -112,14 +112,10 @@ public class DynamicMenuManager {
 	public void addArenaRoleIcon(Kit kit, String roleName) {
 		if(this.roleSettingsMenus.get(kit) != null) {
 			this.roleSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
-		} else {
-			Bukkit.broadcastMessage(ChatColor.RED + "Failed to add Arena Role Icon - For Debugging");
-		}
+		} 
 		if(this.roleSelectionObjectSettingsMenus.get(kit) != null) {
 			this.roleSelectionObjectSettingsMenus.get(kit).addArenaRoleIcon(this.combatant, roleName);
-		} else {
-			Bukkit.broadcastMessage(ChatColor.RED + "Failed to add Arena Role Icon - For Debugging");
-		}
+		} 
 	}
 	
 	public void removeArenaRoleIcon(Kit kit, String roleName) {
