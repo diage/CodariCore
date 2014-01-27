@@ -17,12 +17,14 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.io.ConfigurationInput;
 import com.codari.api5.io.ConfigurationInput.InputFunction;
 import com.codari.api5.io.ConfigurationOutput;
 import com.codari.api5.io.ConfigurationOutput.OutputFunction;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
+import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
@@ -31,8 +33,10 @@ import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
+import com.codari.arena5.players.role.Role;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
+import com.codari.arenacore.players.role.RoleCore;
 
 @SerializableAs("Arena_Builder")
 public class ArenaBuilderCore implements ArenaBuilder {
@@ -259,6 +263,13 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		.add(new TimelineGroupOutputFunction(), new ArrayList<RandomTimelineGroup>(this.randomSpawnables.values()))
 		.add(new DataOutputFunction(), this.data).result();
 		result.put("GameRule", this.getGameRule().getName());
+		result.put("name", this.name);
+		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
+		int i = 0;
+		for (String s : arenaManager.getExistingRoleNames(this.name)) {
+			result.put("role_" + i, s);
+			i++;
+		}
 		return result;
 	}
 	
@@ -266,7 +277,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		ConfigurationInput input = new ConfigurationInput(args);
 		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
 		GameRule gameRule = arenaManager.getGameRule(input.getString("GameRule"));
-		ArenaBuilderCore builder = (ArenaBuilderCore) arenaManager.getArenaBuider(gameRule);
+		String name = input.getString("name");
+		ArenaBuilderCore builder = (ArenaBuilderCore) arenaManager.getArenaBuider(name, gameRule);
 		List<RandomTimelineGroup> randomTimelineGroups = input.get(new TimelineGroupInputFunction());
 		for (RandomTimelineGroup g : randomTimelineGroups) {
 			builder.randomSpawnables.put(g.name, g);
@@ -274,6 +286,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		List<ObjectDataPacket> dataList = input.get(new DataInputFunction());
 		for (ObjectDataPacket data : dataList) {
 			data.apply(builder);
+		}
+		for (int i = 0; args.containsKey("role_" + i); i++) {
+			String rName = input.getString("role_" + i);
+			arenaManager.submitRole(name, ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(rName));
 		}
 		return builder;
 	}
