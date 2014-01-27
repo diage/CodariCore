@@ -3,9 +3,6 @@ package com.codari.arenacore.players.menu;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.guilds.Guild;
 import com.codari.arena5.players.teams.Team;
