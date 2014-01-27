@@ -165,20 +165,15 @@ public final class ArenaCore implements Arena {
 		this.sendMessageToAllPlayers(this.compileTeamNames());
 		hideRoleSelectionObjects();
 		assignRolesIfPlayerDidntPickOne(teams);
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Check One!");
 		ArenaStartEvent e = new ArenaStartEvent(this);
 		Bukkit.getPluginManager().callEvent(e);
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Check Two!");
 		if (e.isCancelled()) {
 			this.teams.clear();
-			Bukkit.broadcastMessage(ChatColor.BOLD + "Arena was cancelled!");
 			return;
 		}
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Check Three!");
 		for (WinCondition winCond : this.rules.getWinConditions()) {
 			winCond.initialize(this);
 		}
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Check Four!");
 		for (TimedAction action : this.actions) {
 			long delay, period;
 			delay = action.getDelay() != null ? action.getDelay().ticks() : 1l;

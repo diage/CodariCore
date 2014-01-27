@@ -37,6 +37,7 @@ import com.codari.arenacore.arena.rules.GameRuleCore;
 @SerializableAs("Arena_Builder")
 public class ArenaBuilderCore implements ArenaBuilder {
 	//-----Fields-----//
+	private String name;
 	private GameRule rules;
 	private final Map<String, RandomTimelineGroup> randomSpawnables;
 	private final List<FixedSpawnableAction> fixedSpawnables;
@@ -48,7 +49,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<ObjectDataPacket> data;
 	
 	//-----Constructor-----//
-	public ArenaBuilderCore(GameRuleCore rules) {
+	public ArenaBuilderCore(String name, GameRuleCore rules) {
+		this.name = name;
 		this.rules = rules;
 		this.randomSpawnables = new HashMap<>();
 		this.fixedSpawnables = new ArrayList<>();
@@ -83,6 +85,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	
 	public void setGameRule(GameRule rule) {
 		this.rules = rule;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	@Override

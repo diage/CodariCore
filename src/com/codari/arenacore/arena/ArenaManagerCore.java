@@ -271,8 +271,8 @@ public class ArenaManagerCore implements ArenaManager {
 	}
 
 	@Override
-	public ArenaBuilder getArenaBuider(GameRule gameRule) {
-		return new ArenaBuilderCore((GameRuleCore) gameRule);
+	public ArenaBuilder getArenaBuider(String name, GameRule gameRule) {
+		return new ArenaBuilderCore(name, (GameRuleCore) gameRule);
 	}
 
 	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {

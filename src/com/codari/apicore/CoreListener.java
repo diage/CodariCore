@@ -162,6 +162,7 @@ public class CoreListener implements Listener {
 				playerInventories.put(player.getName(), player.getInventory().getContents());
 				player.getInventory().clear();
 				player.getInventory().setItem(7, new ItemStack(Material.WOOD_SWORD));
+				player.getInventory().setItem(0, new ItemStack(Material.RED_ROSE));
 				player.getInventory().setHeldItemSlot(7);
 				player.getInventory().setItem(25, new ItemStack(Material.ARROW));
 				player.setAllowFlight(true);

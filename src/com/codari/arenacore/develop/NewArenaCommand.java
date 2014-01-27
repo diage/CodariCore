@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.apicore.command.CodariCommand;
-import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 
@@ -30,8 +29,8 @@ public class NewArenaCommand implements CodariCommand {
 				//gameRule.addWinCondition(new WinCondition2v2(numberOfPointsToWin));
 				//gameRule.addRoleDeclaration(new ArenaRoleDeclaration());
 				//ArenaBuilder construction//
-				ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
-				((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaName, arenaBuilder);
+				//ArenaBuilder arenaBuilder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuider(gameRule);
+				//((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaName, arenaBuilder);
 				player.sendMessage("You have created a new 2v2 arena builder.");
 				return true;
 			} else {

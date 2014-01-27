@@ -1,6 +1,7 @@
 package com.codari.arenacore.arena.objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -204,10 +205,11 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	}
 
 	private void closeInventoryViewers() {
-		if(this.inventory.getViewers().size() > 0) {
-			for(HumanEntity humanEntity : this.inventory.getViewers()) {
-				humanEntity.closeInventory();
-			}
+		Iterator<HumanEntity> iterator = this.inventory.getViewers().iterator();
+		while(iterator.hasNext()) {
+			//Closes the inventory for all the players viewing it
+			iterator.next().closeInventory();
 		}
 	}
+
 }

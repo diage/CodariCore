@@ -70,9 +70,9 @@ public class RoleSelectionObjectListener implements Listener {
 						Bukkit.broadcastMessage(ChatColor.RED + "Combatant is trying to select a role but it's not working!"); //TODO - for testing
 					}
 				} 
-			} 
+			}
+			e.setCancelled(true);
 		}
-		e.setCancelled(true);
 	}
 
 

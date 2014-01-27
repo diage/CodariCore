@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
@@ -77,11 +78,12 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 				@Override
 				public void action() {
 					if (winCondition.conditionMet()) {
-						Collection<Combatant> winners = winCondition.getWinners();
+						Collection<Combatant> winners = winCondition.getWinners();	
 						Arena arena = null;
 						for (Combatant c : winners) {
 							if (c.getTeam().getArena() != null) {
 								arena = c.getTeam().getArena();
+								Bukkit.broadcastMessage(ChatColor.DARK_GREEN + c.getTeam().getTeamName() + " has won the " + arena.getName() + " arena!");
 								break;
 							}
 						}

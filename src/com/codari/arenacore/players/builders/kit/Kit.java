@@ -72,7 +72,7 @@ public class Kit {
 	
 	public Kit(String name, GameRule gameRule) {
 		this.name = name;
-		this.arenaBuilder = new ArenaBuilderCore((GameRuleCore) gameRule);
+		this.arenaBuilder = new ArenaBuilderCore(name, (GameRuleCore) gameRule);
 		this.roleDatas = new HashMap<>();
 		((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(this.name, this.arenaBuilder);
 		this.tools = new ItemStack[9];
