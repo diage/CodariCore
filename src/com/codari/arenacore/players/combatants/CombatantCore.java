@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -132,6 +133,7 @@ public final class CombatantCore implements Combatant {
 	public boolean leaveArena() {
 		Arena arena = Codari.getArenaManager().getArena(this.arenaName);
 		if(arena != null) {
+			this.getPlayer().sendMessage(ChatColor.DARK_BLUE + "You are leaving the arena: " + this.arenaName);
 			this.arenaName = null;
 			this.inArena = false;
 			this.setRole(NON_COMBATANT_ROLE);
@@ -145,15 +147,18 @@ public final class CombatantCore implements Combatant {
 		return this.team;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean sendToArena(Arena arena) {
 		if(arena != null) {
+			this.getPlayer().sendMessage(ChatColor.AQUA + "You are being sent to the arena: " + arena.getName());
 			this.arenaName = arena.getName();
 			this.inArena = true;
 			this.setHotbarCooldown(BukkitTime.SECOND.tickValueOf(1));
 			this.setHotbarActive(true);
 			this.getPlayer().getInventory().setItem(0, new ItemStack(Material.RED_ROSE));
 			this.getPlayer().teleport(((ArenaCore)arena).getSpawn(this));
+			this.getPlayer().updateInventory();
 			return true;
 		}
 		return false;

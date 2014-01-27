@@ -90,7 +90,7 @@ public class CoreListener implements Listener {
 			for (PotionEffect type : player.getActivePotionEffects()) {
 				player.removePotionEffect(type.getType());
 			}
-			player.getInventory().setItem(7, new ItemStack(Material.STICK));
+			player.getInventory().setItem(7, new ItemStack(Material.WOOD_SWORD));
 			player.getInventory().setArmorContents(new ItemStack[4]);
 			player.updateInventory();
 			this.inventories.put(e.getEntity().getName(), e.getEntity().getInventory().getContents());

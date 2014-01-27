@@ -113,9 +113,9 @@ public class QueueCore {
 					}
 					countDown--;
 					if(countDown <= 0) {
-						startArena();
 						task.cancel();
 						task = null;
+						startArena();
 						countDown = COUNT_DOWN_STARTING_VALUE;
 					}
 				}

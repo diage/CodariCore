@@ -204,8 +204,10 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	}
 
 	private void closeInventoryViewers() {
-		for(HumanEntity humanEntity : this.inventory.getViewers()) {
-			humanEntity.closeInventory();
+		if(this.inventory.getViewers().size() > 0) {
+			for(HumanEntity humanEntity : this.inventory.getViewers()) {
+				humanEntity.closeInventory();
+			}
 		}
 	}
 }
