@@ -119,18 +119,24 @@ public class RoleCore implements Role, ConfigurationSerializable {
 	}
 	
 	public RoleCore(Map<String, Object> args) {
+		//TODO
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 1");
 		args = new HashMap<>(args);
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 2");
 		this.name = (String) args.remove("name");
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 3");
 		this.skills = new EnumMap<>(SkillActivation.class);
 		for (SkillActivation a : SkillActivation.values()) {
 			final Skill skill = ((LibraryCore) Codari.getLibrary()).createSkill((String) args.remove(a.toString()));
 			this.skills.put(a, skill);
 		}
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 4");
 		this.links = new LinkedHashMap<>();
 		for (Entry<String, Object> e : args.entrySet()) {
 			if (e.getValue() instanceof String) {
 				this.links.put(e.getKey(), (String) e.getValue());
 			}
 		}
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 5");
 	}
 }
