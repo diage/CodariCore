@@ -2,6 +2,7 @@ package com.codari.arenacore.players.role;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -118,6 +119,7 @@ public class RoleCore implements Role, ConfigurationSerializable {
 	}
 	
 	public RoleCore(Map<String, Object> args) {
+		args = new HashMap<>(args);
 		this.name = (String) args.remove("name");
 		this.skills = new EnumMap<>(SkillActivation.class);
 		for (SkillActivation a : SkillActivation.values()) {

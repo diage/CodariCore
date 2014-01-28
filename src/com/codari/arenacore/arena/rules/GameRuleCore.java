@@ -2,6 +2,7 @@ package com.codari.arenacore.arena.rules;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -202,6 +203,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	}
 	
 	public static GameRuleCore deserialize(Map<String, Object> args) {
+		args = new HashMap<>(args);
 		GameRuleCore rule = new GameRuleCore((String) args.remove("name"));
 		rule.setMatchDuration((Time) args.remove("match_duration"));
 		rule.setTeamSize((byte) args.remove("team_size"));
@@ -241,6 +243,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		}
 		
 		public TimeActionDataStuff(Map<String, Object> args) {
+			args = new HashMap<>(args);
 			this.name = (String) args.remove("name");
 			this.args = new Object[args.size()];
 			for (int i = 0; i < this.args.length; i++) {
@@ -284,6 +287,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		}
 		
 		public WinConditionDataStuff(Map<String, Object> args) {
+			args = new HashMap<>(args);
 			this.name = (String) args.remove("name");
 			this.time = (Time) args.remove("time");
 			this.after = (boolean) args.remove("after");
