@@ -210,7 +210,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		rule.setNumberOfTeams((byte) args.remove("number_of_teams"));
 		//TODO
 		System.out.println("POTATO DEBUG!!!!! GAME DATA 1");
-		for (int i = 0; i < args.size(); i++) {
+		for (int i = 0; args.containsKey("data_stuff_" + i); i++) {
 			((DataStuff) args.get("data_stuff_" + i)).apply(rule);
 		}
 		System.out.println("POTATO DEBUG!!!!! GAME DATA 2");
