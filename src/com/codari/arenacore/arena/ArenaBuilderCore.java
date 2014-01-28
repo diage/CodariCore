@@ -273,23 +273,34 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 	
 	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
+		//TODO
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 1");
 		ConfigurationInput input = new ConfigurationInput(args);
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 2");
 		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 3");
 		GameRule gameRule = arenaManager.getGameRule(input.getString("GameRule"));
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 4");
 		String name = input.getString("name");
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 5");
 		ArenaBuilderCore builder = (ArenaBuilderCore) arenaManager.getArenaBuider(name, gameRule);
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 6");
 		List<RandomTimelineGroup> randomTimelineGroups = input.get(new TimelineGroupInputFunction());
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 7");
 		for (RandomTimelineGroup g : randomTimelineGroups) {
 			builder.randomSpawnables.put(g.name, g);
 		}
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 8");
 		List<ObjectDataPacket> dataList = input.get(new DataInputFunction());
 		for (ObjectDataPacket data : dataList) {
 			data.apply(builder);
 		}
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 9");
 		for (int i = 0; args.containsKey("role_" + i); i++) {
 			String rName = input.getString("role_" + i);
 			arenaManager.submitRole(name, ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(rName));
 		}
+		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 10");
 		return builder;
 	}
 	
