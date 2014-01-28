@@ -131,7 +131,7 @@ public class RoleCore implements Role, ConfigurationSerializable {
 			this.skills.put(a, skill);
 		}
 		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 4");
-		this.links = new LinkedHashMap<>(links);
+		this.links = new LinkedHashMap<>();
 		for (Entry<String, Object> e : args.entrySet()) {
 			if (e.getValue() instanceof String) {
 				this.links.put(e.getKey(), (String) e.getValue());
