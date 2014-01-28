@@ -260,17 +260,16 @@ public class ArenaManagerCore implements ArenaManager {
 		return arena;
 	}
 
-	public Arena loadArena(File file) {
-		ArenaCore arena = (ArenaCore) CodariSerialization.deserialize(file);
-		this.arenas.put(arena.getName(), arena);
-		this.queues.put(arena.getName(), new QueueCore(arena));
+	public void loadArena(File file) {
+		ArenaBuilderCore arena = (ArenaBuilderCore) CodariSerialization.deserialize(file);
+		this.arenaBuilders.put(arena.getName(), arena);
+		this.buildArena(arena.getName(), arena);
 		for(Combatant combatant : this.combatants.values()) {
 			if(combatant != null) {
 				((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
 				combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
 			}
 		}
-		return arena;
 	}
 
 	@Override
