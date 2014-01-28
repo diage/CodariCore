@@ -87,6 +87,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.codariPlayerManager.registerPlayerListener();
 		this.enchantmentManager.packetStuff();
 		this.itemDataManager = new ItemDataManagerCore();
+		this.library = new LibraryCore(); 
 		this.roleManager = new RoleManagerCore();
 		this.arenaManager = new ArenaManagerCore();
 		this.kitManager = new KitManager();
@@ -95,7 +96,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.teamManager = new TeamManagerCore();
 		this.guildManager = new GuildManagerCore();
 		this.attributeFactory = new AttributeFactoryCore();
-		this.library = new LibraryCore(); 
 		this.commandRegister = new CommandRegister();
 		//new StatRegistry();
 		
