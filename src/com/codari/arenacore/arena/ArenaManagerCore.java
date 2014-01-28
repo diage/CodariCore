@@ -64,8 +64,8 @@ public class ArenaManagerCore implements ArenaManager {
 		ConfigurationSerialization.registerClass(GameRuleCore.class);
 		ConfigurationSerialization.registerClass(GameRuleCore.TimeActionDataStuff.class);
 		ConfigurationSerialization.registerClass(GameRuleCore.WinConditionDataStuff.class);
-		this.builderDir = new File(CodariCore.instance().getDataFolder(), "DEM_BUILDERS");
-		this.roleDir = new File(CodariCore.instance().getDataFolder(), "ALLL DA RULZ");
+		this.builderDir = new File(CodariCore.instance().getDataFolder(), "builds");
+		this.roleDir = new File(CodariCore.instance().getDataFolder(), "ruleos");
 	}
 	
 	public void load_D_D_D_D() {

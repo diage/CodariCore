@@ -20,7 +20,7 @@ public class RoleManagerCore {
 	public RoleManagerCore() {
 		this.roles = new HashMap<>();
 		ConfigurationSerialization.registerClass(RoleCore.class);
-		this.roleDir = new File(CodariCore.instance().getDataFolder(), "Roll");
+		this.roleDir = new File(CodariCore.instance().getDataFolder(), "rolly_polly");
 	}
 	
 	public void load_EJDNAE__E() {
