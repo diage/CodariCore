@@ -212,7 +212,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 			((DataStuff) args.get("data_stuff_" + i)).apply(rule);
 		}
 		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(rule);
-		return null;
+		return rule;
 	}
 	
 	//-----Data Stuff-----//
