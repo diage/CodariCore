@@ -119,6 +119,12 @@ public class RoleCore implements Role, ConfigurationSerializable {
 	}
 	
 	public RoleCore(Map<String, Object> args) {
+		//TODO
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION");
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION");
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION");
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION");
+		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION");
 		args = new HashMap<>(args);
 		this.name = (String) args.remove("name");
 		this.skills = new EnumMap<>(SkillActivation.class);

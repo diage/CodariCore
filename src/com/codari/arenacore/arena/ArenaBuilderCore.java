@@ -290,8 +290,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			String rName = input.getString("role_" + i);
 			arenaManager.submitRole(name, ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(rName));
 		}
-		//TODO
-		Bukkit.broadcastMessage("POTATO DEBUG IS THIS NULL? " + String.valueOf(builder));
 		return builder;
 	}
 	
