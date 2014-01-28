@@ -151,11 +151,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Disabler-----//
 	@Override
 	public void onDisable() {
-		this.setInstanceAccess(false);
 		this.enchantmentManager.unregisterCustomEnchantments();
 		this.arenaManager.saveArenaBuilders();
 		this.arenaManager.saveGameRules();
 		this.roleManager.saveRoles();
+		this.setInstanceAccess(false);
 	}
 	
 	//-----Public Methods-----//

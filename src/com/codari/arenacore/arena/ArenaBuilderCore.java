@@ -33,10 +33,8 @@ import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
-import com.codari.arena5.players.role.Role;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
-import com.codari.arenacore.players.role.RoleCore;
 
 @SerializableAs("Arena_Builder")
 public class ArenaBuilderCore implements ArenaBuilder {
