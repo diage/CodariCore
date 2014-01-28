@@ -21,6 +21,9 @@ public class RoleManagerCore {
 		this.roles = new HashMap<>();
 		ConfigurationSerialization.registerClass(RoleCore.class);
 		this.roleDir = new File(CodariCore.instance().getDataFolder(), "Roll");
+	}
+	
+	public void load_EJDNAE__E() {
 		if (this.roleDir.exists()) {
 			for (File file : this.roleDir.listFiles()) {
 				try {

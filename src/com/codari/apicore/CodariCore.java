@@ -97,6 +97,8 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.guildManager = new GuildManagerCore();
 		this.attributeFactory = new AttributeFactoryCore();
 		this.commandRegister = new CommandRegister();
+		this.roleManager.load_EJDNAE__E();
+		this.arenaManager.load_D_D_D_D();
 		//new StatRegistry();
 		
 		//---Arena Objects---//

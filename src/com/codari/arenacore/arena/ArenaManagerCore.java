@@ -66,6 +66,9 @@ public class ArenaManagerCore implements ArenaManager {
 		ConfigurationSerialization.registerClass(GameRuleCore.WinConditionDataStuff.class);
 		this.builderDir = new File(CodariCore.instance().getDataFolder(), "DEM_BUILDERS");
 		this.roleDir = new File(CodariCore.instance().getDataFolder(), "ALLL DA RULZ");
+	}
+	
+	public void load_D_D_D_D() {
 		if (this.roleDir.exists()) {
 			for (File file : this.roleDir.listFiles()) {
 				try {
