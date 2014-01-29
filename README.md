@@ -1,6 +1,6 @@
 CodariCore 
 ===========
-CURRENT VERSION: 0.4.5
+CURRENT VERSION: 0.7
 ===========
 
 ===========
@@ -157,7 +157,7 @@ Version 0.6 Goals
 ---------------
 
 ===========
-Version 0.7 Goals
+Version 0.8 Goals
 ===========
 -Final bug testing and all QOL improvements to prepare for 1.0 release
 
