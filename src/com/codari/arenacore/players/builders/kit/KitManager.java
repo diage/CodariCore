@@ -8,9 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import com.codari.api5.Codari;
+import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
+import com.codari.arenacore.players.combatants.CombatantCore;
 
 
 public class KitManager {
@@ -63,14 +65,26 @@ public class KitManager {
 		return this.kitBuilders.get(name);
 	}
 
-	public boolean createKit(String name) {
+	public boolean createKit(String kitName) {
 		if(this.selectedBuilder != null) {
-			Kit newKit = this.selectedBuilder.buildKit(name);
-			this.kits.put(name, newKit);
+			Kit newKit = this.selectedBuilder.buildKit(kitName);
+			this.kits.put(kitName, newKit);
+			for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {	
+				((CombatantCore) combatant).getDynamicMenuManager().addKitIcon(combatant, kitName);
+			}
 			return true;
 		} 
 		Bukkit.broadcastMessage(ChatColor.RED + "Kit wasn't constructed because selected Kit Builder is null!");	//TODO
 		return false;
+	}
+	
+	/* For deserialization */
+	public void createKit(String kitName, ArenaBuilderCore arenaBuilder) {
+		Kit newKit = new Kit(kitName, arenaBuilder);
+		this.kits.put(kitName, newKit);
+		for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {	
+			((CombatantCore) combatant).getDynamicMenuManager().addKitIcon(combatant, kitName);
+		}
 	}
 
 	public boolean containsKit(String kitName) {

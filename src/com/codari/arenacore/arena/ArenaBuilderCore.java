@@ -12,7 +12,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -301,6 +300,8 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			arenaManager.submitRole(name, ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(rName));
 		}
 		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 10");
+		//Submitting Kit to the Kit Manager
+		((CodariCore) CodariI.INSTANCE).getKitManager().createKit(builder.getName(), builder);
 		return builder;
 	}
 	

@@ -4,9 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import com.codari.api5.Codari;
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
@@ -27,9 +25,6 @@ public class SaveKitIcon extends ExecutableIcon {
 					if(((CombatantCore)this.getCombatant()).getKitManager().createKit(kitName)) {
 						player.sendMessage(ChatColor.GREEN + "You have succesfully created a Kit!");
 						KitListener.requestedKitNames.remove(player.getName());
-						for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {	
-							((CombatantCore) combatant).getDynamicMenuManager().addKitIcon(this.getCombatant(), kitName);
-						}
 					}
 				} else {
 					player.sendMessage(ChatColor.RED + "A Kit with the name \"" + kitName + "\" already exists!");
