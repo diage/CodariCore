@@ -62,11 +62,11 @@ public class ToolBarListener implements Listener {
 				Location location = e.getClickedBlock().getLocation();
 				location.setY(location.getY() + 1);
 				if (e.getItem().equals(kit.getTools()[4])) {
-					builder.addSpawnLocation(location);
-					e.getPlayer().sendMessage(kit.addSpawn(e.getItem(), location));
 					String objectName = SpawnPoint.SPAWN_POINT_NAME;
-					ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
-					arenaObject.reveal();
+					ArenaObject spawnPoint = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+					builder.addSpawnLocation(spawnPoint);
+					e.getPlayer().sendMessage(kit.addSpawn(e.getItem(), location));
+					spawnPoint.reveal();
 					return;
 				}
 				String objectName = e.getItem().getItemMeta().getDisplayName();

@@ -248,6 +248,11 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			this.spawnable.spawn();
 		}
 	}
+	
+	public void addSpawnLocation(ArenaObject arenaObject) {
+		this.addArenaObject(arenaObject);
+		this.addSpawnLocation(arenaObject.getLocation());
+	}
 
 	@Override
 	public void addSpawnLocation(Location location) {
