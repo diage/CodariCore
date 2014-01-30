@@ -25,6 +25,7 @@ import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.objects.RoleSelectionObject;
+import com.codari.arenacore.arena.objects.SpawnPoint;
 import com.codari.arenacore.players.builders.ToolbarManager;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
@@ -63,6 +64,9 @@ public class ToolBarListener implements Listener {
 				if (e.getItem().equals(kit.getTools()[4])) {
 					builder.addSpawnLocation(location);
 					e.getPlayer().sendMessage(kit.addSpawn(e.getItem(), location));
+					String objectName = SpawnPoint.SPAWN_POINT_NAME;
+					ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+					arenaObject.reveal();
 					return;
 				}
 				String objectName = e.getItem().getItemMeta().getDisplayName();

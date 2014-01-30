@@ -87,8 +87,10 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 
 	@Override
 	public void interact(Combatant combatant) {		
-		Player player = combatant.getPlayer();
-		player.openInventory(this.inventory);
+		if(this.inventory != null) {
+			Player player = combatant.getPlayer();
+			player.openInventory(this.inventory);
+		}
 	}
 
 	public void adjustRoleIcons(Combatant combatant, String newRoleName) {
@@ -205,10 +207,12 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	}
 
 	private void closeInventoryViewers() {
-		Iterator<HumanEntity> iterator = this.inventory.getViewers().iterator();
-		while(iterator.hasNext()) {
-			//Closes the inventory for all the players viewing it
-			iterator.next().closeInventory();
+		if(this.inventory != null) {
+			Iterator<HumanEntity> iterator = this.inventory.getViewers().iterator();
+			while(iterator.hasNext()) {
+				//Closes the inventory for all the players viewing it
+				iterator.next().closeInventory();
+			}
 		}
 	}
 

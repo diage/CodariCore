@@ -36,8 +36,6 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.hotbar.HotbarOption;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
-import com.codari.arenacore.players.teams.TeamBuilder;
-import com.codari.arenacore.players.teams.TeamCore;
 
 @SuppressWarnings("deprecation")
 public class CoreListener implements Listener {
@@ -115,7 +113,6 @@ public class CoreListener implements Listener {
 		if(combatant.inArena()) {
 			Codari.getArenaManager().getArena(combatant.getArenaName()).stop();
 			combatant.leaveArena();
-			TeamBuilder.removePlayer((TeamCore)combatant.getTeam(), combatant.getPlayer());
 		}
 	}
 	

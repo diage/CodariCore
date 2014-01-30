@@ -34,6 +34,7 @@ import com.codari.arena5.players.teams.TeamManager;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.objects.RoleSelectionObject;
+import com.codari.arenacore.arena.objects.SpawnPoint;
 import com.codari.arenacore.develop.ArenaDevelopmentCommand;
 import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
 import com.codari.arenacore.develop.FinalizeCommand;
@@ -99,6 +100,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		//new StatRegistry();
 		
 		//---Arena Objects---//
+		Codari.getLibrary().registerArenaObject(SpawnPoint.class);
 		Codari.getLibrary().registerArenaObject(RoleSwitchListenerObject.class);
 		Codari.getLibrary().registerArenaObject(Gate.class);
 		Codari.getLibrary().registerArenaObject(MainItemSpawner.class);
