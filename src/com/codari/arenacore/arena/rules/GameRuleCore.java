@@ -208,14 +208,10 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		rule.setMatchDuration((Time) args.remove("match_duration"));
 		rule.setTeamSize((byte) args.remove("team_size"));
 		rule.setNumberOfTeams((byte) args.remove("number_of_teams"));
-		//TODO
-		System.out.println("POTATO DEBUG!!!!! GAME DATA 1");
 		for (int i = 0; args.containsKey("data_stuff_" + i); i++) {
 			((DataStuff) args.get("data_stuff_" + i)).apply(rule);
 		}
-		System.out.println("POTATO DEBUG!!!!! GAME DATA 2");
 		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(rule);
-		System.out.println("POTATO DEBUG!!!!! GAME DATA 3");
 		return rule;
 	}
 	
@@ -247,14 +243,9 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		}
 		
 		public TimeActionDataStuff(Map<String, Object> args) {
-			//TODO
-			System.out.println("POTATO DEBUG!!!!! TIME DATA 1");
 			args = new HashMap<>(args);
-			System.out.println("POTATO DEBUG!!!!! TIME DATA 2");
 			this.name = (String) args.remove("name");
-			System.out.println("POTATO DEBUG!!!!! TIME DATA 3");
 			this.args = new Object[args.size()];
-			System.out.println("POTATO DEBUG!!!!! TIME DATA 4");
 			for (int i = 0; i < this.args.length; i++) {
 				this.args[i] = args.get("arg_" + i); 
 			}
@@ -297,22 +288,14 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		}
 		
 		public WinConditionDataStuff(Map<String, Object> args) {
-			//TODO
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 1");
 			args = new HashMap<>(args);
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 2");
 			this.name = (String) args.remove("name");
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 3");
 			this.time = (Time) args.remove("time");
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 4");
 			this.after = (boolean) args.remove("after");
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 5");
-			this.args = new Object[args.size()];
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 6");
+			this.args = new Object[args.size() - 1];
 			for (int i = 0; i < this.args.length; i++) {
 				this.args[i] = args.get("arg_" + i); 
 			}
-			System.out.println("POTATO DEBUG!!!!! WIN DATA 7");
 		}
 
 		@Override

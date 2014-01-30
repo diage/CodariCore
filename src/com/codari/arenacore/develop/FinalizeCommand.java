@@ -1,14 +1,10 @@
 package com.codari.arenacore.develop;
 
-import java.io.File;
-
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
-import com.codari.api5.CodariI;
 import com.codari.apicore.command.CodariCommand;
 import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arenacore.arena.ArenaManagerCore;
@@ -26,10 +22,10 @@ public class FinalizeCommand implements CodariCommand {
 			Bukkit.broadcastMessage("Finalized!");	//TODO
 			return true;
 		} else if(sender instanceof Player && args[0].equalsIgnoreCase(LOAD_NAME) && args.length == 2) {
-			File file = new File(CodariI.INSTANCE.getDataFolder(), args[1] + ".dat");
-			((ArenaManagerCore)Codari.getArenaManager()).loadArena(file);
-			sender.sendMessage("" + ChatColor.UNDERLINE + ChatColor.BOLD +
-					ChatColor.LIGHT_PURPLE + "LOADED ARENA NAMED FROM " + file);
+			//File file = new File(CodariI.INSTANCE.getDataFolder(), args[1] + ".dat");
+			//((ArenaManagerCore)Codari.getArenaManager()).loadArena(file);
+			//sender.sendMessage("" + ChatColor.UNDERLINE + ChatColor.BOLD +
+					//ChatColor.LIGHT_PURPLE + "LOADED ARENA NAMED FROM " + file);
 			return true;
 		}
 		return false;

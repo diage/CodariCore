@@ -28,7 +28,6 @@ import com.codari.arena.objects.traps.structure.TrapListener;
 import com.codari.arena.players.RoleHotbarListener;
 import com.codari.arena.players.skills.DamageReductionSkill;
 import com.codari.arena.players.skills.TeleportSkill;
-import com.codari.arena.rules.ArenaRoleDeclaration;
 import com.codari.arena.rules.WinCondition2v2;
 import com.codari.arena5.players.guilds.GuildManager;
 import com.codari.arena5.players.teams.TeamManager;
@@ -97,8 +96,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.guildManager = new GuildManagerCore();
 		this.attributeFactory = new AttributeFactoryCore();
 		this.commandRegister = new CommandRegister();
-		this.roleManager.load_EJDNAE__E();
-		this.arenaManager.load_D_D_D_D();
 		//new StatRegistry();
 		
 		//---Arena Objects---//
@@ -113,7 +110,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		Codari.getLibrary().registerArenaObject(FireTrap.class);
 		Codari.getLibrary().registerArenaObject(PoisonSnareTrap.class);
 		Codari.getLibrary().registerArenaObject(RoleSelectionObject.class);
-		Codari.getLibrary().registerRoleDeclaration(ArenaRoleDeclaration.class);
 		Codari.getLibrary().registerWinCondition(WinCondition2v2.class);
 		
 		//---Skills---//
@@ -148,6 +144,10 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.commandRegister.registerCommand(ComandLeaveTeam.COMMAND_NAME, new ComandLeaveTeam());
 		this.commandRegister.registerCommand(CommandCheckTeam.COMMAND_NAME, new CommandCheckTeam());
 		this.commandRegister.registerCommand(FinalizeCommand.LOAD_NAME, new FinalizeCommand());
+		
+		//-----Serialization-----//
+		this.roleManager.load_EJDNAE__E();
+		this.arenaManager.load_D_D_D_D();
 	}
 	
 	//-----Disabler-----//

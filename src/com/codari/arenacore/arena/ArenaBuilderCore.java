@@ -263,6 +263,9 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		result.put("GameRule", this.getGameRule().getName());
 		result.put("name", this.name);
 		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
+		for (int i = 0; i < this.spawners.size(); i++) {
+			result.put("Spawn_" + i, this.spawners.get(i));
+		}
 		int i = 0;
 		for (String s : arenaManager.getExistingRoleNames(this.name)) {
 			result.put("role_" + i, s);
@@ -295,6 +298,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			data.apply(builder);
 		}
 		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 9");
+		for (int i = 0; args.containsKey("Spawn_" + i); i++) {
+			Location loc = ((SerializableLocation) args.get("Spawn_" + i)).getLocation();
+			builder.addSpawnLocation(loc);
+		}
 		for (int i = 0; args.containsKey("role_" + i); i++) {
 			String rName = input.getString("role_" + i);
 			arenaManager.submitRole(name, ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(rName));

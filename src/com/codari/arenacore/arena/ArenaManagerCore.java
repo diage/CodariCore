@@ -93,7 +93,7 @@ public class ArenaManagerCore implements ArenaManager {
 		if (this.builderDir.exists()) {
 			for (File file : this.builderDir.listFiles()) {
 				try {
-					this.loadArena(file);
+					this.loadArenaBuilder(file);
 				} catch (Exception ex) {
 					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
 					CodariCore.instance().getLogger().log(Level.SEVERE, "||||||||||| POTATO ERROR ||||||||||||||");
@@ -260,18 +260,6 @@ public class ArenaManagerCore implements ArenaManager {
 		return arena;
 	}
 
-	public void loadArena(File file) {
-		ArenaBuilderCore arena = (ArenaBuilderCore) CodariSerialization.deserialize(file);
-		this.arenaBuilders.put(arena.getName(), arena);
-		this.buildArena(arena.getName(), arena);
-		for(Combatant combatant : this.combatants.values()) {
-			if(combatant != null) {
-				((CombatantCore) combatant).getDynamicMenuManager().addArenaIcon(arena.getName());
-				combatant.getPlayer().sendMessage(ChatColor.GREEN + "An Arena has been added to the Menu!");
-			}
-		}
-	}
-
 	@Override
 	public ArenaBuilder getArenaBuider(String name, GameRule gameRule) {
 		return new ArenaBuilderCore(name, (GameRuleCore) gameRule);
@@ -353,6 +341,7 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 	}
 
+	//-----Serialization-----//
 	public void saveArenaBuilders() {
 		for (Entry<String, ArenaBuilderCore> e : this.arenaBuilders.entrySet()) {
 			try {
@@ -395,7 +384,6 @@ public class ArenaManagerCore implements ArenaManager {
 		}
 	}
 
-	@Override
 	public boolean saveArenaBuilder(String name) {
 		if (!this.arenaBuilders.containsKey(name)) {
 			CodariCore.instance().getLogger().log(Level.WARNING, "No arena builder saved under the name " + name);
@@ -406,7 +394,6 @@ public class ArenaManagerCore implements ArenaManager {
 		return true;
 	}
 
-	@Override
 	public boolean loadArenaBuilder(File file) {
 		String name = file.getName();
 		if (this.arenaBuilders.containsKey(name)) {
@@ -428,6 +415,7 @@ public class ArenaManagerCore implements ArenaManager {
 		CodariSerialization.serialize(file, this.getGameRule(name));
 		return true;
 	}
+	
 	public boolean loadGameRule(File file) {
 		String name = file.getName();
 		if (this.gameRules.containsKey(name)) {

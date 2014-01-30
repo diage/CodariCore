@@ -3,8 +3,8 @@ package com.codari.arenacore.players.role;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -79,6 +79,7 @@ public class RoleManagerCore {
 		return false;
 	}
 	
+	//-----Serialization-----//
 	public void saveRoles() {
 		for (Entry<String, Role> e : this.roles.entrySet()) {
 			try {
@@ -113,8 +114,8 @@ public class RoleManagerCore {
 	public boolean loadRole(File file) {
 		String name = file.getName();
 		if (this.roles.containsKey(name)) {
-			CodariCore.instance().getLogger().log(Level.WARNING, "Can not role to the name "
-					+ name + " as a arena builder already exists with that name");
+			CodariCore.instance().getLogger().log(Level.WARNING, "Can not create role to the name "
+					+ name + " as an arena builder already exists with that name");
 			return false;
 		}
 		RoleCore role = (RoleCore) CodariSerialization.deserialize(file);

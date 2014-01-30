@@ -17,8 +17,6 @@ import com.codari.api5.util.reflect.ReflectionException;
 import com.codari.api5.util.reflect.Reflector;
 import com.codari.arena5.Library;
 import com.codari.arena5.arena.rules.Argument;
-import com.codari.arena5.arena.rules.roledelegation.RoleDeclaration;
-import com.codari.arena5.arena.rules.roledelegation.RoleDeclarationName;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.timedaction.TimedActionName;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
@@ -30,7 +28,7 @@ import com.codari.arena5.players.skills.SkillName;
 
 public class LibraryCore implements Library {
 	private final Map<String, Class<? extends ArenaObject>> objects;
-	private final Map<String, Class<? extends RoleDeclaration>> declarations;
+	//private final Map<String, Class<? extends RoleDeclaration>> declarations;
 	private final Map<String, Class<? extends TimedAction>> actions;
 	private final Map<String, Class<? extends WinCondition>> conditions;
 	private final Map<String, Class<? extends Skill>> skills;
@@ -38,7 +36,7 @@ public class LibraryCore implements Library {
 	
 	public LibraryCore() {
 		this.objects = new HashMap<>();
-		this.declarations = new HashMap<>();
+		//this.declarations = new HashMap<>();
 		this.actions = new HashMap<>();
 		this.conditions = new HashMap<>();
 		this.skills = new HashMap<>();
@@ -86,7 +84,7 @@ public class LibraryCore implements Library {
 		return Collections.unmodifiableSet(this.objects.entrySet());
 	}
 	
-	//-----Role Declaration Related-----//
+	/*/-----Role Declaration Related-----//
 	@Override
 	public void registerRoleDeclaration(Class<? extends RoleDeclaration> clazz) {
 		RoleDeclarationName declarationName = clazz.getAnnotation(RoleDeclarationName.class);
@@ -128,7 +126,7 @@ public class LibraryCore implements Library {
 		return this.declarations.keySet();
 	}
 	
-	//-----Timed Action Related-----//
+	//-----Timed Action Related-----/*/
 	@Override
 	public void registerTimedAction(Class<? extends TimedAction> clazz) {
 		TimedActionName actionName = clazz.getAnnotation(TimedActionName.class);

@@ -1,7 +1,6 @@
 package com.codari.arenacore.players.role;
 
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,6 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.codari.api5.Codari;
@@ -27,15 +27,15 @@ public class RoleCore implements Role, ConfigurationSerializable {
 	private Map<SkillActivation, Skill> skills;
 	private String name;
 	private Map<String, String> links;
-	
+
 	public RoleCore(String name, Map<String, String> links) {
 		this.name = name;
-		this.skills = new EnumMap<>(SkillActivation.class);
+		this.skills = new HashMap<>();
 		if(links != null) {
 			this.links = new LinkedHashMap<>(links);
 		}
 	}
-	
+
 	@Override
 	public Collection<Skill> getSkills() {
 		return this.skills.values();
@@ -74,7 +74,7 @@ public class RoleCore implements Role, ConfigurationSerializable {
 	public Role swapRole(Role role) {
 		return null;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof RoleCore) {
@@ -82,12 +82,12 @@ public class RoleCore implements Role, ConfigurationSerializable {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(this.getName()).build();
 	}
-	
+
 	@Override
 	public String getLink(String arenaObjectName) {
 		if(this.links.containsKey(arenaObjectName)) {
@@ -96,47 +96,50 @@ public class RoleCore implements Role, ConfigurationSerializable {
 		Bukkit.broadcastMessage(ChatColor.RED + "There is a role that is trying to interact w/ an object but there is no link!");	//TODO
 		return null;
 	}
-	
+
 	public Map<String, String> getLinks() {
 		return this.links;
 	}
-	
+
 	public Set<String> getObjectsWithLinks() {
 		return this.links.keySet();
 	}
-	
+
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new LinkedHashMap<>();
 		result.put("name", this.name);
 		for (Entry<SkillActivation, Skill> e : this.skills.entrySet()) {
-			SkillName skillName = e.getValue().getClass().getAnnotation(SkillName.class);
-			String name = skillName.value();
-			result.put(e.getKey().toString(), name);
+			if(e.getValue() != null) {
+				SkillName skillName = e.getValue().getClass().getAnnotation(SkillName.class);
+				String name = skillName.value();
+				result.put(e.getKey().toString(), name);
+			}
 		}
 		result.putAll(this.links);
 		return result;
 	}
-	
+
 	public RoleCore(Map<String, Object> args) {
-		//TODO
-		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 1");
 		args = new HashMap<>(args);
-		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 2");
 		this.name = (String) args.remove("name");
-		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 3");
-		this.skills = new EnumMap<>(SkillActivation.class);
+		this.skills = new LinkedHashMap<>();
 		for (SkillActivation a : SkillActivation.values()) {
-			final Skill skill = ((LibraryCore) Codari.getLibrary()).createSkill((String) args.remove(a.toString()));
-			this.skills.put(a, skill);
-		}
-		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 4");
-		this.links = new LinkedHashMap<>();
-		for (Entry<String, Object> e : args.entrySet()) {
-			if (e.getValue() instanceof String) {
-				this.links.put(e.getKey(), (String) e.getValue());
+			String skillName = (String) args.remove(a.toString());
+			if (skillName != null) {
+				final Skill skill = ((LibraryCore) Codari.getLibrary()).createSkill(skillName);
+				this.skills.put(a, skill);
 			}
 		}
-		System.out.println("POTATO DEBUG!!!!! ROLE DESERIALIZATION 5");
+		this.links = new HashMap<>();
+		for (Entry<String, Object> e : args.entrySet()) {
+			if (!e.getKey().equals(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
+				if (e.getValue() instanceof String) {
+					String arenaObjectName = e.getKey(); 
+					String linkName = (String) e.getValue();
+					this.links.put(arenaObjectName, linkName);
+				}
+			}
+		}
 	}
 }
