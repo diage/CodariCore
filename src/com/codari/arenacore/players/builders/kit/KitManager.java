@@ -2,17 +2,14 @@ package com.codari.arenacore.players.builders.kit;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import com.codari.api5.Codari;
-import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.rules.GameRuleCore;
-import com.codari.arenacore.players.combatants.CombatantCore;
 
 
 public class KitManager {
@@ -23,12 +20,6 @@ public class KitManager {
 	public KitManager() {
 		this.kitBuilders = new LinkedHashMap<>();
 		this.kits = new LinkedHashMap<>();
-		for(Entry<String, GameRuleCore> gameRuleEntry : ((ArenaManagerCore) Codari.getArenaManager()).getGameRules()) {
-			this.kitBuilders.put(gameRuleEntry.getKey(), new KitBuilder(gameRuleEntry.getValue()));
-		}
-		for(Entry<String, ArenaBuilderCore> arenaBuilderEntry : ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilders()) {
-			this.kits.put(arenaBuilderEntry.getKey(), new Kit(arenaBuilderEntry.getKey(), arenaBuilderEntry.getValue()));
-		}
 	}
 
 	public void setSelectedKitBuilder(String name) {
@@ -40,13 +31,6 @@ public class KitManager {
 	}
 
 	//---For Menu---//
-	public void submitKitBuilder(KitBuilder kitBuilder) {
-		String kitBuilderName = kitBuilder.getName();
-		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(kitBuilder.getGameRule());
-		this.kitBuilders.put(kitBuilderName, kitBuilder);
-		this.selectedBuilder = kitBuilder;		
-	}	
-
 	public boolean containsKitBuilder(String kitBuilderName) {
 		return this.kitBuilders.containsKey(kitBuilderName);
 	}
@@ -65,27 +49,38 @@ public class KitManager {
 		return this.kitBuilders.get(name);
 	}
 
+	//---Menu Kit/KitBuilder Creation---//
 	public boolean createKit(String kitName) {
 		if(this.selectedBuilder != null) {
 			Kit newKit = this.selectedBuilder.buildKit(kitName);
+			((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(newKit.getArenaBuilder());
 			this.kits.put(kitName, newKit);
-			for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {	
-				((CombatantCore) combatant).getDynamicMenuManager().addKitIcon(combatant, kitName);
-			}
 			return true;
 		} 
 		Bukkit.broadcastMessage(ChatColor.RED + "Kit wasn't constructed because selected Kit Builder is null!");	//TODO
 		return false;
 	}
 	
-	/* For deserialization */
-	public void createKit(String kitName, ArenaBuilderCore arenaBuilder) {
-		Kit newKit = new Kit(kitName, arenaBuilder);
-		this.kits.put(kitName, newKit);
-		for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {	
-			((CombatantCore) combatant).getDynamicMenuManager().addKitIcon(combatant, kitName);
-		}
+	public void submitKitBuilder(KitBuilder kitBuilder) {
+		String kitBuilderName = kitBuilder.getName();
+		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(kitBuilder.getGameRule());
+		this.kitBuilders.put(kitBuilderName, kitBuilder);
+		this.selectedBuilder = kitBuilder;		
+	}	
+	
+	//-----For deserialization : Kit/KitBuilder Creation-----//
+	public void createKit(ArenaBuilderCore arenaBuilder) {
+		Kit newKit = new Kit(arenaBuilder.getName(), arenaBuilder);
+		((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(arenaBuilder);
+		this.kits.put(arenaBuilder.getName(), newKit);
 	}
+	
+	public void createKitBuilder(GameRuleCore gameRule) {
+		KitBuilder kitBuilder = new KitBuilder(gameRule);
+		((ArenaManagerCore) Codari.getArenaManager()).registerGameRule(gameRule);
+		this.kitBuilders.put(gameRule.getName(), kitBuilder);
+	}
+	//-----End of deserialization-----//
 
 	public boolean containsKit(String kitName) {
 		return this.kits.containsKey(kitName);

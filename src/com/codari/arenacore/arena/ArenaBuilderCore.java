@@ -308,7 +308,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 10");
 		//Submitting Kit to the Kit Manager
-		((CodariCore) CodariI.INSTANCE).getKitManager().createKit(builder.getName(), builder);
+		((CodariCore) CodariI.INSTANCE).getKitManager().createKit(builder);
 		return builder;
 	}
 	

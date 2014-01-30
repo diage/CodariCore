@@ -74,7 +74,6 @@ public class Kit {
 		this.name = name;
 		this.arenaBuilder = new ArenaBuilderCore(name, (GameRuleCore) gameRule);
 		this.roleDatas = new HashMap<>();
-		((ArenaManagerCore) Codari.getArenaManager()).addArenaBuilder(this.name, this.arenaBuilder);
 		this.tools = new ItemStack[9];
 		this.tools[4] = SPAWN_SETTER;
 		this.tools[5] = TOOLBAR_EXIT;
@@ -95,6 +94,10 @@ public class Kit {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public ArenaBuilderCore getArenaBuilder() {
+		return this.arenaBuilder;
 	}
 	
 	@Override

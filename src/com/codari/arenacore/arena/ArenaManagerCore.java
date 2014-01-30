@@ -265,8 +265,8 @@ public class ArenaManagerCore implements ArenaManager {
 		return new ArenaBuilderCore(name, (GameRuleCore) gameRule);
 	}
 
-	public void addArenaBuilder(String arenaName, ArenaBuilder arenaBuilder) {
-		this.arenaBuilders.put(arenaName, (ArenaBuilderCore) arenaBuilder);
+	public void addArenaBuilder(ArenaBuilderCore arenaBuilder) {
+		this.arenaBuilders.put(arenaBuilder.getName(), arenaBuilder);
 	}
 
 	public ArenaBuilderCore getArenaBuilder(String arenaName) {

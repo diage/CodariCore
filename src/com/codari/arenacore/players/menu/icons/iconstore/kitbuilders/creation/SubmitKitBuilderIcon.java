@@ -26,11 +26,13 @@ public class SubmitKitBuilderIcon extends ExecutableIcon {
 			if(kitBuilder != null && kitBuilder.isValid()) {
 				((CombatantCore) this.getCombatant()).getKitManager().submitKitBuilder(kitBuilder);
 				((CombatantCore) this.getCombatant()).getDynamicMenuManager().resetKitBuilderDynamicMenus();
+				player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Kit Builder named " + kitBuilder.getName());
 				for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {
-					((CombatantCore) combatant).getDynamicMenuManager().addKitBuilderIcon(kitBuilder.getName());
+					if(combatant != null) {
+						((CombatantCore) combatant).getDynamicMenuManager().addKitBuilderIcon(kitBuilder.getName());
+					}
 				}
 				KitBuilderListener.currentKitBuilders.remove(player.getName());
-				player.sendMessage(ChatColor.GREEN + "You have successfully submitted a Kit Builder named " + kitBuilder.getName());
 			} else {
 				player.sendMessage(ChatColor.RED + "Unable to create Kit Builder. The Kit Builder must have a name, a match duration, "
 						+ "a Team size, a number of Teams size, and at least one win condition.");
