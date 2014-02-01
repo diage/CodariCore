@@ -12,6 +12,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -33,7 +34,11 @@ import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
+import com.codari.arena5.players.role.Role;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.objects.RoleData;
+import com.codari.arenacore.arena.objects.RoleSelectionObject;
+import com.codari.arenacore.arena.objects.SpawnPoint;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 
 @SerializableAs("Arena_Builder")
@@ -49,7 +54,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<String> objectsWithLinks;	//FIXME - when arena objects are loaded, if they do have links they have to be added here
 	private final List<SerializableLocation> spawners;
 	private final List<ObjectDataPacket> data;
-	
+
 	//-----Constructor-----//
 	public ArenaBuilderCore(String name, GameRuleCore rules) {
 		this.name = name;
@@ -63,7 +68,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.spawners = new ArrayList<>();
 		this.data = new ArrayList<>();
 	}
-	
+
 	//-----Public Methods-----//
 	public List<TimedAction> compileActions() {
 		List<TimedAction> actions = new ArrayList<>();
@@ -72,37 +77,37 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		actions.addAll(this.fixedSpawnables);
 		return actions;
 	}
-	
+
 	public List<ArenaObject> compileObjects() {
 		return this.objects;
 	}
-	
+
 	public List<SerializableLocation> compileSpawners() {
 		return this.spawners;
 	}
-	
+
 	public int getNumberOfSpawns() {
 		return this.spawners.size();
 	}
-	
+
 	public void setGameRule(GameRule rule) {
 		this.rules = rule;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
+
 	@Override
 	public GameRule getGameRule() {
 		return this.rules;
 	}
-	
+
 	@Override
 	public boolean createRandomTimelineGroup(String groupName, Time time) {
 		return this.createRandomTimelineGroup(groupName, time, Time.NULL);
 	}
-	
+
 	@Override
 	public boolean createRandomTimelineGroup(String groupName, Time time, Time repeatTime) {
 		if (this.randomSpawnables.containsKey(groupName)) {
@@ -111,7 +116,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.randomSpawnables.put(groupName, new RandomTimelineGroup(groupName, time, repeatTime));
 		return true;
 	}
-	
+
 	@Override
 	public boolean registerRandomSpawnable(RandomSpawnableObject object, String groupName) {
 		RandomTimelineGroup randomTimelineGroup = this.randomSpawnables.get(groupName);
@@ -123,7 +128,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.data.add(new ObjectDataPacket(object, groupName));
 		return true;
 	}
-	
+
 	@Override
 	public boolean checkForRandomSpawnableGroup(String name) {
 		if(this.randomSpawnables.containsKey(name)) {
@@ -131,13 +136,13 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time) {
 		this.addArenaObject(object);
 		return this.registerFixedSpawnable(object, time, Time.NULL);
 	}
-	
+
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
 		//FIXME - check time
@@ -146,15 +151,26 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.data.add(new ObjectDataPacket(object, time.toString(), repeatTime.toString()));
 		return true;
 	}
-	
+
 	@Override
 	public boolean registerPersistent(ImmediatePersistentObject immediatePersistentObject) {
 		this.immediatePersistentObjects.add(immediatePersistentObject);
 		this.addArenaObject(immediatePersistentObject);
-		this.data.add(new ObjectDataPacket(immediatePersistentObject));
+		String[] roleDatas;
+		if(immediatePersistentObject instanceof RoleSelectionObject) {
+			List<RoleData> roleDatasList = ((RoleSelectionObject) immediatePersistentObject).getAllRoles();
+			roleDatas = new String[roleDatasList.size() * 2];
+			for(int i = 0; i < roleDatasList.size(); i++) {
+				roleDatas[i * 2] = roleDatasList.get(i).getRole().getName();
+				roleDatas[i * 2 + 1] = String.valueOf(roleDatasList.get(i).getCounter());
+			}
+		} else {
+			roleDatas = ArrayUtils.EMPTY_STRING_ARRAY;
+		}
+		this.data.add(new ObjectDataPacket(immediatePersistentObject, roleDatas));
 		return true;
 	}
-	
+
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
 		this.delayedPersistentObjects.add(delayedPersistentObject);
@@ -162,15 +178,15 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.data.add(new ObjectDataPacket(delayedPersistentObject, time.toString(), Boolean.toString(override)));
 		return true;
 	}
-	
+
 	public ArrayList<ArenaObject> getArenaObjectsCopyList() {
 		return new ArrayList<ArenaObject>(this.objects);
 	}
-	
+
 	public Map<String, RandomTimelineGroup> getRandomSpawnablesCopyMap() {
 		return new HashMap<String, RandomTimelineGroup>(this.randomSpawnables);
 	}
-	
+
 	public boolean hasAllLinks(Collection<String> links) {
 		for(String link : this.objectsWithLinks) {
 			if(!links.contains(link)) {
@@ -179,7 +195,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 		return true;
 	}
-	
+
 	private void addArenaObject(ArenaObject object) {
 		if(((LibraryCore) Codari.getLibrary()).getLinks(object.getName()) != null) {
 			this.objectsWithLinks.add(object.getName());
@@ -187,17 +203,23 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.objects.add(object);
 	}
 	
+	public void addSpawnLocation(SpawnPoint spawnPoint) {
+		this.addArenaObject(spawnPoint);
+		this.data.add(new ObjectDataPacket(spawnPoint));
+		this.addSpawnLocation(spawnPoint.getLocation());
+	}
+
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
 		private static final long serialVersionUID = -1455939781657809306L;
 
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
-		
+
 		//-----Fields-----//
 		private final List<Marble> bagOfMarbles;
 		private final Random random;
 		private final String name;
-		
+
 		//-----Constructor-----//
 		public RandomTimelineGroup(String name, Time delay, Time period) {
 			super(null, delay, period);
@@ -216,13 +238,13 @@ public class ArenaBuilderCore implements ArenaBuilder {
 				}
 			}
 		}
-		
+
 		private void addObject(RandomSpawnableObject object) {
 			for (int i = 0; i < object.getWeight(); i++) {
 				this.bagOfMarbles.add(new Marble(object));
 			}
 		}
-		
+
 		//THINK OF MARBLES IN A BAG
 		private final class Marble implements Serializable {
 			private static final long serialVersionUID = 2120469391762175063L;
@@ -232,26 +254,21 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			}
 		}
 	}
-	
+
 	private final static class FixedSpawnableAction extends TimedAction {
 		private static final long serialVersionUID = 3857488726629177537L;
 		//-----Fields-----//
 		private final FixedSpawnableObject spawnable;
-		
+
 		public FixedSpawnableAction(FixedSpawnableObject spawnable, Time delay, Time period) {
 			super(null, delay, period);
 			this.spawnable = spawnable;
 		}
-		
+
 		@Override
 		public void action() {
 			this.spawnable.spawn();
 		}
-	}
-	
-	public void addSpawnLocation(ArenaObject arenaObject) {
-		this.addArenaObject(arenaObject);
-		this.addSpawnLocation(arenaObject.getLocation());
 	}
 
 	@Override
@@ -278,7 +295,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 		return result;
 	}
-	
+
 	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
 		//TODO
 		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 1");
@@ -316,7 +333,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		((CodariCore) CodariI.INSTANCE).getKitManager().createKit(builder);
 		return builder;
 	}
-	
+
 	private final static class TimelineGroupOutputFunction implements OutputFunction<List<RandomTimelineGroup>> {
 		@Override
 		public Map<String, Object> apply(@Nullable List<RandomTimelineGroup> timelineGroups) {
@@ -329,7 +346,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return result;
 		}
 	}
-	
+
 	private final static class TimelineGroupInputFunction implements InputFunction<List<RandomTimelineGroup>> {
 		@Override
 		public List<RandomTimelineGroup> apply(@Nullable Map<String, Object> args) {
@@ -348,23 +365,37 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return result;
 		}
 	}
-	
+
 	//-----Object Data Packet-----//
 	@SerializableAs("Oject_Data_Packet")
 	public final static class ObjectDataPacket implements ConfigurationSerializable {
 		private final String objectName;
 		private final SerializableLocation location;
 		private final List<String> extraInformation;
-		
+
 		//-----Constructor-----//
 		private ObjectDataPacket(ArenaObject obj, String... extraInformation) {
 			this.objectName = obj.getName();
 			this.location = new SerializableLocation(obj.getLocation());
 			this.extraInformation = Arrays.asList(extraInformation);
 		}
-		
+
 		private void apply(ArenaBuilderCore builder) {
-			ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(this.objectName, this.location.getLocation());
+			ArenaObject arenaObject;
+			if(!objectName.equals(RoleSelectionObject.OBJECT_NAME)) {
+				arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, this.location.getLocation());
+			} else {
+				Map<String, RoleData> roleDatas = new HashMap<>();
+				for(int i = 0; i < extraInformation.size(); i += 2) {
+					Role role = ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(extraInformation.get(i));
+					int amount = Integer.parseInt(extraInformation.get(i + 1));
+					if(role != null && amount > 0) {
+						roleDatas.put(role.getName(), new RoleData(role, amount));
+					}
+				}
+				builder.registerPersistent(new RoleSelectionObject(location.getLocation(), roleDatas));
+				return;
+			}
 			if(arenaObject instanceof RandomSpawnableObject) {
 				builder.registerRandomSpawnable((RandomSpawnableObject) arenaObject, extraInformation.get(0));
 			} else if(arenaObject instanceof FixedSpawnableObject) {
@@ -381,18 +412,20 @@ public class ArenaBuilderCore implements ArenaBuilder {
 				if(extraInformation != null && extraInformation.size() >= 2) {
 					builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
 				}
+			} else if(arenaObject instanceof SpawnPoint) {
+				builder.addArenaObject(arenaObject);
 			}
 		}
 
 		@Override
 		public Map<String, Object> serialize() {
 			return new ConfigurationOutput()
-					.addString("name", this.objectName)
-					.addObject("location", this.location)
-					.add(new ExtraInformationOutputFunction(), this.extraInformation)
-					.result();
+			.addString("name", this.objectName)
+			.addObject("location", this.location)
+			.add(new ExtraInformationOutputFunction(), this.extraInformation)
+			.result();
 		}
-		
+
 		public ObjectDataPacket(Map<String, Object> args) {
 			ConfigurationInput input = new ConfigurationInput(args);
 			this.objectName = input.getString("name");
@@ -400,7 +433,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			this.extraInformation = input.get(new ExtraInformationInputFunction());
 		}
 	}
-	
+
 	//-----Extra Information Configuration Functions-----//
 	private final static class ExtraInformationOutputFunction implements OutputFunction<List<String>> {
 		@Override
@@ -412,7 +445,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return result;
 		}
 	}
-	
+
 	private final static class ExtraInformationInputFunction implements InputFunction<List<String>> {
 		@Override
 		public List<String> apply(@Nullable Map<String, Object> args) {
@@ -428,7 +461,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return result;
 		}
 	}
-	
+
 	private final static class DataOutputFunction implements OutputFunction<List<ObjectDataPacket>> {
 		@Override
 		public Map<String, Object> apply(@Nullable List<ObjectDataPacket> data) {
@@ -439,7 +472,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return result;
 		}
 	}
-	
+
 	private final static class DataInputFunction implements InputFunction<List<ObjectDataPacket>> {
 		@Override
 		public List<ObjectDataPacket> apply(@Nullable Map<String, Object> args) {

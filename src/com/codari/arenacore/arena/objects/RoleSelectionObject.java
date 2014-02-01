@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
@@ -24,7 +25,7 @@ import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
-@ArenaObjectName("Role Selection Object")
+@ArenaObjectName(RoleSelectionObject.OBJECT_NAME)
 public class RoleSelectionObject implements ImmediatePersistentObject {
 	private static final long serialVersionUID = 3577897723052477603L;
 	private transient BlockState quartzBlockState;
@@ -32,27 +33,24 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 
 	private Map<String, RoleData> roleDatas;
 	private Location location;
-	private final String name;
 	List<RoleData> remainingRoles;
 
 	public static final String INVENTORY_NAME = "Role Selection";
+	public static final String OBJECT_NAME = "Role Selection Object";
 	private Inventory inventory;
 
 	public static final String META_DATA_STRING = RandomStringUtils.randomAscii(69);
 
-	public RoleSelectionObject(Location location) {
+	public RoleSelectionObject(Location location, Map<String, RoleData> roleDatas) {
 		this.location = location;
-		ArenaObjectName arenaObjectName = this.getClass().getAnnotation(ArenaObjectName.class);
-		this.name = arenaObjectName.value();
 		this.quartzBlockState = location.getBlock().getState();
 		this.remainingRoles = new ArrayList<>();
-	}
-
-	public void setRoleDatas(Map<String, RoleData> roleDatas) {
-		this.roleDatas = roleDatas;
-		int size = this.roleDatas.size();
-		size = size < 0 ? 0 : (size > 54 ? 54 : (size % 9 != 0 ? (((size + 8) / 9) * 9) : size));
-		this.inventory = Bukkit.createInventory(null, size, INVENTORY_NAME);
+		if(roleDatas != null) {
+			this.roleDatas = roleDatas;
+			int size = this.roleDatas.size();
+			size = size < 0 ? 0 : (size > 54 ? 54 : (size % 9 != 0 ? (((size + 8) / 9) * 9) : size));
+			this.inventory = Bukkit.createInventory(null, size, INVENTORY_NAME);
+		}
 	}
 
 	@Override
@@ -77,7 +75,7 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 
 	@Override
 	public String getName() {
-		return this.name;
+		return OBJECT_NAME;
 	}
 
 	@Override
@@ -99,6 +97,14 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 		} else {
 			this.swapRole(combatant.getRole().getName(), newRoleName);
 		}
+	}
+	
+	public List<RoleData> getAllRoles() {
+		List<RoleData> allRoleDatas = new ArrayList<>();
+		for(Entry<String, RoleData> roleData : this.roleDatas.entrySet()) {
+			allRoleDatas.add(roleData.getValue());
+		}
+		return allRoleDatas;
 	}
 
 	public List<RoleData> getRemainingRoles() {

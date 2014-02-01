@@ -60,17 +60,22 @@ public class ToolBarListener implements Listener {
 				Kit kit = toolbarManager.getToolbarKit();
 				ArenaBuilderCore builder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(kit.getName());
 				Location location = e.getClickedBlock().getLocation();
+				ArenaObject arenaObject;
 				location.setY(location.getY() + 1);
 				if (e.getItem().equals(kit.getTools()[4])) {
 					String objectName = SpawnPoint.SPAWN_POINT_NAME;
-					ArenaObject spawnPoint = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
-					builder.addSpawnLocation(spawnPoint);
+					arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+					builder.addSpawnLocation((SpawnPoint) arenaObject);
 					e.getPlayer().sendMessage(kit.addSpawn(e.getItem(), location));
-					spawnPoint.reveal();
+					arenaObject.reveal();
 					return;
 				}
 				String objectName = e.getItem().getItemMeta().getDisplayName();
-				ArenaObject arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+				if(!objectName.equals(RoleSelectionObject.OBJECT_NAME)) {
+					arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
+				} else {
+					arenaObject = new RoleSelectionObject(location, kit.getRoleDatas());
+				}
 				List<String> extraInformation = e.getItem().getItemMeta().hasLore() ? e.getItem().getItemMeta().getLore() : new ArrayList<String>();
 				if(this.registerArenaObject(kit, arenaObject, extraInformation, builder)) {
 					//After an Arena Object is added, all the roles have to be checked again to make sure they have the required links
@@ -104,9 +109,6 @@ public class ToolBarListener implements Listener {
 				return true;
 			} else if(arenaObject instanceof ImmediatePersistentObject) {
 				builder.registerPersistent((ImmediatePersistentObject) arenaObject);
-				if(arenaObject instanceof RoleSelectionObject) {
-					((RoleSelectionObject) arenaObject).setRoleDatas(kit.getRoleDatas());
-				} 
 				return true;
 			} else if(arenaObject instanceof DelayedPersistentObject) {
 				if(extraInformation.size() >= 2) {
