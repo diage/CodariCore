@@ -4,9 +4,10 @@ import java.lang.ref.WeakReference;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
+import net.minecraft.util.org.apache.commons.lang3.builder.ToStringBuilder;
+import net.minecraft.util.org.apache.commons.lang3.builder.ToStringStyle;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

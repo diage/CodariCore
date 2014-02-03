@@ -13,8 +13,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
+import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

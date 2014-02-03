@@ -2,7 +2,8 @@ package com.codari.arenacore.players.combatants;
 
 import java.io.File;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

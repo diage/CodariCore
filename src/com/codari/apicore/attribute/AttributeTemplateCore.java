@@ -1,8 +1,8 @@
 package com.codari.apicore.attribute;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.codari.api5.attribute.AttributeTemplate;
 import com.codari.api5.attribute.InvalidAttributeException;

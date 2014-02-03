@@ -12,7 +12,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.ArrayUtils;
+import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;

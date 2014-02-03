@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 
 import com.codari.api5.attribute.AttributeFactory;
 import com.codari.api5.attribute.AttributeTemplate;

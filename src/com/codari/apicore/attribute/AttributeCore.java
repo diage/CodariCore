@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.codari.api5.attribute.Attribute;
 import com.codari.api5.attribute.modifier.AttributeModifier;
