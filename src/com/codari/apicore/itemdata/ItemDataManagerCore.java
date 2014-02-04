@@ -13,6 +13,7 @@ public class ItemDataManagerCore implements ItemDataManager {
 	private final AtomicInteger idGenerator;
 	private final Map<Integer, ItemDataCore> data;
 	
+	
 	//-----Constructor-----//
 	public ItemDataManagerCore() {
 		this.idGenerator = new AtomicInteger(1);
