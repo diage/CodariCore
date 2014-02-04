@@ -1,4 +1,4 @@
-package com.codari.apicore.itemdata;
+package com.codari.apicore.item;
 
 public enum DataEntryType {
 	//-----Enumerations-----//

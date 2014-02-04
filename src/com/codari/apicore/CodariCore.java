@@ -10,7 +10,7 @@ import com.codari.apicore.attribute.AttributeFactoryCore;
 import com.codari.apicore.command.CodariCommandCenter;
 import com.codari.apicore.command.CommandRegister;
 import com.codari.apicore.enchantment.EnchantmentManagerCore;
-import com.codari.apicore.itemdata.ItemDataManagerCore;
+import com.codari.apicore.item.CodariItemManagerCore;
 import com.codari.apicore.player.CodariPlayerManagerCore;
 import com.codari.arena.objects.RoleSwitchListenerObject;
 import com.codari.arena.objects.gate.Gate;
@@ -69,7 +69,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private AttributeFactoryCore attributeFactory;
 	private LibraryCore library;
 	private EnchantmentManagerCore enchantmentManager;
-	private ItemDataManagerCore itemDataManager;
+	private CodariItemManagerCore itemDataManager;
 	
 	//-----Loader-----//
 	@Override
@@ -86,7 +86,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.setInstanceAccess(true);
 		this.codariPlayerManager.registerPlayerListener();
 		this.enchantmentManager.packetStuff();
-		this.itemDataManager = new ItemDataManagerCore();
+		this.itemDataManager = new CodariItemManagerCore();
 		this.library = new LibraryCore(); 
 		this.roleManager = new RoleManagerCore();
 		this.arenaManager = new ArenaManagerCore();
@@ -169,7 +169,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	@Override
-	public ItemDataManagerCore getItemDataManager() {
+	public CodariItemManagerCore getItemDataManager() {
 		return this.itemDataManager;
 	}
 	
