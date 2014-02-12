@@ -17,6 +17,7 @@ public class CommandManager extends TemplateManager {
 		if(this.itemAssets.containsKey(assetID)) {
 			return this.itemAssets.get(assetID);
 		}
+		//Return new Item Asset
 		return null;
 	}
 	

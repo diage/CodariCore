@@ -130,9 +130,7 @@ Version 0.4 Goals
 ===========
 Version 0.5 Goals
 ===========
--Finalize permission system
--Begin item abstraction
--Tie in win statistics
+-Begin serialization
 
 ---------------
 : Bugs to fix :
@@ -145,8 +143,20 @@ Version 0.5 Goals
 ===========
 Version 0.6 Goals
 ===========
+-Finalize serialization
+
+---------------
+: Bugs to fix :
+---------------
+
+---------------
+    : QOL :
+---------------
+
+===========
+Version 0.7 Goals
+===========
 -Finalize item abstraction
--Introduce stat system (Strength and etc.)
 
 ---------------
 : Bugs to fix :
