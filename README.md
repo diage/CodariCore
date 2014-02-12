@@ -84,36 +84,23 @@ Figure out what is wrong with double jump - Soren can't do it! //Done
 Fix double jump flying/cooldown //Done
 role switching is not working currently //Done
 
-Test serialization
-
----------------
-    : QOL :
----------------
-Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
-
 ===========
 Version 0.3 Goals
 ===========
--Improve role abstraction
--Create KitBuilder (menu based) Abstraction
--Begin bug testing Icons
+-Improve role abstraction //Done
+-Create KitBuilder (menu based) Abstraction //Done
+-Begin bug testing Icons //Done
 
 ---------------
 : Bugs to fix :
 ---------------
-fix potions - good ones should help allies and not enemies!
-
----------------
-    : QOL :
----------------
-Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
+fix potions - good ones should help allies and not enemies! //Done
 
 ===========
 Version 0.4 Goals
 ===========
--Finalize role abstraction
--Finalize menu based arena construction
--Start to develop permission system
+-Finalize role abstraction //Done
+-Finalize menu based arena construction //Done
 
 ---------------
 : Bugs to fix :
@@ -123,47 +110,33 @@ Version 0.4 Goals
 -When Spawnable Groups are added, they must be correctly added to the respective kit	//Done
 -When Objective Points are being captured, players w/o teams should not prevent players from capping points		//Done - need testing
 
----------------
-    : QOL :
----------------
-
 ===========
 Version 0.5 Goals
 ===========
--Begin serialization
+-Begin serialization //Done
 
 ---------------
 : Bugs to fix :
----------------
-
----------------
-    : QOL :
 ---------------
 
 ===========
 Version 0.6 Goals
 ===========
--Finalize serialization
+-Finalize serialization //Done
 
 ---------------
 : Bugs to fix :
----------------
-
----------------
-    : QOL :
 ---------------
 
 ===========
 Version 0.7 Goals
 ===========
+-Bug test serialization
+-Further improve Menu Interaction
 -Finalize item abstraction
 
 ---------------
 : Bugs to fix :
----------------
-
----------------
-    : QOL :
 ---------------
 
 ===========
@@ -178,6 +151,7 @@ Version 0.8 Goals
 ---------------
     : QOL :
 ---------------
+Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
 
 ===========
 LOGIN INFO
