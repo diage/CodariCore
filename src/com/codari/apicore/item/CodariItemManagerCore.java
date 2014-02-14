@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.codari.api5.item.CodariItemManager;
 import com.codari.apicore.CodariCore;
+import com.codari.arena5.item.CodariItemManager;
 
 public class CodariItemManagerCore implements CodariItemManager {
 	//-----Fields-----//
