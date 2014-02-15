@@ -21,7 +21,7 @@ public class PlayerSelection extends FunctionMenu {
 		super.setSlot(FunctionMenuSlot.C_ONE, this.backIcon);
 		if(combatant.getTeam() != null && combatant.getTeam().getTeamSize() > 1) {
 			for(Combatant teamMate: combatant.getTeam().getTeamMates(combatant)) {
-				if(teamMate != null && teamMate.getPlayer().getName() != null) {
+				if(teamMate != null && teamMate.getPlayer() != null) {
 					this.addPlayerIcon(combatant, teamMate.getPlayer().getName()); 
 				}
 			}

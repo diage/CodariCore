@@ -6,9 +6,12 @@ import com.codari.arena5.item.CodariItem;
 import com.codari.arena5.item.assets.Command;
 
 public class CommandWrapperAsset implements UseAsset {
-
-	public CommandWrapperAsset(CodariItem item, Command commandAsset) {
-		
+	private CodariItem item;
+	private Command command;
+	
+	public CommandWrapperAsset(CodariItem item, Command command) {
+		this.item = item;
+		this.command = command;
 	}
 	
 	@Override
@@ -25,8 +28,7 @@ public class CommandWrapperAsset implements UseAsset {
 
 	@Override
 	public void use() {
-		// TODO Auto-generated method stub
-		
+		this.command.issue(this.item.getCombatant());
 	}
 
 }
