@@ -288,15 +288,15 @@ public class LibraryCore implements Library {
 		this.itemAssets.put(name, clazz);
 	}
 
-	public ItemAsset createItemAsset(String name) {
-		Class<? extends ItemAsset> clazz = this.itemAssets.get(name);
+	public ItemAsset createItemAsset(String serializedAssetName) {
+		Class<? extends ItemAsset> clazz = this.itemAssets.get(serializedAssetName);
 		if (clazz == null) {
 			return null;
 		}
 		try {
 			return (ItemAsset) Reflector.invokeConstructor(clazz).getHandle();
 		} catch (ReflectionException ex) {
-			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create Item Asset named " + name, ex);
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create Item Asset named " + serializedAssetName, ex);
 			return null;
 		}
 	}

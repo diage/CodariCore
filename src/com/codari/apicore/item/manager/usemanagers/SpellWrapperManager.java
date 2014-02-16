@@ -14,6 +14,6 @@ public class SpellWrapperManager implements AssetManager<UseAsset> {
 
 	@Override
 	public UseAsset getItemAsset(CodariItem item, String assetID) throws Exception {
-		return new SpellWrapperAsset(item, spellManager.getItemAsset(item, assetID));
+		return new SpellWrapperAsset(item, this.spellManager.getItemAsset(item, assetID));
 	}
 }
