@@ -21,6 +21,8 @@ import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.timedaction.TimedActionName;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionName;
+import com.codari.arena5.item.ItemAssetName;
+import com.codari.arena5.item.assets.ItemAsset;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
 import com.codari.arena5.players.skills.Skill;
@@ -33,6 +35,7 @@ public class LibraryCore implements Library {
 	private final Map<String, Class<? extends WinCondition>> conditions;
 	private final Map<String, Class<? extends Skill>> skills;
 	private final Map<String, Set<String>> links;
+	private final Map<String, Class<? extends ItemAsset>> itemAssets;
 	
 	public LibraryCore() {
 		this.objects = new HashMap<>();
@@ -41,6 +44,7 @@ public class LibraryCore implements Library {
 		this.conditions = new HashMap<>();
 		this.skills = new HashMap<>();
 		this.links = new HashMap<>();
+		this.itemAssets = new HashMap<>();
 	}
 	
 	//----ArenaObject Related----//
@@ -268,4 +272,32 @@ public class LibraryCore implements Library {
 		return null;
 	}
 
+	//-----Item Assets-----//
+	@Override
+	public void registerItemAsset(Class<? extends ItemAsset> clazz) {
+		ItemAssetName itemAssetName = clazz.getAnnotation(ItemAssetName.class);
+		if(itemAssetName == null) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing Item Asset Annotation for " + clazz);
+			return;
+		}
+		String name = itemAssetName.name();
+		if(this.itemAssets.containsKey(name)) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Item asset " + name + " already exists");
+			return;
+		}
+		this.itemAssets.put(name, clazz);
+	}
+
+	public ItemAsset createItemAsset(String name) {
+		Class<? extends ItemAsset> clazz = this.itemAssets.get(name);
+		if (clazz == null) {
+			return null;
+		}
+		try {
+			return (ItemAsset) Reflector.invokeConstructor(clazz).getHandle();
+		} catch (ReflectionException ex) {
+			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Could not create Item Asset named " + name, ex);
+			return null;
+		}
+	}
 }
