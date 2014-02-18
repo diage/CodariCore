@@ -2,19 +2,20 @@ package com.codari.apicore.item;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import com.codari.apicore.util.Codec;
 import com.codari.arena5.item.CodariItemManager;
 
 public class CodariItemManagerCore implements CodariItemManager {
 	//-----Fields-----//
-	private final UUID sessionId = UUID.randomUUID();
-	private final AtomicInteger idGenerator = new AtomicInteger(1);
 	private final Map<Integer, CodariItemCore> data;
+	private String sessionId;
+	private int idIncrement;
 	
 	//-----Constructor-----//
 	public CodariItemManagerCore() {
 		this.data = new HashMap<>();
+		this.sessionId = Codec.BASE62.encode(System.currentTimeMillis());
+		this.idIncrement = 0;
 	}
 }
