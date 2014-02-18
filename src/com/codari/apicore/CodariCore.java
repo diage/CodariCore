@@ -9,7 +9,6 @@ import com.codari.api5.util.reflect.Reflector;
 import com.codari.apicore.attribute.AttributeFactoryCore;
 import com.codari.apicore.command.CodariCommandCenter;
 import com.codari.apicore.command.CommandRegister;
-import com.codari.apicore.enchantment.EnchantmentManagerCore;
 import com.codari.apicore.item.CodariItemManagerCore;
 import com.codari.apicore.player.CodariPlayerManagerCore;
 import com.codari.arena.objects.RoleSwitchListenerObject;
@@ -68,14 +67,12 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	private GuildManagerCore guildManager;
 	private AttributeFactoryCore attributeFactory;
 	private LibraryCore library;
-	private EnchantmentManagerCore enchantmentManager;
 	private CodariItemManagerCore itemDataManager;
 	
 	//-----Loader-----//
 	@Override
 	public void onLoad() {
 		this.codariPlayerManager = new CodariPlayerManagerCore();
-		this.enchantmentManager = new EnchantmentManagerCore();
 	}
 	
 	private CommandRegister commandRegister;
@@ -85,7 +82,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	public void onEnable() {
 		this.setInstanceAccess(true);
 		this.codariPlayerManager.registerPlayerListener();
-		this.enchantmentManager.packetStuff();
 		this.itemDataManager = new CodariItemManagerCore();
 		this.library = new LibraryCore(); 
 		this.roleManager = new RoleManagerCore();
@@ -155,7 +151,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Disabler-----//
 	@Override
 	public void onDisable() {
-		this.enchantmentManager.unregisterCustomEnchantments();
 		this.arenaManager.saveArenaBuilders();
 		this.arenaManager.saveGameRules();
 		this.roleManager.saveRoles();
@@ -163,11 +158,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	//-----Public Methods-----//
-	@Override
-	public EnchantmentManagerCore getEnchantmentManager() {
-		return this.enchantmentManager;
-	}
-	
 	@Override
 	public CodariItemManagerCore getItemDataManager() {
 		return this.itemDataManager;
