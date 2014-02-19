@@ -1,7 +1,9 @@
 package com.codari.apicore.item;
 
+import com.codari.apicore.item.assetmaster.SlotType;
 import com.codari.apicore.util.Codec;
 import com.codari.arena5.item.CodariItem;
+import com.codari.arena5.item.assets.ItemAsset;
 import com.codari.arena5.players.combatants.Combatant;
 
 public class CodariItemCore implements CodariItem {
@@ -10,12 +12,14 @@ public class CodariItemCore implements CodariItem {
 	private final Combatant combatant;
 	private final String sessionId;
 	private final String itemId;
+	private final ItemAsset[] assets;
 	
 	//-----Constructor-----//
 	public CodariItemCore(Combatant combatant, String sessionId, int itemId) {
 		this.combatant = combatant;
 		this.sessionId = sessionId;
 		this.itemId = Codec.BASE62.encode(itemId);
+		this.assets = new ItemAsset[SlotType.TOTAL_SLOTS];
 	}
 	
 	//-----Methods-----//

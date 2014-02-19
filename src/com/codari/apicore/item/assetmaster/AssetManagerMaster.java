@@ -45,42 +45,42 @@ public class AssetManagerMaster {
 			SlotType slotType = SlotType.getSlotType(slotValue);
 			switch(slotType) {
 			case ATTRIBUTE:
-				if(attributeCounter == SlotType.MAX_NUMBER_OF_ATTRIBUTES_LENGTH) {
+				if(attributeCounter == slotType.max()) {
 					throw new ExcessAssetException("Too many attribute assets are trying to be placed on an Item.");
 				}
 				itemAssets.add(new DefinedAsset(this.attributeManager.getItemAsset(item, assetID), SlotType.ATTRIBUTE));
 				attributeCounter++;
 				break;
 			case INCREMENTAL:
-				if(incrementalCounter == SlotType.MAX_NUMBER_OF_INCREMENTAL_ASSETS) {
+				if(incrementalCounter == slotType.max()) {
 					throw new ExcessAssetException("Too many incremental assets are trying to be placed on an Item.");
 				}
 				itemAssets.add(new DefinedAsset(this.experienceManager.getItemAsset(item, assetID), SlotType.INCREMENTAL));
 				incrementalCounter++;
 				break;
 			case PREFIX:
-				if(prefixCounter == SlotType.MAX_NUMBER_OF_PREFIX_ASSETS) {
+				if(prefixCounter == slotType.max()) {
 					throw new ExcessAssetException("Too many prefix assets are trying to be placed on an Item.");
 				}
 				itemAssets.add(new DefinedAsset(this.statusManager.getItemAsset(item, assetID), SlotType.PREFIX));
 				prefixCounter++;
 				break;
 			case SUFFIX:
-				if(suffixCounter == SlotType.MAX_NUMBER_OF_SUFFIX_ASSETS) {
+				if(suffixCounter == slotType.max()) {
 					throw new ExcessAssetException("Too many suffix assets are trying to be placed on an Item.");
 				}
 				itemAssets.add(new DefinedAsset(this.statusManager.getItemAsset(item, assetID), SlotType.SUFFIX));
 				suffixCounter++;
 				break;
 			case STACK:
-				if(stackCounter == SlotType.MAX_NUMBER_OF_STACK_ASSETS) {
+				if(stackCounter == slotType.max()) {
 					throw new ExcessAssetException("Too many stack assets are trying to be placed on an Item.");
 				}
 				itemAssets.add(new DefinedAsset(this.stackManager.getItemAsset(item, assetID), SlotType.STACK));
 				stackCounter++;
 				break;
 			case USE:
-				if(useCounter == SlotType.MAX_NUMBER_OF_USE_ASSETS) {
+				if(useCounter == slotType.max()) {
 					throw new ExcessAssetException("Too many use assets are trying to be placed on an Item.");
 				}
 				itemAssets.add(new DefinedAsset(this.useManager.getItemAsset(item, assetID), SlotType.USE));

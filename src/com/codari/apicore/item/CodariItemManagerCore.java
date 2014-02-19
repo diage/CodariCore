@@ -15,7 +15,13 @@ public class CodariItemManagerCore implements CodariItemManager {
 	//-----Constructor-----//
 	public CodariItemManagerCore() {
 		this.data = new HashMap<>();
+		this.newSession();
+	}
+	
+	//-----Methods-----//
+	private void newSession() {
 		this.sessionId = Codec.BASE62.encode(System.currentTimeMillis());
 		this.idIncrement = 0;
+		this.data.clear();
 	}
 }

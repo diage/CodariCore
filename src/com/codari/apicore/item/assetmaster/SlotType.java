@@ -2,6 +2,8 @@ package com.codari.apicore.item.assetmaster;
 
 import java.util.NoSuchElementException;
 
+import org.apache.commons.lang.ArrayUtils;
+
 public enum SlotType {
 
 	ATTRIBUTE(0, 1, 2),
@@ -10,13 +12,15 @@ public enum SlotType {
 	STACK(5),
 	PREFIX(6),
 	SUFFIX(7);
-
-	public final static int MAX_NUMBER_OF_ATTRIBUTES_LENGTH = SlotType.ATTRIBUTE.getSlotValues().length;
-	public final static int MAX_NUMBER_OF_USE_ASSETS = SlotType.USE.getSlotValues().length;
-	public final static int MAX_NUMBER_OF_INCREMENTAL_ASSETS = SlotType.INCREMENTAL.getSlotValues().length;
-	public final static int MAX_NUMBER_OF_STACK_ASSETS = SlotType.STACK.getSlotValues().length;
-	public final static int MAX_NUMBER_OF_PREFIX_ASSETS = SlotType.PREFIX.getSlotValues().length;
-	public final static int MAX_NUMBER_OF_SUFFIX_ASSETS = SlotType.SUFFIX.getSlotValues().length;
+	
+	public static final int TOTAL_SLOTS;
+	static {
+		int total = 0;
+		for (SlotType value : values()) {
+			total += value.max();
+		}
+		TOTAL_SLOTS = total;
+	}
 	
 	private int[] values;
 	
@@ -25,7 +29,11 @@ public enum SlotType {
 	}
 	
 	public int[] getSlotValues() {
-		return this.values;
+		return ArrayUtils.clone(this.values);
+	}
+	
+	public int max() {
+		return this.values.length;
 	}
 	
 	public static SlotType getSlotType(int value) {
