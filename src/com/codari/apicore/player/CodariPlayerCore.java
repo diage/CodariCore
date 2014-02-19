@@ -113,6 +113,7 @@ public final class CodariPlayerCore implements CodariPlayer {
 		return this.getHandle().isWhitelisted();
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void setBanned(boolean banned) {
 		this.getHandle().setBanned(banned);

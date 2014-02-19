@@ -12,8 +12,6 @@ import org.bukkit.entity.Player;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.teams.Team;
-import com.codari.arena5.players.teams.TeamColor;
-import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.teams.queue.QueueCore;
 
@@ -37,11 +35,6 @@ public class TeamCore implements Team {
 	
 	public TeamCore(List<Combatant> combatants) {
 		this.combatants = combatants;
-	}
-	
-	@Deprecated
-	public TeamCore(ArenaCore arenaCore, TeamColor blue, List<Combatant> blueTeam) {
-		this.combatants = null;
 	}
 
 	//-----Public Methods-----//	
