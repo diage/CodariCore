@@ -8,8 +8,10 @@ import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
 
 public class Codec {
 	//-----Constants-----//
+	public static final Codec BINARY = new Binary();
+	public static final Codec HEX = new Hex();
 	public static final Codec BASE62 = new Base62();
-	public static final Codec BASE32764 = new Base32764();
+	public static final Codec BASE65534 = new Base65534();
 	
 	//-----Reserved Characters-----//
 	private static final char negitiveChar = '-';//TODO placeholder
@@ -61,21 +63,6 @@ public class Codec {
 		return result.reverse().toString();
 	}
 	
-	private String encode(BigInteger number, int scale) {
-		boolean isNegitive = number.signum() == -1;
-		boolean isDecimal = scale != 0;
-		StringBuilder result = new StringBuilder();
-		if (isNegitive) {
-			number = number.not().add(BigInteger.ONE);
-			result.append(negitiveChar);
-		}
-		result.append(rawEncode(number));
-		if (isDecimal) {
-			result.append(scaleDelimiter + encode(BigInteger.valueOf(scale)));
-		}
-		return result.toString();
-	}
-	
 	private BigInteger rawDecode(String string) {
 		BigInteger result = BigInteger.ZERO;
 		char[] digits = string.toCharArray();
@@ -93,35 +80,66 @@ public class Codec {
 		return result;
 	}
 	
-	public String encode(BigInteger number) {
-		return encode(number, 0);
+	private String encode(BigInteger number, int scale) {
+		boolean isNegitive = number.signum() == -1;
+		boolean isDecimal = scale != 0;
+		StringBuilder result = new StringBuilder();
+		if (isNegitive) {
+			number = number.not().add(BigInteger.ONE);
+			result.append(negitiveChar);
+		}
+		result.append(this.rawEncode(number));
+		if (isDecimal) {
+			result.append(scaleDelimiter + this.encode(BigInteger.valueOf(scale)));
+		}
+		return result.toString();
 	}
 	
-	public String encode(BigDecimal number) {
+	public final String encode(BigInteger number) {
+		return this.encode(number, 0);
+	}
+	
+	public final String encode(BigDecimal number) {
 		int scale = number.scale();
 		BigInteger unscaledNumber = number.unscaledValue();
-		return encode(unscaledNumber, scale);
+		return this.encode(unscaledNumber, scale);
 	}
 	
-	public String encode(byte[] bytes) {
-		return encode(new BigInteger(bytes));
+	public final String encode(byte[] bytes) {
+		return this.encode(new BigInteger(bytes));
 	}
 	
-	public String encode(long number) {
-		return encode(BigInteger.valueOf(number));
+	public final String encode(byte number) {
+		return this.encode(BigInteger.valueOf(number));
 	}
 	
-	public String encode(double number) {
-		return encode(BigDecimal.valueOf(number));
+	public final String encode(double number) {
+		return this.encode(BigDecimal.valueOf(number));
 	}
 	
-	public Codec.Value decode(String string) throws IllegalArgumentException {
+	public final String encode(float number) {
+		return this.encode(BigDecimal.valueOf(number));
+	}
+	
+	public final String encode(int number) {
+		return this.encode(BigInteger.valueOf(number));
+	}
+	
+	public final String encode(long number) {
+		return this.encode(BigInteger.valueOf(number));
+	}
+	
+	public final String encode(short number) {
+		return this.encode(BigInteger.valueOf(number));
+	}
+	
+	public final Codec.Value decode(String string) throws IllegalArgumentException {
 		//TODO return null if it failed to decode instead of throwing an exception
 		return new Value(string);
 	}
 	
 	//-----Value-----//
-	public class Value implements Comparable<Codec.Value> {
+	public final class Value implements Comparable<Codec.Value> {
 		//-----Fields-----//
 		private final BigDecimal value;
 		
@@ -186,6 +204,14 @@ public class Codec {
 		}
 		
 		//-----Methods-----//
+		public boolean isNegitive() {
+			return this.value.signum() == -1;
+		}
+		
+		public boolean isDecimal() {
+			return this.value.scale() != 0;
+		}
+		
 		public BigInteger bigInteger() {
 			return this.value.toBigInteger();
 		}
@@ -254,6 +280,25 @@ public class Codec {
 		}
 	}
 	
+	//-----Binary-----//
+	private static final class Binary extends Codec {
+		//-----Constructor-----//
+		protected Binary() {
+			super(new char[] {'0', '1'});
+		}
+	}
+	
+	//-----Hex-----//
+	private static final class Hex extends Codec {
+		//-----Constructor-----//
+		protected Hex() {
+			super(new char[] {
+				'0', '1', '2', '3', '4', '5', '6', '7', '8' ,'9',
+				'a', 'b', 'c', 'd', 'e', 'f'
+			});
+		}
+	}
+	
 	//-----Base 62-----//
 	private static final class Base62 extends Codec {
 		//-----Constructor-----//
@@ -269,10 +314,10 @@ public class Codec {
 	}
 	
 	//-----Base 32764-----//
-	private static final class Base32764 extends Codec {
+	private static final class Base65534 extends Codec {
 		//-----Static Methods-----//
 		private static char[] digits() {
-			char[] digits = new char[32764];
+			char[] digits = new char[65534];
 			char c = 1;
 			for (int i = 0; i < digits.length;) {
 				c++;
@@ -285,7 +330,7 @@ public class Codec {
 		}
 		
 		//-----Constructor-----//
-		protected Base32764() {
+		protected Base65534() {
 			super(digits());
 		}
 	}
