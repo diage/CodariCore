@@ -9,7 +9,7 @@ public class StackManager implements AssetManager<StackAsset> {
 	@Override
 	public StackAsset getItemAsset(final CodariItem item, String assetID) throws Exception {
 		//Return new Item Asset
-		return new StackAsset(assetID);
+		return new StackAsset(item, assetID);
 	}
 	
 }

@@ -5,12 +5,13 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 
+import com.codari.arena5.item.CodariItem;
 import com.codari.arena5.item.assets.ItemAsset;
 
 public class StackAsset implements ItemAsset {
 	private int stackSize;
 	
-	public StackAsset(String serializedID) {
+	public StackAsset(CodariItem item, String serializedID) {
 		this.stackSize = Integer.parseInt(serializedID);
 	}
 
@@ -35,10 +36,14 @@ public class StackAsset implements ItemAsset {
 	}
  	
 	public void decrement() {
-		this.stackSize--;
+		if(this.stackSize > 1) {
+			this.stackSize--;
+		}
 	}
 	
 	public void decrement(int amount) {
-		this.stackSize -= amount;
+		if(amount >= this.stackSize) {
+			this.stackSize -= amount;
+		} 
 	}	
 }

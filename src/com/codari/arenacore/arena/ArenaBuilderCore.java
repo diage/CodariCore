@@ -1,6 +1,5 @@
 package com.codari.arenacore.arena;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,6 +12,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
+import net.minecraft.util.org.apache.commons.lang3.RandomStringUtils;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -52,10 +52,20 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<ImmediatePersistentObject> immediatePersistentObjects;
 	private final List<DelayedPersistentObject> delayedPersistentObjects;
 	private final List<ArenaObject> objects;
-	private final List<String> objectsWithLinks;	//FIXME - when arena objects are loaded, if they do have links they have to be added here
+	private final List<String> linkedObjects;	//FIXME - when arena objects are loaded, if they do have links they have to be added here
 	private final List<SerializableLocation> spawners;
 	private final List<ObjectDataPacket> data;
 
+	//-----Shadow Lists-----//
+	private final List<String> objectShadows;
+	private final List<String> randomSpawnableShadows;
+	private final List<String> randomSpawnableGroupShadows;
+	private final List<String> fixedSpawnableShadows;
+	private final List<String> immediatePersistentShadows;
+	private final List<String> delayedPersistentShadows;
+	private final List<String> linkedObjectsShadows;
+	private final List<String> spawnerShadows;
+	
 	//-----Constructor-----//
 	public ArenaBuilderCore(String name, GameRuleCore rules) {
 		this.name = name;
@@ -65,9 +75,19 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.immediatePersistentObjects = new ArrayList<>();
 		this.delayedPersistentObjects = new ArrayList<>();
 		this.objects = new ArrayList<>();
-		this.objectsWithLinks = new ArrayList<>();
+		this.linkedObjects = new ArrayList<>();
 		this.spawners = new ArrayList<>();
 		this.data = new ArrayList<>();
+		
+		//-----Shadows-----//
+		this.objectShadows = new ArrayList<>();
+		this.randomSpawnableShadows = new ArrayList<>();
+		this.randomSpawnableGroupShadows = new ArrayList<>();
+		this.fixedSpawnableShadows = new ArrayList<>();
+		this.immediatePersistentShadows = new ArrayList<>();
+		this.delayedPersistentShadows = new ArrayList<>();
+		this.linkedObjectsShadows = new ArrayList<>();
+		this.spawnerShadows = new ArrayList<>();
 	}
 
 	//-----Public Methods-----//
@@ -125,7 +145,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			return false;
 		}
 		randomTimelineGroup.addObject(object);
-		this.addArenaObject(object);
+		String metaDataValue = this.generateRandomMetaData();
+		this.randomSpawnableShadows.add(metaDataValue);
+		this.randomSpawnableGroupShadows.add(groupName);
+		this.addArenaObject(object, metaDataValue);
 		this.data.add(new ObjectDataPacket(object, groupName));
 		return true;
 	}
@@ -140,23 +163,26 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time) {
-		this.addArenaObject(object);
 		return this.registerFixedSpawnable(object, time, Time.NULL);
 	}
 
 	@Override
 	public boolean registerFixedSpawnable(FixedSpawnableObject object, Time time, Time repeatTime) {
 		//FIXME - check time
+		String metaDataValue = this.generateRandomMetaData();
 		this.fixedSpawnables.add(new FixedSpawnableAction(object, time, repeatTime));
-		this.addArenaObject(object);
+		this.fixedSpawnableShadows.add(metaDataValue);
+		this.addArenaObject(object, metaDataValue);
 		this.data.add(new ObjectDataPacket(object, time.toString(), repeatTime.toString()));
 		return true;
 	}
 
 	@Override
 	public boolean registerPersistent(ImmediatePersistentObject immediatePersistentObject) {
+		String metaDataValue = this.generateRandomMetaData();
 		this.immediatePersistentObjects.add(immediatePersistentObject);
-		this.addArenaObject(immediatePersistentObject);
+		this.immediatePersistentShadows.add(metaDataValue);
+		this.addArenaObject(immediatePersistentObject, metaDataValue);
 		String[] roleDatas;
 		if(immediatePersistentObject instanceof RoleSelectionObject) {
 			List<RoleData> roleDatasList = ((RoleSelectionObject) immediatePersistentObject).getAllRoles();
@@ -174,8 +200,10 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	@Override
 	public boolean registerPersistent(DelayedPersistentObject delayedPersistentObject, Time time, boolean override) {
+		String metaDataValue = this.generateRandomMetaData();
 		this.delayedPersistentObjects.add(delayedPersistentObject);
-		this.addArenaObject(delayedPersistentObject);
+		this.delayedPersistentShadows.add(metaDataValue);
+		this.addArenaObject(delayedPersistentObject, metaDataValue);
 		this.data.add(new ObjectDataPacket(delayedPersistentObject, time.toString(), Boolean.toString(override)));
 		return true;
 	}
@@ -189,25 +217,71 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 
 	public boolean hasAllLinks(Collection<String> links) {
-		for(String link : this.objectsWithLinks) {
+		for(String link : this.linkedObjects) {
 			if(!links.contains(link)) {
 				return false;
 			}
 		}
 		return true;
 	}
+	
+	public void removeArenaObject(String metaDataValue) {
+		int index = this.objectShadows.indexOf(metaDataValue);
+		ArenaObject arenaObject = this.objects.get(index);
+		if(arenaObject instanceof RandomSpawnableObject) {
+			int shadowIndex = this.randomSpawnableShadows.indexOf(metaDataValue);
+			String groupName = this.randomSpawnableGroupShadows.get(shadowIndex);
+			((RandomTimelineGroup) this.randomSpawnables.get(groupName)).remove((RandomSpawnableObject) arenaObject);
+			this.randomSpawnableShadows.remove(shadowIndex);
+			this.randomSpawnableGroupShadows.remove(shadowIndex);
+		} else if(arenaObject instanceof FixedSpawnableObject) {
+			int shadowIndex = this.fixedSpawnableShadows.indexOf(metaDataValue);
+			this.fixedSpawnables.remove(shadowIndex);
+			this.fixedSpawnableShadows.remove(shadowIndex);
+		} else if(arenaObject instanceof ImmediatePersistentObject) {
+			int shadowIndex = this.immediatePersistentShadows.indexOf(metaDataValue);
+			this.immediatePersistentObjects.remove(shadowIndex);
+			this.immediatePersistentShadows.remove(shadowIndex);
+		} else if(arenaObject instanceof DelayedPersistentObject) {
+			int shadowIndex = this.delayedPersistentShadows.indexOf(metaDataValue);
+			this.delayedPersistentObjects.remove(shadowIndex);
+			this.delayedPersistentShadows.remove(shadowIndex);
+		} else if(arenaObject instanceof SpawnPoint) {
+			int shadowIndex = this.spawnerShadows.indexOf(metaDataValue);
+			this.spawners.remove(shadowIndex);
+			this.spawnerShadows.remove(shadowIndex);
+		}
+		
+		if(this.linkedObjectsShadows.contains(metaDataValue)) {
+			int shadowIndex = this.linkedObjectsShadows.indexOf(metaDataValue);
+			this.linkedObjects.remove(shadowIndex);
+			this.linkedObjectsShadows.remove(shadowIndex);
+		}
+		
+		this.objectShadows.remove(index);
+		this.objects.remove(index);
+	}
 
-	private void addArenaObject(ArenaObject object) {
+	private void addArenaObject(ArenaObject object, String metaDataValue) {
 		if(((LibraryCore) Codari.getLibrary()).getLinks(object.getName()) != null) {
-			this.objectsWithLinks.add(object.getName());
+			this.linkedObjects.add(object.getName());
+			this.linkedObjectsShadows.add(metaDataValue);
 		}
 		this.objects.add(object);
+		this.objectShadows.add(metaDataValue);
 	}
 	
+	private String generateRandomMetaData() {
+		return RandomStringUtils.random(16);
+	}
+	
+	//Consider removing this overloaded method and making the overriden method take in a SpawnPoint instead of a location
 	public void addSpawnLocation(SpawnPoint spawnPoint) {
-		this.addArenaObject(spawnPoint);
-		this.data.add(new ObjectDataPacket(spawnPoint));
+		String metaDataValue = this.generateRandomMetaData();
 		this.addSpawnLocation(spawnPoint.getLocation());
+		this.spawnerShadows.add(metaDataValue);
+		this.addArenaObject(spawnPoint, metaDataValue);
+		this.data.add(new ObjectDataPacket(spawnPoint));
 	}
 
 	//-----Random Timeline Group-----//
@@ -217,7 +291,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
 
 		//-----Fields-----//
-		private final List<Marble> bagOfMarbles;
+		private final List<RandomSpawnableObject> bagOfMarbles;
 		private final Random random;
 		private final String name;
 
@@ -233,25 +307,22 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		public void action() {
 			if (!this.bagOfMarbles.isEmpty()) {
 				int i = this.random.nextInt(this.bagOfMarbles.size());
-				Marble marble = this.bagOfMarbles.get(i);
-				if (!marble.object.isSpawned()) {
-					marble.object.spawn();
+				RandomSpawnableObject marble = this.bagOfMarbles.get(i);
+				if (!marble.isSpawned()) {
+					marble.spawn();
 				}
+			}
+		}
+		
+		public void remove(RandomSpawnableObject obj) {
+			while (this.bagOfMarbles.contains(obj)) {
+				this.bagOfMarbles.remove(obj);
 			}
 		}
 
 		private void addObject(RandomSpawnableObject object) {
 			for (int i = 0; i < object.getWeight(); i++) {
-				this.bagOfMarbles.add(new Marble(object));
-			}
-		}
-
-		//THINK OF MARBLES IN A BAG
-		private final class Marble implements Serializable {
-			private static final long serialVersionUID = 2120469391762175063L;
-			private final RandomSpawnableObject object;
-			public Marble(RandomSpawnableObject object) {
-				this.object = object;
+				this.bagOfMarbles.add(object);
 			}
 		}
 	}
@@ -321,6 +392,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			data.apply(builder);
 		}
 		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 9");
+		//Mhenlo - This may be removed once we de-serialize spawn points the correct way because spawn points are arena objects now
 		for (int i = 0; args.containsKey("Spawn_" + i); i++) {
 			Location loc = ((SerializableLocation) args.get("Spawn_" + i)).getLocation();
 			builder.addSpawnLocation(loc);
@@ -414,7 +486,9 @@ public class ArenaBuilderCore implements ArenaBuilder {
 					builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
 				}
 			} else if(arenaObject instanceof SpawnPoint) {
-				builder.addArenaObject(arenaObject);
+				String metaDataValue = builder.generateRandomMetaData();
+				builder.spawnerShadows.add(metaDataValue);
+				builder.addArenaObject(arenaObject, metaDataValue);
 			}
 		}
 

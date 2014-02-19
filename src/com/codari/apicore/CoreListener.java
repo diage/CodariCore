@@ -332,6 +332,10 @@ public class CoreListener implements Listener {
 				return true;
 			case WEAKNESS:
 				return false;
+			case WATER_BREATHING:
+				return true;
+			default:
+				break;
 			}
 		}
 		return false;
