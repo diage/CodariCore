@@ -14,11 +14,11 @@ import org.bukkit.inventory.ItemStack;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
-import com.codari.arena.objects.RoleSwitchListenerObject;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
+import com.codari.arena5.objects.spawnable.ListenerFixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
 import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arenacore.LibraryCore;
@@ -103,8 +103,8 @@ public class ToolBarListener implements Listener {
 				} else if(extraInformation.size() >= 2) {
 					builder.registerFixedSpawnable((FixedSpawnableObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), new Time(0, 0, Long.parseLong(extraInformation.get(1))));
 				}
-				if(arenaObject instanceof RoleSwitchListenerObject) {
-					((RoleSwitchListenerObject) arenaObject).setArenaName(kit.getName());	
+				if(arenaObject instanceof ListenerFixedSpawnableObject) {
+					((ListenerFixedSpawnableObject) arenaObject).setArenaName(kit.getName());	
 				}
 				return true;
 			} else if(arenaObject instanceof ImmediatePersistentObject) {
