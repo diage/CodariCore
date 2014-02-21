@@ -36,6 +36,6 @@ public abstract class StatusAsset implements ItemAsset {
 	
 	public abstract String getSuffixName();
 	
-	public void applyOnHitEffect(Combatant defendingCombatant) {}
+	public void applyOnHitEffect(Combatant attackingCombatant, Combatant defendingCombatant) {}
 	
 }

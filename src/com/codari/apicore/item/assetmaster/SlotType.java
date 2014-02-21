@@ -36,6 +36,13 @@ public enum SlotType {
 		return this.values.length;
 	}
 	
+	public int getSlotValue() {
+		if(this.values.length > 1) {
+			return -1;
+		}
+		return values[0];
+	}
+	
 	public static SlotType getSlotType(int value) {
 		switch(value) {
 		case 0:

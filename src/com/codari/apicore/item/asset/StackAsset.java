@@ -27,6 +27,10 @@ public class StackAsset implements ItemAsset {
 		return lore;
 	}
 	
+	public int getStackSize() {
+		return this.stackSize;
+	}
+	
 	public void increment() {
 		this.stackSize++;
 	}
@@ -35,15 +39,19 @@ public class StackAsset implements ItemAsset {
 		this.stackSize += amount;
 	}
  	
-	public void decrement() {
+	public boolean decrement() {
 		if(this.stackSize > 1) {
 			this.stackSize--;
+			return true;
 		}
+		return false;
 	}
 	
-	public void decrement(int amount) {
+	public boolean decrement(int amount) {
 		if(amount >= this.stackSize) {
 			this.stackSize -= amount;
+			return true;
 		} 
+		return false;
 	}	
 }
