@@ -27,8 +27,6 @@ import com.codari.api5.io.ConfigurationOutput.OutputFunction;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.api5.util.Time;
 import com.codari.apicore.CodariCore;
-import com.codari.arena5.arena.ArenaBuilder;
-import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -40,6 +38,7 @@ import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.objects.RoleData;
 import com.codari.arenacore.arena.objects.RoleSelectionObject;
 import com.codari.arenacore.arena.objects.SpawnPoint;
+import com.codari.arenacore.arena.rules.GameRule;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 
 @SerializableAs("Arena_Builder")

@@ -3,6 +3,7 @@ package com.codari.arenacore.arena;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,7 +30,6 @@ import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaEndEvent;
 import com.codari.arena5.arena.events.ArenaStartEvent;
-import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.objects.ArenaObject;
@@ -38,6 +38,7 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.objects.RoleSelectionObject;
+import com.codari.arenacore.arena.rules.GameRule;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.teams.TeamCore;
 
@@ -110,7 +111,6 @@ public final class ArenaCore implements Arena {
 		return new HashMap<String, Team>(this.teams);
 	}
 
-	@Override
 	public GameRule getGameRule() {
 		return this.rules;
 	}
@@ -132,7 +132,6 @@ public final class ArenaCore implements Arena {
 		return result;
 	}
 
-	@Override
 	public void start(Team... teams) {
 		this.warmUpPeriod(teams);
 	}
@@ -212,7 +211,6 @@ public final class ArenaCore implements Arena {
 		return false;
 	}
 
-	@Override
 	public void stop() {
 		if (this.isMatchInProgress()) {
 			ArenaEndEvent e = new ArenaEndEvent(this);
@@ -235,7 +233,6 @@ public final class ArenaCore implements Arena {
 		}
 	}
 
-	@Override
 	public boolean isMatchInProgress() {
 		return !this.teams.isEmpty();
 	}
@@ -316,5 +313,10 @@ public final class ArenaCore implements Arena {
 			}
 		}
 		return new String(teamNames);
+	}
+
+	@Override
+	public Collection<WinCondition> getWinConditions() {
+		return this.rules.getWinConditions();
 	}
 }

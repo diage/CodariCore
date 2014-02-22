@@ -22,12 +22,11 @@ import com.codari.api5.util.Tick;
 import com.codari.api5.util.Time;
 import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.arena.ArenaManager;
-import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.arena.rules.GameRule;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.combatants.CombatantDataCore;
@@ -135,7 +134,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.combatants.values();
 	} 
 
-	@Override
+
 	public Team getTeam(String arenaName, String teamName) {
 		return this.getArena(arenaName).getTeams().get(teamName);
 	}
@@ -147,12 +146,12 @@ public class ArenaManagerCore implements ArenaManager {
 
 
 	//----Role Related----//
-	@Override
+	//@Override
 	public Role getNewRole(String name) {
 		return new RoleCore(name, null);
 	}
 
-	@Override
+	//@Override
 	public boolean submitRole(String arenaName, Role role) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			if(!this.roleGroups.get(arenaName).contains(role)) {
@@ -166,14 +165,14 @@ public class ArenaManagerCore implements ArenaManager {
 		return false;
 	}
 
-	@Override
+	//@Override
 	public void clearRole(String arenaName, String roleName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			this.roleGroups.get(arenaName).removeRole(roleName);
 		}
 	}
 
-	@Override
+	//@Override
 	public Role getExistingRole(String arenaName, String roleName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			return this.roleGroups.get(arenaName).getRole(roleName);
@@ -181,7 +180,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public Collection<Role> getExistingRoles(String arenaName) {
 		if(this.roleGroups.containsKey(arenaName)) {
 			List<Role> roles = new ArrayList<>();
@@ -222,7 +221,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.arenas.containsKey(arenaName);
 	}
 
-	@Override
+	//@Override
 	public boolean addToQueue(String arenaName, Team team) {
 		if(!this.queues.containsKey(arenaName)) {
 			team.getPlayers().get(0).sendMessage(ChatColor.BLUE + "The arena " + arenaName + " is null!");
@@ -231,7 +230,7 @@ public class ArenaManagerCore implements ArenaManager {
 		return ((TeamCore) team).getQueue().addTeamToQueue(team);
 	}
 
-	@Override
+	//@Override
 	public boolean removeFromQueue(Team team) {
 		QueueCore queue = ((TeamCore) team).getQueue();
 		if(queue != null) {
@@ -246,7 +245,6 @@ public class ArenaManagerCore implements ArenaManager {
 		return this.queues.get(arenaName);
 	}
 
-	@Override
 	public Arena buildArena(String requestedName, ArenaBuilder arenaBuilder) {
 		ArenaCore arena = new ArenaCore(requestedName, (ArenaBuilderCore) arenaBuilder);
 		this.arenas.put(requestedName, arena);
@@ -260,7 +258,6 @@ public class ArenaManagerCore implements ArenaManager {
 		return arena;
 	}
 
-	@Override
 	public ArenaBuilder getArenaBuider(String name, GameRule gameRule) {
 		return new ArenaBuilderCore(name, (GameRuleCore) gameRule);
 	}

@@ -18,12 +18,12 @@ import com.codari.api5.util.Time;
 import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.arena.events.ArenaWinEvent;
-import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionTemplate;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.ArenaCore;
 
 public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	//-----Fields-----//
@@ -92,7 +92,7 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 							return;
 						}
 						Bukkit.getPluginManager().callEvent(new ArenaWinEvent(arena, winners));
-						arena.stop();
+						((ArenaCore) arena).stop();
 					}
 				}
 			});

@@ -5,8 +5,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.codari.api5.Codari;
-import com.codari.arena5.arena.ArenaBuilder;
 import com.codari.arena5.players.combatants.Combatant;
+import com.codari.arenacore.arena.ArenaBuilder;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.players.builders.kit.KitListener;
 import com.codari.arenacore.players.menu.icons.ExecutableIcon;
@@ -23,7 +23,7 @@ public class ConstructIcon extends ExecutableIcon {
 		ArenaBuilder arenaBuilder = ((ArenaManagerCore)Codari.getArenaManager()).getArenaBuilder(arenaName);
 		if(arenaName != null && arenaBuilder != null) {
 			if(((ArenaManagerCore) Codari.getArenaManager()).hasAnExistingRole(arenaName)) {
-				Codari.getArenaManager().buildArena(arenaName, arenaBuilder);			
+				((ArenaManagerCore)Codari.getArenaManager()).buildArena(arenaName, arenaBuilder);			
 				Bukkit.broadcastMessage("Finalized!");	//TODO
 			} else {
 				this.getCombatant().getPlayer().sendMessage(ChatColor.RED + "Failed to create arena - the arena must have at least one role!"); 

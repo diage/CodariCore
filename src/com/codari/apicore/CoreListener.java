@@ -111,7 +111,7 @@ public class CoreListener implements Listener {
 	private void playerLeave(PlayerQuitEvent e) {
 		Combatant combatant = Codari.getArenaManager().getCombatant(e.getPlayer());
 		if(combatant.inArena()) {
-			Codari.getArenaManager().getArena(combatant.getArenaName()).stop();
+			((ArenaCore) Codari.getArenaManager().getArena(combatant.getArenaName())).stop();
 			combatant.leaveArena();
 		}
 	}

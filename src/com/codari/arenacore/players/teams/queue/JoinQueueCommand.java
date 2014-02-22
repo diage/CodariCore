@@ -8,6 +8,7 @@ import com.codari.api5.Codari;
 import com.codari.apicore.command.CodariCommand;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.teams.Team;
+import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class JoinQueueCommand implements CodariCommand {
 	public static final String COMMAND_NAME = "j";
@@ -20,7 +21,7 @@ public class JoinQueueCommand implements CodariCommand {
 			Arena arena = Codari.getArenaManager().getArena(args[1]);
 
 			if(checkIfArenaIsValid(arena, player) && checkIfPlayerHasTeam(team, player)) {  				
-				if(Codari.getArenaManager().addToQueue(args[1], team)) {
+				if(((ArenaManagerCore) Codari.getArenaManager()).addToQueue(args[1], team)) {
 					player.sendMessage(ChatColor.GREEN + "Your team, " +  team.getTeamName() + ", was successfully added to the queue!");
 					return true;
 				}			

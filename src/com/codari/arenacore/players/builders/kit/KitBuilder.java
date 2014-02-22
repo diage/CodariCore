@@ -5,10 +5,10 @@ import org.bukkit.ChatColor;
 
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
-import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arenacore.LibraryCore;
+import com.codari.arenacore.arena.rules.GameRule;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 
 public class KitBuilder {

@@ -10,10 +10,9 @@ import com.codari.apicore.item.assetmaster.AssetManagerMaster;
 import com.codari.apicore.item.assetmaster.DefinedAsset;
 import com.codari.apicore.util.Codec;
 import com.codari.arena5.item.CodariItem;
-import com.codari.arena5.item.CodariItemManager;
 import com.codari.arena5.players.combatants.Combatant;
 
-public class CodariItemManagerCore implements CodariItemManager {
+public class CodariItemManagerCore {
 	private final static String DELIMITER = "#";
 	
 	//-----Fields-----//

@@ -158,7 +158,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	//-----Public Methods-----//
-	@Override
 	public CodariItemManagerCore getItemDataManager() {
 		return this.itemDataManager;
 	}

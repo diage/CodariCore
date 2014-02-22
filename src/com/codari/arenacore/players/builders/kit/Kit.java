@@ -20,12 +20,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.codari.api5.Codari;
 import com.codari.api5.util.Time;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.rules.GameRule;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.objects.RoleData;
+import com.codari.arenacore.arena.rules.GameRule;
 import com.codari.arenacore.arena.rules.GameRuleCore;
 import com.codari.arenacore.players.combatants.CombatantCore;
 import com.codari.arenacore.players.role.RoleCore;
@@ -115,7 +115,7 @@ public class Kit {
 	}
 	
 	public Arena buildArena() {
-		return Codari.getArenaManager().buildArena(name, this.arenaBuilder);
+		return ((ArenaManagerCore)Codari.getArenaManager()).buildArena(name, this.arenaBuilder);
 	}
 	
 	//-----Random TimeLine Group-----//
@@ -269,9 +269,9 @@ public class Kit {
 	public void checkIfRolesHaveRequiredLinks() {
 		if(((ArenaManagerCore) Codari.getArenaManager()).hasAnExistingRole(this.name)) {
 			for(String roleName : ((ArenaManagerCore) Codari.getArenaManager()).getExistingRoleNames(this.name)) {
-				Role role = Codari.getArenaManager().getExistingRole(this.name, roleName);
+				Role role = ((ArenaManagerCore) Codari.getArenaManager()).getExistingRole(this.name, roleName);
 				if(!this.hasAllLinks(((RoleCore) role).getObjectsWithLinks())) {
-					Codari.getArenaManager().clearRole(this.name, roleName);
+					((ArenaManagerCore) Codari.getArenaManager()).clearRole(this.name, roleName);
 					for(Combatant combatant : ((ArenaManagerCore) Codari.getArenaManager()).getCombatants()) {
 						combatant.getPlayer().sendMessage(ChatColor.BLUE + roleName + " has been removed from " + this.name + " because "
 								+ "it is missing a link with one of the added Arena Objects!");

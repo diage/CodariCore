@@ -31,7 +31,7 @@ public class ArenaRoleIcon extends ExecutableIcon {
 		RoleManagerCore roleManager = ((CodariCore) CodariI.INSTANCE).getRoleManager();
 		if(roleManager.containsRole(this.roleName)) {
 			Role role = roleManager.getRole(this.roleName);
-			if(Codari.getArenaManager().getExistingRole(arenaName, this.roleName) == null) {
+			if(((ArenaManagerCore) Codari.getArenaManager()).getExistingRole(arenaName, this.roleName) == null) {
 				if(kit.hasAllLinks(((RoleCore) role).getObjectsWithLinks())) {
 					((ArenaManagerCore) Codari.getArenaManager()).submitRole(arenaName, role);
 					this.getCombatant().getPlayer().sendMessage(ChatColor.GREEN + "Role added!");
