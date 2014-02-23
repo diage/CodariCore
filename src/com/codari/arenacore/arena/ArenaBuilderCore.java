@@ -14,7 +14,6 @@ import javax.annotation.Nullable;
 import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
 import net.minecraft.util.org.apache.commons.lang3.RandomStringUtils;
 
-import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -267,6 +266,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			}
 			arenaObject.hide();
 			this.objects.remove(index);
+			this.data.remove(index);
 			return true;
 		}
 		return false;
@@ -287,15 +287,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	private String generateRandomMetaData() {
 		return RandomStringUtils.random(16);
-	}
-
-	//Consider removing this overloaded method and making the overriden method take in a SpawnPoint instead of a location
-	public void addSpawnLocation(SpawnPoint spawnPoint) {
-		String metaDataValue = this.generateRandomMetaData();
-		this.addSpawnLocation(spawnPoint.getLocation());
-		this.spawnerShadows.add(metaDataValue);
-		this.addArenaObject(spawnPoint, metaDataValue);
-		this.data.add(new ObjectDataPacket(spawnPoint));
 	}
 
 	//-----Random Timeline Group-----//
@@ -358,8 +349,12 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 
 	@Override
-	public void addSpawnLocation(Location location) {
-		this.spawners.add(new SerializableLocation(location));
+	public void addSpawnLocation(SpawnPoint spawnPoint) {
+		String metaDataValue = this.generateRandomMetaData();
+		this.spawners.add(new SerializableLocation(spawnPoint.getLocation()));
+		this.spawnerShadows.add(metaDataValue);
+		this.addArenaObject(spawnPoint, metaDataValue);
+		this.data.add(new ObjectDataPacket(spawnPoint));
 	}
 
 	@Override
@@ -371,9 +366,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		result.put("GameRule", this.getGameRule().getName());
 		result.put("name", this.name);
 		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
-		for (int i = 0; i < this.spawners.size(); i++) {
-			result.put("Spawn_" + i, this.spawners.get(i));
-		}
 		int i = 0;
 		for (String s : arenaManager.getExistingRoleNames(this.name)) {
 			result.put("role_" + i, s);
@@ -384,38 +376,28 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	public static ArenaBuilderCore deserialize(Map<String, Object> args) {
 		//TODO
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 1");
 		ConfigurationInput input = new ConfigurationInput(args);
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 2");
 		ArenaManagerCore arenaManager = (ArenaManagerCore) Codari.getArenaManager();
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 3");
+		System.out.println("Deserialization - Arena Manager found");
 		GameRule gameRule = arenaManager.getGameRule(input.getString("GameRule"));
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 4");
 		String name = input.getString("name");
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 5");
 		ArenaBuilderCore builder = (ArenaBuilderCore) arenaManager.getArenaBuider(name, gameRule);
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 6");
+		System.out.println("Deserialization - ArenaBuilder found");
 		List<RandomTimelineGroup> randomTimelineGroups = input.get(new TimelineGroupInputFunction());
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 7");
 		for (RandomTimelineGroup g : randomTimelineGroups) {
 			builder.randomSpawnables.put(g.name, g);
 		}
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 8");
+		System.out.println("Arena Builder - Random Timeline Groups Deserialized");
 		List<ObjectDataPacket> dataList = input.get(new DataInputFunction());
 		for (ObjectDataPacket data : dataList) {
 			data.apply(builder);
 		}
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 9");
-		//Mhenlo - This may be removed once we de-serialize spawn points the correct way because spawn points are arena objects now
-		for (int i = 0; args.containsKey("Spawn_" + i); i++) {
-			Location loc = ((SerializableLocation) args.get("Spawn_" + i)).getLocation();
-			builder.addSpawnLocation(loc);
-		}
+		System.out.println("Arena Builder - Object Data Packets Applied");
 		for (int i = 0; args.containsKey("role_" + i); i++) {
 			String rName = input.getString("role_" + i);
 			arenaManager.submitRole(name, ((CodariCore) CodariI.INSTANCE).getRoleManager().getRole(rName));
 		}
-		System.out.println("POTATO DEBUG!!!!! BUILD DESERIALIZATION 10");
+		System.out.println("Arena Builder - Roles Deserialized");
 		//Submitting Kit to the Kit Manager
 		((CodariCore) CodariI.INSTANCE).getKitManager().createKit(builder);
 		return builder;
@@ -500,9 +482,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 					builder.registerPersistent((DelayedPersistentObject) arenaObject, new Time(0, 0, Long.parseLong(extraInformation.get(0))), Boolean.parseBoolean(extraInformation.get(1)));
 				}
 			} else if(arenaObject instanceof SpawnPoint) {
-				String metaDataValue = builder.generateRandomMetaData();
-				builder.spawnerShadows.add(metaDataValue);
-				builder.addArenaObject(arenaObject, metaDataValue);
+				builder.addSpawnLocation((SpawnPoint) arenaObject);
 			}
 		}
 

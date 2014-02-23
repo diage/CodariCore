@@ -1,6 +1,5 @@
 package com.codari.arenacore.arena;
 
-import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import com.codari.api5.util.Time;
@@ -9,6 +8,7 @@ import com.codari.arena5.objects.persistant.DelayedPersistentObject;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
+import com.codari.arenacore.arena.objects.SpawnPoint;
 import com.codari.arenacore.arena.rules.GameRule;
 
 /**XXX probably doesn't need to be in the API at all. 
@@ -131,7 +131,7 @@ public interface ArenaBuilder extends ConfigurationSerializable {
 
 	public GameRule getGameRule();
 	
-	public void addSpawnLocation(Location location);
+	public void addSpawnLocation(SpawnPoint spawnPoint);
 
 	public boolean checkForRandomSpawnableGroup(String name);
 }

@@ -34,8 +34,6 @@ import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaManagerCore;
 import com.codari.arenacore.arena.objects.RoleSelectionObject;
 import com.codari.arenacore.arena.objects.SpawnPoint;
-import com.codari.arenacore.develop.ArenaDevelopmentCommand;
-import com.codari.arenacore.develop.ArenaDevelopmentKitListener;
 import com.codari.arenacore.develop.FinalizeCommand;
 import com.codari.arenacore.develop.NewArenaCommand;
 import com.codari.arenacore.players.builders.kit.KitManager;
@@ -125,7 +123,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		//Bukkit.getPluginManager().registerEvents(new AntiTroyListener(), this);
 		
 		//-----Listeners-----//
-		Bukkit.getPluginManager().registerEvents(new ArenaDevelopmentKitListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SkillListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CoreListener(), this);
 		
@@ -136,7 +133,6 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 		this.commandRegister.registerCommand(JoinQueueCommand.COMMAND_NAME, new JoinQueueCommand());
 		this.commandRegister.registerCommand(NewArenaCommand.COMMAND_NAME, new NewArenaCommand());
 		this.commandRegister.registerCommand(FinalizeCommand.COMMAND_NAME, new FinalizeCommand());
-		this.commandRegister.registerCommand(ArenaDevelopmentCommand.COMMAND_NAME, new ArenaDevelopmentCommand());
 		this.commandRegister.registerCommand(CommandCreateTeam.COMMAND_NAME, new CommandCreateTeam());
 		this.commandRegister.registerCommand(CommandInvitePlayerToTeam.COMMAND_NAME, new CommandInvitePlayerToTeam());
 		this.commandRegister.registerCommand(ComandLeaveTeam.COMMAND_NAME, new ComandLeaveTeam());

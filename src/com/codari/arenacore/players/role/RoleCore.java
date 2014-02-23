@@ -34,6 +34,8 @@ public class RoleCore implements Role, ConfigurationSerializable {
 		this.skills = new HashMap<>();
 		if(links != null) {
 			this.links = new LinkedHashMap<>(links);
+		} else {
+			this.links = new LinkedHashMap<>();
 		}
 	}
 
