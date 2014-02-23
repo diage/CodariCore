@@ -8,8 +8,8 @@ import com.codari.arenacore.players.menu.menus.Menu;
 
 public class ArenaRoleDataIcon extends MenuIcon {
 
-	public ArenaRoleDataIcon(Combatant combatant, Menu menu) {
-		super(Material.SUGAR_CANE_BLOCK, combatant, menu, "Set Number of Roles");
+	public ArenaRoleDataIcon(Combatant combatant, Menu menu, String roleName) {
+		super(Material.BLAZE_ROD, combatant, menu, "Set Number of " + roleName + " Roles");
 	}
 
 }

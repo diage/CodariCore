@@ -8,6 +8,6 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 public class SetWinConditionTickIcon  extends HoverIcon {
 
 	public SetWinConditionTickIcon(Combatant combatant) {
-		super(Material.WALL_SIGN, combatant, "Set Win Condition Tick");
+		super(Material.BLAZE_ROD, combatant, "Set Win Condition Tick");
 	}
 }

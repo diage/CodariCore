@@ -9,7 +9,7 @@ import com.codari.arenacore.players.menu.menus.Menu;
 public class HelpIcon extends MenuIcon {
 
 	public HelpIcon(Combatant combatant, Menu menu) {
-		super(Material.CAKE_BLOCK, combatant, menu, "Help");
+		super(Material.COOKED_CHICKEN, combatant, menu, "Help");
 	}
 
 }

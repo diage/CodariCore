@@ -45,7 +45,7 @@ public class RoleSelectionObjectSettings extends FunctionMenu {
 
 	public void addArenaRoleIcon(Combatant combatant, String roleName) {
 		if(super.getNextAvailableSlot() != FunctionMenuSlot.NO_SLOT) {
-			super.setSlot(super.getNextAvailableSlot(), new ArenaRoleDataIcon(combatant, new RoleDataSettings(combatant, roleName, new BackIcon(combatant, this))));
+			super.setSlot(super.getNextAvailableSlot(), new ArenaRoleDataIcon(combatant, new RoleDataSettings(combatant, roleName, new BackIcon(combatant, this)), roleName));
 		} else {
 			if(this.nextPage != null) {
 				this.nextPage.addArenaRoleIcon(combatant, roleName);

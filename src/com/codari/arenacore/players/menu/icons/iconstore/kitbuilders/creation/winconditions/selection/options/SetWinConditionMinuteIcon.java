@@ -8,7 +8,7 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 public class SetWinConditionMinuteIcon extends HoverIcon {
 
 	public SetWinConditionMinuteIcon(Combatant combatant) {
-		super(Material.WALL_SIGN, combatant, "Set Win Condition Minute");
+		super(Material.BOW, combatant, "Set Win Condition Minute");
 	}
 
 }

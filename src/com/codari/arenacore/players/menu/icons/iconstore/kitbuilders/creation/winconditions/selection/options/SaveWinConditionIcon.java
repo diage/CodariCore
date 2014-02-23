@@ -13,7 +13,7 @@ import com.codari.arenacore.players.menu.icons.ExecutableIcon;
 public class SaveWinConditionIcon extends ExecutableIcon {
 
 	public SaveWinConditionIcon(Combatant combatant) {
-		super(Material.SUGAR_CANE_BLOCK, combatant, "Save Win Condition");
+		super(Material.DIAMOND_AXE, combatant, "Save Win Condition");
 	}
 
 	@Override

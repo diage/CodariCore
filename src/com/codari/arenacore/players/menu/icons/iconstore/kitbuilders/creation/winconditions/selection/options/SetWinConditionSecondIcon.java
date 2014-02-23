@@ -8,7 +8,7 @@ import com.codari.arenacore.players.menu.icons.HoverIcon;
 public class SetWinConditionSecondIcon  extends HoverIcon {
 
 	public SetWinConditionSecondIcon(Combatant combatant) {
-		super(Material.WALL_SIGN, combatant, "Set Win Condition Second");
+		super(Material.ANVIL, combatant, "Set Win Condition Second");
 	}
 
 }

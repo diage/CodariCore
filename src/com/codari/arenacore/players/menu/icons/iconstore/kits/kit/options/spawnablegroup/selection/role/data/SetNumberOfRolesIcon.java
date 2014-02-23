@@ -9,7 +9,7 @@ public class SetNumberOfRolesIcon extends HoverIcon {
 	private String roleName;
 	
 	public SetNumberOfRolesIcon(Combatant combatant, String roleName) {
-		super(Material.SUGAR_CANE, combatant, roleName);
+		super(Material.SUGAR_CANE, combatant, "Set Number Of Roles");
 		this.roleName = roleName;
 	}
 
