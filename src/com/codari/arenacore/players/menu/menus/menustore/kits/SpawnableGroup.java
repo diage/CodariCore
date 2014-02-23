@@ -22,6 +22,7 @@ import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawna
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectPersistentIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectRandomIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectRoleSelectionIcon;
+import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.ArenaObjectSpawnPointIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.CreateSpawnableGroupIcon;
 import com.codari.arenacore.players.menu.icons.iconstore.kits.kit.options.spawnablegroup.EditSpawnableGroupIcon;
 import com.codari.arenacore.players.menu.icons.structure.Icon;
@@ -67,7 +68,7 @@ public class SpawnableGroup extends FunctionMenu {
 					super.setSlot(super.getNextAvailableSlot(), new ArenaObjectPersistentIcon(combatant, new PersistentObjectSettings(combatant, arenaObjectName, new BackIcon(combatant, this)), arenaObjectName));
 				}
 			} else if(SpawnPoint.class.isAssignableFrom(objectEntry.getValue())) {
-				return;
+				super.setSlot(super.getNextAvailableSlot(), new ArenaObjectSpawnPointIcon(combatant, new SpawnPointSlotSlection(combatant, new BackIcon(combatant, this))));
 			} else {
 				Bukkit.broadcastMessage(ChatColor.RED + arenaObjectName + " was unable to be registered because an icon was not created for its Arena Object Type!"); //TODO
 			}
