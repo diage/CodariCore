@@ -1,5 +1,6 @@
 package com.codari.arenacore.players.builders.kit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -314,7 +315,12 @@ public class Kit {
 	
 	private void addSpawn(Location location, ItemStack itemStack) {
 		ItemMeta meta = itemStack.getItemMeta();
-		List<String> lore = meta.getLore();
+		List<String> lore;
+		if(meta.hasLore()) {
+			lore = meta.getLore();
+		} else {
+			lore = new ArrayList<>();
+		}
 		lore.add(spawnString(location));
 		meta.setLore(lore);
 		itemStack.setItemMeta(meta);
