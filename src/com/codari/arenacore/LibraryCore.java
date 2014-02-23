@@ -21,7 +21,7 @@ import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.timedaction.TimedActionName;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.arena.rules.wincondition.WinConditionName;
-import com.codari.arena5.item.ItemAssetName;
+import com.codari.arena5.item.ItemAssetInformation;
 import com.codari.arena5.item.assets.ItemAsset;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.ArenaObjectName;
@@ -275,7 +275,7 @@ public class LibraryCore implements Library {
 	//-----Item Assets-----//
 	@Override
 	public void registerItemAsset(Class<? extends ItemAsset> clazz) {
-		ItemAssetName itemAssetName = clazz.getAnnotation(ItemAssetName.class);
+		ItemAssetInformation itemAssetName = clazz.getAnnotation(ItemAssetInformation.class);
 		if(itemAssetName == null) {
 			CodariI.INSTANCE.getLogger().log(Level.WARNING, "Missing Item Asset Annotation for " + clazz);
 			return;

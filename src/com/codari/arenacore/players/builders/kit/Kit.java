@@ -1,6 +1,5 @@
 package com.codari.arenacore.players.builders.kit;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -57,15 +56,12 @@ public class Kit {
 	
 	//-----Tool Bar-----//
 	private final ItemStack[] tools;
-	private final static ItemStack SPAWN_SETTER = new ItemStack(Material.STICK);
+	private final static ItemStack DELETE_TOOL = new ItemStack(Material.BLAZE_ROD);
 	private final static ItemStack TOOLBAR_EXIT = new ItemStack(Material.STICK);
 	static {
-		ItemMeta spawnMeta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
-		spawnMeta.setDisplayName("Spawn Setter");
-		List<String> spawnLore = new ArrayList<>();
-		spawnLore.add(ChatColor.GREEN + "Spawn Locations");
-		spawnMeta.setLore(spawnLore);
-		SPAWN_SETTER.setItemMeta(spawnMeta);
+		ItemMeta spawnMeta = Bukkit.getItemFactory().getItemMeta(Material.BLAZE_ROD);
+		spawnMeta.setDisplayName("Delete Tool");
+		DELETE_TOOL.setItemMeta(spawnMeta);
 		ItemMeta exitMeta = Bukkit.getItemFactory().getItemMeta(Material.STICK);
 		exitMeta.setDisplayName(ChatColor.RED + "Exit ToolBar");
 		TOOLBAR_EXIT.setItemMeta(exitMeta);
@@ -76,8 +72,8 @@ public class Kit {
 		this.arenaBuilder = new ArenaBuilderCore(name, (GameRuleCore) gameRule);
 		this.roleDatas = new HashMap<>();
 		this.tools = new ItemStack[9];
-		this.tools[4] = SPAWN_SETTER;
-		this.tools[5] = TOOLBAR_EXIT;
+		this.tools[4] = DELETE_TOOL;
+		this.tools[5] = TOOLBAR_EXIT; 
 	}
 	
 	/* Constructor for serialized Arena Builders */
@@ -85,7 +81,7 @@ public class Kit {
 		this.name = name;
 		this.arenaBuilder = arenaBuilder;
 		this.tools = new ItemStack[9];
-		this.tools[4] = SPAWN_SETTER;
+		this.tools[4] = DELETE_TOOL;
 		this.tools[5] = TOOLBAR_EXIT;
 	}
 	

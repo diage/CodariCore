@@ -14,6 +14,7 @@ import com.codari.api5.player.CodariPlayer;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
 import com.codari.apicore.CodariCore;
+import com.codari.apicore.item.SpellAttributeLinker;
 import com.codari.arena5.arena.Arena;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
@@ -44,6 +45,7 @@ public final class CombatantCore implements Combatant {
 	private CombatantDataCore data;
 	private DynamicMenuManager dynamicMenuManager;
 	private MenuManager menuManager;
+	private SpellAttributeLinker spellAttributeLinker;
 	
 	private boolean isLeader, inArena;
 	private TeamCore team, inviteTeam;
@@ -75,6 +77,7 @@ public final class CombatantCore implements Combatant {
 		this.menuManager = new MenuManager(this); 
 		this.toolbarManager = new ToolbarManager(this);
 		this.inArena = false;
+		this.spellAttributeLinker = new SpellAttributeLinker();
 	}
 	
 	//-----Public Methods-----//
@@ -303,5 +306,9 @@ public final class CombatantCore implements Combatant {
 	
 	public GuildCore getGuild() {
 		return this.guild;
+	}
+	
+	public SpellAttributeLinker getSpellAttributeLinker() {
+		return this.spellAttributeLinker;
 	}
 }

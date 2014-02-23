@@ -1,6 +1,7 @@
 package com.codari.arenacore.arena.objects;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,13 @@ public class RoleSelectionObject implements ImmediatePersistentObject {
 	public void hide() {
 		this.quartzBlockState.update(true);	
 		this.deactivate();
+	}
+	
+	@Override
+	public Collection<BlockState> getAffectedBlocks() {
+		Collection<BlockState> affectedBlocks = new ArrayList<>();
+		affectedBlocks.add(this.quartzBlockState);
+		return affectedBlocks;
 	}
 
 	@Override

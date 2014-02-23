@@ -15,8 +15,10 @@ import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
 import net.minecraft.util.org.apache.commons.lang3.RandomStringUtils;
 
 import org.bukkit.Location;
+import org.bukkit.block.BlockState;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
@@ -40,6 +42,7 @@ import com.codari.arenacore.arena.objects.RoleSelectionObject;
 import com.codari.arenacore.arena.objects.SpawnPoint;
 import com.codari.arenacore.arena.rules.GameRule;
 import com.codari.arenacore.arena.rules.GameRuleCore;
+import com.codari.arenacore.players.builders.kit.ToolBarListener;
 
 @SerializableAs("Arena_Builder")
 public class ArenaBuilderCore implements ArenaBuilder {
@@ -64,7 +67,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	private final List<String> delayedPersistentShadows;
 	private final List<String> linkedObjectsShadows;
 	private final List<String> spawnerShadows;
-	
+
 	//-----Constructor-----//
 	public ArenaBuilderCore(String name, GameRuleCore rules) {
 		this.name = name;
@@ -77,7 +80,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		this.linkedObjects = new ArrayList<>();
 		this.spawners = new ArrayList<>();
 		this.data = new ArrayList<>();
-		
+
 		//-----Shadows-----//
 		this.objectShadows = new ArrayList<>();
 		this.randomSpawnableShadows = new ArrayList<>();
@@ -223,42 +226,50 @@ public class ArenaBuilderCore implements ArenaBuilder {
 		}
 		return true;
 	}
-	
-	public void removeArenaObject(String metaDataValue) {
-		int index = this.objectShadows.indexOf(metaDataValue);
-		ArenaObject arenaObject = this.objects.get(index);
-		if(arenaObject instanceof RandomSpawnableObject) {
-			int shadowIndex = this.randomSpawnableShadows.indexOf(metaDataValue);
-			String groupName = this.randomSpawnableGroupShadows.get(shadowIndex);
-			((RandomTimelineGroup) this.randomSpawnables.get(groupName)).remove((RandomSpawnableObject) arenaObject);
-			this.randomSpawnableShadows.remove(shadowIndex);
-			this.randomSpawnableGroupShadows.remove(shadowIndex);
-		} else if(arenaObject instanceof FixedSpawnableObject) {
-			int shadowIndex = this.fixedSpawnableShadows.indexOf(metaDataValue);
-			this.fixedSpawnables.remove(shadowIndex);
-			this.fixedSpawnableShadows.remove(shadowIndex);
-		} else if(arenaObject instanceof ImmediatePersistentObject) {
-			int shadowIndex = this.immediatePersistentShadows.indexOf(metaDataValue);
-			this.immediatePersistentObjects.remove(shadowIndex);
-			this.immediatePersistentShadows.remove(shadowIndex);
-		} else if(arenaObject instanceof DelayedPersistentObject) {
-			int shadowIndex = this.delayedPersistentShadows.indexOf(metaDataValue);
-			this.delayedPersistentObjects.remove(shadowIndex);
-			this.delayedPersistentShadows.remove(shadowIndex);
-		} else if(arenaObject instanceof SpawnPoint) {
-			int shadowIndex = this.spawnerShadows.indexOf(metaDataValue);
-			this.spawners.remove(shadowIndex);
-			this.spawnerShadows.remove(shadowIndex);
+
+	public boolean removeArenaObject(String metaDataValue) {
+		if(this.objectShadows.contains(metaDataValue)) {
+			int index = this.objectShadows.indexOf(metaDataValue);
+			ArenaObject arenaObject = this.objects.get(index);
+			if(arenaObject instanceof RandomSpawnableObject) {
+				int shadowIndex = this.randomSpawnableShadows.indexOf(metaDataValue);
+				String groupName = this.randomSpawnableGroupShadows.get(shadowIndex);
+				((RandomTimelineGroup) this.randomSpawnables.get(groupName)).remove((RandomSpawnableObject) arenaObject);
+				this.randomSpawnableShadows.remove(shadowIndex);
+				this.randomSpawnableGroupShadows.remove(shadowIndex);
+			} else if(arenaObject instanceof FixedSpawnableObject) {
+				int shadowIndex = this.fixedSpawnableShadows.indexOf(metaDataValue);
+				this.fixedSpawnables.remove(shadowIndex);
+				this.fixedSpawnableShadows.remove(shadowIndex);
+			} else if(arenaObject instanceof ImmediatePersistentObject) {
+				int shadowIndex = this.immediatePersistentShadows.indexOf(metaDataValue);
+				this.immediatePersistentObjects.remove(shadowIndex);
+				this.immediatePersistentShadows.remove(shadowIndex);
+			} else if(arenaObject instanceof DelayedPersistentObject) {
+				int shadowIndex = this.delayedPersistentShadows.indexOf(metaDataValue);
+				this.delayedPersistentObjects.remove(shadowIndex);
+				this.delayedPersistentShadows.remove(shadowIndex);
+			} else if(arenaObject instanceof SpawnPoint) {
+				int shadowIndex = this.spawnerShadows.indexOf(metaDataValue);
+				this.spawners.remove(shadowIndex);
+				this.spawnerShadows.remove(shadowIndex);
+			}
+
+			if(this.linkedObjectsShadows.contains(metaDataValue)) {
+				int shadowIndex = this.linkedObjectsShadows.indexOf(metaDataValue);
+				this.linkedObjects.remove(shadowIndex);
+				this.linkedObjectsShadows.remove(shadowIndex);
+			}
+
+			this.objectShadows.remove(index);
+			for(BlockState blockState : arenaObject.getAffectedBlocks()) {
+				blockState.removeMetadata(ToolBarListener.RANDOM_PASS_KEY, CodariI.INSTANCE);
+			}
+			arenaObject.hide();
+			this.objects.remove(index);
+			return true;
 		}
-		
-		if(this.linkedObjectsShadows.contains(metaDataValue)) {
-			int shadowIndex = this.linkedObjectsShadows.indexOf(metaDataValue);
-			this.linkedObjects.remove(shadowIndex);
-			this.linkedObjectsShadows.remove(shadowIndex);
-		}
-		
-		this.objectShadows.remove(index);
-		this.objects.remove(index);
+		return false;
 	}
 
 	private void addArenaObject(ArenaObject object, String metaDataValue) {
@@ -266,14 +277,18 @@ public class ArenaBuilderCore implements ArenaBuilder {
 			this.linkedObjects.add(object.getName());
 			this.linkedObjectsShadows.add(metaDataValue);
 		}
+		//Add metadata
+		for(BlockState blockState : object.getAffectedBlocks()) {
+			blockState.setMetadata(ToolBarListener.RANDOM_PASS_KEY, new FixedMetadataValue(CodariI.INSTANCE, metaDataValue));
+		}
 		this.objects.add(object);
 		this.objectShadows.add(metaDataValue);
 	}
-	
+
 	private String generateRandomMetaData() {
 		return RandomStringUtils.random(16);
 	}
-	
+
 	//Consider removing this overloaded method and making the overriden method take in a SpawnPoint instead of a location
 	public void addSpawnLocation(SpawnPoint spawnPoint) {
 		String metaDataValue = this.generateRandomMetaData();
@@ -312,7 +327,7 @@ public class ArenaBuilderCore implements ArenaBuilder {
 				}
 			}
 		}
-		
+
 		public void remove(RandomSpawnableObject obj) {
 			while (this.bagOfMarbles.contains(obj)) {
 				this.bagOfMarbles.remove(obj);

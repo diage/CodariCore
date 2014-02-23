@@ -8,6 +8,6 @@ import com.codari.arenacore.players.menu.icons.MenuIcon;
 
 public class BorderIcon extends MenuIcon {
 	public BorderIcon(Combatant combatant) {
-		super(Material.BEDROCK, combatant, ChatColor.RED + "=====");
+		super(Material.IRON_FENCE, combatant, ChatColor.RED + "=====");
 	}
 }

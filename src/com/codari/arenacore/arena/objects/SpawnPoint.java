@@ -1,5 +1,8 @@
 package com.codari.arenacore.arena.objects;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -48,6 +51,15 @@ public class SpawnPoint implements ArenaObject {
 		for (BlockState state : this.spawnPointBaseStates) {
 			state.update(true);
 		}
+	}
+	
+	@Override
+	public Collection<BlockState> getAffectedBlocks() {
+		Collection<BlockState> affectedBlocks = new ArrayList<>();
+		for(BlockState blockState : this.spawnPointBaseStates) {
+			affectedBlocks.add(blockState);
+		}
+		return affectedBlocks;
 	}
 
 	@Override

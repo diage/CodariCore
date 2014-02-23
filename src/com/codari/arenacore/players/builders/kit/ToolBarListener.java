@@ -3,6 +3,8 @@ package com.codari.arenacore.players.builders.kit;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.util.org.apache.commons.lang3.RandomStringUtils;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,8 +13,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 
 import com.codari.api5.Codari;
+import com.codari.api5.CodariI;
 import com.codari.api5.util.Time;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -30,6 +34,9 @@ import com.codari.arenacore.players.builders.ToolbarManager;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 public class ToolBarListener implements Listener {
+	
+	public static final String RANDOM_PASS_KEY = RandomStringUtils.randomAscii(69);
+	
 	@EventHandler
 	public void toolSelect(HotbarSelectEvent e) {
 		ToolbarManager toolbarManager = ((CombatantCore) e.getCombatant()).getToolbarManager();
@@ -43,8 +50,8 @@ public class ToolBarListener implements Listener {
 				ItemStack item = e.getItem();
 				e.getCombatant().getPlayer().getInventory().setItem(7, item);
 				break;
-			case HOTBAR_6:
-				toolbarManager.disableToolBar();
+			case HOTBAR_6:	
+				toolbarManager.disableToolBar(); 
 				break;
 			default:
 				break;
@@ -60,17 +67,30 @@ public class ToolBarListener implements Listener {
 				Kit kit = toolbarManager.getToolbarKit();
 				ArenaBuilderCore builder = ((ArenaManagerCore) Codari.getArenaManager()).getArenaBuilder(kit.getName());
 				Location location = e.getClickedBlock().getLocation();
+				String objectName = e.getItem().getItemMeta().getDisplayName();
 				ArenaObject arenaObject;
 				location.setY(location.getY() + 1);
-				if (e.getItem().equals(kit.getTools()[4])) {
-					String objectName = SpawnPoint.SPAWN_POINT_NAME;
+				
+				if(e.getItem().equals(kit.getTools()[4])) {	//Delete Tool
+					List<MetadataValue> values = e.getClickedBlock().getMetadata(RANDOM_PASS_KEY);
+					MetadataValue metaValue = null;
+					for (MetadataValue interiorValue : values) {
+						if (interiorValue.getOwningPlugin().equals(CodariI.INSTANCE)) {
+							metaValue = interiorValue;
+						}
+					}
+					if(metaValue != null) {
+						String arenaObjectKey = (String) metaValue.value();
+						builder.removeArenaObject(arenaObjectKey);
+					}
+					return;
+				} else if (objectName.equals(SpawnPoint.SPAWN_POINT_NAME)) {	//Spawn Tool
 					arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
 					builder.addSpawnLocation((SpawnPoint) arenaObject);
 					e.getPlayer().sendMessage(kit.addSpawn(e.getItem(), location));
 					arenaObject.reveal();
 					return;
 				}
-				String objectName = e.getItem().getItemMeta().getDisplayName();
 				if(!objectName.equals(RoleSelectionObject.OBJECT_NAME)) {
 					arenaObject = ((LibraryCore) Codari.getLibrary()).createObject(objectName, location);
 				} else {
