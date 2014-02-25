@@ -5,7 +5,7 @@ import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.codari.api5.attribute.AttributeTemplate;
-import com.codari.api5.attribute.InvalidAttributeException;
+import com.codari.api5.exceptions.InvalidAttributeException;
 import com.codari.apicore.CodariCore;
 
 public final class AttributeTemplateCore implements AttributeTemplate {

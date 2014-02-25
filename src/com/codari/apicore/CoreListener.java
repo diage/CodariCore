@@ -30,8 +30,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
-import com.codari.arena5.arena.events.ArenaEndEvent;
-import com.codari.arena5.arena.events.ArenaStartEvent;
+import com.codari.api5.events.ArenaEndEvent;
+import com.codari.api5.events.ArenaStartEvent;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.hotbar.HotbarOption;
 import com.codari.arena5.players.teams.Team;

@@ -25,11 +25,11 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
+import com.codari.api5.events.ArenaEndEvent;
+import com.codari.api5.events.ArenaStartEvent;
 import com.codari.api5.util.SerializableLocation;
 import com.codari.apicore.CodariCore;
 import com.codari.arena5.arena.Arena;
-import com.codari.arena5.arena.events.ArenaEndEvent;
-import com.codari.arena5.arena.events.ArenaStartEvent;
 import com.codari.arena5.arena.rules.timedaction.TimedAction;
 import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.objects.ArenaObject;

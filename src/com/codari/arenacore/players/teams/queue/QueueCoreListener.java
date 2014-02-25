@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.codari.api5.Codari;
-import com.codari.arena5.arena.events.ArenaEndEvent;
+import com.codari.api5.events.ArenaEndEvent;
 import com.codari.arenacore.arena.ArenaManagerCore;
 
 public class QueueCoreListener implements Listener {

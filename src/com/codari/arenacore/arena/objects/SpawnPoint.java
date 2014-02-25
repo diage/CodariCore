@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 
+import com.codari.api5.annotations.ArenaObjectName;
 import com.codari.arena5.objects.ArenaObject;
-import com.codari.arena5.objects.ArenaObjectName;
 
 @ArenaObjectName(SpawnPoint.SPAWN_POINT_NAME)
 public class SpawnPoint implements ArenaObject {

@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.codari.api5.CodariI;
-import com.codari.arena5.objects.ArenaObjectName;
+import com.codari.api5.annotations.ArenaObjectName;
 import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
