@@ -6,21 +6,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLClassLoader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 
 import com.codari.api5.asset.AssetDescriptionFile;
 import com.codari.api5.asset.AssetLybrary;
 import com.codari.api5.asset.InvalidAssetDescriptionFileException;
-import com.codari.api5.asset.InvalidAssetException;
 import com.codari.apicore.CodariCore;
 
 public final class AssetLybraryCore implements AssetLybrary {
@@ -33,7 +28,7 @@ public final class AssetLybraryCore implements AssetLybrary {
 	//-----Constructor-----//
 	public AssetLybraryCore() {
 		this.assetDirectory = new File(CodariCore.instance().getDataFolder(), "assets");
-		
+		this.assetClassLoader = null;
 		FileFilter jarFilter = new FileFilter() {
 			//-----Fields-----//
 			private final Pattern jarPattern = Pattern.compile("\\w+\\.jar$");
