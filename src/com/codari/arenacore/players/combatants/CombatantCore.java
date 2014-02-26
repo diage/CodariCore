@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
+import com.codari.api5.events.RoleSelectEvent;
 import com.codari.api5.player.CodariPlayer;
 import com.codari.api5.util.scheduler.BukkitTime;
 import com.codari.api5.util.scheduler.CodariRunnable;
@@ -20,7 +21,6 @@ import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.combatants.CombatantStats;
 import com.codari.arena5.players.guilds.Guild;
 import com.codari.arena5.players.role.Role;
-import com.codari.arena5.players.role.RoleSelectEvent;
 import com.codari.arena5.players.teams.Team;
 import com.codari.arenacore.arena.ArenaCore;
 import com.codari.arenacore.players.builders.ToolbarManager;

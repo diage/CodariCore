@@ -17,6 +17,7 @@ import org.bukkit.metadata.MetadataValue;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
+import com.codari.api5.events.HotbarSelectEvent;
 import com.codari.api5.util.Time;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.objects.persistant.DelayedPersistentObject;
@@ -24,7 +25,6 @@ import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
 import com.codari.arena5.objects.spawnable.FixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.ListenerFixedSpawnableObject;
 import com.codari.arena5.objects.spawnable.RandomSpawnableObject;
-import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arenacore.LibraryCore;
 import com.codari.arenacore.arena.ArenaBuilderCore;
 import com.codari.arenacore.arena.ArenaManagerCore;

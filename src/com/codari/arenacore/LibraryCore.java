@@ -15,6 +15,7 @@ import org.bukkit.Location;
 import com.codari.api5.CodariI;
 import com.codari.api5.annotations.ArenaObjectName;
 import com.codari.api5.annotations.ItemAssetInformation;
+import com.codari.api5.annotations.SkillName;
 import com.codari.api5.annotations.TimedActionName;
 import com.codari.api5.annotations.WinConditionName;
 import com.codari.api5.util.reflect.ReflectionException;
@@ -26,7 +27,6 @@ import com.codari.arena5.arena.rules.wincondition.WinCondition;
 import com.codari.arena5.item.assets.ItemAsset;
 import com.codari.arena5.objects.ArenaObject;
 import com.codari.arena5.players.skills.Skill;
-import com.codari.arena5.players.skills.SkillName;
 
 public class LibraryCore implements Library {
 	private final Map<String, Class<? extends ArenaObject>> objects;

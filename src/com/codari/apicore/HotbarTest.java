@@ -6,8 +6,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.codari.api5.Codari;
+import com.codari.api5.events.HotbarSelectEvent;
 import com.codari.api5.util.scheduler.BukkitTime;
-import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 
 public class HotbarTest implements Listener {
 	public HotbarTest() {

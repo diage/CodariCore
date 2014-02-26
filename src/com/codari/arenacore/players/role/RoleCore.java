@@ -16,11 +16,11 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.codari.api5.Codari;
+import com.codari.api5.annotations.SkillName;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arena5.players.role.Role;
 import com.codari.arena5.players.skills.Skill;
 import com.codari.arena5.players.skills.SkillActivation;
-import com.codari.arena5.players.skills.SkillName;
 import com.codari.arenacore.LibraryCore;
 
 @SerializableAs("Random_Thing_No_One_Will_See_But_Used_For_Future_Proofing_If_Package_Names_Ever_Change")

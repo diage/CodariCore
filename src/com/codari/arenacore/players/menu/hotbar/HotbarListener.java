@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
 import com.codari.api5.Codari;
+import com.codari.api5.events.HotbarSelectEvent;
 import com.codari.arena5.players.combatants.Combatant;
-import com.codari.arena5.players.hotbar.HotbarSelectEvent;
 import com.codari.arena5.players.hotbar.HotbarOption;
 
 public class HotbarListener implements Listener {
