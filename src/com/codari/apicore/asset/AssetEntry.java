@@ -11,8 +11,11 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import com.codari.api5.asset.Asset;
 import com.codari.api5.asset.AssetRegistrationException;
+import com.codari.api5.asset.AssetType;
 import com.codari.apicore.CodariCore;
+import com.codari.apicore.asset.AssetLybraryCore.AssetClassLoader;
 
 public final class AssetEntry {
 	//-----Constants-----//
@@ -63,6 +66,8 @@ public final class AssetEntry {
 	private final int lineNumber;
 	private final String assetName;
 	private final String className;
+	private Class<? extends Asset> assetClass;
+	private AssetType type;
 	
 	//-----Constructor-----//
 	private AssetEntry(File origin, int lineNumber, String[] rawEntry) throws AssetRegistrationException {
@@ -99,5 +104,28 @@ public final class AssetEntry {
 	
 	public String getClassName() {
 		return this.className;
+	}
+	
+	public Class<? extends Asset> getAssetClass() {
+		return this.assetClass;
+	}
+	
+	public AssetType getType() {
+		return this.type;
+	}
+	
+	void initilize(AssetClassLoader assetClassLoader) throws AssetRegistrationException {
+		if (this.assetClass == null) {
+			try {
+				Class<?> clazz = Class.forName(this.className, true, assetClassLoader);
+				this.assetClass = clazz.asSubclass(Asset.class);
+			} catch (ClassNotFoundException ex) {
+				//TODO throw AssetRegistrationException for various issuses with loading the asset class
+			}
+			this.type = AssetType.getType(this.assetClass);
+			if (this.type == null) {
+				//TODO throw AssetRegistrationException for null type
+			}
+		}
 	}
 }

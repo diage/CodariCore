@@ -47,30 +47,28 @@ public final class AssetLybraryCore implements AssetLybrary {
 							file.getName() + ", ignoring it");
 					continue;
 				}
-				try {
-					this.assetClassLoader.addURL(file.toURI().toURL());
-				} catch (MalformedURLException ex) {
-					throw new AssetRegistrationException(ex);
+				this.assetClassLoader.addFile(file);
+				for (AssetEntry loadedEntry : loadedEntries) {
+					try {
+						loadedEntry.initilize(this.assetClassLoader);
+						assetEntries.add(loadedEntry);
+					} catch (AssetRegistrationException ex) {
+						//TODO LOGGING <INSERT INFORMATIVE MESSAGE HERE>
+						CodariCore.instance().getLogger().log(Level.WARNING, "<INSERT INFORMATIVE MESSAGE HERE>", ex);
+					}
 				}
-				assetEntries.addAll(loadedEntries);
-				
 			} catch (AssetRegistrationException ex) {
 				//TODO LOGGING
 				CodariCore.instance().getLogger().log(Level.WARNING, "An error occured while loading assets " +
 						" from " + file.getName(), ex);
 			}
 		}
-		
-		for (AssetEntry assetEntry : assetEntries) {
-			//How to load class with custom class loader
-			//Class.forName(assetEntry.getClassName(), true, this.assetClassLoader);
-		}
 	}
 	
 	//-----Methods-----//
 	
 	//-----Asset Class Loader-----//
-	private final class AssetClassLoader extends URLClassLoader {
+	final class AssetClassLoader extends URLClassLoader {
 		//-----Constructor-----//
 		private AssetClassLoader() {
 			super(new URL[]{});
@@ -80,6 +78,14 @@ public final class AssetLybraryCore implements AssetLybrary {
 		@Override
 		protected void addURL(URL url) {
 			super.addURL(url);
+		}
+		
+		private void addFile(File file) throws AssetRegistrationException {
+			try {
+				this.addURL(file.toURI().toURL());
+			} catch (MalformedURLException ex) {
+				throw new AssetRegistrationException(ex);
+			}
 		}
 	}
 }
