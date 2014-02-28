@@ -16,18 +16,18 @@ import com.codari.apicore.CodariCore;
 
 public final class AssetEntry {
 	//-----Constants-----//
-	private static final String ASSET_DESCRIPTION_FILENAME = "assets.txt";
+	private static final String ASSET_REGISTRATION_FILENAME = "assets.txt";
 	private static final Pattern ASSET_NAME_PATTERN = Pattern.compile("^[\\w-]+$");
 	private static final Pattern CLASS_NAME_PATTERN =
-			Pattern.compile("([\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*");
+			Pattern.compile("^([\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*$");
 	
 	//-----Static Methods-----//
 	public static List<AssetEntry> loadEntries(File file) throws AssetRegistrationException {
 		List<AssetEntry> assetEntries = new ArrayList<>();
 		try (JarFile jarFile = new JarFile(file)) {
-			JarEntry jarEntry = jarFile.getJarEntry(ASSET_DESCRIPTION_FILENAME);
+			JarEntry jarEntry = jarFile.getJarEntry(ASSET_REGISTRATION_FILENAME);
 			if (jarEntry == null) {
-				throw new AssetRegistrationException("could not find '" + ASSET_DESCRIPTION_FILENAME + "'" +
+				throw new AssetRegistrationException("could not find '" + ASSET_REGISTRATION_FILENAME + "'" +
 						" within " + file);
 			}
 			try (Scanner scanner = new Scanner(jarFile.getInputStream(jarEntry))) {
@@ -43,7 +43,7 @@ public final class AssetEntry {
 					assetEntries.add(assetEntry);
 				}
 			} catch (IOException ex) {
-				throw new AssetRegistrationException("Failed to access '" + ASSET_DESCRIPTION_FILENAME + "'" +
+				throw new AssetRegistrationException("Failed to access '" + ASSET_REGISTRATION_FILENAME + "'" +
 						" within " + file, ex);
 			}
 		} catch (IOException ex) {
@@ -53,7 +53,7 @@ public final class AssetEntry {
 				throw ex;
 			}
 			throw new AssetRegistrationException("Unknown error occured while accessing " + 
-					"'" + ASSET_DESCRIPTION_FILENAME + "' within " + file.getName(), ex);
+					"'" + ASSET_REGISTRATION_FILENAME + "' within " + file.getName(), ex);
 		}
 		return assetEntries;
 	}
@@ -68,15 +68,15 @@ public final class AssetEntry {
 	private AssetEntry(File origin, int lineNumber, String[] rawEntry) throws AssetRegistrationException {
 		if (!ASSET_NAME_PATTERN.matcher(rawEntry[0]).matches()) {
 			throw new AssetRegistrationException("Invalid asset name '" + rawEntry[0] + "'" + "found on line " +
-					lineNumber + " of '" + ASSET_DESCRIPTION_FILENAME + "' within " + origin.getName());
+					lineNumber + " of '" + ASSET_REGISTRATION_FILENAME + "' within " + origin.getName());
 		}
 		if (rawEntry[0] == null) {
 			throw new AssetRegistrationException("No class name defined on line " + lineNumber + " of " +
-					"'" + ASSET_DESCRIPTION_FILENAME + "' within " + origin.getName());
+					"'" + ASSET_REGISTRATION_FILENAME + "' within " + origin.getName());
 		}
 		if (!CLASS_NAME_PATTERN.matcher(rawEntry[0]).matches()) {
 			throw new AssetRegistrationException("Invalid class name '" + rawEntry[1] + "'" + "found on line " +
-					lineNumber + " of '" + ASSET_DESCRIPTION_FILENAME + "' within " + origin.getName());
+					lineNumber + " of '" + ASSET_REGISTRATION_FILENAME + "' within " + origin.getName());
 		}
 		this.origin = origin;
 		this.lineNumber = lineNumber;

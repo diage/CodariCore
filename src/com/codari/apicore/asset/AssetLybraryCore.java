@@ -62,7 +62,8 @@ public final class AssetLybraryCore implements AssetLybrary {
 		}
 		
 		for (AssetEntry assetEntry : assetEntries) {
-			
+			//How to load class with custom class loader
+			//Class.forName(assetEntry.getClassName(), true, this.assetClassLoader);
 		}
 	}
 	
