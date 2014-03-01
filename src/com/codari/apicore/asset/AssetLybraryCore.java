@@ -6,13 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import com.codari.api5.asset.Asset;
 import com.codari.api5.asset.AssetLybrary;
 import com.codari.api5.asset.AssetRegistrationException;
 import com.codari.apicore.CodariCore;
@@ -21,7 +18,7 @@ public final class AssetLybraryCore implements AssetLybrary {
 	//-----Fields-----//
 	private final File assetDirectory = new File(CodariCore.instance().getDataFolder(), "assets");
 	private final AssetClassLoader assetClassLoader = new AssetClassLoader();
-	private final Map<String, Asset> assets = new HashMap<>();
+	//private final Map<String, Asset> assets = new HashMap<>();
 	
 	//-----Constructor-----//
 	public AssetLybraryCore() {
