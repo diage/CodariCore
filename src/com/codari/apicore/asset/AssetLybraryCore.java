@@ -51,11 +51,12 @@ public final class AssetLybraryCore implements AssetLybrary {
 				for (AssetEntry loadedEntry : loadedEntries) {
 					try {
 						loadedEntry.initilize(this.assetClassLoader);
-						assetEntries.add(loadedEntry);
 					} catch (AssetRegistrationException ex) {
 						//TODO LOGGING <INSERT INFORMATIVE MESSAGE HERE>
 						CodariCore.instance().getLogger().log(Level.WARNING, "<INSERT INFORMATIVE MESSAGE HERE>", ex);
+						continue;
 					}
+					assetEntries.add(loadedEntry);
 				}
 			} catch (AssetRegistrationException ex) {
 				//TODO LOGGING
