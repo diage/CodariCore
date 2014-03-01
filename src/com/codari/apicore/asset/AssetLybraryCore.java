@@ -60,6 +60,11 @@ public final class AssetLybraryCore implements AssetLybrary {
 				CodariCore.instance().getLogger().log(Level.WARNING, "An error occured while loading assets " +
 						" from " + file.getName(), ex);
 			}
+			
+			for (AssetEntry assetEntry : assetEntries) {
+				//TODO conflict resolving
+				assetEntry.getAssetClass();//Temp so no errors <.<
+			}
 		}
 	}
 	
