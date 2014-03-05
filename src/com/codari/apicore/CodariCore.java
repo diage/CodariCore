@@ -5,7 +5,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.codari.api5.Codari;
 import com.codari.api5.CodariI;
+import com.codari.api5.asset.AssetLybrary;
 import com.codari.api5.util.reflect.Reflector;
+import com.codari.apicore.asset.AssetLybraryCore;
 import com.codari.apicore.attribute.AttributeFactoryCore;
 import com.codari.apicore.command.CodariCommandCenter;
 import com.codari.apicore.command.CommandRegister;
@@ -57,6 +59,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	}
 	
 	//-----Fields-----//
+	private AssetLybraryCore assetLybrary;
 	private CodariPlayerManagerCore codariPlayerManager;
 	private ArenaManagerCore arenaManager;
 	private KitManager kitManager;
@@ -78,6 +81,7 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Enabler-----//
 	@Override
 	public void onEnable() {
+		this.assetLybrary = new AssetLybraryCore();
 		this.setInstanceAccess(true);
 		this.codariPlayerManager.registerPlayerListener();
 		this.itemDataManager = new CodariItemManagerCore();
@@ -198,6 +202,11 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	
 	public CommandRegister getCommandRegister() {
 		return this.commandRegister;
+	}
+
+	@Override
+	public AssetLybraryCore getAssetLybrary() {
+		return this.assetLybrary;
 	}
 	
 	//-----Private Methods-----//

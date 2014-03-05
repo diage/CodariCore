@@ -1,74 +1,83 @@
 package com.codari.apicore.asset;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
+import java.util.Map;
 
+import net.minecraft.util.org.apache.commons.lang3.reflect.FieldUtils;
+
+import com.codari.api5.asset.Asset;
 import com.codari.api5.asset.AssetLybrary;
-import com.codari.api5.asset.AssetRegistrationException;
 import com.codari.apicore.CodariCore;
+import com.codari.apicore.util.FileFilters;
 
 public final class AssetLybraryCore implements AssetLybrary {
 	//-----Fields-----//
 	private final File assetDirectory = new File(CodariCore.instance().getDataFolder(), "assets");
 	private final AssetClassLoader assetClassLoader = new AssetClassLoader();
-	//private final Map<String, Asset> assets = new HashMap<>();
+	private final Map<String, Map<String, Map<String, Asset>>> assets = new HashMap<>();
 	
 	//-----Constructor-----//
 	public AssetLybraryCore() {
-		FileFilter jarFilter = new FileFilter() {
-			//-----Fields-----//
-			private final Pattern jarPattern = Pattern.compile("^[\\w-]+\\.jar$");
-			
-			//-----Methods-----//
-			@Override
-			public boolean accept(File file) {
-				return this.jarPattern.matcher(file.getName()).matches();
+		List<AssetEntryCore> assetEntries = new ArrayList<>();
+		
+		for (File file : this.assetDirectory.listFiles(FileFilters.JAR)) {
+			List<AssetEntryCore> loadedEntries = AssetEntryCore.loadEntries(file);
+			if (loadedEntries.isEmpty()) {
+				throw new RuntimeException("no entries in " + file);
 			}
-		};
+			this.assetClassLoader.addFile(file);
+			for (AssetEntryCore assetEntry : loadedEntries) {
+				try {
+					assetEntry.initilize(this.assetClassLoader);
+					assetEntries.add(assetEntry);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
 		
-		List<AssetEntry> assetEntries = new ArrayList<>();
-		
-		for (File file : this.assetDirectory.listFiles(jarFilter)) {
+		for (AssetEntryCore assetEntry : assetEntries) {
 			try {
-				List<AssetEntry> loadedEntries = AssetEntry.loadEntries(file);
-				if (loadedEntries.isEmpty()) {
-					//TODO LOGGING
-					CodariCore.instance().getLogger().log(Level.INFO, "No valid asset entries found in " +
-							file.getName() + ", ignoring it");
-					continue;
+				Asset asset = assetEntry.getMain().newInstance();
+				FieldUtils.writeDeclaredField(asset, "entry", assetEntry);
+				Map<String, Map<String, Asset>> layer1 = this.assets.get(assetEntry.getRegistration());
+				if (layer1 == null) {
+					layer1 = new HashMap<>();
 				}
-				this.assetClassLoader.addFile(file);
-				for (AssetEntry loadedEntry : loadedEntries) {
-					try {
-						loadedEntry.initilize(this.assetClassLoader);
-					} catch (AssetRegistrationException ex) {
-						//TODO LOGGING <INSERT INFORMATIVE MESSAGE HERE>
-						CodariCore.instance().getLogger().log(Level.WARNING, "<INSERT INFORMATIVE MESSAGE HERE>", ex);
-						continue;
-					}
-					assetEntries.add(loadedEntry);
+				Map<String, Asset> layer2 = layer1.get(assetEntry.getType().toString());
+				if (layer2 == null) {
+					layer2 = new HashMap<>();
 				}
-			} catch (AssetRegistrationException ex) {
-				//TODO LOGGING
-				CodariCore.instance().getLogger().log(Level.WARNING, "An error occured while loading assets " +
-						" from " + file.getName(), ex);
-			}
-			
-			for (AssetEntry assetEntry : assetEntries) {
-				//TODO conflict resolving
-				assetEntry.getAssetClass();//Temp so no errors <.<
+				layer2.put(assetEntry.getName(), asset);
+			} catch (InstantiationException | IllegalAccessException ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
 	
 	//-----Methods-----//
+	public Asset getAsset(String registration, String type, String name) {
+		Map<String, Map<String, Asset>> layer1 = this.assets.get(registration);
+		if (layer1 == null) {
+			return null;
+		}
+		Map<String, Asset> layer2 = layer1.get(type);
+		if (layer2 == null) {
+			return null;
+		}
+		return layer2.get(name);
+	}
+	
+	public Asset getAsset(String fullName) {
+		String[] splitName = fullName.split("\\.");
+		return this.getAsset(splitName[0], splitName[1], splitName[2]);
+	}
 	
 	//-----Asset Class Loader-----//
 	final class AssetClassLoader extends URLClassLoader {
@@ -83,11 +92,11 @@ public final class AssetLybraryCore implements AssetLybrary {
 			super.addURL(url);
 		}
 		
-		private void addFile(File file) throws AssetRegistrationException {
+		private void addFile(File file) {
 			try {
 				this.addURL(file.toURI().toURL());
 			} catch (MalformedURLException ex) {
-				throw new AssetRegistrationException(ex);
+				ex.printStackTrace();
 			}
 		}
 	}
