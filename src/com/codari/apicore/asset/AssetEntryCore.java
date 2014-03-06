@@ -15,7 +15,7 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import com.codari.api5.asset.Asset;
 import com.codari.api5.asset.AssetEntry;
-import com.codari.api5.asset.AssetType;
+import com.codari.api5.asset.type.AssetType;
 import com.codari.apicore.asset.AssetLybraryCore.AssetClassLoader;
 
 public final class AssetEntryCore implements AssetEntry {

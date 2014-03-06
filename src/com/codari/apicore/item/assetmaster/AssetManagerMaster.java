@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import com.codari.apicore.item.manager.AttributeManager;
 import com.codari.apicore.item.manager.ExperienceManager;
 import com.codari.apicore.item.manager.StackManager;
-import com.codari.apicore.item.manager.StatusManager;
+import com.codari.apicore.item.manager.PrefixManager;
 import com.codari.apicore.item.manager.usemanagers.UseManager;
 import com.codari.arena5.item.CodariItem;
 
@@ -17,7 +17,7 @@ public class AssetManagerMaster {
 	private AttributeManager attributeManager;
 	private ExperienceManager experienceManager;
 	private StackManager stackManager;
-	private StatusManager statusManager;
+	private PrefixManager statusManager;
 	
 	//---Delimiters---//
 	private final static String INITIAL_DELIMITER = "$";
@@ -27,7 +27,7 @@ public class AssetManagerMaster {
 		this.attributeManager = new AttributeManager();
 		this.experienceManager = new ExperienceManager();
 		this.stackManager = new StackManager();
-		this.statusManager = new StatusManager();
+		this.statusManager = new PrefixManager();
 	}
 	
 	public List<DefinedAsset> getItemAsset(CodariItem item, List<String> assetIDs) throws Exception {

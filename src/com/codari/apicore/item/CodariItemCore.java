@@ -3,14 +3,18 @@ package com.codari.apicore.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
+import com.codari.api5.events.itemevents.CodariItemLevelEvent;
+import com.codari.apicore.item.asset.ExperienceAsset;
 import com.codari.apicore.item.asset.StackAsset;
 import com.codari.apicore.item.asset.useassets.UseAsset;
 import com.codari.apicore.item.assetmaster.DefinedAsset;
 import com.codari.apicore.item.assetmaster.SlotType;
 import com.codari.arena5.item.CodariItem;
 import com.codari.arena5.item.assets.ItemAsset;
+import com.codari.arena5.item.assets.Prefix;
 import com.codari.arena5.players.combatants.Combatant;
 
 /* Damage Values
@@ -26,6 +30,7 @@ public class CodariItemCore implements CodariItem {
 	private final ItemAsset[] assets;
 	private final ItemStack itemStack;
 	public List<String> displayLore;
+	private int damageAmount;
 	
 	//-----Constructor-----//
 	public CodariItemCore(Combatant combatant, ItemStack itemStack) {
@@ -33,6 +38,7 @@ public class CodariItemCore implements CodariItem {
 		this.assets = new ItemAsset[SlotType.TOTAL_SLOTS];
 		this.itemStack = itemStack;
 		this.displayLore = new ArrayList<>();
+		this.damageAmount = this.computeDamage();
 	}
 	
 	//-----Methods-----//
@@ -114,7 +120,10 @@ public class CodariItemCore implements CodariItem {
 
 	@Override
 	public void attack(Combatant enemy) {
-		// TODO Auto-generated method stub
+		if(this.assets[SlotType.PREFIX.getSlotValue()] != null) {
+			((Prefix) this.assets[SlotType.PREFIX.getSlotValue()]).applyOnHitEffect(this.getCombatant(), enemy);
+			enemy.getPlayer().damage(this.damageAmount, this.getCombatant().getPlayer());
+		}
 		
 	}
 
@@ -143,13 +152,14 @@ public class CodariItemCore implements CodariItem {
 
 	@Override
 	public void levelUp() {
-		// TODO Auto-generated method stub
-		
+		Bukkit.getPluginManager().callEvent(new CodariItemLevelEvent(this));	
 	}
 
 	@Override
 	public void addExp(int exp) {
-		// TODO Auto-generated method stub
+		if(this.assets[SlotType.INCREMENTAL.getSlotValue()] instanceof ExperienceAsset) {
+			((ExperienceAsset) this.assets[SlotType.INCREMENTAL.getSlotValue()]).increment(exp);
+		}
 		this.updateLore();
 	}
 
@@ -160,7 +170,7 @@ public class CodariItemCore implements CodariItem {
 	
 	public List<String> getDisplayLore() {
 		return new ArrayList<>(this.displayLore);
-	}
+	}      
 	
 	@SuppressWarnings("deprecation")
 	private void updateLore() {
@@ -172,4 +182,9 @@ public class CodariItemCore implements CodariItem {
 		}
 		this.combatant.getPlayer().updateInventory();
 	}	
+	
+	private int computeDamage() {
+		//FIXME
+		return 0;
+	}
 }
