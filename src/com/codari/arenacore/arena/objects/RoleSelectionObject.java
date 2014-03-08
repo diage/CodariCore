@@ -23,13 +23,12 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.codari.api5.CodariI;
 import com.codari.api5.annotations.ArenaObjectName;
-import com.codari.arena5.objects.persistant.ImmediatePersistentObject;
+import com.codari.arena5.assets.ImmediatePersistentAsset;
 import com.codari.arena5.players.combatants.Combatant;
 import com.codari.arenacore.players.combatants.CombatantCore;
 
 @ArenaObjectName(RoleSelectionObject.OBJECT_NAME)
-public class RoleSelectionObject implements ImmediatePersistentObject {
-	private static final long serialVersionUID = 3577897723052477603L;
+public class RoleSelectionObject extends ImmediatePersistentAsset {
 	private transient BlockState quartzBlockState;
 	private Material quartzBlockMaterial = Material.QUARTZ_BLOCK;
 

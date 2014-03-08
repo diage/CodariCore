@@ -75,7 +75,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 		final WinCondition winCondition = ((LibraryCore) Codari.getLibrary()).createWinCondition(name, args);
 		if (this.addTimedAction(new WinConditionAction(time, (WinConditionTemplate) winCondition, after))) {
 			this.timedActions.add(new TimedAction(null, Time.ONE_TICK, Time.ONE_TICK) {
-				private static final long serialVersionUID = -3268071058821069399L;
 				@Override
 				public void action() {
 					if (winCondition.conditionMet()) {
@@ -154,7 +153,6 @@ public class GameRuleCore implements GameRule, ConfigurationSerializable {
 	
 	//-----Win Condition Action-----//
 	private final static class WinConditionAction extends TimedAction {
-		private static final long serialVersionUID = 5391314571661514449L;
 		//-----Fields-----//
 		private final WinConditionTemplate winCond;
 		private final boolean after;

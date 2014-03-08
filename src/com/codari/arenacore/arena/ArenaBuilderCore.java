@@ -291,8 +291,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 
 	//-----Random Timeline Group-----//
 	private final static class RandomTimelineGroup extends TimedAction {
-		private static final long serialVersionUID = -1455939781657809306L;
-
 		private final static Random globalRandom = new Random(System.currentTimeMillis());
 
 		//-----Fields-----//
@@ -333,7 +331,6 @@ public class ArenaBuilderCore implements ArenaBuilder {
 	}
 
 	private final static class FixedSpawnableAction extends TimedAction {
-		private static final long serialVersionUID = 3857488726629177537L;
 		//-----Fields-----//
 		private final FixedSpawnableObject spawnable;
 

@@ -21,8 +21,6 @@ public class SpawnPoint implements ArenaObject {
 	private transient BlockState[] spawnPointBaseStates = new BlockState[9];
 	private Material spawnPointBaseMaterial = Material.SNOW_BLOCK;
 	
-	private static final long serialVersionUID = 8043066845402150275L;
-
 	public SpawnPoint(Location location) {
 		this.location = location;
 		ArenaObjectName arenaObjectName = this.getClass().getAnnotation(ArenaObjectName.class);

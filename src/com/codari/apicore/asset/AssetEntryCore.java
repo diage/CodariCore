@@ -8,20 +8,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.regex.Pattern;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import com.codari.api5.asset.Asset;
 import com.codari.api5.asset.AssetEntry;
-import com.codari.api5.asset.type.AssetType;
+import com.codari.api5.asset.AssetType;
 import com.codari.apicore.asset.AssetLybraryCore.AssetClassLoader;
 
 public final class AssetEntryCore implements AssetEntry {
 	//-----Constants-----//
 	private static final Yaml YAML = new Yaml(new SafeConstructor());
-	private static final String ASSET_REGISTRATION_FILENAME = "assets.txt";
+	private static final String ASSET_REGISTRATION_FILENAME = "assets.yml";
 	//private static final Pattern ASSET_NAME_PATTERN = Pattern.compile("^[\\w-]+$");
 	//private static final Pattern CLASS_NAME_PATTERN =
 			//Pattern.compile("^([\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*$");
