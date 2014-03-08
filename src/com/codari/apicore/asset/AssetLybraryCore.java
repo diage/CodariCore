@@ -4,9 +4,11 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.util.org.apache.commons.lang3.reflect.ConstructorUtils;
 import net.minecraft.util.org.apache.commons.lang3.reflect.FieldUtils;
@@ -14,9 +16,9 @@ import net.minecraft.util.org.apache.commons.lang3.reflect.FieldUtils;
 import com.codari.api5.asset.Asset;
 import com.codari.api5.asset.AssetEntry;
 import com.codari.api5.asset.AssetLybrary;
+import com.codari.api5.asset.AssetType;
 import com.codari.apicore.CodariCore;
 import com.codari.apicore.util.FileFilters;
-import com.codari.arena5.item.assets.AssetType;
 
 public final class AssetLybraryCore implements AssetLybrary {
 	//-----Fields-----//
@@ -77,8 +79,25 @@ public final class AssetLybraryCore implements AssetLybrary {
 		return this.getAssetEntry(splitName[0], splitName[1], splitName[2]);
 	}
 	
-	public <T extends Asset> T buildAsset(String registration, String type, String name, Object... args) {
-		AssetEntryCore entry = this.getAssetEntry0(registration, type, name);
+	public AssetEntry[] getAssetEntries(AssetEntryFilter filter) {
+		List<AssetEntry> entries = new ArrayList<>();
+		for (Entry<String, Map<String, Map<String, AssetEntryCore>>> e1 : this.assetEntries.entrySet()) {
+			if (filter.allowRegistration(e1.getKey())) {
+				for (Entry<String, Map<String, AssetEntryCore>> e2 : e1.getValue().entrySet()) {
+					if (filter.allowType(AssetType.valueOf(e2.getKey().toUpperCase()))) {
+						for (Entry<String, AssetEntryCore> e3 : e2.getValue().entrySet()) {
+							if (filter.allowName(e3.getKey())) {
+								entries.add(e3.getValue());
+							}
+						}
+					}
+				}
+			}
+		}
+		return entries.toArray(new AssetEntry[entries.size()]);
+	}
+	
+	private <T extends Asset> T buildAsset(AssetEntryCore entry, Object... args) {
 		if (entry == null) {
 			return null;
 		}
@@ -92,6 +111,14 @@ public final class AssetLybraryCore implements AssetLybrary {
 			//TODO debug?
 			return null;
 		}
+	}
+	
+	public <T extends Asset> T buildAsset(AssetEntry entry, Object... args) {
+		return this.buildAsset((AssetEntryCore) entry);
+	}
+	
+	public <T extends Asset> T buildAsset(String registration, String type, String name, Object... args) {
+		return this.buildAsset(this.getAssetEntry0(registration, type, name), args);
 	}
 	
 	public <T extends Asset> T buildAsset(String registration, AssetType type, String name, Object... args) {
