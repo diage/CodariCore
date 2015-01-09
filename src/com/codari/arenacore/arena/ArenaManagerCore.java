@@ -424,4 +424,9 @@ public class ArenaManagerCore implements ArenaManager {
 		this.gameRules.put(name, rule);
 		return true;
 	}
+
+	@Override
+	public Combatant getCombatant(String name) {
+		return this.getCombatant(Bukkit.getOfflinePlayer(name));
+	}
 }
