@@ -2,6 +2,7 @@ package com.codari.apicore.player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -19,20 +20,20 @@ import com.codari.apicore.CodariCore;
 
 public final class CodariPlayerManagerCore implements CodariPlayerManager {
 	//-----Fields-----//
-	private final Map<String, CodariPlayerCore> codariPlayers;
-	private final Map<String, CodariPlayerCore> onlineCodariPlayers;
+	private final Map<UUID, CodariPlayerCore> codariPlayers;
+	private final Map<UUID, CodariPlayerCore> onlineCodariPlayers;
 	private boolean pendingListenerRegistration;
-	private final Map<String, PermissionAttachment> perms;
+	private final Map<UUID, PermissionAttachment> perms;
 	
 	//-----Constructor-----//
 	public CodariPlayerManagerCore() {
 		this.codariPlayers = new HashMap<>();
 		this.onlineCodariPlayers = new HashMap<>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			String name = player.getName().toLowerCase();
-			CodariPlayerCore codariPlayer = new CodariPlayerCore(name);
-			this.codariPlayers.put(name, codariPlayer);
-			this.onlineCodariPlayers.put(name, codariPlayer);
+			UUID uuid = player.getUniqueId();
+			CodariPlayerCore codariPlayer = new CodariPlayerCore(uuid);
+			this.codariPlayers.put(uuid, codariPlayer);
+			this.onlineCodariPlayers.put(uuid, codariPlayer);
 		}
 		pendingListenerRegistration = true;
 		this.perms = new HashMap<>();
@@ -41,14 +42,13 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 	
 	//-----Methods-----//
 	@Override
-	public CodariPlayerCore getCodariPlayer(String name) {
-		name = name.toLowerCase();
-		CodariPlayerCore codariPlayer = this.codariPlayers.get(name);
+	public CodariPlayerCore getCodariPlayer(UUID uuid) {
+		CodariPlayerCore codariPlayer = this.codariPlayers.get(uuid);
 		if (codariPlayer == null) {
-			codariPlayer = new CodariPlayerCore(name);
-			this.codariPlayers.put(name, codariPlayer);
+			codariPlayer = new CodariPlayerCore(uuid);
+			this.codariPlayers.put(uuid, codariPlayer);
 			if (codariPlayer.getHandle().isOnline()) {
-				this.onlineCodariPlayers.put(name, codariPlayer);
+				this.onlineCodariPlayers.put(uuid, codariPlayer);
 			}
 		}
 		return codariPlayer;
@@ -56,17 +56,17 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 	
 	@Override
 	public CodariPlayerCore getCodariPlayer(OfflinePlayer player) {
-		return this.getCodariPlayer(player.getName());
+		return this.getCodariPlayer(player.getUniqueId());
 	}
 	
 	@Override
-	public boolean isOnline(String name) {
-		return this.onlineCodariPlayers.containsKey(name.toLowerCase());
+	public boolean isOnline(UUID uuid) {
+		return this.onlineCodariPlayers.containsKey(uuid);
 	}
 	
 	@Override
 	public boolean isOnline(OfflinePlayer player) {
-		return this.isOnline(player.getName());
+		return this.isOnline(player.getUniqueId());
 	}
 	
 	public void registerPlayerListener() {
@@ -81,29 +81,28 @@ public final class CodariPlayerManagerCore implements CodariPlayerManager {
 		//-----Event Handlers-----//
 		@EventHandler(priority = EventPriority.LOWEST)
 		private void onPlayerJoin(PlayerJoinEvent e) {
-			String name = e.getPlayer().getName().toLowerCase();
-			CodariPlayerCore codariPlayer = codariPlayers.get(name);
-			onlineCodariPlayers.put(name, codariPlayer);
-			perms.put(name, e.getPlayer().addAttachment(CodariCore.instance()));
+			UUID uuid = e.getPlayer().getUniqueId();
+			CodariPlayerCore codariPlayer = codariPlayers.get(uuid);
+			onlineCodariPlayers.put(uuid, codariPlayer);
+			perms.put(uuid, e.getPlayer().addAttachment(CodariCore.instance()));
 		}
 		
 		@EventHandler(priority = EventPriority.MONITOR)
 		private void onPlayerQuit(PlayerQuitEvent e) {
-			String name = e.getPlayer().getName().toLowerCase();
-			CodariPlayerCore codariPlayer = onlineCodariPlayers.remove(name);
+			UUID uuid = e.getPlayer().getUniqueId();
+			CodariPlayerCore codariPlayer = onlineCodariPlayers.remove(uuid);
 			if (codariPlayer == null) {
-				codariPlayer = codariPlayers.get(name);
+				codariPlayer = codariPlayers.get(uuid);
 			}
 			codariPlayer.invalidateOnlineReference();
-			perms.remove(name);
+			perms.remove(uuid);
 		}
 	}
 
 	@Override
-	public void setPerm(String player, String perm, boolean value) {
-		player = player.toLowerCase();
-		if (this.perms.containsKey(player)) {
-			this.perms.get(player).setPermission(perm, value);
+	public void setPerm(UUID uuid, String perm, boolean value) {
+		if (this.perms.containsKey(uuid)) {
+			this.perms.get(uuid).setPermission(perm, value);
 		}
 	}
 }

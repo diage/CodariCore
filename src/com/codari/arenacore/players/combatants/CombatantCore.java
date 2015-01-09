@@ -1,6 +1,7 @@
 package com.codari.arenacore.players.combatants;
 
 import java.io.File;
+import java.util.UUID;
 
 import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -66,8 +67,8 @@ public final class CombatantCore implements Combatant {
 	private String currentArenaBuildName;
 	
 	//-----Constructor-----//
-	public CombatantCore(String name) {
-		this.player = CodariCore.instance().getCodariPlayerManager().getCodariPlayer(name);
+	public CombatantCore(UUID uuid) {
+		this.player = CodariCore.instance().getCodariPlayerManager().getCodariPlayer(uuid);
 		String dataFilePath = String.format(DATA_FILE_PATH, this.player.getName());
 		this.dataFile = new File(CodariI.INSTANCE.getDataFolder(), dataFilePath);	
 		this.activeHotbar = false;

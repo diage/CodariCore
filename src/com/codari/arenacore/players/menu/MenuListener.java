@@ -20,7 +20,7 @@ public class MenuListener implements Listener {
 	public void openMenuInventoryClick(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player && e.getInventory().getType() == InventoryType.CRAFTING) {
 			Player player = ((Player)e.getWhoClicked());
-			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
+			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getUniqueId());
 			if(!combatant.inArena()) {
 				if(e.getSlot() == MAIN_MENU_SLOT_NUMBER) {
 					if(!combatant.getMenuManager().isMenuOpen()) {
@@ -43,7 +43,7 @@ public class MenuListener implements Listener {
 	public void openMenuInteract(PlayerInteractEvent e) {
 		if(e.getPlayer().getInventory().getHeldItemSlot() == MAIN_MENU_SLOT_NUMBER) {
 			Player player = e.getPlayer();
-			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getName());
+			CombatantCore combatant = (CombatantCore)Codari.getArenaManager().getCombatant(player.getUniqueId());
 			if(!combatant.inArena()) {
 				if(!combatant.getMenuManager().isMenuOpen()) {
 					combatant.getMenuManager().enterMenu();

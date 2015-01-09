@@ -3,6 +3,7 @@ package com.codari.apicore.player;
 import java.lang.ref.WeakReference;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import net.minecraft.util.org.apache.commons.lang3.builder.HashCodeBuilder;
 import net.minecraft.util.org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,19 +22,19 @@ import com.codari.apicore.CodariCore;
 public final class CodariPlayerCore implements CodariPlayer {
 	//-----Fields-----//
 	private WeakReference<OfflinePlayer> playerReference;
-	private final String name;
+	private final UUID uuid;
 	private boolean isvalidOnlineReference;
 	private final String toString;
 	private final int hash;
 	
 	//-----Constructor-----//
-	public CodariPlayerCore(String name) {
-		OfflinePlayer player = Bukkit.getOfflinePlayer(name);
+	public CodariPlayerCore(UUID uuid) {
+		OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+		this.uuid = uuid;
 		this.playerReference = new WeakReference<>(player);
-		this.name = player.getName();
 		this.isvalidOnlineReference = true;
-		this.toString = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append(this.name).build();
-		this.hash = new HashCodeBuilder().append(this.name).build();
+		this.toString = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append(this.uuid).build();
+		this.hash = new HashCodeBuilder().append(this.uuid).build();
 	}
 	
 	//-----Methods-----//
@@ -47,7 +48,7 @@ public final class CodariPlayerCore implements CodariPlayer {
 	}
 	
 	private OfflinePlayer updateReference() {
-		OfflinePlayer player = Bukkit.getOfflinePlayer(this.name);
+		OfflinePlayer player = Bukkit.getOfflinePlayer(this.uuid);
 		this.playerReference = new WeakReference<>(player);
 		this.isvalidOnlineReference = true;
 		return player;
@@ -73,8 +74,13 @@ public final class CodariPlayerCore implements CodariPlayer {
 	}
 	
 	@Override
+	public UUID getUniqueId() {
+		return this.uuid;
+	}
+	
+	@Override
 	public String getName() {
-		return this.name;
+		return this.getHandle().getName();
 	}
 	
 	@Override
@@ -87,7 +93,7 @@ public final class CodariPlayerCore implements CodariPlayer {
 			try {
 				return (Player) player;
 			} catch (ClassCastException ignore) {
-				throw new Error("Player named " + this.name + " is falsly shown online");
+				throw new Error("Player with uuid " + this.uuid + " is falsly shown online");
 			}
 		}
 		return null;
@@ -151,7 +157,7 @@ public final class CodariPlayerCore implements CodariPlayer {
 			return true;
 		}
 		if (obj instanceof CodariPlayerCore) {
-			return this.name.equalsIgnoreCase(((CodariPlayerCore) obj).name);
+			return this.uuid.equals(((CodariPlayerCore) obj).uuid);
 		}
 		return false;
 	}
@@ -160,11 +166,11 @@ public final class CodariPlayerCore implements CodariPlayer {
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new LinkedHashMap<>();
-		result.put("name", this.name);
+		result.put("uuid", this.uuid.toString());
 		return result;
 	}
 	
 	public CodariPlayerCore deserialize(Map<String, Object> args) {
-		return CodariCore.instance().getCodariPlayerManager().getCodariPlayer((String) args.get("name"));
+		return CodariCore.instance().getCodariPlayerManager().getCodariPlayer(UUID.fromString((String) args.get("uuid")));
 	}
 }

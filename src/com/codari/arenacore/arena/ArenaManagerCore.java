@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -36,7 +37,7 @@ import com.codari.arenacore.players.teams.queue.QueueCore;
 
 public class ArenaManagerCore implements ArenaManager {
 	//-----Fields-----//
-	private final Map<String, Combatant> combatants;
+	private final Map<UUID, Combatant> combatants;
 	private final Map<String, ArenaCore> arenas;
 	//private final Map<String, ArenaGroupCore> arenaGroups;
 	private final Map<String, ArenaBuilderCore> arenaBuilders;
@@ -115,19 +116,18 @@ public class ArenaManagerCore implements ArenaManager {
 	//-----Public Methods-----//
 	//----Combatant Related----//
 	@Override
-	public Combatant getCombatant(String name) {
-		name = name.toLowerCase();
-		Combatant combatant = this.combatants.get(name);
+	public Combatant getCombatant(UUID uuid) {
+		Combatant combatant = this.combatants.get(uuid);
 		if (combatant == null) {
-			combatant = new CombatantCore(name);
-			this.combatants.put(name, combatant);
+			combatant = new CombatantCore(uuid);
+			this.combatants.put(uuid, combatant);
 		}
 		return combatant;
 	}
 
 	@Override
 	public Combatant getCombatant(OfflinePlayer player) {
-		return this.getCombatant(player.getName());
+		return this.getCombatant(player.getUniqueId());
 	}
 
 	public Collection<Combatant> getCombatants() {
