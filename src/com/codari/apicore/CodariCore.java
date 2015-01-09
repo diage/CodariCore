@@ -80,8 +80,8 @@ public final class CodariCore extends JavaPlugin implements CodariI {
 	//-----Enabler-----//
 	@Override
 	public void onEnable() {
-		this.assetLybrary = new AssetLybraryCore();
 		this.setInstanceAccess(true);
+		//this.assetLybrary = new AssetLybraryCore();
 		this.codariPlayerManager.registerPlayerListener();
 		this.itemDataManager = new CodariItemManagerCore();
 		this.library = new LibraryCore(); 
