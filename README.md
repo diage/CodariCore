@@ -152,16 +152,3 @@ Version 0.8 Goals
     : QOL :
 ---------------
 Improve Teleport (Distance, check for solid ground, prevent spawning in blocks)
-
-===========
-LOGIN INFO
-===========
-
-BEASTNODE::
-<22:55:10> "Troy9567": http://mc.beastnode.com/index.php?r=site/page&view=home
-<22:55:15> "Troy9567": username: sportsfan1432@yahoo.com
-<22:55:20> "Troy9567": password: Sorentemp
-FILEZILLA::
-<23:28:11> "Troy9567": 198.143.154.41
-<23:28:16> "Troy9567": user: sportsfan1432@yahoo.com.38000
-<23:28:27> "Troy9567": password is same
